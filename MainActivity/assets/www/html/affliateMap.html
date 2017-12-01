@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- main -->
+	<script src="../code/jquery.bxslider.min.js"></script>
+    <link href="../code/jquery.bxslider.css" rel="stylesheet" />
+    
+    <!--  naver map API -->
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
+   <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=gAnO6LlGEkgRPUUN7YGO&submodules=geocoder"></script>
+    
+    <!-- tab -->
+	<script type='text/javascript' src='../code/tabs.js'></script>
+
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    <!-- Link Swiper's CSS -->
+ <link rel="stylesheet" href="../swiper/dist/css/swiper.min.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+    <link href="../css/monthpicker.css" rel="stylesheet" />
+	<script src="../code/common.js"></script>
+<!--<script type="text/javascript" charset="utf-8" src="../cordova.js"></script>-->
+
+<style type="text/css">
+/* .on { color: blue; border: 1px solid blue; } */
+.on { background-color:#DDF4FE;}
+.list-block {display: none; }
+.item-title.small-fonts{font-size: small;}
+
+.alen_list_box2 {margin:0px 0px; background:#fff; border:0; }
+.alen_list_box2 li { background-color:#fff; }
+.alen_list_combtnbox { height:42px; /*margin-bottom:5px;*/}
+.alen_list_combtn { margin:0 5px; padding:0 5px 0 5px; border:1px solid #539bff; color:#fff; /* font-size:1.5em; */ font-weight:400; text-align:center; line-height:50px; cursor:pointer; background:#539bff; -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
+.albpad { padding:0px 0 0px 0; }
+
+.alen_list_btn2 {background-color:#fff;padding:5px 0px;border-top:1px solid #ddd;}
+/* .alen_list_btn2 { margin:10px 10px 10px 10px; padding:0; border-radius:10px; background:#333; } */
+.alen_list_btn2item { width:20%;float:left; text-align:center; /* color:#a99f9f;  */}
+.alen_list_btn2item:nth-of-type(5){margin-right:0;}
+/* .alen_list_btn2item { width:20%; float:left;; text-align:center; color:#fff; } */
+.alen_list_btn2item .al_btn_txt {padding:8px 0; border:1px solid #ddd; border-radius:5px;margin-right:2px;}
+.alen_list_btn2item .al_btn_txt:nth-of-type(5) {margin-right:0;}
+/* .alen_list_btn2item .al_btn_txt { padding:10px 0; border-right:1px solid #666; } */
+.alen_list_btn2item .al_btn_txt.last {background-color:#ddd; }
+
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner { padding-right: 15px; text-align:center; }
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner .item-title { margin:0 auto; }
+.alen_list_box2 label.label-radio input[type="radio"]:checked ~ .item-inner { background: no-repeat center; background-position: 50% 3px; background-position: -webkit-calc(50% - 8px) 3px; background-position: calc(50% - 8px ) 3px; -webkit-background-size: 13px 10px; background-size: 13px 10px; 
+background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23539bff'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");  }
+.divPage{background: url(../common/divPage.png) no-repeat 0 0;background-position: 0% 0%; height: 30px;}
+.alen_radio_box2 { margin:10px; border:1px solid #e5e5e5; }
+.alen_table_in { border-radius:5px; margin:0 5px;}
+.name_span{width: 95%; text-align: center; position: absolute; font: 19px bold;}
+/*가맹점 상세정보 사진부분*/
+    .store_pic{border-bottom:1px solid #ddd;}
+    .store_pic img {width:100%;}
+    
+    
+</style>
+</head>
+
+<body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <div class="panel panel-left panel-reveal">
+    	<div class="profile_box">
+        	<!-- <div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div> -->
+            <div class="pf_txt">
+            	<h2>김종현</h2>
+                <p>쿠폰 <span>0</span>개</p>
+                <p>포인트 <span>200</span>p</p>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        </div>
+    </div>   
+    <div class="views">
+		<div class="view view-main">
+        
+            <div class="navbar top_menu">
+                <div data-page="index" class="navbar-inner">
+                
+                    <div class="left sliding" style="z-index: 1000"><a href="javascript:back()" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                    <span class="name_span" id="affDetName"></span>
+                </div>     
+                
+                
+                
+                <div data-page="receipt_details" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">영수증 상세 내역</div>
+                </div>
+                
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                </div>
+
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+                
+                <div data-page="detailSearch" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">상세조회</div>
+                </div>                               
+            </div>          
+			<div class="pages navbar-through toolbar-through">
+                <div data-page="index" class="page">
+                    <div class="page-content">
+
+                   <!--   
+                   <div class="history_title">
+                        <div class="history_txt" >최근사용내역</div>
+                        <div class="history_total" id="totalAmount" style="padding-top: 0px"></div>
+                        <hr>
+                    </div> -->      
+                    
+                        <hr>
+                        <div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="../common/bx_loader.gif" />
+                    
+
+
+<div id="map" style="; width: 100%; height: 70%; clear: both; position:relative">
+<div class="map_buttons">
+<a onclick="myLocation()"><img src="../img/location.png"></a>
+</div>
+</div>
+<div style="height: 150px; background: white;">
+
+</div>
+<p><button onclick="geoFindMe()">현 위치</button></p>
+<div id="out"></div>
+
+
+
+
+
+
+
+<style type="text/css">
+    
+</style>
+
+<div>
+
+                        
+                        
+                        
+                        
+                      
+<!-- <p>
+(주)더리얼마케팅 | 대표이사:손종희<br>
+사업자등록번호:220-88-19101   |   통신판매업신고 강남 04134호<br>
+서울시 강남구 압구정로10길 13, 401호(신사동, 마사빌딩)<br>
+이메일 : The REAL @naver.com<br>
+고객센터 : 02-518-5112 | 마케팅:02-540-3111<br>
+</p>
+
+<p class="copytxt">CopyrightⓒThe REAL Co.All rights reserved</p> -->
+                    </div>                    
+                    </div>
+                </div>
+                
+<style type="text/css">
+
+.rtpage_box { background:#f2f2f2; border:1px solid #e5e5e5; margin-bottom:20px; padding:5px; border-radius:5px; }
+.rtpage_inbox { background:#fff; border:1px solid #e5e5e5; padding:10px 30px; border-radius:5px; }
+.rtpage_holl { padding:5px 5px 15px 5px; height:35px; }
+.rtpage_holl div { width:6%; height:100%; margin:0 2%; border-radius:30px; border:1px solid #e5e5e5; float:left; background:#f2f2f2; }
+
+
+.rt_title { padding:20px 0 0px 0; }
+.rt_title h2 { text-align:center; font-size:3em; font-weight:700; color:#000; clear:both; padding:5px 0 15px 0; }
+.rt_title p { text-align:center; font-size:1em; color:#000; clear:both; }
+
+.rt_txt01 { text-align:left; font-size:1em; color:#666; clear:both; /* padding:0px 10px; */ }
+.rt_txt01 span { text-align:right; float:right; }
+
+.rt_total { text-align:left; font-size:1.5em; font-weight:700; color:#000; clear:both; padding:20px 10px; border-bottom:2px dashed #aaa; border-top:2px dashed #aaa; margin-top:20px; }
+.rt_total span { text-align:right; float:right; }
+
+.rt_total { text-align:left; font-size:1.8em; font-weight:700; color:#000; clear:both; padding:20px 10px; border-bottom:1px dashed #aaa; border-top:1px dashed #aaa; margin-top:20px; }
+.rt_total span { text-align:right; float:right; }
+.rt_orderno { border-bottom:1px dashed #aaa; border-top:1px dashed #aaa; padding:20px 0; margin-top:20px; }
+.rt_orderno p { text-align:center; font-size:1.2em; color:#666; clear:both; }
+.rt_orderno h2 { text-align:center; font-size:1.8em; color:#000; clear:both; padding:5px 0; }
+
+.rt_table { border-top:1px solid #ddd; border-bottom:1px solid #ddd; margin:20px 5px 0px 5px;  }
+.rt_table .rt_tabletitle { border-bottom:1px solid #ddd; background:#fff;}
+.rt_table li { float:left; padding:5px 0; text-align:center; color:#333; }
+.rt_table li.rt_mlat01 { width:45%; }
+.rt_table li.rt_mlat02 { width:20%; }
+.rt_table li.rt_mlat03 { width:10%; }
+.rt_table li.rt_mlat04 { width:25%; text-align:right; padding-right:5px; }
+
+.rt_etc { text-align:left; font-size:1.3em; font-weight:700; color:#333; clear:both; padding:10px 10px; border-bottom:1px dashed #aaa; }
+.rt_etc span { text-align:right; float:right; }
+
+.rt_copy { text-align:center; font-size:0.7em; }
+	/* 로딩*/
+#loading2 {height: 100%; left: 0px; position: fixed; _position:absolute;  top: 0px; width: 100%; filter:alpha(opacity=50); -moz-opacity:0.5; opacity : 0.5;}
+#loading {height: 100%; left: 0px; position: fixed; _position:absolute; top: 0px; width: 100%; filter:alpha(opacity=50); -moz-opacity:0.5; opacity : 0.5;}
+.loading {background-color: #c3c3c3; z-index: 199; }
+#loading_img2{width: 20px; height: 20px; position:absolute; top:50%; left:50%; z-index: 200;}
+#loading_img{width: 20px; height: 20px;	position:absolute; top:50%; left:50%; z-index: 200;}
+
+.map_buttons{position: absolute; top: 0; left: 0; z-index: 1000; padding: 5px;width: 100%; text-align: left; }
+.map_buttons img{width: 32px; height: 32px;  opacity: 0.80; border-radius: 6px; box-shadow: 2px 2px 5px #b7b8b7; margin: 10px; }
+</style>                
+                
+
+                <div data-page="receipt_details" class="page cached">
+                    <div class="page-content">
+						<div id="loading2" class="loading"></div><img id="loading_img2" alt="loading" src="../common/bx_loader.gif" />
+                        <div class="content-block">
+
+						<div class="rtpage_box">
+                        	<div class="rtpage_inbox" id ="detailRecData">
+                            </div>
+                        </div>
+                        
+<!-- 						<div class="receipt_box">
+                        	<div class="receipt_inbox" id ="detailRecData">
+                                
+                            </div>
+                        </div> -->
+                        
+                        <div class="latest_btnbox">
+                            
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div data-page="agree01" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree01.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-page="agree03" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+    </div>    
+<!-- <div id="div_ajax_load_image">
+    <img src="../common/log_img.png" />
+</div>  -->
+
+<script src="../js/monthpicker.min.js"></script>
+<script src="../js/monthpicker-dom.min.js"></script>
+<script src="../js/monthpicker.js"></script>
+<script type="text/javascript" src="../js/framework7.js"></script>
+
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+
+<script type="text/javascript">
+var request = new Request();
+
+$(document).ready(function(){
+	commonUserData();
+		$(window).on('ajaxStart',function(){
+		$("#loading_img").css("z-index",200);
+		$("#loading_img2").css("z-index",200);
+		$("#loading").show();
+		$("#loading2").show();
+	}).on('ajaxStop',function(){
+			$("#loading").hide();
+			$("#loading_img").hide();
+		$("#loading_img").css("z-index",-200);
+		$("#loading2").hide();
+		$("#loading_img2").css("z-index",-200);
+	});
+})
+
+function back(){
+	window.history.back();
+}
+/////////////////////////////////////////////////////////////////
+
+var affliateNo = request.getParameter('affliateNo');
+
+$(document).ready(function(){
+	affMapView();
+});
+
+function affMapView(){
+	$.ajax({
+        type: "post",
+        url : commonIp()+"/theReal/receipt/affMapView.do",
+        data: {
+        	affliateNo  	: affliateNo
+        },
+        success: fn_affMapView,
+        error: whenError
+	});
+}
+
+function fn_affMapView(data){
+	$("#affDetName").append(data.affName);
+	
+	var cityhall = new naver.maps.LatLng(data.lat, data.lng),
+    map = new naver.maps.Map('map', {
+        center: cityhall.destinationPoint(0, 0),
+        zoom: 12
+    }),
+    marker = new naver.maps.Marker({
+        map: map,
+        position: cityhall
+    });
+	
+	naver.maps.Event.addListener(marker, "click", function(e) {
+	    if (infowindow.getMap()) {
+	        infowindow.close();
+	    } else {
+	        infowindow.open(map, marker);
+	    }
+	});
+	
+	
+	
+	
+}
+
+function whenError(){
+	alert("데이터 정보를 가져오지 못하였습니다. \n같은 오류시 관리자에게 문의하세요.");
+}
+
+
+function test(){
+	var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        slidesPerView: 4,
+        centeredSlides: true,
+        paginationClickable: true,
+        spaceBetween: 30
+    });
+}
+
+function myLocation() {
+	  var output = document.getElementById("out");
+
+	  if (!navigator.geolocation){
+	    output.innerHTML = "<p>사용자의 브라우저는 지오로케이션을 지원하지 않습니다.</p>";
+	    return;
+	  }
+
+	  function success(position) {
+	    var latitude  = position.coords.latitude;
+	    var longitude = position.coords.longitude;
+
+	    output.innerHTML = '<p>위도 : ' + latitude + '° <br>경도 : ' + longitude + '°</p>';
+
+	    var img = new Image();
+	    img.src = "http://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+
+	    output.appendChild(img);
+	  };
+
+	  function error() {
+	    output.innerHTML = "사용자의 위치를 찾을 수 없습니다.";
+	  };
+
+	  output.innerHTML = "<p>Locating…</p>";
+
+	  navigator.geolocation.getCurrentPosition(success, error);
+	}
+	
+
+
+
+
+
+
+
+
+
+/* 
+$("#interaction").on("click", function(e) {
+    e.preventDefault();
+
+    if (map.getOptions("draggable")) {
+        map.setOptions({ //지도 인터랙션 끄기
+            draggable: false,
+            pinchZoom: false,
+            scrollWheel: false,
+            keyboardShortcuts: false,
+            disableDoubleTapZoom: true,
+            disableDoubleClickZoom: true,
+            disableTwoFingerTapZoom: true
+        });
+
+        $(this).removeClass("control-on");
+    } else {
+        map.setOptions({ //지도 인터랙션 켜기
+            draggable: true,
+            pinchZoom: true,
+            scrollWheel: true,
+            keyboardShortcuts: true,
+            disableDoubleTapZoom: false,
+            disableDoubleClickZoom: false,
+            disableTwoFingerTapZoom: false
+        });
+
+        $(this).addClass("control-on");
+    }
+});	 */
+</script>
+
+
+</body>
+</html>

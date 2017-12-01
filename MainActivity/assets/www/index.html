@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="code/layout.css" />
+    <link rel="stylesheet" media="all" href="code/common.css" />
+
+    <!-- main -->
+	<script src="code/jquery.bxslider.min.js"></script>
+    <link href="code/jquery.bxslider.css" rel="stylesheet" />
+    
+    
+    <!-- tab -->
+	<script type='text/javascript' src='code/tabs.js'></script>
+    
+    <!-- scroll -->
+	<script src="code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="code/fm.scrollator.jquery.css" />
+    
+    
+	<script src="code/common.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    
+</head>
+
+<body class="login_page">
+
+<div class="wrap">
+
+	<div class="container login_box">
+    
+    	<div class="login_img"><img src="code/web_point3.png"></div>
+<div style="color: white; font-size: 20px; font-weight: 500; height: 100px; position: relative; left: 5px;  top: 70%; z-index: 1; text-align: center;">
+자동 로그인 체크 중입니다...
+</div>
+    
+    </div>
+<!-- 	
+<body class="login_page">
+
+<div class="wrap">
+
+	<div class="container login_box">
+    
+    	<div class="login_img"><img src="code/web_point3.png"></div>
+        
+    
+    </div> -->
+
+
+    
+</div>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+<script type="text/javascript">
+
+//자동로그인 설정된 아이디 값 가져오기
+var id = window.localStorage.getItem("id");
+//자동로그인 설정된 비밀번호 값 가져오기
+var pw = window.localStorage.getItem("pw");	
+document.addEventListener("deviceready", onDeviceReady, true);
+	var permissions = null;
+function onDeviceReady() {
+	//permissions.requestPermission(successCallback, errorCallback, permission);
+	permissions = cordova.plugins.permissions;
+
+	permissions.hasPermission(permissions.READ_PHONE_STATE, checkReadPhoneStatePermissionCallback, null);
+	permissions.hasPermission(permissions.RECEIVE_MMS, checkReceiveMmsPermissionCallback, null);
+	permissions.hasPermission(permissions.RECEIVE_SMS, checkReceiveSmsPermissionCallback, null);
+	permissions.hasPermission(permissions.WAKE_LOCK, checkWakeLockPermissionCallback, null);
+	permissions.hasPermission(permissions.ACCESS_COARSE_LOCATION, checkCoarseLocationPermissionCallback, null);
+	permissions.hasPermission(permissions.ACCESS_FINE_LOCATION, checkFineLocationPermissionCallback, null);
+	
+}
+
+
+ 
+function checkReadPhoneStatePermissionCallback(status) {
+	console.log(status);
+  if(!status.hasPermission) {
+	console.log("1111");
+    var errorCallback = function() {
+      alert('READ_PHONE_STATE permission is not turned on');
+    }
+ 
+	console.log("222222");
+    permissions.requestPermission(
+      permissions.READ_PHONE_STATE,
+      function(status) {
+        if(!status.hasPermission) errorCallback();
+      },
+      errorCallback);
+  }else{
+	  console.log('Camera permission 11111');
+  }
+}
+ 
+function checkReceiveMmsPermissionCallback(status) {
+	console.log(status);
+  if(!status.hasPermission) {
+	console.log("1111");
+    var errorCallback = function() {
+      alert('READ_PHONE_STATE permission is not turned on');
+    }
+ 
+	console.log("222222");
+    permissions.requestPermission(
+      permissions.RECEIVE_MMS,
+      function(status) {
+        if(!status.hasPermission) errorCallback();
+      },
+      errorCallback);
+  }else{
+	  console.log('Camera permission 11111');
+  }
+}
+ 
+function checkReceiveSmsPermissionCallback(status) {
+	console.log(status);
+  if(!status.hasPermission) {
+	console.log("1111");
+    var errorCallback = function() {
+      alert('READ_PHONE_STATE permission is not turned on');
+    }
+ 
+	console.log("222222");
+    permissions.requestPermission(
+      permissions.RECEIVE_SMS,
+      function(status) {
+        if(!status.hasPermission) errorCallback();
+      },
+      errorCallback);
+  }else{
+	  console.log('Camera permission 11111');
+  }
+}
+ 
+function checkWakeLockPermissionCallback(status) {
+	console.log(status);
+  if(!status.hasPermission) {
+	console.log("1111");
+    var errorCallback = function() {
+      alert('READ_PHONE_STATE permission is not turned on');
+    }
+ 
+	console.log("222222");
+    permissions.requestPermission(
+      permissions.WAKE_LOCK,
+      function(status) {
+        if(!status.hasPermission) errorCallback();
+      },
+      errorCallback);
+  }else{
+	  console.log('Camera permission 11111');
+  }
+}
+ 
+function checkCoarseLocationPermissionCallback(status) {
+	console.log(status);
+  if(!status.hasPermission) {
+	console.log("1111");
+    var errorCallback = function() {
+      alert('READ_PHONE_STATE permission is not turned on');
+    }
+ 
+	console.log("222222");
+    permissions.requestPermission(
+      permissions.ACCESS_COARSE_LOCATION,
+      function(status) {
+        if(!status.hasPermission) errorCallback();
+      },
+      errorCallback);
+  }else{
+	  console.log('Camera permission 11111');
+  }
+}
+ 
+function checkFineLocationPermissionCallback(status) {
+	console.log(status);
+  if(!status.hasPermission) {
+	console.log("1111");
+    var errorCallback = function() {
+    	alert('READ_PHONE_STATE permission is not turned on');
+    }
+ 
+	console.log("222222");
+    permissions.requestPermission(
+      permissions.ACCESS_FINE_LOCATION,
+      function(status) {
+        if(!status.hasPermission) errorCallback();
+      },
+      errorCallback);
+  }else{
+	  console.log('Camera permission 11111');
+  }
+}
+
+
+// 디바이스가 ready가 될때 실행될 수 있도록 이벤트 리스너에 등록한다.
+/* document.addEventListener("deviceready", function(){
+  console.log(device.platform);
+
+  if(device.platform.toUpperCase() == 'ANDROID'){
+    window.plugins.pushNotification.register(successHandler,errorHandler, {
+      //"senderID" : "912734728084", // Google GCM 서비스에서 생성한 Project Number를 입력한다.
+      "senderID" : "416114430430", // Google GCM 서비스에서 생성한 Project Number를 입력한다.
+      "ecb" : "onNotificationGCM" // 디바이스로 푸시가 오면 onNotificationGCM 함수를 실행할 수 있도록 ecb(event callback)에 등록한다.
+    });
+  }
+
+}); */
+
+$(document).ready(function(){
+	 //var permissions = cordova.require("plugins/cordova-plugin-android-permissions/www/permissions.js");
+
+	/**
+	자동로그인 체크로직
+	**/
+	//return false;
+	if(id != "" || id != null){
+		$.ajax({
+	        type: "post",
+	        url : commonIp()+"/theReal/receipt/lgnChk.do",
+	        data: {
+	        	eMail	 	: id,
+	        	pwd 		: pw
+	        },
+	        success: fnSucData,
+	        error: whenError
+	    	});		
+	}else{
+		//자동로그인 설정안되어있을시 1.5초 뒤에 로그인 페이지로 이동
+		setTimeout(function() {
+			location.href='login.html';
+		}, 1500);
+	}		
+})
+
+
+	/*
+	자동로그인 체크로직 성공함수
+	*/
+	function fnSucData(resdata){
+		
+		var resultData = resdata.resultMap;
+		var uuId = "";
+		var telNo = "";
+		resultCnt = resultData.length;
+		if(resultData.length>0){
+			for(var i=0; i<resultData.length; i++){
+				uuId = resultData[i].UUID;
+				telNo = resultData[i].TEL_NO;
+				console.log(resultData[i].UUID);
+				console.log(resultData[i].TEL_NO);
+			}
+			//DB에 저장된 단말기 번호와 핸드폰 번호를 가져와 메인페이지로 이동
+			setTimeout(function() {
+				location.href='./html/index.html?uuId='+uuId+'&telNo='+telNo;
+			}, 1500);		
+		}		 
+			 
+		else{
+			//자동로그인 설정안되어있을시 1.5초 뒤에 로그인 페이지로 이동
+			setTimeout(function() {
+				location.href='login.html';
+			}, 1500);		
+		}		
+		
+		
+	}
+	
+	/*
+	자동로그인 체크로직 실패함수
+	*/
+	function whenError(){
+		setTimeout(function() {
+			location.href='login.html';
+		}, 1500);		
+	}
+
+            // app.initialize();
+
+            /**
+             * tokenHandler
+             *
+             * @param result
+             *
+             * 디바이스 토큰핸들러 콜백함수.
+             * 푸시 서비스를 활성화 하였을 때, window.plugins.pushNotification.register 메소드가 실행되면서 디바이스 토큰을 가져와서 출력한다.
+             * 만약에 푸시 서버로 디바이스 토큰을 보내야할 경우 이 함수 안에서 서버로 디바이스 토큰을 전송하면 된다.
+             */
+            function tokenHandler(result){
+              console.log('deviceToken:' + result);
+            }
+
+            /**
+             * errorHandler
+             *
+             * @param err
+             *
+             * 에러 핸들러 콜백 함수.
+             */
+            function errorHandler(err){
+              console.log('error:' + err);
+            }
+
+            /**
+             * successHandler
+             *
+             * @param result
+             *
+             * 디바이스로 푸시 메세지를 받았을 때 뱃지처리 이후 호출하는 콜백함수
+             */
+            function successHandler(result){
+              console.log('result:'+result);
+            }
+
+            /**
+             * onNotificationGCM
+             *
+             * @param e
+             *
+             * 안드로이드 디바이스로 푸시 메세지를 받을 때 호출되는 함수, window.plugins.pushNotification.register 옵션에 설정에서 ecb의 이름에 매칭된다.
+             */
+            function onNotificationGCM (e){
+              switch (e.event) {
+              case 'registered': // 안드로이드 디바이스의 registerID를 획득하는 event 중 registerd 일 경우 호출된다.
+                console.log('registerID:' + e.regid);
+                break;
+              case 'message': // 안드로이드 디바이스에 푸시 메세지가 오면 호출된다.
+                {
+	                console.log(':' + e);
+                  if (e.foreground){ // 푸시 메세지가 왔을 때 앱이 실행되고 있을 경우
+                    var soundfile = e.soundname || e.payload.sound;
+                    var my_media = new Media("/android_asset/www/" + soundfile);
+                    my_media.play();
+                  } else { // 푸시 메세지가 왔을 때 앱이 백그라운드로 실행되거나 실행되지 않을 경우
+                    if (e.coldstart) { // 푸시 메세지가 왔을 때 푸시를 선택하여 앱이 열렸을 경우
+                      console.log("알림 왔을 때 앱이 열리고 난 다음에 실행 될때");
+                    } else { // 푸시 메세지가 왔을 때 앱이 백그라운드로 사용되고 있을 경우
+                      console.log("앱이 백그라운드로 실행될 때");
+                    }
+                  }
+
+                  console.log(decodeURI(e.payload.title));
+                  console.log(decodeURI(e.payload.message));
+                  //navigator.notification.alert(decodeURI(e.payload.msg));
+                  
+                  navigator.notification.alert(
+                		  decodeURI(e.payload.message),  // message
+                		    '',         // callback
+                		    decodeURI(e.payload.title),            // title
+                		    '확인333'                  // buttonName
+                		);                
+                }
+                break;
+              case 'error': // 푸시 메세지 처리에 에러가 발생하면 호출한다.
+                console.log('error:' + e.msg);
+                break;
+              case 'default':
+                console.log('알수 없는 이벤트');
+                break;
+              }
+            }
+
+        </script>
+    </body>
+</html>

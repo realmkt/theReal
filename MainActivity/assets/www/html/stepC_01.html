@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<title>더리얼마케팅 전자영수증</title>
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/welcome.css">
+<script type="text/javascript" src="../js/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="../js/html5shiv.js"></script>
+<![endif]-->
+<script type="text/javascript" >
+</script>
+</head>
+<body class="sub">
+<div id="wrap">
+	<!-- header -->
+	<header id="header">
+		<!-- menu -->
+		<a href="javascript:void(0);" class="menu-open txt-out">메뉴 열기</a>
+		<a href="javascript:history.go(-1);" class="back-to"><span></span>이전</a>
+		<h2>전자영수증 내역 	통계</h2>
+		<script src="../js/menu.js"></script> 
+		<!-- //menu -->
+	</header>
+	<div id="top_mar" style="display:none;"></div>
+	<!-- //header -->
+	<!-- content -->
+	<section id="contents">
+		<section class="step-area">
+			<h1 class="hidden">전자영수증 탭</h1>		
+			<ul>
+				<li id="tabToday"><p>당일</p><span></span></li>
+				<li id="tabWeek" class="on"><p>1주일</p><span></span></li>
+				<li id="tabMonth"><p>1달</p><span></span></li>
+				<!-- <li id="tabDiv"><p>기간설정</p><span></span></li> -->
+			</ul>		
+		</section>			
+			<div class="width-pd2">
+				<p class="sub-txt">기간입력</p>
+			</div>			
+		<!-- //step area -->
+		<section class="step-con">
+			<h1 class="hidden">전자영수증 조회</h1>
+			
+			<div class="width-pd2 box-col-gray">
+				<div id="piechart_3d" style="width: 310px; height: 200px;"></div>
+			</div>
+			<ul class="loan-list mgB20">
+			</ul>
+		</section>
+	</section>
+	<!-- //content -->
+</div>
+
+<!-- 약관 레이어 -->
+<section class="layer-popup" id="multiPopLayer" >
+	<!-- 사이트 header -->
+	<header class="layer-tit">
+		<h1> 영수증 발급 내역 확인</h1>
+	</header>
+	<!-- //사이트 header -->	
+	<!-- 본문 컨텐츠 -->
+	<div class="layer-content2" style="height: 200px;">
+		<div class="layer-content-inner">
+		</div>
+		<div class="btn_area txt-center">
+			<a href="javascript:void(0);" class="btn-view" style="width:110px" id="btnYes">예</a>			
+			<a href="javascript:void(0);" class="btn-view" style="width:110px" id="btnNo">아니오</a>			
+		</div>			
+	</div>
+	<!-- //본문 컨텐츠 -->	
+	<!-- 팝업닫기버튼 -->
+	<a href="javascript:popupClose();" class="btn-close txt-out">레이어팝업 닫기</a>
+	<!-- //팝업닫기버튼 -->	
+</section>
+<!-- //약관 레이어 -->
+<div id="mask"></div>
+<script type="text/javascript">
+
+var request = new Request();
+var idParam = request.getParameter('id');
+var seq = "";
+
+var selectDate = new Date();
+var month = selectDate.getMonth()-1;
+var year= selectDate.getFullYear();
+var mon = (selectDate.getMonth()+1)>	9 ? ''+(selectDate.getMonth()+1) : '0'+(selectDate.getMonth()+1);
+
+var nowDate = new Date();               //오늘 날짜 객체 선언
+var nYear = nowDate.getFullYear();      //오늘의 년도
+var nMonth = (nowDate.getMonth()+1) ;       //오늘의 월 ※ 0월부터 시작
+nMonth = ((nMonth)>9 ? ''+(nMonth) : '0'+(nMonth) );
+var nDate = nowDate.getDate();           //오늘의 날
+var nowFullDate = nYear+nMonth+nDate;
+
+$(document).ready(function(){
+	drawChart();
+	//startGetA01Data();
+	 //toggle
+	 $.support.cors = true;
+	 //nowWeek();
+		$("#tabToday").click(function(){
+			if($(this).hasClass("on")){
+				return;
+			}else{
+				$("li").removeClass("on");
+				$(this).addClass("on");
+			}
+			
+			$(".sub-txt").text(nYear+"년 "+nMonth+"월 "+nDate+"일 ~ "+nYear+"년 "+nMonth+"월 "+nDate+"일");
+			
+		});
+		
+		$("#tabWeek").click(function(){
+			
+			$("li").removeClass("on");
+			$(this).addClass("on");
+			nowWeek();
+		});
+		
+		$("#tabMonth").click(function(){
+			
+			$("li").removeClass("on");
+			$(this).addClass("on");
+			nowMonth();
+			
+		});
+	
+})
+
+
+function nowWeek(){
+	var weekDate = new Date(Date.parse(nowDate) - 7 * 1000 * 60 * 60 * 24); //일주일전
+	var wYear = weekDate.getFullYear();      //오늘의 년도
+	var wMonth = (weekDate.getMonth()+1) ;       //오늘의 월 ※ 0월부터 시작
+	var wDate = weekDate.getDate();           //오늘의 날
+	wMonth = ((wMonth)>9 ? ''+(wMonth) : '0'+(wMonth) );
+	$(".sub-txt").text(wYear+"년 "+wMonth+"월 "+wDate+"일 ~ "+nYear+"년 "+nMonth+"월 "+nDate+"일");
+	var weekFullDate = wYear+wMonth+wDate;
+	//drawChart(idParam,weekFullDate,nowFullDate);
+};
+
+
+function nowMonth(){
+	selectDate = new Date(selectDate.getFullYear(), month, selectDate.getDate());
+	var startDate = new Date();
+	startDate.setFullYear(selectDate.getFullYear());
+	startDate.setMonth((selectDate.getMonth()+1));
+	var startPrevYear = startDate.getFullYear();
+	var startPrevMonth = startDate.getMonth();
+	startPrevMonth = ((startPrevMonth)>9 ? ''+(startPrevMonth) : '0'+(startPrevMonth) );
+	$(".sub-txt").text(startPrevYear+"년 "+startPrevMonth+"월 "+nDate+"일 ~ "+nYear+"년 "+nMonth+"월 "+nDate+"일");
+	var monthFullDate = startPrevYear+startPrevMonth+nDate;
+	//drawChart2(idParam,monthFullDate,nowFullDate);
+};
+
+
+google.charts.load("current", {packages:["corechart"]});
+google.charts.setOnLoadCallback(drawChart);
+	//function drawChart(idParam,pastFullDate,nowFullDate) {
+	function drawChart() {
+ 		    var jsonData = $.ajax({
+ 				url : commonIp()+"/theReal/receipt/appChartTest2.do",		
+		        dataType:"json",
+		        data: {
+					id : idParam	,
+		        	year : year	,
+		        	mon : nowFullDate	,
+		        	//lsatDay : day	,
+		        	lsatDay : nowFullDate	,
+		        },	
+		        async: false
+		    }).responseText;
+	    var data = new google.visualization.DataTable(jsonData);
+	
+  var options = {
+    //title: year+mon+'이용내역',
+    is3D: true,
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+  chart.draw(data, options);
+}
+	/* 
+	function drawChart2(idParam,pastFullDate,nowFullDate) {
+ 		    var jsonData = $.ajax({
+ 				url : commonIp()+"/theReal/receipt/appChartTest2.do",		
+		        dataType:"json",
+		        data: {
+					id : idParam	,
+		        	year : year	,
+		        	mon : pastFullDate	,
+		        	//lsatDay : day	,
+		        	lsatDay : nowFullDate	,
+		        },	
+		        async: false
+		    }).responseText;
+	    var data = new google.visualization.DataTable(jsonData);
+	
+  var options = {
+    //title: year+mon+'이용내역',
+    is3D: true,
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+  chart.draw(data, options);
+}  */
+
+</script>
+</body>
+</html>

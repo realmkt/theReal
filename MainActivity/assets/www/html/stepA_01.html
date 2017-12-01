@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<title>더리얼마케팅 전자영수증</title>
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/welcome.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<script type="text/javascript" src="../js/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="../js/html5shiv.js"></script>
+<![endif]-->
+<script type ="text/javascript" >
+</script>
+</head>
+<body class="sub">
+<div id="wrap">
+	<!-- header -->
+	<header id="header">
+		<a href="javascript:void(0);" class="menu-open txt-out">메뉴 열기</a>
+		<a href="javascript:history.go(-1);" class="back-to"><span></span>이전</a>
+		<h2>전자영수증 내역 	조회</h2>
+		<script src="../js/menu.js"></script> 
+		<!-- //menu -->
+	</header>
+	<div id="top_mar" style="display:none;"></div>
+	<!-- //header -->
+	<!-- content -->
+	<section id="contents">
+		<!-- //step area -->
+		<section class="step-con">
+			<h1 class="hidden">전자영수증 조회</h1>
+			<div class="width-pd2 box-col-gray">
+				<p class="sub-txt"></p>
+			</div>
+			<ul class="loan-list mgB20">
+			</ul>
+<div class ="indexbg4" style="position: fixed; bottom: 5px; right: 5px;">
+<a href ="#">
+</a>
+</div>
+		</section>
+	</section>
+	<!-- //content -->
+</div>
+
+<!-- 상품 내용 보기 레이어 -->
+<section class="layer-popup" id="pop01Layer">
+	<!-- 사이트 header -->
+	<header class="layer-tit wide">
+		<h1>알림</h1>
+	</header>
+	<!-- //사이트 header -->	
+	<!-- 본문 컨텐츠 -->
+	<div class="layer-content2" style="height: 157px;">
+		<div class="layer-content-inner">
+			<p class="alert_txt">
+				현재 달보다 이후 달입니다.
+			</p>
+			<div class="btn_area txt-center">
+				<a href="javascript:void(0);" class="btn-view width_auto" onclick="javascript:popupClose();">확인</a>			
+			</div>
+		</div>
+	</div>
+	<!-- //본문 컨텐츠 -->	
+	<!-- 팝업닫기버튼 -->
+	<a href="javascript:popupClose();" class="btn-close txt-out">레이어팝업 닫기</a>
+	<!-- //팝업닫기버튼 -->	
+</section>
+
+<!-- 약관 레이어 -->
+<section class="layer-popup2" id="multiPopLayer" >
+	<!-- 사이트 header -->
+	<header class="layer-tit2">
+		<h1> 영수증 발급 내역 확인</h1>
+	</header>
+	<!-- //사이트 header -->	
+	<!-- 본문 컨텐츠 -->
+	<div class="layer-content2" style="height: 100%;">
+		<div class="layer-content-inner">
+		</div>
+		<div class="btn_area txt-center">
+			<a href="javascript:void(0);" class="btn-view" style="width:110px" id="btnYes">이메일보내기</a>			
+			<a href="javascript:void(0);" class="btn-view" style="width:110px" id="btnNo">닫기</a>			
+		</div>			
+	</div>
+	<!-- //본문 컨텐츠 -->	
+	<!-- 팝업닫기버튼 -->
+	<a href="javascript:popupClose2();" class="btn-close2 txt-out">레이어팝업 닫기</a>
+	<!-- //팝업닫기버튼 -->	
+</section>
+<!-- //약관 레이어 -->
+<div id="mask"></div>
+<script type="text/javascript">
+
+var request = new Request();
+var idParam = request.getParameter('id');
+var seq = "";
+var resultCnt = 0;
+var curCnt = 0;
+
+$(document).ready(function(){
+	
+	$.support.cors = true;
+	startGetA01Data();
+	 //toggle
+	//$(document).on('click','.loan-list li  > a',function(){
+	$(document).on('click','.table_type',function(){
+		var test = $(this).attr("id");
+		if($("#"+test).next('li').hasClass("on")){
+			$("#"+test).next('li').removeClass("on");
+		}else{
+			$('li').removeClass("on");
+			$("#"+test).next('li').addClass("on");
+			$(".dropboad").hide();
+		}
+		return false;
+	});
+	
+ 	$(document).on('click','.emailSend',function(){
+		$(".layer-content-inner").empty();
+		popupOpenId2("multiPop");
+		var eMailStr = '';
+		curCnt = parseInt($(this).attr("id").replace("table",""))+1;
+		eMailStr +='<ul class="previewControl">';
+		eMailStr +='<li id="prevBtn"><a href="javascript:void(0);"><input type="button" value="이전"  class="control btn-pre"  id="btnPrev" /></a></li>';
+		//eMailStr +='<li id="pageInfo">'+curCnt+'/'+resultCnt+'</li>';
+		eMailStr +='<li id="pageInfo">'+curCnt+'/'+resultCnt+'</li>';
+		eMailStr +='<li id="nextBtn"><input type="button" value="다음" class="control btn-next"  id="btnNext" /></li>';
+		eMailStr +='</ul>';
+		eMailStr +='<img src="../images/receipt/rec'+curCnt+'.png" style="width: 100%; max-height: 100%" alt="img">';
+		
+		$(".layer-content-inner").append(eMailStr);		
+	});		
+	
+	
+	$(document).on('click','#prevBtn',function(){
+ 		if(curCnt ==1){
+			alert("처음 영수증입니다.");
+		}else{
+			$(".layer-content-inner").empty();			
+			curCnt--;
+			var eMailStr = '';
+			eMailStr +='<ul class="previewControl">';
+			eMailStr +='<li id="prevBtn"><a href="javascript:void(0);"><input type="button" value="이전"  class="control btn-pre"  id="btnPrev" /></a></li>';
+			//eMailStr +='<li id="pageInfo">'+curCnt+'/'+resultCnt+'</li>';
+			eMailStr +='<li id="pageInfo">'+curCnt+'/'+resultCnt+'</li>';
+			eMailStr +='<li id="nextBtn"><input type="button" value="다음" class="control btn-next"  id="btnNext" /></li>';
+			eMailStr +='</ul>';
+			eMailStr +='<img src="../images/receipt/rec'+curCnt+'.png" style="width: 100%; max-height: 100%" alt="img">';
+			$(".layer-content-inner").append(eMailStr);	
+		}
+	});		
+	
+	$(document).on('click','#nextBtn',function(){
+ 		if(curCnt ==10){
+			alert("마지막 영수증입니다.");
+		}else{
+			$(".layer-content-inner").empty();
+			curCnt++;
+			var eMailStr = '';
+			eMailStr +='<ul class="previewControl">';
+			eMailStr +='<li id="prevBtn"><a href="javascript:void(0);"><input type="button" value="이전"  class="control btn-pre"  id="btnPrev" /></a></li>';
+			//eMailStr +='<li id="pageInfo">'+curCnt+'/'+resultCnt+'</li>';
+			eMailStr +='<li id="pageInfo">'+curCnt+'/'+resultCnt+'</li>';
+			eMailStr +='<li id="nextBtn"><input type="button" value="다음" class="control btn-next"  id="btnNext" /></li>';
+			eMailStr +='</ul>';
+			eMailStr +='<img src="../images/receipt/rec'+curCnt+'.png" style="width: 100%; max-height: 100%" alt="img">';
+			$(".layer-content-inner").append(eMailStr);	
+		}
+	});			
+
+	
+/* 	$(document).on('click','.emailSend',function(){
+		$(".layer-content-inner").empty();
+		seq = $(this).attr('id');
+		var eMailStr = '';
+		multiPoppupOpen(this);
+		eMailStr +='<p>□  상호명 : '+$("#etpNm"+seq).text()+'</p>';
+		eMailStr +='<p>□  상품내역 : '+$("#payGoods"+seq).text()+'</p>';
+		eMailStr +='<p>□  사용내역 : '+$("#payAm"+seq).text()+'</p>';
+		eMailStr +='<p>□  사용카드 : '+$("#payDiv"+seq).text()+'</p>';
+		eMailStr +='<p>□  사용일시 : '+$("#useDate"+seq).val()+'</p>';
+		
+		$(".layer-content-inner").append(eMailStr);
+
+	}); */
+	
+	$(document).on('click','#btnYes',function(){
+		callEmailSend(seq);
+	});
+	$(document).on('click','#btnNo',function(){
+		popupClose2();
+	});	
+	
+})
+
+function callEmailSend(seq){
+    $.ajax({
+     type: "post",
+     url : commonIp()+"/theReal/receipt/sendMail.do",
+     data: {
+        	 useDate : $('#useDate'+seq).val(),
+        	 payDiv : $('#payDiv'+seq).text(),
+        	 etpNm : $('#etpNm'+seq).text(),
+        	 payAm : $('#payAm'+seq).text(),
+        	 eMail : idParam,
+        	 payGoods : $('#payGoods'+seq).text(),
+     },
+     success: callEmailSendSuc,
+     error: whenError
+ 	});
+}
+
+function callEmailSendSuc(resdata){
+	alert("이메일전송이 되었습니다.");
+	popupClose();
+}
+
+function startGetA01Data(){
+	
+    $.ajax({
+        type: "post",
+        url : commonIp()+"/theReal/receipt/appA01.do",
+        dataType:"json",
+        data: {
+			id : "god870225@naver.com"	,
+        },
+        success: startGetA01DataSuc,
+        error: whenError
+	});			
+	
+}
+
+function startGetA01DataSuc(resdata){
+			var str = "";
+			var resultData = resdata.resultMap;
+			resultCnt = resultData.length;
+			if(resultData.length>0){
+				for(var i=0; i<resultData.length; i++){
+					str += '<li class="table_type" name="multiPop" id="table'+i+'">';
+					str +=     '<table>';
+					str +=         '<caption>최근 지출 내역</caption>';
+					str += '				<colgroup>';
+					str += '					<col width="20%" />';
+					str += '					<col width="10%" />';
+					str += '					<col width="20%" />';
+					str += '					<col width="*" />';
+					str += '					<col width="15%" />';
+					str += '				</colgroup>';
+					str +=         '<tbody>';
+					str +=             '<tr>';
+					str +=                 '<td>'+resultData[i].USE_DATE+'</td>';
+					str +=                 '<td><img src="../images/icon/coffe_icon.png" alt="아이콘" style="max-width: 100%; height: 50%;"></td>';
+					str +=                 '<td>'+resultData[i].PAY_DIV+'</td>';
+					str +=                 '<td>'+resultData[i].ETP_NM+'</td>';
+					str +=                 '<td>'+resultData[i].PAY_AM+'원</td>';
+					str +=             '</tr>';
+					str +=         '</tbody>';
+					str +=     '</table>';
+					
+					str += '</li>';		
+					
+					if(i == 0){
+						str += '<li>';
+					}else{
+						str += '<li>';
+					}
+					/* str += '<input type="hidden" value="'+resultData[i].PAY_AM+'" id="payAm'+i+'">'; */
+					str += '	<div class="dropboad">';
+					str += '		<div class="on-bd">';					
+					str += '			<table class="board-view wid-full" style="font-size:11px";>';
+					str += '				<caption>사용내역 확인</caption>';
+					str += '				<colgroup>';
+					str += '					<col width="110px" />';
+					str += '					<col width="*" />';
+					str += '				</colgroup>';
+					str += '				<tbody>';
+					str += '					<tr>';
+					str += '						<th scope="row" >상호명</th>';
+					str += '						<td class="right" id="etpNm'+i+'">'+resultData[i].ETP_NM+'</td>';
+					str += '					</tr>';
+					str += '						<th scope="row" >상품내역</th>';
+					str += '						<td class="right" id="payGoods'+i+'">'+resultData[i].PAY_GOODS+'</td>';
+					str += '					</tr>';
+					str += '					<tr>';
+					str += '						<th scope="row" >사용내역</th>';
+					str += '						<td class="right" id="payAm'+i+'">'+resultData[i].PAY_AM+'</td>';
+					str += '					</tr>';
+					str += '					<tr>';
+					str += '						<th scope="row" >사용카드</th>';
+					str += '						<td class="right" id="payDiv'+i+'">'+resultData[i].PAY_DIV+'</td>';
+					str += '					</tr>';
+					str += '					<tr>';
+					str += '						<th scope="row" ></th>';
+					str += '						<td class="right"><a href="javascript:void(0);" class="emailSend" name="multiPop" id='+i+'><span></span>상세보기</a></td>';
+					str += '					</tr>';
+					str += '				</tbody>';
+					str += '			</table>';
+					str += '		</div>';
+					str += '	</div>';
+					str += '</li>';							
+					
+				}
+		/* 			str += '<div class = "indexbg4"style="position: fixed;">';
+		/* 			str += '<!-- <div class="indexbg1">'; -->
+					str += '<!-- <a href="#">'; -->
+					str += '<!-- <img src="../images/banner/eventbanner.jpg" title="위로 가기"> --><!-- </a> ';--> 
+					str += '</div>'; */			
+				$(".loan-list").append(str);
+				$(".sub-txt").text("최근영수증 내역조회 ("+resultData.length+"건, 총"+resultData[0].TOTAL_AM+"원)");
+			}	
+}
+
+function startGetA01DataSuc2(resdata){
+	var str = "";
+	var resultData = resdata.resultMap;
+	if(resultData.length>0){
+		for(var i=0; i<resultData.length; i++){
+			if(i == 0){
+				str += '<li class="on">';
+			}else{
+				str += '<li>';
+			}
+			str += '	<a href="javascript:void(0);">';
+			/* str += '<img src="../images/icon/beer_icon.png" style="float: left;">'; */
+ 			str += '		사용일자 : '+resultData[i].USE_DATE+'<br />';
+			str += '		사용금액 : '+resultData[i].PAY_AM+'원';
+			str += '	</a>';
+			str += '<input type="hidden" value="'+resultData[i].USE_DATE+'" id="useDate'+i+'">';
+			/* str += '<input type="hidden" value="'+resultData[i].PAY_AM+'" id="payAm'+i+'">'; */
+			str += '	<div class="dropboad">';
+			str += '		<div class="on-bd">';					
+			str += '			<table class="board-view wid-full">';
+			str += '				<caption>사용내역 확인</caption>';
+			str += '				<colgroup>';
+			str += '					<col width="110px" />';
+			str += '					<col width="*" />';
+			str += '				</colgroup>';
+			str += '				<tbody>';
+			str += '					<tr>';
+			str += '						<th scope="row" >상호명</th>';
+			str += '						<td class="right" id="etpNm'+i+'">'+resultData[i].ETP_NM+'</td>';
+			str += '					</tr>';
+			str += '						<th scope="row" >상품내역</th>';
+			str += '						<td class="right" id="payGoods'+i+'">'+resultData[i].PAY_GOODS+'</td>';
+			str += '					</tr>';
+			str += '					<tr>';
+			str += '						<th scope="row" >사용내역</th>';
+			str += '						<td class="right" id="payAm'+i+'">'+resultData[i].PAY_AM+'</td>';
+			str += '					</tr>';
+			str += '					<tr>';
+			str += '						<th scope="row" >사용카드</th>';
+			str += '						<td class="right" id="payDiv'+i+'">'+resultData[i].PAY_DIV+'</td>';
+			str += '					</tr>';
+			str += '					<tr>';
+			str += '						<th scope="row" ></th>';
+			str += '						<td class="right"><a href="javascript:void(0);" class="emailSend" name="multiPop" id='+i+'><span></span>이메일보내기</a></td>';
+			str += '					</tr>';
+			str += '				</tbody>';
+			str += '			</table>';
+			str += '		</div>';
+			str += '	</div>';
+			str += '</li>';			
+		}
+/* 			str += '<div class = "indexbg4"style="position: fixed;">';
+/* 			str += '<!-- <div class="indexbg1">'; -->
+			str += '<!-- <a href="#">'; -->
+			str += '<!-- <img src="../images/banner/eventbanner.jpg" title="위로 가기"> --><!-- </a> ';--> 
+			str += '</div>'; */			
+		$(".loan-list").append(str);
+		$(".sub-txt").text("최근영수증 내역조회 ("+resultData.length+"건, 총"+resultData[0].TOTAL_AM+"원)");
+	}	
+}
+	
+function whenError(request,status,error){
+	alert("ERROR");
+}	
+</script>
+</body>
+</html>

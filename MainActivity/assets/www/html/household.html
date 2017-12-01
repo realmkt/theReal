@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+
+    <!-- main -->
+	<script src="../code/jquery.bxslider.min.js"></script>
+    <link href="../code/jquery.bxslider.css" rel="stylesheet" />
+    
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+    
+    <!-- calendar-->
+    <link rel="stylesheet" href="../code/calendar.css">
+    <script src="../code/calendar.js"></script>
+    
+    
+	<script src="../code/common.js"></script>
+    
+    
+<style type="text/css">
+.househ_box { background:#f2f2f2; border:1px solid #e5e5e5; margin-bottom:20px; padding:5px; border-radius:5px; }
+.househ_inbox { background:#fff; border:1px solid #e5e5e5; padding:10px 5px; border-radius:5px; }
+.househ_holl { padding:5px 5px 15px 5px; height:35px; }
+.househ_holl div { width:6%; height:100%; margin:0 2%; border-radius:30px; border:1px solid #e5e5e5; float:left; background:#f2f2f2; }
+
+.hh_txt01 { border:1px solid #ddd; background:#fff;  margin:0 5px 15px 5px; border-radius:5px; padding:10px 10px; font-size:1.4em; color:#333; }
+.hh_txt01 span { font-size:0.7em; color:#999; padding-right:10px; }
+.hh_half { background:#fff;  margin:0 5px 15px 5px; border-left:1px solid #ddd; border-top:1px solid #ddd; }
+.hh_half li { float:left; border-right:1px solid #ddd; border-bottom:1px solid #ddd; width:50%; }
+.hh_half li span { }
+.hh_half li.hh_full { width:100%; }
+.hh_half li div { font-size:0.7em; line-height:0.8em; color:#999; background:#f2f2f2; border-bottom:1px solid #e5e5e5; padding:5px 10px; line-height:0.9em; }
+.hh_half li div.hh_hcon { font-size:1em; color:#333; background:#fff; line-height:1.4em; border-bottom:0px; }
+.hh_copy { text-align:center; font-size:0.7em; }
+
+
+.hh_table { border:1px solid #ddd; margin:0 5px 15px 5px;  }
+.hh_table .hh_tabletitle { border-bottom:1px solid #ddd; background:#f2f2f2;}
+.hh_table li { float:left; padding:5px 0; text-align:center; border-left:1px solid #ddd; color:#333; }
+.hh_table li:first-child { border-left:0; }
+.hh_table li.hh_mlat01 { width:20%; }
+.hh_table li.hh_mlat02 { width:35%; }
+.hh_table li.hh_mlat03 { width:20%; }
+.hh_table li.hh_mlat04 { width:25%; text-align:right; padding-right:5px; }
+
+
+.house_box { background:#fff; }
+.house_now { text-align:center; font-size:1.5rem; color:#888; }
+.house_nav { height:40px; margin:0 10px; }
+.house_nav .house_leftcon { width:30%; float:left; text-align:left; }
+.house_nav .house_rightcon { width:30%; float:right; text-align:right; }
+.house_nav i{ font-style: normal; text-align: center; width: 2rem; height: 2rem; line-height: 2rem; top: 0; font-family:Tahoma, Geneva, sans-serif; color:#539bff; text-indent:-999;}
+.house_nav i:before {  left:0; speak: none; font-style: normal; font-weight: normal; font-family: "icomoon"; -webkit-font-smoothing: antialiased; -webkit-text-stroke-width: 0.2px; font-size: 1.8rem; line-height: 2rem; text-align: center; width: 2rem; }
+.house_nav i.prev:before {   content: ""; }
+.house_nav i.next:before {   content: ""; }
+
+.oneTabOn {background-color:rgba(146, 221, 255, 0.3); }
+
+.twoTabOn { }
+.threeTabOn { }
+.showOn {display: block; }
+.showOff {display: none; }
+.highPrice{background: url(../common/highPrice.png) no-repeat 0 0;background-position: right; }
+.lowPrice{background: url(../common/lowPrice.png) no-repeat 0 0;background-position: right; }
+
+.divPage{background: url(../common/divPage2.png) no-repeat 0 0;background-position: 50% 50%; height: 30px;"}
+</style>    
+    
+</head>
+
+<body>
+
+
+
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+
+
+    <div class="panel panel-left panel-reveal">
+    
+    	<div class="profile_box">
+        	<!-- <div class="pf_photo" style="background:url(../common/profile.jpg) no-repeat center;"></div> -->
+            
+            <div class="pf_txt">
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        </div>
+
+    </div>
+    
+    
+    <div class="views">
+		<div class="view view-main">
+            <div class="navbar top_menu">
+                <div data-page="index" class="navbar-inner" >
+                    <div class="left">
+                    <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+                    </div>
+                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 27%;"><img style="width: 75%;height: 50%;margin: 0 auto" src="../common/logo_01.png"></div>
+
+                </div>
+                
+                <div data-page="receipt_details" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">영수증 상세 내역</div>
+                </div>                
+                
+                <div data-page="house_detail" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">지출 내역</div>
+                </div>
+                
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                </div>
+                
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+                
+            </div>
+         
+			<div class="pages navbar-through toolbar-through">
+                <div data-page="index" class="page" style="background: white;">
+                    <div class="page-content">
+
+                    <div class="history_title" style="background-color:#fff; height: 40px;padding: 10px 0 5px 15px;">
+                    	<div class="divPage" style="width: 20%; height: 40px; position: absolute; left: 40%; top: 44px;"></div>
+                        <div class="history_txt"  style="font-size:1.2em; color:#539bff; font-weight:600; line-height:20px;">지출내역</div>
+                        <div class="history_total" id="totalAmount" style="font-size:1.0em; color:#539bff; font-weight:600; line-height:20px; padding:0px 0 5px 15px;"></div>
+                        <hr>
+                    </div>  
+
+<!-- 					<div class="house_txt">
+					10.01부터 10.24일까지<br>
+                    카드 3건, 현금 5건 총 8건 50,000원을 사용하셨습니다.
+                    </div> -->
+                    
+<!--                     <div class="house_graph">
+                    </div> -->
+					
+                    <div id="calendar" style="border-top: 1px solid #eee;"></div>
+					<div class="latest_box alen_outbox">
+                    	<div class="latest_content" >
+							<div class="list_tab">
+<!-- 								<ul class="one_tab" style="border-bottom:0px;">
+									<li>
+											<ul class="two_tab showOn" name="two_tab201702" style="border-bottom:0px;">
+												<li>
+ 													<div class="second twoTabOn" id="twoTab2017021" name="twoTab201702">
+														<span>02-15</span>
+														<span>1건/ 28,000원</span>
+													</div>
+														<ul class="three_tab2" id="threeTab2017021" name="threeTab2017021" style="border-bottom:0px;border-top:0px;">
+															<li style="border-top:0px;">	
+																<a href="#receipt_details" name="receiptDetail" id="seq0">
+																	<input type="hidden" value="E02" id="mlaticonM0">
+																	<input type="hidden" value="우리카드법인" id="cardAppCo0">
+																	<input type="hidden" value="일시불" id="instDiv0">
+																	<input type="hidden" value="2017-02-15" id="divMonth0">
+																	<input type="hidden" value="12:41" id="divSec0">
+																	<div class="mlat01M" id="mlat01M0">12:41</div>	
+																	<div class="mlaticonM"><span><img src="../common/E02.png" style="width: 50%;" alt=""></span></div>	
+																	<div class="mlat02M" id="mlat02M0">주식회사 남산돈까스</div>	
+																	<div class="mlat03M" id="mlat03M0">28,000원</div>
+																	<hr>
+																</a>
+															</li>
+														</ul>
+												</li>
+											</ul>
+									</li>
+								</ul> -->
+							</div>
+						</div> <!--last_content-->
+                    </div>                    
+                    
+                    <div class="foot_info">
+                    
+<!--                     	<div class="foot_box">
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree03">이용약관</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree01">개인정보 취급방침</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#">고객센터</a>
+                            </div>
+                            
+                            
+                            <hr>
+                        </div> -->
+<!-- <p>
+(주)더리얼마케팅 | 대표이사:손종희<br>
+사업자등록번호:220-88-19101   |   통신판매업신고 강남 04134호<br>
+서울시 강남구 압구정로10길 13, 401호(신사동, 마사빌딩)<br>
+이메일 : TheREAL@naver.com<br>
+고객센터 : 02-518-5112 | 마케팅:02-540-3111<br>
+</p>
+
+<p class="copytxt">CopyrightⓒThe REAL Co.All rights reserved</p> -->
+                    </div>
+                    
+                    
+                    </div>
+                </div>
+                
+                <div data-page="house_detail" class="page cached">
+                    <div class="page-content house_box">
+                        <div class="content-block">
+                        
+                        <div class="house_now">11월 15일</div>
+                        
+                        <div class="house_nav">
+                        	<div class="house_leftcon2">
+                            <i class="prev2"></i> </div>
+                            
+                        	<div class="house_rightcon2">
+                            <i class="next2"></i></div>
+                            
+                            <hr>
+                        </div>
+                        
+						<div class="househ_box">
+                        	<div class="househ_inbox">
+                                
+<!--                                 <div class="hh_half">
+                                	<ul>
+                                      <li class="hh_full"><div>오늘의 총 영수증 발급</div><div class="hh_hcon">4건 / 40,000원</div></li>
+                                      <li><div>현금결제</div><div class="hh_hcon">1건 / 10,000원</div></li>
+                                      <li><div>카드결제</div><div class="hh_hcon">3건 / 30,000원</div></li>
+                                      <hr>
+                                    </ul>
+                                </div>
+                                
+                                <div class="hh_table">
+                                	<ul class="hh_tabletitle">
+                                      <li class="hh_mlat01">시간</li>
+                                      <li class="hh_mlat02">업체명</li>
+                                      <li class="hh_mlat03">현금/카드</li>
+                                      <li class="hh_mlat04">금액</li>
+                                      <hr>
+                                    </ul>
+                                    
+                                	<ul>
+                                      <li class="hh_mlat01">09:30</li>
+                                      <li class="hh_mlat02">카페</li>
+                                      <li class="hh_mlat03">신사동</li>
+                                      <li class="hh_mlat04">10,000원</li>
+                                      <hr>
+                                    </ul>
+                                    
+                                	<ul>
+                                      <li class="hh_mlat01">09:30</li>
+                                      <li class="hh_mlat02">카페</li>
+                                      <li class="hh_mlat03">신사동</li>
+                                      <li class="hh_mlat04">10,000원</li>
+                                      <hr>
+                                    </ul>
+                                    
+                                	<ul>
+                                      <li class="hh_mlat01">09:30</li>
+                                      <li class="hh_mlat02">카페</li>
+                                      <li class="hh_mlat03">신사동</li>
+                                      <li class="hh_mlat04">10,000원</li>
+                                      <hr>
+                                    </ul>
+                                    
+                                </div>
+  -->
+                                
+                            </div>
+                        </div>
+
+                        
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                <div data-page="agree01" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree01.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div data-page="agree03" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+<style type="text/css">
+
+.rtpage_box { background:#f2f2f2; border:1px solid #e5e5e5; margin-bottom:20px; padding:5px; border-radius:5px; }
+.rtpage_inbox { background:#fff; border:1px solid #e5e5e5; padding:10px 30px; border-radius:5px; }
+.rtpage_holl { padding:5px 5px 15px 5px; height:35px; }
+.rtpage_holl div { width:6%; height:100%; margin:0 2%; border-radius:30px; border:1px solid #e5e5e5; float:left; background:#f2f2f2; }
+
+
+.rt_title { padding:20px 0 0px 0; }
+.rt_title h2 { text-align:center; font-size:3em; font-weight:700; color:#000; clear:both; padding:5px 0 15px 0; }
+.rt_title p { text-align:center; font-size:1em; color:#000; clear:both; }
+
+.rt_txt01 { text-align:left; font-size:1em; color:#666; clear:both; /* padding:0px 10px; */ }
+.rt_txt01 span { text-align:right; float:right; }
+
+.rt_total { text-align:left; font-size:1.5em; font-weight:700; color:#000; clear:both; padding:20px 10px; border-bottom:2px dashed #aaa; border-top:2px dashed #aaa; margin-top:20px; }
+.rt_total span { text-align:right; float:right; }
+
+.rt_total { text-align:left; font-size:1.8em; font-weight:700; color:#000; clear:both; padding:20px 10px; border-bottom:1px dashed #aaa; border-top:1px dashed #aaa; margin-top:20px; }
+.rt_total span { text-align:right; float:right; }
+
+.rt_orderno { border-bottom:2px dashed #aaa; border-top:2px dashed #aaa; padding:20px 0; margin-top:20px; }
+.rt_orderno p { text-align:center; font-size:1.2em; color:#666; clear:both; }
+.rt_orderno h2 { text-align:center; font-size:1.8em; color:#000; clear:both; padding:5px 0; }
+
+.rt_table { border-top:1px solid #ddd; border-bottom:1px solid #ddd; margin:20px 5px 0px 5px;  }
+.rt_table .rt_tabletitle { border-bottom:1px solid #ddd; background:#fff;}
+.rt_table li { float:left; padding:5px 0; text-align:center; color:#333; }
+.rt_table li.rt_mlat01 { width:45%; }
+.rt_table li.rt_mlat02 { width:20%; }
+.rt_table li.rt_mlat03 { width:10%; }
+.rt_table li.rt_mlat04 { width:25%; text-align:right; padding-right:5px; }
+
+.rt_etc { text-align:left; font-size:1.3em; font-weight:700; color:#333; clear:both; padding:10px 10px; border-bottom:1px dashed #aaa; }
+.rt_etc span { text-align:right; float:right; }
+
+.rt_copy { text-align:center; font-size:0.7em; }
+
+</style>                
+                
+                
+                
+                <div data-page="receipt_details" class="page cached">
+                    <div class="page-content">
+                        <div class="content-block">
+                        
+						<div class="receipt_box">
+                        	<div class="receipt_inbox" id ="detailRecData">
+                                
+                            </div>
+                        </div>
+                        
+                        <!-- <div class="latest_btnbox">
+                            <div class="latest_btn" id="backBtn">확인</div>
+                        </div>
+                         -->
+                        
+                        
+                        </div>
+                    </div>
+                </div>                
+                                
+                
+			</div>
+            
+            
+            
+            
+
+		</div>
+    </div>
+    
+    
+    
+    
+
+<script>
+history.pushState(null,null,location.href);
+window.onpopstate = function(event){
+	if(pageCnt==0){
+		history.back();
+	}else{
+		pageCnt = 0;
+		location.reload();
+	}
+}
+	var pageCnt = 0;
+
+	var now = new Date();
+	var year = now.getFullYear();
+	var month = now.getMonth() + 1;
+	var date = now.getDate();
+	var request = new Request();
+	var telNo = request.getParameter('telNo');
+	var uuId = request.getParameter('uuId');
+
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1;
+	var yyyy = today.getFullYear();
+	var month = today.getMonth()-1;
+	var nowDay ="";
+	if(dd<10) {
+	    dd='0'+dd
+	} 
+	
+	if(mm<10) {
+	    mm='0'+mm
+	} 	
+	
+	$(document).ready(function(){
+		
+		$(document).on('click','[name="receiptDetail"]',function(){
+			pageCnt = 1;
+			seq = $(this).attr('id').replace("seq","");
+			$("#detailRecData").empty();
+			var smsStr = "";
+			
+			smsStr += '<div class="rtpage_holl">												';
+			smsStr += '	<div></div>                                                         ';
+			smsStr += '    <div></div>                                                         ';
+			smsStr += '    <div></div>                                                         ';
+			smsStr += '    <div></div>                                                         ';
+			smsStr += '    <div></div>                                                         ';
+			smsStr += '    <div></div>                                                         ';
+			smsStr += '    <div></div>                                                         ';
+			smsStr += '    <div></div>                                                         ';
+			smsStr += '    <div></div>                                                         ';
+			smsStr += '    <div></div>                                                         ';
+			smsStr += '    <hr>                                                                ';
+			smsStr += '</div>                                                                  ';
+			smsStr += '<div class="rt_title">                                                  ';
+			smsStr += '	<h2>THE REAL #</h2>                                                 ';
+			smsStr += '    <p>                                                                 ';
+			smsStr += '    Mobile Life Service                                                 ';
+			smsStr += '    </p>                                                                ';
+			smsStr += '</div>                                                                  ';
+				
+			smsStr += '<div class="rt_total">사용금액<span>'+$("#mlat03M"+seq).text()+'</span></div>                     ';
+			smsStr += '<div class="rt_etc">사용일시<span>'+to_date_format($("#divMonth"+seq).val(),"-")+' '+$("#divSec"+seq).val()+'</span></div>                    ';
+			smsStr += '<div class="rt_etc" style="border-bottom: 0px dashed #aaa;">할부여부<span>'+$("#instDiv"+seq).val()+'</span></div>                       ';
+			smsStr += '<div class="rt_etc">카드사<span>'+$("#cardAppCo"+seq).val()+'</span></div>                     ';
+			smsStr += '<div class="rt_etc" style="border-bottom: 0px dashed #aaa;">사용매장<span>'+$("#mlat02M"+seq).text()+'</span></div>                     ';
+			smsStr += '<div class="rt_etc">항목<span><img src="../common/'+$("#mlaticonM"+seq).val()+'.png" style="width: 20%;" alt="">'+'   '+parseAppCoDiv($("#mlaticonM"+seq).val())+'</span></div>                     ';
+			
+			smsStr += '<div class="rt_copy">                                                   ';
+			smsStr += '본 전자영수증은 거래의 참고용으로 사용하시기 바랍니다.                                 ';
+			smsStr += '</div>                                                                  ';						
+			
+/* 			
+			seq = $(this).attr('id').replace("seq","");
+			$("#detailRecData").empty();
+			var smsStr = "";
+			smsStr += ' <div class="receipt_holl">	';
+			smsStr += ' 	<div></div>             ';
+			smsStr += '     <div></div>             ';
+			smsStr += '     <div></div>             ';
+			smsStr += '     <div></div>             ';
+			smsStr += '     <div></div>             ';
+			smsStr += '     <div></div>             ';
+			smsStr += '     <div></div>             ';
+			smsStr += '     <div></div>             ';
+			smsStr += '     <div></div>             ';	
+			smsStr += '     <div></div>             ';
+			smsStr += '     <hr>                    ';
+			smsStr += ' </div>					    ';
+			
+			smsStr += '<div class="rec_half">';
+			smsStr += '	<ul>';
+			smsStr += '      <li class="rec_full"><div class="rec_hcon" style="text-align: center;font-size: large;">모바일 영수증 발급내역</div></li>';
+			smsStr += '      <li class="rec_full"><div>카드사</div><div class="rec_hcon">'+$("#cardAppCo"+seq).val()+'</div></li>';
+			smsStr += '      <li class="rec_full"><div>할부여부</div><div class="rec_hcon">'+$("#instDiv"+seq).val()+'</div></li>';
+			smsStr += '      <li class="rec_full"><div>사용일시</div><div class="rec_hcon">'+to_date_format($("#divMonth"+seq).val(), "-")+' '+$("#divSec"+seq).val()+ '</div></li>';
+			smsStr += '      <li class="rec_full"><div>사용매장</div><div class="rec_hcon">'+$("#mlat02M"+seq).text()+'</div></li>';
+			
+			smsStr += '      <li class="rec_full"><div>항목</div><div class="rec_hcon"><img src="../common/'+$("#mlaticonM"+seq).val()+'.png" style="width: 5%;" alt="">'+'   '+parseAppCoDiv($("#mlaticonM"+seq).val())+'</div></li>';
+			smsStr += '      <li class="rec_full"><div>사용금액</div><div class="rec_hcon">'+$("#mlat03M"+seq).text()+'</div></li>';
+			smsStr += '      <hr>';
+			smsStr += '    </ul>';
+			smsStr += '</div>';		 */	
+			$("#detailRecData").append(smsStr);		
+		})		
+		
+		
+		$("#backBtn").click(function(){
+			location.href='household.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+		})		
+		
+		$(".divPage").click(function(){
+			location.href='mobile.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+		})
+		
+		commonUserData();
+		
+	    $.ajax({
+	        type: "post",
+	        url : commonIp()+"/theReal/receipt/houseHold.do",
+	        /* dataType : "html", */
+	        dataType:"json",
+	        data: {
+/*  	        	startDate : "20161001",
+	        	endDate : "20161031",  */
+/*   	        	startDate : yyyy+"0101",
+	        	endDate : yyyy+"1231", */
+   	        	startDate : "20160101",
+	        	endDate : "20171231", 
+	        	startCurDate : yyyy+mm+"01",
+	        	endCurDate : yyyy+mm+"31",
+	        	eMail : telNo,
+	        },
+	        success: startGetB01CalDataSuc,
+	        error: whenError
+	    	});			
+		
+	 	$(document).on('click','.prev',function(){
+	 		$(".list_tab").empty();
+	 		var thisYear = $(".calendar-display").text().substring(0,4);
+	 		var thisMonth = $(".m").text();
+ 			if(parseInt(thisMonth)<10){
+ 				thisMonth = "0"+thisMonth;
+ 			}	 		
+			    $.ajax({
+			        type: "post",
+			        url : commonIp()+"/theReal/receipt/houseHold.do",
+			        /* dataType : "html", */
+			        dataType:"json",
+			        data: {
+		/*  	        	startDate : "20161001",
+			        	endDate : "20161031",  */
+		/*   	        	startDate : yyyy+"0101",
+			        	endDate : yyyy+"1231", */
+		   	        	startDate : thisYear+thisMonth+"01",
+			        	endDate : thisYear+thisMonth+"31",
+			        	startCurDate : thisYear+thisMonth+"01",
+			        	endCurDate : thisYear+thisMonth+"31",		
+			        	eMail : telNo,
+			        },
+			        success: startGetB01CalDataSuc2,
+			        error: whenError
+			    	});					 
+/* 			alert("prev");
+ 			today = new Date(today.getFullYear(), (month), today.getDate());
+			var startDate = new Date();
+			var endDate   = new Date();
+			startDate.setFullYear(today.getFullYear());
+			endDate.setFullYear(today.getFullYear());
+			startDate.setMonth((today.getMonth()+1));
+			endDate.setMonth((today.getMonth()+2));
+			month = today.getMonth();
+			var startPrevYear = startDate.getFullYear();
+			var startPrevMonth = startDate.getMonth();			
+			alert(startPrevYear);
+			alert(startPrevMonth);
+		    $.ajax({
+		        type: "post",
+		        url : commonIp()+"/theReal/receipt/houseHold.do",
+		        dataType:"json",
+		        data: {
+		        	startDate : startPrevYear+""+startPrevMonth+"01",
+		        	endDate : startPrevYear+""+startPrevMonth+"31",
+		        	eMail : telNo,
+		        },
+		        success: startGetB01CalDataSuc,
+		        error: whenError
+		    	});	 */	 		
+		});
+		
+	 	$(document).on('click','.next',function(){
+	 		$(".list_tab").empty();
+	 		var thisYear = $(".calendar-display").text().substring(0,4);
+	 		var thisMonth = $(".m").text();
+ 			if(parseInt(thisMonth)<10){
+ 				thisMonth = "0"+thisMonth;
+ 			}
+			    $.ajax({
+			        type: "post",
+			        url : commonIp()+"/theReal/receipt/houseHold.do",
+			        /* dataType : "html", */
+			        dataType:"json",
+			        data: {
+		/*  	        	startDate : "20161001",
+			        	endDate : "20161031",  */
+		/*   	        	startDate : yyyy+"0101",
+			        	endDate : yyyy+"1231", */
+		   	        	startDate : thisYear+thisMonth+"01",
+			        	endDate : thisYear+thisMonth+"31",
+			        	startCurDate : thisYear+thisMonth+"01",
+			        	endCurDate : thisYear+thisMonth+"31",			        	
+			        	eMail : telNo,
+			        },
+			        success: startGetB01CalDataSuc2,
+			        error: whenError
+			    	});					 
+/* 			alert("prev");
+ 			today = new Date(today.getFullYear(), (month), today.getDate());
+			var startDate = new Date();
+			var endDate   = new Date();
+			startDate.setFullYear(today.getFullYear());
+			endDate.setFullYear(today.getFullYear());
+			startDate.setMonth((today.getMonth()+1));
+			endDate.setMonth((today.getMonth()+2));
+			month = today.getMonth();
+			var startPrevYear = startDate.getFullYear();
+			var startPrevMonth = startDate.getMonth();			
+			alert(startPrevYear);
+			alert(startPrevMonth);
+		    $.ajax({
+		        type: "post",
+		        url : commonIp()+"/theReal/receipt/houseHold.do",
+		        dataType:"json",
+		        data: {
+		        	startDate : startPrevYear+""+startPrevMonth+"01",
+		        	endDate : startPrevYear+""+startPrevMonth+"31",
+		        	eMail : telNo,
+		        },
+		        success: startGetB01CalDataSuc,
+		        error: whenError
+		    	});	 */	 		
+		});
+	 	
+/* 	 	$(".dot").closest("a").click(function(){
+	 		alert("11111");
+	 	})
+	 	
+	 	$(document).on('click','.next',function(){
+			alert("next");
+		});
+	 	
+	 	
+	 	$(document).on('click','.next',function(){
+			alert("next");
+		});
+	 	
+	 	$(document).on('click','.now',function(){
+			alert("now11");
+		}); */
+
+	 	$(document).on('click','.calendar .days li',function(){
+			console.log(this);
+			$("li").css("background","none");
+			$(this).css("background","rgba(83, 155, 255, 0.4)");
+			
+			 nowDay = $(this).attr('data-calendar-day');
+			 $(".house_now").text(nowDay+" 영수증 발급내역");
+			 
+			 var strArr = nowDay.split("/");
+			 console.log(strArr);
+			 console.log(strArr[0]);
+			 console.log(strArr[1]);
+			 console.log(strArr[2]);
+			 console.log(strArr[1].length);
+			 console.log(strArr[2].length);
+			 if(strArr[1].length <2){
+				 strArr[1] = "0"+strArr[1];
+			 }
+			 if(strArr[2].length <2){
+				 strArr[2] = "0"+strArr[2];
+			 }
+			 nowDay = strArr[0]+strArr[1]+strArr[2];
+			 console.log(nowDay);
+			 
+   		    $.ajax({
+			        type: "post",
+			        url : commonIp()+"/theReal/receipt/houseHoldDetail.do",
+			        dataType:"json",
+			        data: {
+			        	startDate : nowDay,
+			        	telNo : telNo,
+			        },
+			        success: houseHoldDetailDataSuc,
+			        error: whenError
+			    	}); 
+	 		
+
+		});
+
+/* 	 	$(document).on('click','.dot',function(){
+			alert("now22");
+		}); */
+        		
+	})
+	
+	function houseHoldDetailDataSuc(resdata){
+		pageCnt = 1;
+		var resultData = resdata.resultMap;
+		console.log(resultData);
+		var resultCnt = resultData.length;
+		if(resultCnt > 0){
+			$(".list_tab").empty();
+			var str = "";
+			str += '<ul class="one_tab" style="border-bottom:0px;">';
+			str += '	<li>';
+/* 			str += '		<div class="first oneTabOn" id="oneTab201702" name="oneTab201702">';
+			str += '			<span style="font-size:18px;" name="28000">02<span>2017</span></span>';
+			str += '			<span style="font-size:14px;" name="oneTab28000">1 건 / 28,000원</span>';
+			str += '		</div>'; */
+			str += '		<ul class="two_tab showOn" name="two_tab" style="border-bottom:0px;">';
+			str += '			<li>';
+			str += '				<div class="second twoTabOn" id="twoTab" name="twoTab">';
+			str += '					<span id="nowDay">'+to_date_format(nowDay,"-")+'</span>';
+			str += '					<span>'+resultCnt+'건/ '+resultData[0].TOTAL_AM+'원</span>';
+			str += '				</div>';
+			str += '					<ul class="three_tab2" id="threeTab'+nowDay+'" name="threeTab'+nowDay+'" style="border-bottom:0px;border-top:0px;">';
+			for(var i=0; i<resultCnt; i++){
+				str += '						<li style="border-top:0px;">	';
+				str += '							<a href="#receipt_details" name="receiptDetail" id="seq'+i+'">';
+				str += '								<input type="hidden" value="'+resultData[i].APP_CO_DIV+'" id="mlaticonM'+i+'">';
+				str += '								<input type="hidden" value="'+resultData[i].CARD_APP_CO+'" id="cardAppCo'+i+'">';
+				str += '								<input type="hidden" value="'+resultData[i].INST_DIV+'" id="instDiv'+i+'">';
+				str += '								<input type="hidden" value="'+nowDay+'" id="divMonth'+i+'">';
+				str += '								<input type="hidden" value="'+resultData[i].CNT_DATE+'" id="divSec'+i+'">';
+				str += '								<div class="mlat01M" id="mlat01M'+i+'">'+resultData[i].CNT_DATE+'</div>	';
+				str += '								<div class="mlaticonM"><span><img src="../common/'+resultData[i].APP_CO_DIV+'.png" style="width: 50%;" alt=""></span></div>	';
+				str += '								<div class="mlat02M" id="mlat02M'+i+'">'+resultData[i].APP_CO+'</div>	';
+				str += '								<div class="mlat03M" id="mlat03M'+i+'">'+numberWithCommas(resultData[i].APP_AMOUNT)+'원</div>';
+				str += '								<hr>';
+				str += '							</a>';
+				str += '						</li>';
+			}
+			str += '					</ul>';			
+			str += '			</li>';
+			str += '		</ul>';
+			str += '	</li>';
+			str += '</ul>';			
+			
+/* 			$(".househ_box").empty();
+			var totalAm = resultData[0].TOTAL_AM;
+			var cntDate =  resultData[0].CNT_DATE;
+			var appCo =  resultData[0].APP_CO;
+			var appCoDiv =  resultData[0].APP_CO_DIV;
+			var appAmount =  resultData[0].APP_AMOUNT;
+			var instDiv =  resultData[0].INST_DIV;
+			var cardAppCo =  resultData[0].CARD_APP_CO;
+			console.log("totalAm:"+totalAm);
+			console.log("cntDate:"+cntDate);
+			console.log("appCo:"+appCo);
+			console.log("appCoDiv:"+appCoDiv);
+			console.log("appAmount:"+appAmount);
+			console.log("instDiv:"+instDiv);
+			console.log("cardAppCo:"+cardAppCo);
+			var str = "";
+			str += '<div class="househ_inbox">';
+			str += '    <div class="hh_half">';
+			str += '    	<ul>';
+			str += '          <li class="hh_full"><div>오늘의 총 영수증 발급</div><div class="hh_hcon">'+resultCnt+'건 / '+numberWithCommas(totalAm)+'원</div></li>';
+			str += '          <hr>';
+			str += '        </ul>';
+			str += '    </div>';
+			str += '    <div class="hh_table">';
+			str += '    	<ul class="hh_tabletitle">';
+			str += '          <li class="hh_mlat01">시간</li>';
+			str += '          <li class="hh_mlat02">업체명</li>';
+			str += '          <li class="hh_mlat03">카드</li>';
+			str += '          <li class="hh_mlat04">금액</li>';
+			str += '          <hr>';
+			str += '        </ul>';		
+			for(var i=0; i<resultCnt; i++){
+				str += '<ul>';
+				str += '  <li class="hh_mlat01">'+resultData[i].CNT_DATE+'</li>';
+				str += '  <li class="hh_mlat02">'+resultData[i].APP_CO+'</li>';
+				str += '  <li class="hh_mlat03">'+resultData[i].CARD_APP_CO+'</li>';
+				str += '  <li class="hh_mlat04">'+numberWithCommas(resultData[i].APP_AMOUNT)+'원</li>';
+				str += '  <hr>';
+				str += '</ul>';				
+			}		
+			str += '    </div>';
+			str += '</div>';					
+		}
+	
+		
+		$(".househ_box").append(str);		 */
+		}
+		$(".list_tab").append(str);	
+	}
+	
+	function startGetB01CalDataSuc(resdata){
+		/* 		<div class="house_txt">
+		김종현 고객님은 10.01부터 10.24일까지<br>
+        카드 3건, 현금 5건 총 8건 50,000원을 사용하셨습니다.
+        </div> */
+        /* 카드 3건, 현금 5건 총 8건 50,000원을 사용하셨습니다. */
+        /* $(".house_txt").text($(".pf_txt>h2").text()); */		
+		var resultData = resdata.resultMap;
+		console.log(resultData);
+		var resultCnt = resultData.length;
+		var data = new Array();
+		if(resultCnt > 0){
+			for(var i=0; i<resultCnt; i++){
+				if(resultData[0].TOTAL_CNT == "0" ){
+					$("#totalAmount").text("총0건 / 0원");
+				}else{
+					$("#totalAmount").text("총 "+resultData[0].TOTAL_CNT+"건 / "+resultData[0].TOTAL_AM+"원");
+				}
+				var dtlGoodsObj = new Object();
+	            dtlGoodsObj.date = resultData[i].CNT_DATE;
+	            dtlGoodsObj.value = resultData[i].CONUT+"건";
+	            data.push(dtlGoodsObj);
+			}
+			
+		}else{
+			$("#totalAmount").text("총0건 / 0원");
+		}
+		//data = JSON.stringify(data);
+		console.log(data);
+		var data2 = [{
+			date: '2016-11-11',
+			value: '3건'
+		}
+		
+		,{
+			date: '2016-11-15',
+			value: '2건'
+		}
+		,{
+			'date': '2016-11-17',
+			'value': '2건'
+		}
+		,{
+			'date': '2016-11-18',
+			'value': '2건'
+		}
+		
+		];
+		console.log(data);
+		// inline
+		
+		var $ca = $('#calendar').calendar({
+			// view: 'month',
+			width: 100,
+			height: 300,
+			// startWeek: 0,
+			// selectedRang: [new Date(), null],
+			data: data,
+			onSelected: function(view, date, data) {
+				console.log('view:' + view)
+				console.log('date:' + date)
+				console.log('data:' + (data || 'cancel'));
+			},
+			viewChange: function(view, y, m) {
+				console.log(view, y, m)
+			}
+		});		
+		
+		//[{"date":"2016-11-11","value":"3건"},{"date":"2016-11-11","value":"3건"},{"date":"2016-11-11","value":"3건"}]		
+		
+/* 		var data = [{
+			date: '2016-11-11',
+			value: '3건'
+		}
+		
+		,{
+			date: '2016-11-15',
+			value: '2건'
+		}
+		,{
+			'date': '2016-11-17',
+			'value': '2건'
+		}
+		,{
+			'date': '2016-11-18',
+			'value': '2건'
+		}
+		
+		];		 */
+		
+
+	};
+	function startGetB01CalDataSuc2(resdata){
+		/* 		<div class="house_txt">
+		김종현 고객님은 10.01부터 10.24일까지<br>
+        카드 3건, 현금 5건 총 8건 50,000원을 사용하셨습니다.
+        </div> */
+        /* 카드 3건, 현금 5건 총 8건 50,000원을 사용하셨습니다. */
+        /* $(".house_txt").text($(".pf_txt>h2").text()); */
+        
+		var resultData = resdata.resultMap;
+		console.log(resultData);
+		var resultCnt = resultData.length;
+		var data = new Array();
+		if(resultCnt > 0){
+			for(var i=0; i<resultCnt; i++){
+			$("#totalAmount").text("총 "+resultData[0].TOTAL_CNT+"건 / "+resultData[0].TOTAL_AM+"원");
+				var dtlGoodsObj = new Object();
+	            dtlGoodsObj.date = resultData[i].CNT_DATE;
+	            dtlGoodsObj.value = resultData[i].CONUT+"건";
+	            data.push(dtlGoodsObj);
+			}
+			
+		}else{
+			$("#totalAmount").text("총0건 / 0원");
+		}
+		//data = JSON.stringify(data);
+		console.log(data);
+		var data2 = [{
+			date: '2016-11-11',
+			value: '3건'
+		}
+		
+		,{
+			date: '2016-11-15',
+			value: '2건'
+		}
+		,{
+			'date': '2016-11-17',
+			'value': '2건'
+		}
+		,{
+			'date': '2016-11-18',
+			'value': '2건'
+		}
+		
+		];
+		console.log(data);
+		// inline
+		//$("#calendar").remove();
+		
+		var $ca = $('#calendar').calendar({
+			// view: 'month',
+			width: 100,
+			height: 300,
+			// startWeek: 0,
+			// selectedRang: [new Date(), null],
+			data: data,
+			onSelected: function(view, date, data) {
+				console.log('view:' + view)
+				console.log('date:' + date)
+				console.log('data:' + (data || 'cancel'));
+			},
+			viewChange: function(view, y, m) {
+				console.log(view, y, m)
+			}
+		});		
+		
+		//[{"date":"2016-11-11","value":"3건"},{"date":"2016-11-11","value":"3건"},{"date":"2016-11-11","value":"3건"}]		
+		
+/* 		var data = [{
+			date: '2016-11-11',
+			value: '3건'
+		}
+		
+		,{
+			date: '2016-11-15',
+			value: '2건'
+		}
+		,{
+			'date': '2016-11-17',
+			'value': '2건'
+		}
+		,{
+			'date': '2016-11-18',
+			'value': '2건'
+		}
+		
+		];		 */
+		
+
+	};
+	
+	function whenError(){
+		alert("ERROR");
+	};	
+	
+</script>
+
+
+<script type="text/javascript" src="../js/framework7.js"></script>
+
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+</body>
+</html>

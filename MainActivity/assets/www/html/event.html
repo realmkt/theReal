@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+    
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+    
+	<script src="../code/common.js"></script>
+    
+</head>
+
+<body>
+
+
+
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+
+
+    <div class="panel panel-left panel-reveal">
+    
+    	<div class="profile_box">
+        	<!-- <div class="pf_photo" style="background:url(../common/profile.jpg) no-repeat center;"></div> -->
+            
+            <div class="pf_txt">
+            	<h2>김종현</h2>
+                <p>쿠폰 <span>0</span>개</p>
+                <p>포인트 <span>200</span>p</p>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        	<ul>
+            	<li onClick="location.href='latest.html'">
+                <div class="leftm_box leftm01"></div>
+                <a href="#">최근사용내역</a>
+                </li>
+                
+            	<li onClick="location.href='history.html'">
+                <div class="leftm_box leftm02"></div>
+                <a href="#">영수증확인</a>
+                </li>
+                
+            	<li onClick="location.href='#'">
+                <div class="leftm_box leftm03"></div>
+                <a href="#">가계부</a>
+                </li>
+                
+            	<li onClick="location.href='event.html'">
+                <div class="leftm_box leftm04"></div>
+                <a href="#">이벤트</a>
+                </li>
+                
+            	<li onClick="location.href='notice.html'">
+                <div class="leftm_box leftm05"></div>
+                <a href="#">공지사항</a>
+                </li>
+                
+            </ul>
+        </div>
+
+    </div>
+    
+    
+    <div class="views">
+		<div class="view view-main">
+        
+            <div class="navbar top_menu">
+                <div data-page="index" class="navbar-inner">
+                
+                    <div class="left">
+                    <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+                    </div>
+                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 27%;"><img style="width: 75%;height: 50%;margin: 0 auto" src="../common/logo_01.png"></div>
+
+                </div>
+                
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                </div>
+                
+                
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+                
+                
+                <div data-page="event_page" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backS">Back</span></a></div>
+                <div class="center sliding">이벤트</div>
+                </div>
+                
+                
+            </div>
+
+
+			<div class="pages navbar-through toolbar-through">
+                <div data-page="index" class="page">
+                    <div class="page-content">
+                    
+                    <div class="event_tab">
+                    	<ul>
+                        	<li><a href="javascript:void(0)" class="active" id="event">전체보기</a></li>
+                        	<li><a href="javascript:void(0)"  id="eventPro">진행중인 이벤트</a></li>
+                        	<li><a href="javascript:void(0)"  id="eventEnd">종료된 이벤트</a></li>
+                            <hr>
+                        </ul>
+                    </div>
+
+					<div class="board_box alen_outbox">
+
+                    	<div class="board_content" >
+                        	<h2>이벤트</h2>
+                        	<ul id="eventList">
+<!--                             	<li>
+                                <a href="#event_page">
+                                <div class="board_title"><span>경희처럼, 도전하라!</span> <span class="board_adate">2017-01-19 11:08</span><hr></div>
+                                </a>
+                                </li> -->
+                                
+<!--                             	<li>
+                                <a href="#notice_page">
+                                <div class="board_title"><span>배달의민족 “간단계좌결제 서비스” 오픈 일정 변경 안내</span> <span class="board_adate">2016-08-19 11:08</span><hr></div>
+                                </a>
+                                </li>
+                                                                
+                            	<li>
+                                <a href="#notice_page">
+                                <div class="board_title"><span>개인정보 취급방침 개정 안내</span> <span class="board_adate">2016-08-19 11:08</span><hr></div>
+                                </a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </div>
+
+<!--                     <div class="event_board">
+                    	<div class="event_bitem alen_outbox">
+                        <a href="#event_page">
+                        <img src="../banner/event01.jpg">
+                        </a>
+                        </div>
+                        
+                    	<div class="event_bitem alen_outbox">
+                        <a href="#event_page">
+                        <img src="../banner/event02.jpg">
+                        </a>
+                        </div>
+                        
+                    	<div class="event_bitem alen_outbox">
+                        <a href="#event_page">
+                        <img src="../banner/event01.jpg">
+                        </a>
+                        </div>
+                        
+                    	<div class="event_bitem alen_outbox">
+                        <a href="#event_page">
+                        <img src="../banner/event02.jpg">
+                        </a>
+                        </div>
+                    </div> -->
+                    
+                    
+
+                    
+                    
+                    <div class="foot_info">
+                    
+<!--                     	<div class="foot_box">
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree03">이용약관</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree01">개인정보 취급방침</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#">고객센터</a>
+                            </div>
+                            
+                            
+                            <hr>
+                        </div> -->
+<p>
+(주)더리얼마케팅 | 대표이사:손종희<br>
+사업자등록번호:220-88-19101   |   통신판매업신고 강남 04134호<br>
+서울시 강남구 압구정로10길 13, 401호(신사동, 마사빌딩)<br>
+이메일 : theReal@realmkt.co.kr<br>
+고객센터 : 02-518-5112 | 마케팅:02-540-3111<br>
+</p>
+
+<p class="copytxt">CopyrightⓒThe REAL Co.All rights reserved</p>
+                    </div>
+                    
+                    
+                    </div>
+                </div>
+                
+                
+
+                <div data-page="event_page" class="page cached">
+                    <div class="page-content">
+                        <div class="content-block">
+
+
+						<div class="eventd_box">
+                        	<div class="eventd_inbox">
+<!--                                 <div class="evd_table">
+                                	<ul>
+                                      <li>경희처럼, 도전하라!</li>
+                                      <li class="evd_tsub"><span>2017-01-19 11:08</span><span class="evd_right">HIT 320</span><hr></li>
+
+                                    </ul>
+                                    
+                                    <div class="evd_content">
+                                    <img src="../banner/event_test.jpg">
+                                    
+                                    </div>
+                                    
+                                </div> -->
+                                
+                            </div>
+                        </div>
+                        
+
+                        </div>
+                    </div>
+                </div>
+
+
+ 
+                <div data-page="agree01" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree01.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div data-page="agree03" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+			</div>
+            
+            
+            
+            
+
+		</div>
+    </div>
+
+
+
+
+<script type="text/javascript" src="../js/framework7.js"></script>
+
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+<script type="text/javascript">
+/* $(document).ready(function(){
+history.pushState(null,null,location.href);
+window.onpopstate = function(event){
+	location.reload();
+}
+}); */
+var pageCnt = true;
+
+var request = new Request();
+var telNo = request.getParameter('telNo');
+var uuId = request.getParameter('uuId');
+var seq ="";
+$(document).ready(function(){
+	
+	$("#event").click(function(){
+		location.href='event.html?telNo='+telNo;
+	})
+	
+	$("#eventPro").click(function(){
+		location.href='event_pro.html?telNo='+telNo;
+	})
+	
+	$("#eventEnd").click(function(){
+		location.href='event_end.html?telNo='+telNo;
+	})
+	
+	commonUserData();
+	fn_eventList("all","02");
+	
+	$(document).on('click','.evd_content',function(){
+		
+		window.open($("#eventLinkUrl"+seq).val(),"_blank","location=yes");
+	})
+	$(document).on('click','[name="eventList"]',function(){
+		$(".eventd_inbox").empty();
+		pageCnt = false;
+		seq = $(this).attr('id');
+		seq = seq.replace("seq","");
+		var strDtl = "";
+		strDtl += '<div class="evd_table">';
+		strDtl += '	<ul>';
+		strDtl += '      <li>'+$("#listTitle"+seq).text()+'</li>';
+		strDtl += '      <li class="evd_tsub"><span>'+$("#listDate"+seq).text()+'</span><span class="evd_right">'+$("#eventHitCnt"+seq).val()+'</span><hr></li>';
+		strDtl += '    </ul>';
+		strDtl += '    <div class="evd_content">';
+		strDtl += $("#eventBoardContents"+seq).val();
+		strDtl += '    </div>';
+		strDtl += '</div>';	
+		$(".eventd_inbox").append(strDtl);
+	});	
+	
+})
+
+function dateInput(targetday,sep){
+  
+	var date = new Date();
+	var start = new Date(Date.parse(date) - targetday * 1000 * 60 * 60 * 24);
+	
+	var yyyy = start.getFullYear();
+	var mm = start.getMonth()+1;
+	var dd = start.getDate();
+	
+	if(mm<10){
+		mm = "0" + mm;
+	}if(dd<10){
+		dd = "0" + dd;
+	}
+  
+	return yyyy + sep + mm + sep + dd; 
+  
+ }	
+
+function fn_eventList(procDivCd, boardDiv){
+	    $.ajax({
+	        type: "post",
+	        url : commonIp()+"/theReal/receipt/eventBoardList.do",
+	        data: {
+	      		nowDay : dateInput(0,"-"),
+	      		boardDiv : boardDiv,
+	      		procDivCd : procDivCd
+	        },
+	        success: fn_sucEventList,
+	        error: whenError
+    	});			
+}
+
+function fn_sucEventList(resdata){
+	var str = "";
+	var resultData = resdata.resultMap;
+	$("#eventList").empty();
+	
+	var resultCnt = resultData.length;
+	if(resultCnt>0){
+		for(var i=0; i<resultCnt; i++){
+			
+			str += '<li>';
+			str += '<a href="#event_page" name="eventList" id="seq'+resultData[i].SEQ+'">';
+			str += "<input type='hidden' value = '"+resultData[i].BOARD_CONTENTS+"' id='eventBoardContents"+resultData[i].SEQ+"'>";
+			str += '<input type="hidden" value = "'+resultData[i].HIT_CNT+'" id="eventHitCnt'+resultData[i].SEQ+'">';
+			str += '<input type="hidden" value = "'+resultData[i].EVENT_START_DATE+'" id="eventStartDate'+resultData[i].SEQ+'">';
+			str += '<input type="hidden" value = "'+resultData[i].EVENT_END_DATE+'" id="eventEndData'+resultData[i].SEQ+'">';
+			str += '<input type="hidden" value = "'+resultData[i].LINK_URL+'" id="eventLinkUrl'+resultData[i].SEQ+'">';
+			str += '<div class="board_title"><span id="listTitle'+resultData[i].SEQ+'">'+resultData[i].BOARD_TITLE+'</span> <span class="board_adate" id="listDate'+resultData[i].SEQ+'">'+resultData[i].USE_DATE_ORG+'</span><hr></div>';
+			str += '</a>';
+			str += '</li>';	
+		}
+	}else{
+		
+	}
+	
+	$("#eventList").append(str);
+}
+
+
+function whenError(){
+	alert("에러");
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+    <!--fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <!-- main -->
+	<script src="../code/jquery.bxslider.min.js"></script>
+    <link href="../code/jquery.bxslider.css" rel="stylesheet" />
+    
+    <!-- tab -->
+	<script type='text/javascript' src='../code/tabs.js'></script>
+    
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+    
+	<script src="../code/common.js"></script>
+    
+<style>
+	/* .latest_content li a > div:first-child{margin-left:50px;} */
+	.oneTabOn {background-color:rgba(146, 221, 255, 0.15); }
+	
+	.twoTabOn { }
+	.threeTabOn {background-color: #eee }
+	.showOn {display: block; }
+	.showOff {display: none; }
+	.highPrice{background: url(../common/up.png) no-repeat 0 0; background-size: 13%,13%; background-position: right; }
+	.lowPrice{background: url(../common/down.png) no-repeat 0 0; background-size: 13%,13%; background-position: right; }
+/* 	.highPrice{background: url(../common/highPrice.png) no-repeat 0 0; background-size: 40px,40px; background-position: right; }
+	.lowPrice{background: url(../common/lowPrice.png) no-repeat 0 0; background-size: 40px,40px; background-position: right; } */
+	
+	.divPage{background: url(../common/divPage.png) no-repeat 0 0;background-position: 50% 50%; height: 30px;"}
+
+
+.on { }
+.list-block {display: none; }
+.item-title.small-fonts{font-size: small;}
+
+
+.alen_list_box2 { margin:0px 0px; background:none; border:0; }
+.alen_list_box2 li { margin:0 10px 0 10px; }
+.alen_list_combtnbox { height:35px; margin-bottom:5px; }
+.alen_list_combtn { margin:3px 10px 3px 10px; padding:0 5px 0 5px; border:1px solid #539bff; color:#fff; /* font-size:1.5em; */ font-weight:400; text-align:center; line-height:50px; cursor:pointer; background:#539bff; -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
+.albpad { padding:0px 0 0px 0; }
+
+.alen_list_btn2 { margin:10px 10px 10px 10px; padding:0; border-radius:10px; background:#333; }
+.alen_list_btn2item { width:20%; float:left;; text-align:center; color:#fff; }
+.alen_list_btn2item .al_btn_txt { padding:10px 0; border-right:1px solid #666; }
+.alen_list_btn2item .al_btn_txt.last { border-right:0; }
+
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner { padding-right: 15px; text-align:center; }
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner .item-title { margin:0 auto; }
+.alen_list_box2 label.label-radio input[type="radio"]:checked ~ .item-inner { background: no-repeat center; background-position: 50% 3px; background-position: -webkit-calc(50% - 8px) 3px; background-position: calc(50% - 8px ) 3px; -webkit-background-size: 13px 10px; background-size: 13px 10px; 
+background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23539bff'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");  }
+.alen_radio_box2 { margin:10px; border:1px solid #e5e5e5; }
+
+
+.alen_table_in { border-radius:5px; margin:0 5px;}
+	
+	
+
+</style>
+
+
+</head>
+
+<body>
+
+
+
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+
+
+    <div class="panel panel-left panel-reveal">
+    
+    	<div class="profile_box">
+        	<!-- <div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div> -->
+            
+            <div class="pf_txt">
+            	<h2>김종현</h2>
+                <p>쿠폰 <span>0</span>개</p>
+                <p>포인트 <span>200</span>p</p>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        </div>
+
+    </div>
+    
+    
+    <div class="views">
+		<div class="view view-main">
+        
+            <div class="navbar top_menu">
+                <div data-page="index" class="navbar-inner">
+                
+                    <div class="left">
+                    <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+                    </div>
+                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 27%;"><img style="width: 75%;height: 50%;margin: 0 auto" src="../common/logo_01.png"></div>
+
+                </div>
+                
+                <div data-page="receipt_details" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backS">Back</span></a></div>
+                <div class="center sliding">영수증 상세 내역</div>
+                </div>
+                
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                </div>
+                
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+                
+            </div>
+            
+<style type="text/css">
+.alen_radio_box { margin:0px; border:0; font-size:1.2em; border-top: 1px solid #eee;}
+.alen_table_list { width:31%; float:left; height:30px; margin:1.5% 0% 1.5% 1.6%; }
+.alen_table_last { border-right:0; }
+.alen_table_top { border-bottom:1px solid #e5e5e5}
+.alen_radio_box .alabel-radio { display:block;}
+.alen_radio_box .aitem-content { height:30px; padding:0 0;}
+.alen_radio_box .item-title { text-align:center; height:30px; line-height:30px; font-size:16px; margin:0 auto; }
+
+label.alabel-radio { cursor: pointer; }
+label.alabel-radio input[type="radio"] { display: none; }
+label.alabel-radio input[type="radio"] ~ .aitem-inner { padding-right:0px; background:#fff; border:1px solid #ddd; border-radius:5px; }
+label.alabel-radio input[type="radio"]:checked ~ .aitem-inner {background:rgba(146, 221, 255, 0.20);  color:#333; }
+label.alabel-radio { -webkit-transition-duration: 300ms; transition-duration: 300ms; }
+html:not(.watch-active-state) label.alabel-radio:active,
+label.alabel-radio.active-state { -webkit-transition-duration: 0ms; transition-duration: 0ms; background-color: #fff; }
+html:not(.watch-active-state) label.alabel-radio:active .aitem-inner:after,
+label.alabel-radio.active-state .aitem-inner:after { background-color: transparent; }
+.smart-select select { display: none; }
+
+</style>            
+            
+			<div class="pages navbar-through toolbar-through">
+                <div data-page="index" class="page">
+                    <div class="page-content">
+
+					<div class="latest_box alen_outbox">
+                    	<div class="latest_content" >
+                        	<h2 style="height: 40px" class="divPage">지출내역</h2>
+                        	<div class="divPage_house" style="width: 20%; height: 40px; position: absolute; left: 40%; top: 0;"></div>
+
+                        <ul>
+            
+                            <div class="alen_radio_box">
+                                
+                                
+                                
+                                <div class="alen_table_list">
+                                <label class="alabel-radio aitem-content">
+                                  <input type="radio" name="mobRadio" checked>
+                                  <div class="aitem-inner" name="mobTabBtn" id="mobTab01">
+                                    <div class="item-title">날짜별</div>
+                                  </div>
+                                </label>
+                                </div>
+                                
+                                <div class="alen_table_list">
+                                <label class="alabel-radio aitem-content">
+                                  <input type="radio" name="mobRadio">
+                                  <div class="aitem-inner" name="mobTabBtn" id="mobTab02">
+                                    <div class="item-title">항목별</div>
+                                  </div>
+                                </label>
+                                </div>
+                                
+                                <div class="alen_table_list">
+                                <label class="alabel-radio aitem-content">
+                                  <input type="radio" name="mobRadio" >
+                                  <div class="aitem-inner" name="mobTabBtn" id="mobTab03" >
+                                    <div class="item-title ">카드별</div>
+                                  </div>
+                                </label>
+                                </div>
+                                <hr>
+                            </div>                            
+
+                        </ul>
+
+<!--                         	<div class="list_icon">
+                        	    <ul style="border-bottom:0px;">
+                        	        <li class="on" id="mobTab01" name="mobTab"><a href="javascript:void(0);">카드별</a></li>
+                        	        <li id="mobTab02" name="mobTab"><a href="javascript:void(0);">날짜별</a></li>
+                        	        <li id="mobTab03" name="mobTab"><a href="javascript:void(0);">항목별</a></li>
+                        	    </ul>
+                        	</div> -->
+                        <div class="list_tab">
+                        	<!-- <ul class="one_tab">
+                              <li>
+                                 <div class="first oneTabOn"  id="oneTab201702"  name="oneTab201702">
+                                  <span>02 <span>2017</span></span>
+                                  <span>3건/182,000</span>
+                                  </div>
+                                  <ul class="two_tab showOn">
+                                      <li>
+                                         <div class="second twoTabOn"  id="twoTab2017021"  name="twoTab201702">
+                                          <span>삼성카드</span>
+                                          <span>2건/5,88800원</span>
+                                          </div>
+
+                                    <ul class="three_tab"  id="threeTab2017021"  name="threeTab2017021">
+                                    <li>
+                                    <a href="#receipt_details">
+                                    <div class="mlat01">2016-08-24</div>
+                                    <div class="mlaticon"><span><img src="../common/beer.png" alt=""></span></div>
+                                    <div class="mlat03">세븐일레븐</div>
+                                    <div class="mlat04">3.900원</div>
+                                    <hr>
+                                    </a>
+                                    </li>
+                                
+                                    <li>
+                                    <a href="#receipt_details">
+                                    <div class="mlat01">2016-08-24</div>
+                                    <div class="mlaticon"><span><img src="../common/beer.png" alt=""></span></div>
+                                    
+                                    <div class="mlat03">세븐일레븐</div>
+                                    <div class="mlat04">3.900원</div>
+                                    <hr>
+                                    </a>
+                                    </li>
+
+                                    <li>
+                                    <a href="#receipt_details">
+                                    <div class="mlat01">2016-08-24</div>
+                                    <div class="mlaticon"><span><img src="../common/beer.png" alt=""></span></div>
+                                    
+                                    <div class="mlat03">세븐일레븐</div>
+                                    <div class="mlat04">3.900원</div>
+                                    <hr>
+                                    </a>
+                                    </li>
+                                </ul>
+                                      </li>    
+                                      <li>
+                                         <div class="second twoTabOn" id="twoTab2017022"  name="twoTab201702">
+                                          <span>신한카드</span>
+                                          <span>2건/5,88800원</span>
+                                          </div>
+
+                                    <ul class="three_tab"  id="threeTab2017022"  name="threeTab2017022">
+                                    <li>
+                                    <a href="#receipt_details">
+                                    <div class="mlat01">2016-08-24</div>
+                                    <div class="mlaticon"><span><img src="../common/beer.png"  alt=""></span></div>
+                                    <div class="mlat03">세븐일레븐</div>
+                                    <div class="mlat04">3.900원</div>
+                                    <hr>
+                                    </a>
+                                    </li>
+
+                                    <li>
+                                    <a href="#receipt_details">
+                                    <div class="mlat01">2016-08-24</div>
+                                    <div class="mlaticon"><span><img src="../common/beer.png" alt=""></span></div>
+                                    
+                                    <div class="mlat03">세븐일레븐</div>
+                                    <div class="mlat04">3.900원</div>
+                                    <hr>
+                                    </a>
+                                    </li>
+
+                                    <li>	
+                                    <a href="#receipt_details">
+                                    <div class="mlat01">2016-08-24</div>
+                                    <div class="mlaticon"><span><img src="../common/beer.png" alt=""></span></div>
+                                    
+                                    <div class="mlat03">세븐일레븐</div>
+                                    <div class="mlat04">3.900원</div>
+                                    <hr>
+                                    </a>
+                                    </li>
+                                </ul>
+                                      </li>    
+                                  </ul>
+                                  
+                              </li>
+                            </ul> 
+            
+                        	<ul class="one_tab">
+                              <li>
+                                 <div class="first" id="oneTab201701"  name="oneTab201701">
+                                  <span>01 <span>2017</span></span>
+                                  <span>3건/182,000</span>
+                                  </div>
+                                  <ul class="two_tab">
+                                      <li>
+                                         <div class="second" id="twoTab2017011"  name="twoTab201701">
+                                          <span>삼성카드</span>
+                                          <span>2건/5,88800원</span>
+                                          </div>
+                                          <ul class="three_tab" id="threeTab2017011"  name="threeTab2017011">
+                                    <li>
+	                                    <a href="#receipt_details">
+	                                    <div class="mlat01">2016-08-24</div>
+	                                    <div class="mlaticon"><span><img src="../common/beer.png" alt=""></span></div>
+	                                    <div class="mlat03">세븐일레븐</div>
+	                                    <div class="mlat04">3.900원</div>
+	                                    <hr>
+	                                    </a>
+                                    </li>
+                                
+                                    <li>
+                                    <a href="#receipt_details">
+                                    <div class="mlat01">2016-08-24</div>
+                                    <div class="mlaticon"><span><img src="../common/beer.png" alt=""></span></div>
+                                    <div class="mlat03">세븐일레븐</div>
+                                    <div class="mlat04">3.900원</div>
+                                    <hr>
+                                    </a>
+                                    </li>
+
+                                    <li>
+                                    <a href="#receipt_details">
+                                    <div class="mlat01">2016-08-24</div>
+                                    <div class="mlaticon"><span><img src="../common/beer.png" alt=""></span></div>
+                                    <div class="mlat03">세븐일레븐</div>
+                                    <div class="mlat04">3.900원</div>
+                                    <hr>
+                                    </a>
+                                    </li>
+                                </ul>
+                                      </li>    
+                                  </ul>
+                                  
+                              </li>
+                            </ul>
+                            
+            -->
+                        </div> <!--tab_list-->
+                        </div> <!--last_content-->
+                    </div>
+                    
+                    </div>
+                </div>
+                
+<style type="text/css">
+
+.rtpage_box { background:#f2f2f2; border:1px solid #e5e5e5; margin-bottom:20px; padding:5px; border-radius:5px; }
+.rtpage_inbox { background:#fff; border:1px solid #e5e5e5; padding:10px 30px; border-radius:5px; }
+.rtpage_holl { padding:5px 5px 15px 5px; height:35px; }
+.rtpage_holl div { width:6%; height:100%; margin:0 2%; border-radius:30px; border:1px solid #e5e5e5; float:left; background:#f2f2f2; }
+
+
+.rt_title { padding:20px 0 0px 0; }
+.rt_title h2 { text-align:center; font-size:3em; font-weight:700; color:#000; clear:both; padding:5px 0 15px 0; }
+.rt_title p { text-align:center; font-size:1em; color:#000; clear:both; }
+
+.rt_txt01 { text-align:left; font-size:1em; color:#666; clear:both; /* padding:0px 10px; */ }
+.rt_txt01 span { text-align:right; float:right; }
+
+.rt_total { text-align:left; font-size:1.5em; font-weight:700; color:#000; clear:both; padding:20px 10px; border-bottom:2px dashed #aaa; border-top:2px dashed #aaa; margin-top:20px; }
+.rt_total span { text-align:right; float:right; }
+
+.rt_total { text-align:left; font-size:1.8em; font-weight:700; color:#000; clear:both; padding:20px 10px; border-bottom:1px dashed #aaa; border-top:1px dashed #aaa; margin-top:20px; }
+.rt_total span { text-align:right; float:right; }
+
+.rt_orderno { border-bottom:2px dashed #aaa; border-top:2px dashed #aaa; padding:20px 0; margin-top:20px; }
+.rt_orderno p { text-align:center; font-size:1.2em; color:#666; clear:both; }
+.rt_orderno h2 { text-align:center; font-size:1.8em; color:#000; clear:both; padding:5px 0; }
+
+.rt_table { border-top:1px solid #ddd; border-bottom:1px solid #ddd; margin:20px 5px 0px 5px;  }
+.rt_table .rt_tabletitle { border-bottom:1px solid #ddd; background:#fff;}
+.rt_table li { float:left; padding:5px 0; text-align:center; color:#333; }
+.rt_table li.rt_mlat01 { width:45%; }
+.rt_table li.rt_mlat02 { width:20%; }
+.rt_table li.rt_mlat03 { width:10%; }
+.rt_table li.rt_mlat04 { width:25%; text-align:right; padding-right:5px; }
+.rt_etc { text-align:left; font-size:1.3em; font-weight:700; color:#333; clear:both; padding:10px 10px; border-bottom:1px dashed #aaa; }
+.rt_etc span { text-align:right; float:right; }
+
+.rt_copy { text-align:center; font-size:0.7em; }
+
+</style>                           
+                
+                
+                <div data-page="receipt_details" class="page cached">
+                    <div class="page-content">
+                        <div class="content-block">
+                        
+						<div class="rtpage_box">
+                        	<div class="rtpage_inbox" id ="detailRecData">
+                            </div>
+                        </div>                        
+                        
+<!-- 						<div class="receipt_box">
+                        	<div class="receipt_inbox" id ="detailRecData">
+                                
+                            </div>
+                        </div> -->
+                        
+                       <!--  <div class="latest_btnbox">
+                            <div class="latest_btn" id="backBtn">확인</div>
+                        </div>
+                         -->
+                        
+                        
+                        </div>
+                    </div>
+                </div>                
+                
+                
+			</div>
+            
+            
+            
+            
+
+		</div>
+    </div>
+
+
+
+<script type="text/javascript" src="../js/framework7.js"></script>
+
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+
+<script type="text/javascript">
+/* history.pushState(null,null,location.href);
+window.onpopstate = function(event){
+	if(pageCnt==0){
+		history.back();
+	}else{
+		pageCnt = 0;
+		location.reload();
+	}
+} */
+
+var pageCnt = 0;
+
+var request = new Request();
+
+var telNo = request.getParameter('telNo');
+var uuId = request.getParameter('uuId');
+var selMobTab ="";
+var seq = "";
+var array = new Array();
+$(document).ready(function(){
+
+	commonUserData();	
+	depth01List("DAY");
+	$(".divPage_house").click(function(){
+		location.href='household.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+	})	
+	
+	$(document).on('click','.first',function(){	
+		
+ 		var test = $(this).attr("id");
+		test = test.replace("oneTab","");
+		if($(this).hasClass("oneTabOn")){
+			$('.first').removeClass("oneTabOn");
+			$(".second").removeClass("threeTabOn");
+			$(".three_tab").css("display","none");
+			$('[name="two_tab'+test+'"]').slideUp();
+			$('[name="three_tab'+test+'"]').slideUp();
+			
+		}else{
+			$(".two_tab").css("display","none");
+			$('.second').slideUp();
+			$('[name="two_tab'+test+'"]').css("display","block");
+			$('.first').removeClass("oneTabOn");
+			$(this).addClass("oneTabOn");
+			$('[name="twoTab'+test+'"]').slideDown();
+		}
+		
+	})	
+	$(document).on('click','.second',function(){
+  		var test2 = $(this).attr("id");
+  		test2 = test2.replace("twoTab","");
+  		if($(this).hasClass("threeTabOn")){
+			//$('.first').removeClass("oneTabOn");
+	  		$(".second").removeClass("threeTabOn");
+			$(".three_tab").css("display","none");
+			$('[name="threeTab'+test2+'"]').slideUp();  			
+  		}else{
+	  		$(".three_tab").slideUp();
+	  		$(".three_tab").css("display","none");
+	  		$('[name="threeTab'+test2+'"]').css("display","block");
+	  		$(".second").removeClass("threeTabOn");
+	  		$(this).addClass("threeTabOn");
+	  		$('[name="threeTab'+test2+'"]').slideDown();
+  		}
+	})
+	
+	$('[name="mobTabBtn"]').click(function(){
+	//$('.alabel-radio').click(function(){
+		var thisId= $(this).attr("id");
+		switch (thisId) {
+		  case 'mobTab01'  : depth01List("DAY"); break;
+		  case 'mobTab02'  : depth01List("DIV"); break;
+		  case 'mobTab03'  : depth01List("CARD"); break;
+		  default   : depth01List("DAY"); break;
+		}				
+		
+		if($('[name="mobTabBtn"]').parents('[name="mobRadio"]').hasClass("on")){
+			$('[name="mobTabBtn"]').parents('[name="mobRadio"]').removeClass("on");
+			//$('[name="mobtab"]').css({'color': '','border': ''});
+			$(this).parents('[name="mobRadio"]').addClass("on");
+			//$(this).css({'color': '#539bff'});
+			//alert($('.on').attr("id"));
+		}else{
+			$(this).parents('[name="mobRadio"]').addClass("on");
+			//$(this).css({'color': '539bff'});
+		}
+	})	 
+	
+	$("#backBtn").click(function(){
+		location.href='mobile.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+	})
+	
+	$(document).on('click','[name="receiptDetail"]',function(){
+		seq = $(this).attr('id').replace("seq","");
+		pageCnt = 1;
+		$("#detailRecData").empty();
+		var smsStr = "";
+		
+		
+		smsStr += '<div class="rtpage_holl">												';
+		smsStr += '	<div></div>                                                         ';
+		smsStr += '    <div></div>                                                         ';
+		smsStr += '    <div></div>                                                         ';
+		smsStr += '    <div></div>                                                         ';
+		smsStr += '    <div></div>                                                         ';
+		smsStr += '    <div></div>                                                         ';
+		smsStr += '    <div></div>                                                         ';
+		smsStr += '    <div></div>                                                         ';
+		smsStr += '    <div></div>                                                         ';
+		smsStr += '    <div></div>                                                         ';
+		smsStr += '    <hr>                                                                ';
+		smsStr += '</div>                                                                  ';
+		smsStr += '<div class="rt_title">                                                  ';
+		smsStr += '    <p>                                                                 ';
+		smsStr += '    [문자 상세 내역]                                                 ';
+		smsStr += '    </p>                                                                ';		
+		smsStr += '	<h2>THE REAL #</h2>                                                 ';
+		smsStr += '    <p>                                                                 ';
+		smsStr += '    Mobile Life Service                                                 ';
+		smsStr += '    </p>                                                                ';
+		smsStr += '</div>                                                                  ';
+			
+		smsStr += '<div class="rt_total">사용금액<span>'+$("#mlat03M"+seq).text()+'</span></div>                     ';
+		smsStr += '<div class="rt_etc">사용일시<span>'+$("#divMonth"+seq).val()+' '+$("#divSec"+seq).val()+'</span></div>                    ';
+		smsStr += '<div class="rt_etc" style="border-bottom: 0px dashed #aaa;">할부여부<span>'+$("#instDiv"+seq).val()+'</span></div>                       ';
+		smsStr += '<div class="rt_etc">카드사<span>'+$("#cardAppCo"+seq).val()+'</span></div>                     ';
+		smsStr += '<div class="rt_etc" style="border-bottom: 0px dashed #aaa;">사용매장<span>'+$("#mlat02M"+seq).text()+'</span></div>                     ';
+		smsStr += '<div class="rt_etc">항목<span><img src="../common/'+$("#mlaticonM"+seq).val()+'.png" style="width: 20%;" alt="">'+'   '+parseAppCoDiv($("#mlaticonM"+seq).val())+'</span></div>                     ';
+		
+		
+		smsStr += '<div class="rt_copy">                                                   ';
+		smsStr += '본 전자영수증은 거래의 참고용으로 사용하시기 바랍니다.                                 ';
+		smsStr += '</div>                                                                  ';								
+		
+/* 		
+		smsStr += ' <div class="receipt_holl">	';
+		smsStr += ' 	<div></div>             ';
+		smsStr += '     <div></div>             ';
+		smsStr += '     <div></div>             ';
+		smsStr += '     <div></div>             ';
+		smsStr += '     <div></div>             ';
+		smsStr += '     <div></div>             ';
+		smsStr += '     <div></div>             ';
+		smsStr += '     <div></div>             ';
+		smsStr += '     <div></div>             ';
+		smsStr += '     <div></div>             ';
+		smsStr += '     <hr>                    ';
+		smsStr += ' </div>					    ';
+		
+		smsStr += '<div class="rec_half">';
+		smsStr += '	<ul>';
+		smsStr += '      <li class="rec_full"><div class="rec_hcon" style="text-align: center;font-size: large;">모바일 영수증 발급내역</div></li>';
+		smsStr += '      <li class="rec_full"><div>카드사</div><div class="rec_hcon">'+$("#cardAppCo"+seq).val()+'</div></li>';
+		smsStr += '      <li class="rec_full"><div>할부여부</div><div class="rec_hcon">'+$("#instDiv"+seq).val()+'</div></li>';
+		smsStr += '      <li class="rec_full"><div>사용일시</div><div class="rec_hcon">'+$("#divMonth"+seq).val()+' '+$("#divSec"+seq).val()+ '</div></li>';
+		smsStr += '      <li class="rec_full"><div>사용매장</div><div class="rec_hcon">'+$("#mlat02M"+seq).text()+'</div></li>';
+		
+		smsStr += '      <li class="rec_full"><div>항목</div><div class="rec_hcon"><img src="../common/'+$("#mlaticonM"+seq).val()+'.png" style="width: 5%;" alt="">'+'   '+parseAppCoDiv($("#mlaticonM"+seq).val())+'</div></li>';
+		smsStr += '      <li class="rec_full"><div>사용금액</div><div class="rec_hcon">'+$("#mlat03M"+seq).text()+'</div></li>';
+		smsStr += '      <hr>';
+		smsStr += '    </ul>';
+		smsStr += '</div>';		 */	
+		$("#detailRecData").append(smsStr);		
+	})
+	
+})
+
+function depth01List(mobTab){
+	selMobTab = mobTab;
+	$.ajax({
+	    type: "post",
+	    url : commonIp()+"/theReal/receipt/depth01List.do",
+	    dataType:"json",
+	    data: {
+	    	startDate : dateInput(365,""),
+	    	endDate : dateInput(0,""),
+	    	startDateMonth : dateInputMonth(365,""),
+	    	endDateMonth : dateInputMonth(0,""),
+	    	telNo : telNo,
+	    	mobTab : selMobTab,
+	    },
+	    success: depth01SucList,
+	    error: whenError
+	}); 	
+}
+
+	
+	//onetab 클릭시
+function depth01SucList(resdata){
+	var resultData = resdata.resultMap;
+	var resultDataDep01 = resdata.resultMapCard01List.resultMap;
+	var resultDataDep02 = resdata.resultMapCard02List.resultMap;
+	var resultCnt = resultData.length;	
+	var resultDataDep01Cnt = resultDataDep01.length;	
+	var resultDataDep02Cnt = resultDataDep02.length;	
+	var divMonth = "";
+	var str = "";
+	$(".list_tab").empty();
+	if(resultData.length>0){
+		
+
+		for(var i=0; i<resultCnt; i++){
+			var starndardMonth = resultData[i].STANDARD_MONTH;
+			var sepYear = starndardMonth.substring(0,4); 
+			var sepMonth =starndardMonth.substring(4); 
+			var remComAmt = replaceAll(resultData[i].TOTAL_AMT,",","");
+			array.push(remComAmt);		
+			
+
+			str +=	'<ul class="one_tab" style="border-bottom:0px;">';
+			str +=	'	<li>';
+			if(i==0){
+				str +=	'		<div class="first oneTabOn"  id="oneTab'+starndardMonth+'"  name="oneTab'+starndardMonth+'">';
+			}else{
+				str +=	'		<div class="first"  id="oneTab'+starndardMonth+'"  name="oneTab'+starndardMonth+'">';
+			}
+			str +=	'			<span style="font-size:30px;" name='+remComAmt+'>'+sepMonth+'<span>'+sepYear+'</span></span>';
+			str +=	'			<span style="font-size:16px;" name="oneTab'+remComAmt+'">'+resultData[i].MONTH_CNT+' 건 / '+(resultData[i].TOTAL_AMT)+'원</span>';
+			str +=	'		</div>';
+ 			if(resultDataDep01Cnt>0){
+				if(i==0){
+		 			str +=	'		<ul class="two_tab showOn" name="two_tab'+starndardMonth+'" style="border-bottom:0px;">';
+				}else{
+		 			str +=	'		<ul class="two_tab" name="two_tab'+starndardMonth+'" style="border-bottom:0px;">';
+				}
+				for(var j=0; j<resultDataDep01Cnt; j++){
+					var divMonth = resultDataDep01[j].DIV_MONTH;
+					var divDay= resultDataDep01[j].DIV_DAY;
+					var divCardAppCo = resultDataDep01[j].CARD_APP_CO;
+					var divAppCoDiv = resultDataDep01[j].APP_CO_DIV;
+					if(i==0 && starndardMonth == divMonth){
+						str +=	'			<li>';
+						str +=	'				<div class="second twoTabOn"  id="twoTab'+starndardMonth+(j+1)+'"  name="twoTab'+starndardMonth+'">';
+					}else if(i !=0 && starndardMonth == divMonth){
+						str +=	'			<li>';
+						str +=	'				<div class="second"  id="twoTab'+starndardMonth+(j+1)+'"  name="twoTab'+starndardMonth+'">';
+					}
+					if(starndardMonth == divMonth){
+						if(selMobTab =="CARD"){
+							str +=	'					<span>'+resultDataDep01[j].CARD_APP_CO+'</span>';
+							str +=	'					<span>'+resultDataDep01[j].MONTH_CNT+'건/ '+resultDataDep01[j].TOTAL_AMT+'원</span>';
+							str +=	'				</div>';
+						}else if(selMobTab =="DAY"){
+							str +=	'					<span>'+resultDataDep01[j].DIV_DATE+'</span>';
+							str +=	'					<span>'+resultDataDep01[j].MONTH_CNT+'건/ '+resultDataDep01[j].TOTAL_AMT+'원</span>';
+							str +=	'				</div>';
+						}else if(selMobTab =="DIV"){
+							str +=	'					<span>'+parseAppCoDiv(resultDataDep01[j].APP_CO_DIV)+'</span>';
+							str +=	'					<span>'+resultDataDep01[j].MONTH_CNT+'건/ '+resultDataDep01[j].TOTAL_AMT+'원</span>';
+							str +=	'				</div>';
+						}
+						if(resultDataDep02Cnt>0){
+							str += '<ul class="three_tab"  id="threeTab'+starndardMonth+(j+1)+'"  name="threeTab'+starndardMonth+(j+1)+'" style="border-bottom:0px;border-top:0px;">';
+								for(var k=0; k<resultDataDep02Cnt; k++){
+									var imgDiv = resultDataDep02[k].APP_CO_DIV;
+									if(divMonth == resultDataDep02[k].DIV_WEEK && divAppCoDiv==resultDataDep02[k].APP_CO_DIV && selMobTab =="DIV"){
+										str += '<li style="border-top:0px;">';
+										str += '	<a href="#receipt_details" name="receiptDetail" id="seq'+k+'">';
+										str += '<input type="hidden" value = "'+imgDiv+'" id="mlaticonM'+k+'">';
+										str += '<input type="hidden" value = "'+resultDataDep02[k].CARD_APP_CO+'" id="cardAppCo'+k+'">';
+										str += '<input type="hidden" value = "'+resultDataDep02[k].INST_DIV+'" id="instDiv'+k+'">';
+										str += '<input type="hidden" value = "'+resultDataDep02[k].DIV_MONTH+'" id="divMonth'+k+'">';
+										str += '<input type="hidden" value = "'+resultDataDep02[k].DIV_SEC+'" id="divSec'+k+'">';
+										str += '	<div class="mlat01M" id="mlat01M'+k+'">'+resultDataDep02[k].DIV_MONTH+'</div>';
+										str += '	<div class="mlaticonM"><span><img src="../common/'+imgDiv+'.png" style="width: 50%;" alt=""></span></div>';
+										//str += '	<div class="mlat03">'+resultDataDep02[k].APP_CO_DIV+'</div>';
+										str += '	<div class="mlat02M" id="mlat02M'+k+'">'+resultDataDep02[k].APP_CO+'</div>';
+										str += '	<div class="mlat03M" id="mlat03M'+k+'">'+numberWithCommas(resultDataDep02[k].APP_AMOUNT)+'원</div>';
+										str += '	<hr>';
+										str += '	</a>';
+										str += '</li>';										
+									}else if(divMonth == resultDataDep02[k].DIV_WEEK && divDay == resultDataDep02[k].DIV_MONTH  && selMobTab =="DAY"){
+										str += '<li style="border-top:0px;">';
+										str += '	<a href="#receipt_details" name="receiptDetail" id="seq'+k+'">';
+										str += '<input type="hidden" value = "'+imgDiv+'" id="mlaticonM'+k+'">';
+										str += '<input type="hidden" value = "'+resultDataDep02[k].CARD_APP_CO+'" id="cardAppCo'+k+'">';
+										str += '<input type="hidden" value = "'+resultDataDep02[k].INST_DIV+'" id="instDiv'+k+'">';
+										str += '<input type="hidden" value = "'+resultDataDep02[k].DIV_MONTH+'" id="divMonth'+k+'">';
+										str += '<input type="hidden" value = "'+resultDataDep02[k].DIV_SEC+'" id="divSec'+k+'">';
+										str += '	<div class="mlat01M" id="mlat01M'+k+'">'+resultDataDep02[k].DIV_SEC+'</div>';
+										str += '	<div class="mlaticonM"><span><img src="../common/'+imgDiv+'.png" style="width: 50%;" alt=""></span></div>';
+										//str += '	<div class="mlat03">'+resultDataDep02[k].APP_CO_DIV+'</div>';
+										str += '	<div class="mlat02M" id="mlat02M'+k+'">'+resultDataDep02[k].APP_CO+'</div>';
+										str += '	<div class="mlat03M" id="mlat03M'+k+'">'+numberWithCommas(resultDataDep02[k].APP_AMOUNT)+'원</div>';
+										str += '	<hr>';
+										str += '	</a>';
+										str += '</li>';										
+									}else if(divMonth == resultDataDep02[k].DIV_WEEK && divCardAppCo == resultDataDep02[k].CARD_APP_CO && selMobTab =="CARD"){
+										str += '<li style="border-top:0px;">';
+										str += '	<a href="#receipt_details" name="receiptDetail" id="seq'+k+'">';
+										str += '<input type="hidden" value = "'+imgDiv+'" id="mlaticonM'+k+'">';
+										str += '<input type="hidden" value = "'+resultDataDep02[k].CARD_APP_CO+'" id="cardAppCo'+k+'">';
+										str += '<input type="hidden" value = "'+resultDataDep02[k].INST_DIV+'" id="instDiv'+k+'">';
+										str += '<input type="hidden" value = "'+resultDataDep02[k].DIV_MONTH+'" id="divMonth'+k+'">';
+										str += '<input type="hidden" value = "'+resultDataDep02[k].DIV_SEC+'" id="divSec'+k+'">';
+										str += '	<div class="mlat01M" id="mlat01M'+k+'">'+resultDataDep02[k].DIV_MONTH+'</div>';
+										str += '	<div class="mlaticonM"><span><img src="../common/'+imgDiv+'.png" style="width: 50%;" alt=""></span></div>';
+										//str += '	<div class="mlat03">'+resultDataDep02[k].APP_CO_DIV+'</div>';
+										str += '	<div class="mlat02M" id="mlat02M'+k+'">'+resultDataDep02[k].APP_CO+'</div>';
+										str += '	<div class="mlat03M" id="mlat03M'+k+'">'+numberWithCommas(resultDataDep02[k].APP_AMOUNT)+'원</div>';
+										str += '	<hr>';
+										str += '	</a>';
+										str += '</li>';										
+									}else{
+										
+									}
+									
+								}
+								
+							str += '</ul>'
+							
+						}
+						
+						
+					}
+				
+				str +=	'			</li>    '; 
+				
+				}
+							/* str += '<li style="border-top:0px;">';
+							str += 		'<a href="javascript:monthAllSendMail('+starndardMonth+')">이메일 보내기</a>';
+							str += '</li>';	  */
+						str += '</ul>'; 				
+				
+			} 
+
+		str +=	'	</li>';
+		str +=	'</ul>	';
+		}
+		
+	}
+		$(".list_tab").append(str);
+		var max = Math.max.apply(null, array);
+		var min = Math.min.apply(null, array);
+		$('[name="'+max+'"]').addClass("highPrice");
+		$('[name="'+min+'"]').addClass("lowPrice");
+		$('[name="oneTab'+max+'"]').css("color","#f58bb9");
+		$('[name="oneTab'+min+'"]').css("color","#7dcdf7");
+		//$('[name="'+max+'"]').text("highPrice");
+	
+}
+
+	function monthAllSendMail(date){
+		if(confirm("해당 월 총 내역을 이메일로 받으시겠습니까?")){
+			//alert("네");
+			$.ajax({
+			    type: "post",
+			    url : commonIp()+"/theReal/receipt/monthAllSendMail.do",
+			    dataType:"json",
+			    data: {
+			    	telNo : telNo,
+			    	date : date
+			    },
+			    success: fnMonthAllSendMail,
+			    error: whenError
+			}); 	
+		
+		}
+		return false;
+	}
+
+	function fnMonthAllSendMail(data){
+		alert(data);
+		
+	}
+	
+	
+function dateInput(targetday,sep){
+	  
+	  var date = new Date();
+	  var start = new Date(Date.parse(date) - targetday * 1000 * 60 * 60 * 24);
+	  
+	  var yyyy = start.getFullYear();
+	  var mm = start.getMonth()+1;
+	  var dd = start.getDate();
+	  
+	  if(mm<10){
+	   mm = "0" + mm;
+	  }if(dd<10){
+	   dd = "0" + dd;
+	  }
+	  
+	  return yyyy + sep + mm + sep + dd; 
+	  
+}	
+
+function dateInputMonth(targetday,sep){
+	  
+	  var date = new Date();
+	  var start = new Date(Date.parse(date) - targetday * 1000 * 60 * 60 * 24);
+	  
+	  var yyyy = start.getFullYear();
+	  var mm = start.getMonth()+1;
+	  
+	  if(mm<10){
+	   mm = "0" + mm;
+	  }
+	  
+	  return yyyy+mm; 
+	  
+}	
+
+
+function whenError(request,status,error){
+	//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+};	
+
+</script>
+
+</body>
+</html>

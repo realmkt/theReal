@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+
+    <!-- main -->
+	<script src="../code/jquery.bxslider.min.js"></script>
+    <link href="../code/jquery.bxslider.css" rel="stylesheet" />
+    
+    <!-- tab -->
+	<script type='text/javascript' src='../code/tabs.js'></script>
+
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+    <!-- <link href="../css/monthpicker.css" rel="stylesheet" /> -->
+	<script src="../code/common.js"></script>
+<!-- 	<script type="text/javascript" charset="utf-8" src="../cordova.js"></script> -->
+
+<style type="text/css">
+/* .on { color: blue; border: 1px solid blue; } */
+.on { }
+.list-block {display: none; }
+.item-title.small-fonts{font-size: small;}
+
+
+.alen_list_box2 { margin:0px 0px; background:none; border:0; }
+.alen_list_box2 li { margin:0 10px 0 10px; }
+.alen_list_combtnbox { height:35px; margin-bottom:5px; }
+.alen_list_combtn { margin:3px 10px 3px 10px; padding:0 5px 0 5px; border:1px solid #539bff; color:#fff; /* font-size:1.5em; */ font-weight:400; text-align:center; line-height:50px; cursor:pointer; background:#539bff; -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
+.albpad { padding:0px 0 0px 0; }
+
+.alen_list_btn2 { margin:10px 10px 10px 10px; padding:0; border-radius:10px; background:#333; }
+.alen_list_btn2item { width:20%; float:left;; text-align:center; color:#fff;}
+.alen_list_btn2item .al_btn_txt { padding:10px 0; border-right:1px solid #666; }
+.alen_list_btn2item .al_btn_txt.last { border-right:0; }
+
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner { padding-right: 15px; text-align:center; }
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner .item-title { margin:0 auto; }
+.alen_list_box2 label.label-radio input[type="radio"]:checked ~ .item-inner { background: no-repeat center; background-position: 50% 3px; background-position: -webkit-calc(50% - 8px) 3px; background-position: calc(50% - 8px ) 3px; -webkit-background-size: 13px 10px; background-size: 13px 10px; 
+background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23539bff'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");  }
+.divPage{background: url(../common/divPage.png) no-repeat 0 0;background-position: 0% 0%; height: 30px;"}
+.alen_radio_box2 { margin:10px; border:1px solid #e5e5e5; }
+</style>
+
+</head>
+
+<body>
+
+
+
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+
+
+    <div class="panel panel-left panel-reveal">
+    
+    	<div class="profile_box">
+        	<!-- <div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div> -->
+            
+            <div class="pf_txt">
+            	<h2>김종현</h2>
+                <p>쿠폰 <span>0</span>개</p>
+                <p>포인트 <span>200</span>p</p>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        </div>
+
+    </div>
+    
+    <div class="views">
+		<div class="view view-main">
+        
+            <div class="navbar top_menu">
+                <div data-page="index" class="navbar-inner">
+                
+                    <div class="left">
+                    <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+                    </div>
+					<div class="center sliding alen_logo" style="width: 65%"><img style="width: 65%;height: 50%;margin-left: 17%" src="../common/logo_01.png"></div>
+                </div>
+                
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                </div>
+                
+                
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+                
+            </div>
+            
+
+
+			<div class="pages navbar-through toolbar-through">
+                <div data-page="index" class="page">
+                    <div class="page-content">
+                    
+                    <div class="history_title">
+                        <div class="history_txt">지출통계분석</div>
+                        <div class="history_total" id="totalAmount"></div>
+                        <hr>
+                    </div>                    
+                    
+					<div class="alen_list_btn2">
+                        <div class="alen_list_btn2item" >
+                            <div class="al_btn_txt" name="divPay" id="btnToday">당일</div>
+                        </div>
+                        
+                        <div class="alen_list_btn2item" name="divPay" id="btnWeek">
+                            <div class="al_btn_txt">일주일</div>
+                        </div>
+                        
+                        <div class="alen_list_btn2item" name="divPay" id="btnMonth">
+                            <div class="al_btn_txt">한달</div>
+                        </div>
+                        
+                        <div class="alen_list_btn2item on" name="divPay" id="btnRefresh">
+                            <div class="al_btn_txt">최근</div>
+                        </div>
+
+                        <div class="alen_list_btn2item dtl" name="divPay" id="btnDetail">
+                            <div class="al_btn_txt last">상세</div>
+                        </div>
+                        <hr>
+                    </div>
+                    
+                    <div class="list-block alen_list_box2 albpad">
+                        <ul>
+                            <li>
+                                <div class="item-content hsh_input"><input type="date" name="startDate"  id="startDate"  style="font-size: small;"></div>
+                                
+                                <div class="hsh_and">-</div>
+                                
+                                <div class="item-content hsh_input"><input type="date" name="endDate"  id="endDate"  style="font-size: small;"></div>
+                                <hr>
+                            </li>
+
+                        </ul>
+                    </div>
+                    
+                    <div class="list-block alen_list_box2 albpad">
+                        <ul>
+                            <li>
+                                <div>
+                                    <div class="alen_table_quad">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_pay" value="ALL" checked>
+                                      <div class="item-inner">
+                                        <div class="item-title small-fonts">전체</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    
+                                    <div class="alen_table_quad">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_pay" value="CARD">
+                                      <div class="item-inner">
+                                        <div class="item-title small-fonts">카드</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    
+                                    <div class="alen_table_quad">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_pay" value="CASH">
+                                      <div class="item-inner">
+                                        <div class="item-title small-fonts">현금</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    
+                                    <div class="alen_table_quad alen_table_last">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_pay" value="ETC">
+                                      <div class="item-inner">
+                                        <div class="item-title small-fonts">기타</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    <hr>
+                                
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    
+                    
+                    <div class="list-block alen_list_box2 albpad">
+                        <ul>
+                            <li>
+                                <div>
+                                    <div class="alen_table_quad">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_new" value="D2" checked>
+                                      <div class="item-inner">
+                                        <div class="item-title small-fonts">최신</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    
+                                    <div class="alen_table_quad">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_new" value="D1">
+                                      <div class="item-inner">
+                                        <div class="item-title small-fonts">과거</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    
+                                    <div class="alen_table_quad">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_new" value="A2">
+                                      <div class="item-inner">
+                                        <div class="item-title small-fonts">높은금액</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    
+                                    <div class="alen_table_quad alen_table_last">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_new" value="A1">
+                                      <div class="item-inner">
+                                        <div class="item-title small-fonts">낮은금액</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    <hr>
+                                
+                                </div>
+                            </li>
+
+                        </ul>
+	                    <div class="alen_list_combtnbox" >
+	                        <div class="alen_list_combtn small-fonts" id="searchBtn" >조  회</div>
+	                    </div>
+                    </div>
+                    
+                     
+                    
+                    
+                    <!-- <div id="page-container"></div> -->
+
+					<div class="latest_box alen_outbox">
+
+                        
+                    	<div class="latest_content" >
+                        	<ul id = "receiptData">
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- <div id="chartContainer" style="height: 100px; width: 100%;"></div> -->
+                    <div class = "chartData" id="donutchart" style="height: 100px; width: 100%;"></div><br/><br/>
+                    <div class = "chartData" id="donutchart2" style="height: 100px; width: 100%;"></div><br/><br/>
+                    <div class = "chartData" id="donutchart3" style="height: 100px; width: 100%;"></div><br/><br/>
+                    <div class = "chartData" id="donutchart4" style="height: 100px; width: 100%;"></div>
+                    <div class="foot_info">
+                    
+                    	<div class="foot_box">
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree03">이용약관</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree01">개인정보 취급방침</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="javascript:void(0)">고객센터</a>
+                            </div>
+                            
+                            
+                            <hr>
+                        </div>
+<p>
+(주)이베이 코리아   |   대표이사 : 변광윤<br>
+사업자등록번호 : 220-81-83676   |   통신판매업신고 강남 10630호<br>
+서울시 강남구 테헤란로 152 (역삼동 강남파이낸스센터)<br>
+이메일 :information@corp.auction.co.kr<br>
+고객센터 :1588-0184(오전9시~오후6시,토요일/공휴일휴무<br>
+</p>
+
+<p class="copytxt">Copyrightⓒnoname Co,.All rights reserved</p>
+                    </div>
+                    
+                    
+                    </div>
+                </div>
+                
+                <div data-page="agree01" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree01.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div data-page="agree03" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+			</div>
+            
+            
+            
+            
+
+		</div>
+    </div>
+<!-- <div id="div_ajax_load_image">
+    <img src="../common/log_img.png" />
+</div>  -->
+
+<!-- <script src="../js/monthpicker.min.js"></script>
+<script src="../js/monthpicker-dom.min.js"></script>
+<script src="../js/monthpicker.js"></script> -->
+<script type="text/javascript" src="../js/framework7.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="../js/my-app.js"></script>
+<!-- <script type="text/javascript" src="../js/jquery.canvasjs.min.js"></script>
+<script type="text/javascript" src="../js/canvasjs.min.js"></script> -->
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	var request = new Request();
+	
+	var dateSrchCd  = null;
+	var startDate  = null;
+	var endDate = null;
+	var dateDivCd = null;
+	var payDivCd = null;
+	var orderByCd = null;	
+	
+	var telNo = request.getParameter('telNo');
+	var uuId = request.getParameter('uuId');
+	var barcodeNo = "";
+	var dtlSeq = "";
+	var seq = "";
+	var emailSendJsonData = null;
+
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1;
+	var yyyy = today.getFullYear();
+
+	if(dd<10) {
+	    dd='0'+dd
+	} 
+
+	if(mm<10) {
+	    mm='0'+mm
+	} 
+	
+	
+	var date = new Date();
+	var curDate = date.getDate();
+	var firstDayOfMonth = new Date( date.getFullYear(), date.getMonth()+1 , 1 );
+	var startDate = date.getFullYear()+""+(date.getMonth() > 9 ? ''+date.getMonth(): '0'+date.getMonth());
+	//var lastMonth = new Date ( firstDayOfMonth.setDate( firstDayOfMonth.getDate() - 1 ) );
+	var lastMonth = new Date( date.getFullYear(), (date.getMonth()+1) , 1 );
+	var endDate = date.getFullYear()+""+(date.getMonth()+1 > 9 ? ''+(date.getMonth()+1): '0'+date.getMonth());
+	
+	 function dateInput(targetday,sep){
+		  
+		  var date = new Date();
+		  var start = new Date(Date.parse(date) - targetday * 1000 * 60 * 60 * 24);
+		  
+		  var yyyy = start.getFullYear();
+		  var mm = start.getMonth()+1;
+		  var dd = start.getDate();
+		  
+		  if(mm<10){
+		   mm = "0" + mm;
+		  }if(dd<10){
+		   dd = "0" + dd;
+		  }
+		  
+		  return yyyy + sep + mm + sep + dd; 
+		  
+		 }		
+	    $('#startDate').val(dateInput(7,"-"));		
+	    $('#endDate').val(dateInput(0,"-"));
+	function latestDivSrch(dateSrchCd,startDate,endDate,dateDivCd,payDivCd,orderByCd){
+     	    $.ajax({
+    	        type: "post",
+    	        url : commonIp()+"/theReal/receipt/smsLatestData.do",
+    	        data: {
+    	        	telNo  	: telNo,
+    	        	dateSrchCd : dateSrchCd, 
+    	        	startDate : startDate, 
+    	        	endDate : endDate,
+    	        	dateDivCd : dateDivCd,
+    	        	payDivCd : payDivCd,
+    	        	orderByCd : orderByCd,
+    	        },
+    	        success: fn_latestData,
+    	        error: whenError
+        	});			
+		}	
+		
+
+	$(document).ready(function(){
+        	$(".chartData").hide();
+
+    		$("#totalAmount").click(function(){
+    			location.href='latest.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+    		})
+    		
+    		$("#btnDetail").click(function(){
+    			if($('#btnDetail').hasClass("dtl")){
+    				$('#btnDetail').removeClass("dtl");
+    				$('.alen_table_quad').css({'height': '35px'});
+    				$('#searchBtn').css({'line-height': '35px'});
+    				$(".list-block").slideDown();
+    				//alert($('.on').attr("id"));
+    			}else{
+    				$('#btnDetail').addClass("dtl");
+    				
+    				$(".list-block").slideUp();
+    			}
+    		})
+    		
+    		$('[name="divPay"]').click(function(){
+    			if($('[name="divPay"]').hasClass("on")){
+    				$('[name="divPay"]').removeClass("on");
+    				$('[name="divPay"]').css({'color': '','border': ''});
+    				$(this).addClass("on");
+    				$(this).css({'color': '#539bff'});
+    				//alert($('.on').attr("id"));
+    			}else{
+    				$(this).addClass("on");
+    				$(this).css({'color': '539bff'});
+    			}
+    		})        	
+        	
+
+        $("#btnList").click(function(){
+        	latestData();
+        	$(".latest_content").show();
+        	$(".chartData").hide();
+        })
+
+        $("#btnAnal").click(function(){
+   	     google.charts.load("current", {packages:["corechart"]});
+	     //google.load('visualization', '1.0', {'packages':['corechart']});
+	      google.charts.setOnLoadCallback(monthChartData);
+	      google.charts.setOnLoadCallback(dayDivChartData);
+	      google.charts.setOnLoadCallback(instDivChartData);
+	      google.charts.setOnLoadCallback(dayOfMonthChartData);		        	
+        	$(".latest_content").hide();
+        	$(".chartData").show();
+        })
+		//당일버튼 클릭 시
+        $("#btnToday").click(function(){
+        	$(".latest_content").show();
+        	latestDivSrch("N","N","N","TODAY","N","N");
+        	$(".chartData").hide();
+        	//$("#donutchart").show();
+/*    	     google.charts.load("current", {packages:["corechart"]});
+	      google.charts.setOnLoadCallback(drawChart); */
+        });
+        
+        //일주일 버튼 클릭 시
+        $("#btnWeek").click(function(){
+        	//$("#donutchart").show();
+        	latestDivSrch("N","N","N","WEEK","N","N");
+        	$(".chartData").hide();
+        	$(".latest_content").show();
+/*    	     google.charts.load("current", {packages:["corechart"]});
+	      google.charts.setOnLoadCallback(drawChart2); */
+        });
+        
+        //한달 버튼 클릭시 
+        $("#btnMonth").click(function(){
+        	//$("#donutchart").show();
+        	latestDivSrch("N","N","N","MONTH","N","N");
+        	$(".chartData").hide();
+        	$(".latest_content").show();
+/*    	     google.charts.load("current", {packages:["corechart"]});
+        	google.charts.setOnLoadCallback(monthChartData); */
+        });
+        //새로고침 버튼 클릭시 
+        $("#btnRef").click(function(){
+        	latestData();
+        	$(".chartData").hide();
+        	$(".latest_content").show();
+        });
+        
+        
+    	$("#searchBtn").click(function(){
+    		//시작일자
+    		var startDateVal = $(':input[name="startDate"]').val();
+    		//종료일자
+    		var endDateVal = $(':input[name="endDate"]').val();
+    		//조회내용
+    		startDateComVal = replaceAll(startDateVal,"","");
+    		endDateComVal = replaceAll(endDateVal,"","");
+    		if(startDateComVal > endDateComVal){
+    			alert("조회일자가 현재일자보다 큽니다.");
+    			$(':input[name="startDate"]').focus();
+    			return false;
+    		}
+    		var sortPayVal = $(':radio[name="sort_pay"]:checked').val();
+    		//조회결과순서
+    		var sortNewVal = $(':radio[name="sort_new"]:checked').val();
+    		console.log(startDateVal);
+    		console.log(endDateVal);
+    		console.log(sortPayVal);
+    		console.log(sortNewVal);
+    		if(isNull(startDateVal)){
+    			alert("시작일자를 입력해주시기 바랍니다.");
+    			return false;
+    		}
+    		if(isNull(endDateVal)){
+    			alert("종료일자를 입력해주시기 바랍니다.");
+    			return false;
+    		}
+    		//$("#receiptData").empty();
+    		latestDivSrch("Y",startDateVal,endDateVal,"N",sortPayVal,sortNewVal);
+    	})	        
+		
+		  $('.history_cate').bxSlider({
+			  slideWidth: 70,
+			  minSlides: 2,
+			  maxSlides: 8,
+			  moveSlides: 4,
+			  slideMargin: 10,
+			  auto: false,
+			  autoHover: true,
+			  pager: false,
+			  controls: false
+		  });		
+		
+		latestData();
+		commonUserData();
+		
+		
+		function todayChart(){
+			
+		}
+
+/* 	      function drawChart2() {
+	        var data = google.visualization.arrayToDataTable([
+	          ['Task', 'Hours per Day'],
+	          ['Wo1111111k',     11],
+	          ['Eat',      2],
+	          ['Commute',  2],
+	          ['Watch TV', 2],
+	          ['Sleep',    7]
+	        ]);
+
+	        var options = {
+	          title: 'My Daily Activities',
+	          pieHole: 0.4,
+	        };
+
+	        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+	        chart.draw(data, options);
+	      }		
+	      function drawChart(resdata) {
+	    	  
+
+	    	  var years = ['11월', '12월'];
+	    	  var sales = [12900, 2233];
+
+	    	  var data = new google.visualization.DataTable();
+	    	  data.addColumn('string', '월');
+	    	  data.addColumn('number', '금액');
+
+	    	  for(i = 0; i < years.length; i++)
+	    	    data.addRow([years[i], sales[i]]);
+	    	  
+	    	  
+/* 	        var data = google.visualization.arrayToDataTable([
+	          ['Task', 'Hours per Day'],
+	          ['Work',     11],
+	          ['Eat',      2],
+	          ['Commute',  2],
+	          ['Watch TV', 2],
+	          ['Sleep',    7]
+	        ]); */
+/*
+	        var options = {
+	          title: 'My Daily Activities',
+	          pieHole: 0.4,
+	        };
+
+	        var chart = new google.visualization.ColumnChart(document.getElementById('donutchart'));
+	        chart.draw(data, options);
+	      }		
+		 */
+/* 		var chart = new CanvasJS.Chart("chartContainer",
+				{
+					title:{
+						text: "Presidential Election Results"
+					},
+			                animationEnabled: true,
+					data: [
+					{
+						type: "doughnut",
+						startAngle: 60,
+						toolTipContent: "{legendText}: {y} - <strong>#percent% </strong>",
+						showInLegend: true,
+			          explodeOnClick: false, //**Change it to true
+						dataPoints: [
+							{y: 65899660, indexLabel: "Barack Obama #percent%", legendText: "Barack Obama" },
+							{y: 60929152, indexLabel: "Mitt Romney #percent%", legendText: "Mitt Romney" },
+							{y: 2175850,  indexLabel: "Others #percent%", legendText: "Others" }
+						]
+					}
+					]
+				});
+				chart.render();
+				$(".canvasjs-chart-credit").empty(); */
+	})
+
+	function replaceAll(content,before,after){
+	    return content.split(before).join(after);
+	}		
+	
+	function dayDivChartData(){
+	    $.ajax({
+	        type: "post",
+	        url : commonIp()+"/theReal/receipt/dayDivChartData.do",
+	        data: {
+	        	telNo  	: telNo
+	        },
+	        success: 	function (resdata){
+	    		console.log(resdata);
+	    		var str = "";
+	    		var resultData = resdata.resultMap;	
+	    		
+	    		resultCnt = resultData.length;
+	    		if(resultData.length>0){
+	    			
+	        	  var data = new google.visualization.DataTable();
+	        	  data.addColumn('string', '월');
+	        	  data.addColumn('number', '사용금액');
+
+	    			var options = {
+	    			     title: '날짜별사용통계',
+	    			     pieHole: 0.4,
+	    			     };
+
+	    			
+	    			for(var i=0; i<resultCnt; i++){
+	    			console.log(typeof resultData[i].WEEK_NAME.toString());
+	    			console.log(typeof parseInt(resultData[i].DAY_AMT));
+	    				data.addRow([resultData[i].WEEK_NAME.toString()+"요일", parseInt(resultData[i].DAY_AMT.replace(",",""))]);		
+	    			}
+	      	        var chart = new google.visualization.LineChart(document.getElementById('donutchart2'));
+	      	        chart.draw(data, options);	    	  
+	    		}
+	    		
+	    	},
+	        error: whenError
+    	});				
+	};
+	function instDivChartData(){
+	    $.ajax({
+	        type: "post",
+	        url : commonIp()+"/theReal/receipt/instDivChartData.do",
+	        data: {
+	        	telNo  	: telNo
+	        },
+	        success: 	function (resdata){
+	    		console.log(resdata);
+	    		var str = "";
+	    		var resultData = resdata.resultMap;	
+	    		
+	    		resultCnt = resultData.length;
+	    		if(resultData.length>0){
+	    			
+	        	  var data = new google.visualization.DataTable();
+	        	  data.addColumn('string', '월');
+	        	  data.addColumn('number', '사용금액');
+
+	    			var options = {
+	    			     title: '할부별사용통계',
+	    			     //pieHole: 0.4,
+	    			     is3D: true,
+	    			     };
+
+	    			
+	    			for(var i=0; i<resultCnt; i++){
+	    				data.addRow([resultData[i].INST_DIV.toString(), parseInt(resultData[i].DAY_AMT.replace(",",""))]);		
+	    			}
+	      	        var chart = new google.visualization.PieChart(document.getElementById('donutchart3'));
+	      	        chart.draw(data, options);	    	  
+	    		}
+	    		
+	    	},
+	        error: whenError
+    	});				
+	};
+	function dayOfMonthChartData(){
+	    $.ajax({
+	        type: "post",
+	        url : commonIp()+"/theReal/receipt/dayOfMonthChartData.do",
+	        data: {
+	        	telNo  	: telNo
+	        },
+	        success: 	function (resdata){
+	    		console.log(resdata);
+	    		var str = "";
+	    		var resultData = resdata.resultMap;	
+	    		
+	    		resultCnt = resultData.length;
+	    		if(resultData.length>0){
+	    			
+	        	  var data = new google.visualization.DataTable();
+	        	  data.addColumn('string', '월');
+	        	  data.addColumn('number', '사용금액');
+
+	    			var options = {
+	    			     title: '일별사용통계',
+	    			     pieHole: 0.4,
+	    			     };
+	    			
+	    			for(var i=0; i<resultCnt; i++){
+	    			console.log(typeof resultData[i].DAY.toString());
+	    			console.log(typeof parseInt(resultData[i].DAY_AMT));
+	    				data.addRow([resultData[i].DAY.toString()+"일", parseInt(resultData[i].DAY_AMT.replace(",",""))]);		
+	    			}
+	      	        var chart = new google.visualization.ColumnChart(document.getElementById('donutchart4'));
+	      	        chart.draw(data, options);	    	  
+	    		}
+	    	},
+	        error: whenError
+    	});				
+	};
+	
+	function monthChartData(){
+	    $.ajax({
+	        type: "post",
+	        url : commonIp()+"/theReal/receipt/monthChartData.do",
+	        data: {
+	        	telNo  	: telNo
+	        },
+	        success: 	function (resdata){
+	    		console.log(resdata);
+	    		var str = "";
+	    		var resultData = resdata.resultMap;	
+	    		
+	    		resultCnt = resultData.length;
+	    		if(resultData.length>0){
+	    			
+	        	  var data = new google.visualization.DataTable();
+	        	  data.addColumn('string', '월');
+	        	  data.addColumn('number', '사용금액');
+
+	    			var options = {
+	    			     title: '월별사용통계',
+	    			     pieHole: 0.4,
+	    			     };
+	    			
+	    			for(var i=0; i<resultCnt; i++){
+	    				data.addRow([resultData[i].MONTH.toString()+"월", parseInt(resultData[i].TOTAL_AMT.replace(",",""))]);
+	    			}
+	      	        var chart = new google.visualization.BarChart(document.getElementById('donutchart'));
+	      	        chart.draw(data, options);	    	  
+	    		}
+	    	},
+	        error: whenError
+    	});				
+	};
+	
+/* 	function fn_monthChartData(resdata){
+		console.log(resdata);
+		var str = "";
+		var resultData = resdata.resultMap;	
+		
+		resultCnt = resultData.length;
+		if(resultData.length>0){
+			
+    	  var data = new google.visualization.DataTable();
+    	  data.addColumn('string', '월');
+    	  data.addColumn('number', '사용금액');
+
+			var options = {
+			     title: 'My Daily Activities',
+			     pieHole: 0.4,
+			     };
+
+			
+			for(var i=0; i<resultCnt; i++){
+				data.addRow([resultData[i].MONTH, resultData[i].TOTAL_AMT]);		
+			}
+			console.log("@@@");
+			console.log(data);
+			console.log("@@@");
+  	        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+  	        chart.draw(data, options);	    	  
+			
+		}
+		
+	} */
+	
+	function latestData(){
+	    $.ajax({
+	        type: "post",
+	        url : commonIp()+"/theReal/receipt/smsLatestData.do",
+	        data: {
+	        	telNo  	: telNo
+	        },
+	        success: fn_latestData,
+	        error: whenError
+    	});				
+	};
+	
+	function fn_latestData(resdata){
+		console.log(resdata);
+		var str = "";
+		var resultData = resdata.resultMap;
+		var cardCashDiv = "";
+		
+		$("#receiptData").empty();
+		
+		resultCnt = resultData.length;
+		if(resultData.length>0){
+			for(var i=0; i<resultCnt; i++){
+				$("#totalAmount").text("총 "+resultCnt+"건 / "+resultData[i].TEST1+"원");
+				
+				str += '<li>';
+/* 				str += '<input type="hidden" value = "'+resultData[i].SALES_BARCODE+'" id="barcodeNo'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].SHOP_NAME+'" id="shopName'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].SHOP_ADDR+'" id="shopAddr'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].SHOP_BIZNO+'" id="shopBizNo'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].SHOP_CEO+'" id="shopCeo'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].SHOP_TEL_NUM+'" id="shopTelNum'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].SHOP_CASHIER+'" id="shopCashier'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].SALES_DATE+'" id="salesDate'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].CARD_APP_NO+'" id="cardAppNo'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].CARD_NO+'" id="cardNo'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].CARD_ICOM+'" id="cardICom'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].CARD_INSTALLMENT+'" id="cardInstall'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].EMAIL+'" id="emailInfo'+resultData[i].SEQ+'">';
+				str += '<input type="hidden" value = "'+resultData[i].USER_NM+'" id="userNm'+resultData[i].SEQ+'">';
+				//전체부가세합
+				str += '<input type="hidden" value = "'+resultData[i].SALES_SUM_TAX_AMT+'" id="sumTaxAmt'+resultData[i].SEQ+'">';
+				//면세물품가액
+				str += '<input type="hidden" value = "'+resultData[i].SALES_SUM_DF_AMT+'" id="sumDfAmt'+resultData[i].SEQ+'">';
+				//과세물품가액
+				str += '<input type="hidden" value = "'+resultData[i].SALES_SUM_FP_AMT+'" id="sumFpAmt'+resultData[i].SEQ+'">';
+				//전체판매금액
+				str += '<input type="hidden" value = "'+resultData[i].SALES_SUM_AL_AMT+'" id="sumAlAmt'+resultData[i].SEQ+'">';
+				//전체 결제금액
+				str += '<input type="hidden" value = "'+resultData[i].SALES_PAID_AMT+'" id="sumPaidAmt'+resultData[i].SEQ+'">'; */
+				str += '<a href="#receipt_details" name="receiptDetail" id="seq'+resultData[i].SMS_NO+'">';
+				//str += '<a href="#" name="receiptDetail" id="seq'+i+'">';
+				str += '<div class="mlat01" id="mlat01'+resultData[i].SEQ+'">'+resultData[i].APP_DT+'</div>';
+				/* str += '<div class="mlaticon" id="mlaticon'+resultData[i].SEQ+'"><span>커피</span></div>'; */
+				str += '<div class="mlat02" id="mlat02'+resultData[i].SEQ+'">'+resultData[i].APP_CO+'</div>';
+				str += '<div class="mlat03" id="mlat03'+resultData[i].SEQ+'">'+resultData[i].INST_DIV+'</div>';
+				str += '<div class="mlat04" id="mlat04'+resultData[i].SEQ+'">'+numberWithCommas(resultData[i].APP_AMOUNT)+'</div>';
+				
+				str += '<div class="mlat05" id="mlat05'+resultData[i].SEQ+'">'+resultData[i].CARD_APP_CO+'</div>';
+				str += '<hr>';		            
+				str += '</a>';		            
+				str += '</li>';		            
+			}
+		}else{
+			str += '<li>';
+			str += '<div style="width: 50%;margin-left: 25%";><img style="width: 80%;" src="../common/emptyList03.jpg"></div>';			
+			str += '</li>';		
+			$("#totalAmount").text("총 0건 / 0원");
+			
+		}
+		$("#receiptData").append(str);		
+		//$("#detailRecData").empty();
+		
+	};
+	
+	function fn_latestUpdateData(){
+		console.log("확인여부업데이트");
+	};
+	
+	function whenError(){
+		alert("실패");
+	};
+	
+	function callEmailSendSuc(resdata){
+		alert("완료");
+	}	
+	
+</script>
+
+
+</body>
+</html>

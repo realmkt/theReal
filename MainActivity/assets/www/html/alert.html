@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="code/layout.css" />
+    <link rel="stylesheet" media="all" href="code/common.css" />
+
+    <!-- main -->
+	<script src="code/jquery.bxslider.min.js"></script>
+    <link href="code/jquery.bxslider.css" rel="stylesheet" />
+    
+    <!-- tab -->
+	<script type='text/javascript' src='code/tabs.js'></script>
+    
+    <!-- scroll -->
+	<script src="code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+    
+	<script src="code/common.js"></script>
+    
+</head>
+
+<body>
+
+
+<style type="text/css">
+.alert_box { position:fixed; top:40%; left:50%; margin-left:-30%; border-radius:7px; box-shadow:1px 1px 10px #aaa; background: #fff; width:60%; z-index:999; }
+.alert_box .alert_txt { text-align:center; padding:20px 10px 20px; color:#666; font-size:1.2em; }
+.alert_box .alert_btn { text-align:center; padding:10px; border-radius:0 0 7px 7px; text-shadow: 1px 1px 3px #666666; background: #f2f2f2; padding:12px; border-top:1px solid #e5e5e5; }
+.alert_box .alert_btn a { border-radius: 4px; text-shadow: 1px 1px 3px #999; color: #ffffff; font-size: 1.2em; background: #539bff; padding:2px 15px; text-decoration: none; }
+</style>
+
+
+<div class="alert_box">
+	<div class="alert_txt" id="alert_desc">중복된 아이디입니다.</div>
+	<div class="alert_btn"><a href="javascript:void(0)">확인</a></div>
+</div>
+
+
+
+
+<script type="text/javascript" src="js/framework7.js"></script>
+
+<script type="text/javascript" src="js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+</body>
+</html>

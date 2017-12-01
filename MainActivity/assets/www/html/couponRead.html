@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+    
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+    
+	<script src="../code/common.js"></script>
+    
+</head>
+
+<body>
+
+
+
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+
+
+    <div class="panel panel-left panel-reveal">
+    
+    	<div class="profile_box">
+        	<!-- <div class="pf_photo" style="background:url(../common/profile.jpg) no-repeat center;"></div> -->
+            
+            <div class="pf_txt">
+            	<h2>김종현</h2>
+                <p>쿠폰 <span>0</span>개</p>
+                <p>포인트 <span>200</span>p</p>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        	<ul>
+            </ul>
+        </div>
+
+    </div>
+    
+    
+    <div class="views">
+		<div class="view view-main">
+        
+            <div class="navbar top_menu">
+                <div data-page="index" class="navbar-inner">
+                
+                    <div class="left">
+                    <div class="left sliding"><a href="javascript:back()" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                    </div>
+                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 27%;"></div>
+                </div>     
+                <div data-page="receipt_details" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">영수증 상세 내역</div>
+                </div>
+                
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                </div>
+
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+                
+                <div data-page="detailSearch" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">상세조회</div>
+                </div>                               
+            </div> 
+
+
+			<div class="pages navbar-through toolbar-through">
+                <div data-page="index" class="page">
+                    <div class="page-content">
+                    
+                    <div class="coupon_tab">
+                    	<ul>
+                        	<li><a href="javascript:void(0)"  class="active" id="coupon">진행중인 쿠폰</a></li>
+                        	<!-- <li><a href="javascript:void(0)"  id="eventEnd">종료된 쿠폰</a></li> -->
+                        	<li><a href="javascript:void(0)"  id="coupon_all">전체보기</a></li>
+                            <hr>
+                        </ul>
+                    </div>
+
+					<div class="board_box alen_outbox">
+
+                    	<div class="board_content" >
+                        	<h2>더리얼 쿠폰</h2>
+                        	<ul id="couponList">
+<!--                             	<li>
+                                <a href="#event_page">
+                                <div class="board_title"><span>경희처럼, 도전하라!</span> <span class="board_adate">2017-01-19 11:08</span><hr></div>
+                                </a>
+                                </li> -->
+                                
+<!--                             	<li>
+                                <a href="#notice_page">
+                                <div class="board_title"><span>배달의민족 “간단계좌결제 서비스” 오픈 일정 변경 안내</span> <span class="board_adate">2016-08-19 11:08</span><hr></div>
+                                </a>
+                                </li>
+                                                                
+                            	<li>
+                                <a href="#notice_page">
+                                <div class="board_title"><span>개인정보 취급방침 개정 안내</span> <span class="board_adate">2016-08-19 11:08</span><hr></div>
+                                </a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </div>
+
+<!--                     <div class="event_board">
+                    	<div class="event_bitem alen_outbox">
+                        <a href="#event_page">
+                        <img src="../banner/event01.jpg">
+                        </a>
+                        </div>
+                        
+                    	<div class="event_bitem alen_outbox">
+                        <a href="#event_page">
+                        <img src="../banner/event02.jpg">
+                        </a>
+                        </div>
+                        
+                    	<div class="event_bitem alen_outbox">
+                        <a href="#event_page">
+                        <img src="../banner/event01.jpg">
+                        </a>
+                        </div>
+                        
+                    	<div class="event_bitem alen_outbox">
+                        <a href="#event_page">
+                        <img src="../banner/event02.jpg">
+                        </a>
+                        </div>
+                    </div> -->
+                    
+                    
+
+                    
+                     <div data-page="event_page" class="page">
+                    <div class="page-content">
+                        <div class="content-block">
+
+
+						<div class="coupond_box">
+                        	<div class="coupond_inbox">
+                                 <div class="cod_table">
+                                	
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+
+                        </div>
+                    </div>
+                </div>
+                    <div class="foot_info">
+                    
+<!--                     	<div class="foot_box">
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree03">이용약관</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree01">개인정보 취급방침</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#">고객센터</a>
+                            </div>
+                            
+                            
+                            <hr>
+                        </div> -->
+<p>
+(주)더리얼마케팅 | 대표이사:손종희<br>
+사업자등록번호:220-88-19101   |   통신판매업신고 강남 04134호<br>
+서울시 강남구 압구정로10길 13, 401호(신사동, 마사빌딩)<br>
+이메일 : theReal@realmkt.co.kr<br>
+고객센터 : 02-518-5112 | 마케팅:02-540-3111<br>
+</p>
+
+<p class="copytxt">CopyrightⓒThe REAL Co.All rights reserved</p>
+                    </div>
+                    
+                    
+                    </div>
+                </div>
+                
+                
+
+               
+
+
+ 
+                
+			</div>
+            
+            
+            
+            
+
+		</div>
+    </div>
+
+
+
+
+<script type="text/javascript" src="../js/framework7.js"></script>
+
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+<script type="text/javascript">
+
+function back(){
+	window.history.back();
+}
+var request = new Request();
+var telNo = request.getParameter('telNo');
+var uuId = request.getParameter('uuId');
+var seq = request.getParameter('seq');
+$(document).ready(function(){
+	
+	
+	commonUserData();
+	fn_couponRead(seq);
+	
+	/* $(document).on('click','.evd_content',function(){
+		window.open($("#eventLinkUrl"+seq).val(),"_blank","location=yes");
+	}) 링크 이동 jq*/
+	/* 
+	$(document).on('click','[name="eventList"]',function(){
+		$(".coupond_inbox").empty();
+		seq = $(this).attr('id');
+		seq = seq.replace("seq","");
+		var strDtl = "";
+		strDtl += '<div class="cod_table">';
+		strDtl += '	<ul>';
+		strDtl += '      <li>'+$("#listTitle"+seq).text()+'</li>';
+		strDtl += '      <li class="cod_tsub"><span>'+$("#listDate"+seq).text()+'</span><span class="evd_right">'+$("#eventHitCnt"+seq).val()+'</span><hr></li>';
+		strDtl += '    </ul>';
+		strDtl += '    <div class="cod_content">';
+		strDtl += $("#couponBoardContents"+seq).val();
+		strDtl += '    </div>';
+		strDtl += '</div>';	
+		$(".coupond_inbox").append(strDtl);
+	});	
+	 */
+})
+
+function dateInput(targetday,sep){
+  
+	var date = new Date();
+	var start = new Date(Date.parse(date) - targetday * 1000 * 60 * 60 * 24);
+	
+	var yyyy = start.getFullYear();
+	var mm = start.getMonth()+1;
+	var dd = start.getDate();
+	
+	if(mm<10){
+		mm = "0" + mm;
+	}if(dd<10){
+		dd = "0" + dd;
+	}
+  
+	return yyyy + sep + mm + sep + dd; 
+  
+ }	
+
+function fn_couponRead(seq){
+	    $.ajax({
+	        type: "post",
+	        url : commonIp()+"/theReal/receipt/couponRead.do",
+	        data: {
+	        	seq : seq,
+	        },
+	        success: fn_sucCouponRead,
+	        error: whenError
+    	});			
+}
+
+function fn_sucCouponRead(resdata){
+	
+	$(".coupond_inbox").empty();
+	var strDtl = "";
+	strDtl += '<div class="cod_table">';
+	strDtl += '	<ul>';
+	strDtl += '      <li>'+resdata.COUPON_TITLE+'</li>';
+	strDtl += '      <li class="cod_tsub"><span style="font-size:13px; padding:10px; color:#000">'+resdata.USE_DATE_ORG+'</span><span class="cod_right">조회수 : '+resdata.COUPON_CNT;
+	if((resdata.COUPON_TOTAL-resdata.COUPON_DOWNLOAD)==0){
+		strDtl += '<span style="color:red; position:relative; right:-60px;"><br>남은 쿠폰 : '+(resdata.COUPON_TOTAL-resdata.COUPON_DOWNLOAD)+'</span></span><hr></li>';
+	}else{
+		strDtl += '<br>남은 쿠폰 : '+(resdata.COUPON_TOTAL-resdata.COUPON_DOWNLOAD)+'</span><hr></li>';
+	}
+	
+	
+	
+	strDtl += '    </ul>';
+	strDtl += '    <div class="cod_content">';
+	strDtl +=      resdata.COUPON_CONTENT
+	strDtl += '    </div>';
+	strDtl += '		<input type="button" value="쿠폰 받기" class="couponInBtn" id="couponInBtn" onclick="couponInBtn()"> ';
+	strDtl += '</div>';	
+	$(".coupond_inbox").append(strDtl);
+	
+	if(resdata.downCnt){
+		$("#couponInBtn").val("모두 소진된 쿠폰입니다.");
+		$("#couponInBtn").css("background","#eee");
+		$("#couponInBtn").css("color","red");
+		$("#couponInBtn").prop("disabled", true);
+	}		
+		
+}
+
+function couponInBtn(){
+		$.ajax({
+	        type: "post",
+	        url : commonIp()+"/theReal/receipt/couponAdd.do",
+	        data: {
+	        	nowDay : dateInput(0,"-"),
+	        	seq : seq,
+	        	telNo : telNo,
+	        	uuId : uuId
+	        },
+	        success: fn_sucCouponAdd,
+	        error: whenError
+    	});		
+		
+}
+
+function whenError(request,status,error){
+	alert("code:"+request.status+"\n\n"+"message:"+request.responseText+"\n\n"+"error:"+error);
+}
+
+function fn_sucCouponAdd(resdata){
+	if(resdata==0){
+		alert("쿠폰이 발급되었습니다! \n'내 쿠폰' 에서 확인하세요.");
+	}else if(resdata==1){
+		alert("쿠폰을 이미 발급 받았습니다. \n'내 쿠폰' 에서 확인해주세요.");
+	}else if(resdata==2){
+		alert("쿠폰이 모두 소진되었습니다.\n다음 이벤트를 기대해주세요!");
+	}
+	$("#couponInBtn").css("background","#eee");
+	$("#couponInBtn").prop("disabled", true);
+}
+</script>
+</body>
+</html>

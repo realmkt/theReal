@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+
+    <!-- main -->
+	<script src="../code/jquery.bxslider.min.js"></script>
+    <link href="../code/jquery.bxslider.css" rel="stylesheet" />
+
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+    
+	<script src="../code/common.js"></script>
+    
+    <link href="../css/monthpicker.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+
+
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+
+    <div class="panel panel-left panel-reveal">
+    
+    	<div class="profile_box">
+        	<div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div>
+            
+            <div class="pf_txt">
+            	<h2>김종현</h2>
+                <p>쿠폰 <span>0</span>개</p>
+                <p>포인트 <span>200</span>p</p>
+                
+                <div class="alen_setting" onClick="location.href='setting.html'">
+                <a href="#"><i class="icon icon-form-settings"></i></a>
+                </div>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        	<ul>
+            	<li onClick="location.href='latest.html'">
+                <div class="leftm_box leftm01"></div>
+                <a href="#">최근사용내역</a>
+                </li>
+                
+            	<li onClick="location.href='history.html'">
+                <div class="leftm_box leftm02"></div>
+                <a href="#">영수증확인</a>
+                </li>
+                
+            	<li onClick="location.href='household.html'">
+                <div class="leftm_box leftm03"></div>
+                <a href="#">가계부</a>
+                </li>
+                
+            	<li onClick="location.href='event.html'">
+                <div class="leftm_box leftm04"></div>
+                <a href="#">이벤트</a>
+                </li>
+                
+            	<li onClick="location.href='notice.html'">
+                <div class="leftm_box leftm05"></div>
+                <a href="#">공지사항</a>
+                </li>
+                
+            </ul>
+        </div>
+
+    </div>
+    
+
+
+    
+    <div class="views">
+		<div class="view view-main">
+        
+            <div class="navbar top_menu">
+                <div data-page="index" class="navbar-inner">
+                
+                    <div class="left">
+                    <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+                    </div>
+                    <div class="center sliding alen_logo" onClick="location.href='index.html'"><img src="common/logo.png"></div>
+
+                </div>
+                
+                <div data-page="receipt_details" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">영수증 상세 내역</div>
+                </div>
+                
+                
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                </div>
+                
+                
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+                
+                
+            </div>
+            
+			<div class="pages navbar-through toolbar-through">
+                <div data-page="index" class="page">
+
+                    
+                    <div class="page-content">
+                    
+                    
+                    <div class="history_title">
+                        <div class="history_txt">전자영수증 내역확인</div>
+                        <div class="history_total">총 10건 / 560,560원</div>
+                        <hr>
+                    </div>
+                    
+                    
+                    <div class="history_btnbox">
+                       
+                        <div class="history_cate">
+                            <div class="slide">
+							<a href="#"><img src="icon/car.png"></a>
+                            <p>자동차/주유</p>
+                            </div>
+                            
+                            <div class="slide">
+							<a href="#"><img src="icon/coffee.png"></a>
+                            <p>카페<br>베이커리</p>
+                            </div>
+                            
+                            <div class="slide">
+							<a href="#"><img src="icon/food.png"></a>
+                            <p>음식</p>
+                            </div>
+                            
+                            <div class="slide">
+							<a href="#"><img src="icon/mart.png"></a>
+                            <p>편의점/마트</p>
+                            </div>
+                            
+                            <div class="slide">
+							<a href="#"><img src="icon/pay.png"></a>
+                            <p>통신</p>
+                            </div>
+                            
+                            <div class="slide">
+							<a href="#"><img src="icon/shopping.png"></a>
+                            <p>쇼핑</p>
+                            </div>
+                            
+                            <div class="slide">
+							<a href="#"><img src="icon/question.png"></a>
+                            <p>기타 사용처</p>
+                            </div>
+                        </div>        
+                    </div>
+                    
+                    
+					
+                    <div class="history_sort">
+                    	<ul>
+                          <li class="asort_up">최신순</li>
+                          <li class="asort_down">높은순</li>
+                          
+                          <li class="hsort_line"></li>
+                          
+                          <li>당일</li>
+                          <li>1주일</li>
+                          <li>한달</li>
+                          
+                          <li class="hsort_line"></li>
+                          
+                          <li class="hsort_detail" onClick="location.href='history_search.html'">상세조회</li>
+                          
+                        </ul>
+                    </div>
+                    
+                    
+
+					<div class="latest_box alen_outbox">
+
+                        
+                    	<div class="latest_content" >
+                        	<ul>
+                            	<li>
+                                <a href="#receipt_details">
+                                <div class="mlat01">2016-08-24</div>
+                                <div class="mlaticon"><span>카페/베이커리</span></div>
+                                <div class="mlat02">삼성카드</div>
+                                <div class="mlat03">세븐일레븐</div>
+                                <div class="mlat04">3.900원</div>
+                                <hr>
+                                </a>
+                                </li>
+                                
+                            	<li>
+                                <a href="#receipt_details">
+                                <div class="mlat01">2016-08-24</div>
+                                <div class="mlaticon"><span>편의점/마트</span></div>
+                                <div class="mlat02">삼성카드</div>
+                                <div class="mlat03">세븐일레븐</div>
+                                <div class="mlat04">3.900원</div>
+                                <hr>
+                                </a>
+                                </li>
+                                
+                            	<li>
+                                <a href="#receipt_details">
+                                <div class="mlat01">2016-08-24</div>
+                                <div class="mlaticon"><span>자동차/주유</span></div>
+                                <div class="mlat02">삼성카드</div>
+                                <div class="mlat03">세븐일레븐</div>
+                                <div class="mlat04">3.900원</div>
+                                <hr>
+                                </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+
+                    
+                    
+                    <div class="foot_info">
+                    
+                    	<div class="foot_box">
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree03">이용약관</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree01">개인정보 취급방침</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#">고객센터</a>
+                            </div>
+                            
+                            
+                            <hr>
+                        </div>
+<p>
+(주)이베이 코리아   |   대표이사 : 변광윤<br>
+사업자등록번호 : 220-81-83676   |   통신판매업신고 강남 10630호<br>
+서울시 강남구 테헤란로 152 (역삼동 강남파이낸스센터)<br>
+이메일 :information@corp.auction.co.kr<br>
+고객센터 :1588-0184(오전9시~오후6시,토요일/공휴일휴무<br>
+</p>
+
+<p class="copytxt">Copyrightⓒnoname Co,.All rights reserved</p>
+                    </div>
+                    
+                    
+                    </div>
+                </div>
+                
+
+
+<style type="text/css">
+
+.rtpage_box { background:#f2f2f2; border:1px solid #e5e5e5; margin-bottom:20px; padding:5px; border-radius:5px; }
+.rtpage_inbox { background:#fff; border:1px solid #e5e5e5; padding:10px 30px; border-radius:5px; }
+.rtpage_holl { padding:5px 5px 15px 5px; height:35px; }
+.rtpage_holl div { width:6%; height:100%; margin:0 2%; border-radius:30px; border:1px solid #e5e5e5; float:left; background:#f2f2f2; }
+
+
+.rt_title { padding:20px 0 30px 0; }
+.rt_title h2 { text-align:center; font-size:3em; font-weight:700; color:#000; clear:both; padding:5px 0 15px 0; }
+.rt_title p { text-align:center; font-size:1em; color:#000; clear:both; }
+
+.rt_txt01 { text-align:left; font-size:1em; color:#666; clear:both; padding:0px 10px; }
+.rt_txt01 span { text-align:right; float:right; }
+
+.rt_total { text-align:left; font-size:1.5em; font-weight:700; color:#000; clear:both; padding:20px 10px; border-bottom:2px dashed #aaa; border-top:2px dashed #aaa; margin-top:20px; }
+.rt_total span { text-align:right; float:right; }
+
+.rt_total { text-align:left; font-size:1.8em; font-weight:700; color:#000; clear:both; padding:20px 10px; border-bottom:2px dashed #aaa; border-top:2px dashed #aaa; margin-top:20px; }
+.rt_total span { text-align:right; float:right; }
+
+.rt_orderno { border-bottom:2px dashed #aaa; border-top:2px dashed #aaa; padding:20px 0; margin-top:20px; }
+.rt_orderno p { text-align:center; font-size:1.2em; color:#666; clear:both; }
+.rt_orderno h2 { text-align:center; font-size:1.8em; color:#000; clear:both; padding:5px 0; }
+
+.rt_table { border-top:1px solid #ddd; border-bottom:1px solid #ddd; margin:20px 5px 0px 5px;  }
+.rt_table .rt_tabletitle { border-bottom:1px solid #ddd; background:#fff;}
+.rt_table li { float:left; padding:5px 0; text-align:center; color:#333; }
+.rt_table li.rt_mlat01 { width:45%; }
+.rt_table li.rt_mlat02 { width:20%; }
+.rt_table li.rt_mlat03 { width:10%; }
+.rt_table li.rt_mlat04 { width:25%; text-align:right; padding-right:5px; }
+
+.rt_etc { text-align:left; font-size:1.3em; font-weight:700; color:#333; clear:both; padding:10px 10px; border-bottom:2px dashed #aaa; }
+.rt_etc span { text-align:right; float:right; }
+
+.rt_copy { text-align:center; font-size:0.7em; }
+
+</style>
+
+
+                <div data-page="receipt_details" class="page cached">
+                    <div class="page-content">
+                        <div class="content-block">
+                        
+						<div class="rtpage_box">
+                        	<div class="rtpage_inbox">
+                            
+                            	<div class="rtpage_holl">
+                                	<div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <hr>
+                                </div>
+                                
+                                <div class="rt_title">
+                                	<h2>THE REAL #</h2>
+                                    <p>
+                                    Mobile Life Service
+                                    </p>
+                                </div>
+                                
+                                
+								<div class="rt_txt01">바라던유통(주)<span>2016-12-18 15:59:46</span></div>
+                                
+								<div class="rt_txt01">대표:강격석<span>031-529-7052</span></div>
+                                
+								<div class="rt_txt01">경기도 남양주시 진건읍 신월리 218-1 바라던유통(주)</span></div>
+                                
+                                
+                                <div class="rt_orderno">
+                                	<p>주문번호</p>
+                                	<h2>1225911584-11584</h2>
+                                </div>
+                                
+                                
+                                <div class="rt_table">
+                                	<ul class="rt_tabletitle">
+                                      <li class="rt_mlat01">상품명</li>
+                                      <li class="rt_mlat02">단가</li>
+                                      <li class="rt_mlat03">수량</li>
+                                      <li class="rt_mlat04">금액</li>
+                                      <hr>
+                                    </ul>
+                                    
+                                	<ul>
+                                      <li class="rt_mlat01">콜라</li>
+                                      <li class="rt_mlat02">1,000</li>
+                                      <li class="rt_mlat03">1</li>
+                                      <li class="rt_mlat04">1,000</li>
+                                      <hr>
+                                    </ul>
+                                    
+                                	<ul>
+                                      <li class="rt_mlat01">사이다</li>
+                                      <li class="rt_mlat02">1,000</li>
+                                      <li class="rt_mlat03">1</li>
+                                      <li class="rt_mlat04">1,000</li>
+                                      <hr>
+                                    </ul>
+                                    
+                                	<ul>
+                                      <li class="rt_mlat01">환타</li>
+                                      <li class="rt_mlat02">1,000</li>
+                                      <li class="rt_mlat03">1</li>
+                                      <li class="rt_mlat04">1,000</li>
+                                      <hr>
+                                    </ul>
+                                    
+                                </div>
+                                
+								
+                                
+                                <div class="rt_total">Total<span>3,000</span></div>
+                                
+                                <div class="rt_etc">스타벅스카드<span>500</span></div>
+                                
+                                <div class="rt_etc">제휴할인(KT)<span>1,500</span></div>
+                                
+                                <div class="rt_etc">적립포인트<span>300포인트</span></div>
+                                
+                                
+                                
+                                
+                                <div class="rt_copy">
+                                본 확인서는 (주)리얼프라이스에서 발행한 신용카드 매출전표입니다.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="latest_btnbox" onClick="location.href=''">
+                            <div class="latest_btn">이메일 보내기</div>
+                        </div>
+                        
+                        
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                <div data-page="agree01" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree01.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div data-page="agree03" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+			</div>
+            
+            
+            
+            
+
+		</div>
+    </div>
+
+
+<script>
+
+
+// coupon_slider
+$(document).ready(function(){
+  $('.history_cate').bxSlider({
+	  slideWidth: 70,
+	  minSlides: 2,
+	  maxSlides: 8,
+	  moveSlides: 4,
+	  slideMargin: 10,
+	  auto: false,
+	  autoHover: true,
+	  pager: false,
+	  controls: false
+  });
+});
+</script>
+
+
+<script src="../js/monthpicker.min.js"></script>
+<script src="../js/monthpicker-dom.min.js"></script>
+<script src="../js/monthpicker.js"></script>
+
+
+<script type="text/javascript" src="../js/framework7.js"></script>
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+</body>
+</html>
+
+
+    

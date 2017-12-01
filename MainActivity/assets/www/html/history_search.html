@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+
+    <!-- main -->
+	<script src="../code/jquery.bxslider.min.js"></script>
+    <link href="../code/jquery.bxslider.css" rel="stylesheet" />
+    
+    <!-- tab -->
+	<script type='text/javascript' src='../code/tabs.js'></script>
+    
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+    
+	<script src="../code/common.js"></script>
+    
+</head>
+
+<body>
+
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+
+    <div class="panel panel-left panel-reveal">
+    
+    	<div class="profile_box">
+        	<!-- <div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div> -->
+            
+            <div class="pf_txt">
+            	<h2>김종현</h2>
+                <p>쿠폰 <span>0</span>개</p>
+                <p>포인트 <span>200</span>p</p>
+                
+                <div class="alen_setting" onClick="location.href='setting.html'">
+                <a href="#"><i class="icon icon-form-settings"></i></a>
+                </div>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        	<ul>
+            	<li onClick="location.href='latest.html'">
+                <div class="leftm_box leftm01"></div>
+                <a href="#">최근사용내역</a>
+                </li>
+                
+            	<li onClick="location.href='history.html'">
+                <div class="leftm_box leftm02"></div>
+                <a href="#">영수증확인</a>
+                </li>
+                
+            	<li onClick="location.href='household.html'">
+                <div class="leftm_box leftm03"></div>
+                <a href="#">가계부</a>
+                </li>
+                
+            	<li onClick="location.href='event.html'">
+                <div class="leftm_box leftm04"></div>
+                <a href="#">이벤트</a>
+                </li>
+                
+            	<li onClick="location.href='notice.html'">
+                <div class="leftm_box leftm05"></div>
+                <a href="#">공지사항</a>
+                </li>
+                
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="views">
+		<div class="view view-main">
+        
+            <div class="navbar top_menu">
+            
+                <div data-page="index" class="navbar-inner">
+	                    <div class="left">
+		                    <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+	                    </div>
+                    <div class="center sliding alen_logo" onClick="location.href='index.html'"><img src="../common/logo.png"></div>
+                </div>
+
+            </div>
+            
+			<div class="pages navbar-through toolbar-through">
+
+                <div data-page="index" class="page">
+
+                    <div class="page-content hsh_box">
+                    
+                    <div class="alen_list_title">
+                    조회 기간
+                    </div>
+                    
+                    <div class="list-block alen_list_box">
+                        <ul>
+                            <li>
+                                <div class="item-content hsh_input"><input type="date" name="startDate" style="font-size: small;"></div>
+                                
+                                <div class="hsh_and">-</div>
+                                
+                                <div class="item-content hsh_input"><input type="date"  name="endDate" style="font-size: small;"></div>
+                                <hr>
+                            </li>
+
+                        </ul>
+                    </div>
+                    
+                    <div class="alen_list_title">
+                    조회 내용
+                    </div>
+                    
+                    <div class="list-block alen_list_box">
+                        <ul>
+                            <li>
+                                <div class="alen_radio_box">
+                                    <div class="alen_table_half alen_table_top">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_pay" value="전체" checked>
+                                      <div class="item-inner">
+                                        <div class="item-title">전체</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    <div class="alen_table_half alen_table_last alen_table_top">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_pay" value="카드">
+                                      <div class="item-inner">
+                                        <div class="item-title">카드</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    <div class="alen_table_half">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_pay" value="현금">
+                                      <div class="item-inner">
+                                        <div class="item-title">현금</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    <div class="alen_table_half alen_table_last">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_pay" value="기타">
+                                      <div class="item-inner">
+                                        <div class="item-title">기타</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    <hr>
+                                
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    
+                    <div class="alen_list_title">
+                    조회 결과 순서
+                    </div>
+                    
+                    <div class="list-block alen_list_box">
+                        <ul>
+                            <li>
+                                <div class="alen_radio_box">
+                                    <div class="alen_table_half alen_table_top">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_new" value="최신순" checked>
+                                      <div class="item-inner">
+                                        <div class="item-title">최신순</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    <div class="alen_table_half alen_table_last alen_table_top">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_new" value="과거순">
+                                      <div class="item-inner">
+                                        <div class="item-title">과거순</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    <hr>
+                                   
+                                    <div class="alen_table_half">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_new" value="높은 금액순">
+                                      <div class="item-inner">
+                                        <div class="item-title">높은 금액순</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    <div class="alen_table_half alen_table_last">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sort_new" value="낮은 금액순">
+                                      <div class="item-inner">
+                                        <div class="item-title">낮은 금액순</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    <hr>
+                                
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                        
+                    <div class="agree_btnbox" id="searchBtn">
+                        <div class="agree_btn">조회</div>
+                    </div>
+                    
+                    </div>
+                </div>
+
+			</div>
+
+		</div>
+    </div>
+
+<script type="text/javascript" src="../js/framework7.js"></script>
+
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+<script type="text/javascript">
+var request = new Request();
+var telNo = request.getParameter('telNo');
+var uuId = request.getParameter('uuId');
+
+$(document).ready(function(){
+	$("#searchBtn").click(function(){
+			
+		//시작일자
+		var startDateVal = $(':input[name="startDate"]').val();
+		//종료일자
+		var endDateVal = $(':input[name="endDate"]').val();
+		//조회내용
+		var sortPayVal = $(':radio[name="sort_pay"]:checked').val();
+		//조회결과순서
+		var sortNewVal = $(':radio[name="sort_new"]:checked').val();
+		
+		if(isNull(startDateVal)){
+			alert("시작일자를 입력해주시기 바랍니다.");
+			return false;
+		}
+		if(isNull(endDateVal)){
+			alert("종료일자를 입력해주시기 바랍니다.");
+			return false;
+		}
+		
+		location.href='latest.html?telNo='+request.getParameter('telNo')+'&latestDiv='+request.getParameter('latestDiv');
+		
+	})
+	
+	
+})
+</script>
+</body>
+</html>

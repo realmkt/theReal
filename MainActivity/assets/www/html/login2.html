@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="code/layout.css" />
+    <link rel="stylesheet" media="all" href="code/common.css" />
+
+    <!-- main -->
+	<script src="code/jquery.bxslider.min.js"></script>
+    <link href="code/jquery.bxslider.css" rel="stylesheet" />
+    
+    <!-- tab -->
+	<script type='text/javascript' src='code/tabs.js'></script>
+    
+    <!-- scroll -->
+	<script src="code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+    
+	<script src="code/common.js"></script>
+    
+</head>
+
+<body class="login2_body">
+
+
+    <div class="views">
+		<div class="view view-main">
+        
+        
+            <div class="navbar top_menu">
+                
+                <div data-page="search_id" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">아이디 찾기</div>
+                </div>
+
+                
+                <div data-page="search_pass" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">비밀번호 찾기</div>
+                </div>
+
+            </div>
+        
+			<div class="pages navbar-through toolbar-through">
+
+                <div data-page="index" class="page">
+
+                    <div class="page-content">
+                    	
+                        <div class="login2_content">
+					
+                            <div class="login2_title"><img src="common/log_title.png"></div>
+     
+                            <div class="login2_box">
+                                <ul>
+                                    <li class="full_input"><input type="text" placeholder="아이디"></li>
+                                    
+                                    <li class="full_input"><input type="text" placeholder="비밀번호"></li>
+                                </ul>
+                            </div>
+                            
+                            
+                            <div class="log_sqbox" onClick="location.href='index.html'">
+                                <div class="log_sqbtn">로그인</div>
+                            </div>
+                            
+                            <div class="log_auto">
+                            <label class="label-checkbox item-content">
+                              <input type="checkbox" name="ks-checkbox" value="Food">
+                              <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+                              <div class="item-inner">
+                                <div class="item-title">자동로그인 설정</div>
+                              </div>
+                            </label>
+                            <hr>
+                            </div>
+                            
+	
+						</div>
+                        
+                        <div class="login2_sub">
+							<div><a href="#search_id">아이디 찾기</a></div>
+							<div><a href="#search_pass">비밀번호 찾기</a></div>
+							<div class="login2_join" href="#" onClick="location.href='join.html'">회원가입</div>
+                        </div>
+                    
+                    </div>
+                </div>
+               
+               
+
+                <div data-page="search_id" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block log_block">
+                    	<div class="join_box">
+                        	<ul>
+
+                            	<li class="full_input">
+                                <select>
+                                    <option>SKT</option>
+                                    <option>KT</option>
+                                    <option>LGu+</option>
+                                    <option>알뜰폰 SKT</option>
+                                    <option>알뜰폰 KT</option>
+                                    <option>알뜰폰 LG U+</option>
+                                </select>
+                                </li>
+                                
+                            	<li class="full_input"><input type="text" placeholder="휴대폰 번호"></li>
+                                
+                               
+                            	<li>
+                                <div class="alen_table_title">
+                                <div class="tel_btn" onClick="location.href='#'">인증번호 받기</div>
+                                </div>
+                                
+                                <div class="alen_table_con">
+                                <input type="text" placeholder="인증번호입력">
+                                </div>
+                                
+                                <hr>
+                                </li>
+                                
+                            </ul>
+                            
+                            
+                        </div>
+                        
+                        <div class="agree_btnbox" onClick="location.href='index.html'">
+                            <div class="agree_btn">확인</div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div data-page="search_pass" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block log_block">
+                        
+                    	<div class="join_box">
+                        	<ul>
+                            	<li class="full_input"><input type="text" placeholder="아이디"></li>
+                            
+                            	<li class="full_input">
+                                <select>
+                                    <option>SKT</option>
+                                    <option>KT</option>
+                                    <option>LGu+</option>
+                                    <option>알뜰폰 SKT</option>
+                                    <option>알뜰폰 KT</option>
+                                    <option>알뜰폰 LG U+</option>
+                                </select>
+                                </li>
+                                
+                            	<li class="full_input"><input type="text" placeholder="휴대폰 번호"></li>
+                                
+                               
+                            	<li>
+                                <div class="alen_table_title">
+                                <div class="tel_btn" onClick="location.href='#'">인증번호 받기</div>
+                                </div>
+                                
+                                <div class="alen_table_con">
+                                <input type="text" placeholder="인증번호입력">
+                                </div>
+                                
+                                <hr>
+                                </li>
+                                
+                            </ul>
+                            
+                            
+                        </div>
+                        
+                        <div class="agree_btnbox" onClick="location.href='index.html'">
+                            <div class="agree_btn">확인</div>
+                        </div>
+                        
+                        </div>
+                    </div>
+                </div>
+
+
+			</div>
+
+		</div>
+    </div>
+
+
+
+
+<script type="text/javascript" src="js/framework7.js"></script>
+
+<script type="text/javascript" src="js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+</body>
+</html>
