@@ -183,15 +183,25 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 
                    
                     <div class="latest_contitle">
-                    	<h2>최근사용내역<span>전자영수증</span><span>SMS</span><span class="active" id="serbtn">전체</span></h2>
+                    	<h2>최근사용내역
+                    	<span id="onlyRec">전자영수증</span>
+                    	<span id="onlySms">SMS</span>
+                    	<span class="active" id="allBtn">전체</span>
+                    	<span id="setting_Btn">영수증 관리</span>
+                    	
+                    	</h2>
                     </div>
-                    <div class="latest_coninfo">
-                    	<div class="latest_allLeft">7건 <span>175,700원</span></div>
-                    	<div class="latest_allRight">전자영수증 <span>3건</span> 발행</div>
-                        <hr>
-                    </div>
-                    
-                    <div class="latest_conser alen_outbox">
+						<div class="latest_coninfo" id="latestConinfo">
+							<div class="latest_allLeft">
+								7건 <span>175,700원</span>
+							</div>
+							<div class="latest_allRight">
+								전자영수증 <span>3건</span> 발행
+							</div>
+							<hr>
+						</div>
+
+						<div class="latest_conser alen_outbox">
                     <input type="radio" id="latest01" name="latestsbox" value="latest" checked>
                     <label for="latest01">최근</label>
                     
@@ -426,7 +436,6 @@ function allClear(){
 	payDivCd  = "ALL";
 	orderByCd = "NEW";
 	dateDivCd = "";
-	smsDivCd = "ALL";
 	dateSrchCd = "N";
 	endSeq = 10;
 }
@@ -449,6 +458,31 @@ var dateSrchCd = "N";	//조회 버튼시 Y
 $(document).ready(function() {
 	latestData();
 });
+
+	$("#allBtn").click(function(){
+		allClear();
+		smsDivCd = "ALL";
+		$("#onlyRec").removeClass("active");
+		$("#onlySms").removeClass("active");
+		$("#allBtn").addClass("active");
+		latestData();
+	});
+	$("#onlySms").click(function(){
+		allClear();
+		smsDivCd = "ONLYSMS";
+		$("#allBtn").removeClass("active");
+		$("#onlyRec").removeClass("active");
+		$("#onlySms").addClass("active");
+		latestData();
+	});
+	$("#onlyRec").click(function(){
+		allClear();
+		smsDivCd = "ONLYREC";
+		$("#allBtn").removeClass("active");
+		$("#onlySms").removeClass("active");
+		$("#onlyRec").addClass("active");
+		latestData();
+	});
 	$("#latest01").click(function(){
 		allClear();
 		latestData();
@@ -463,7 +497,30 @@ $(document).ready(function() {
 		dateDivCd = "MONTH";
 		latestData();
 	});
-	
+	$("#pays01").click(function(){
+		payDivCd = "ALL";
+	});
+	$("#pays02").click(function(){
+		payDivCd = "CARD";
+	});
+	$("#pays03").click(function(){
+		payDivCd = "CASH";
+	});
+	$("#pays04").click(function(){
+		payDivCd = "ETC";
+	});
+	$("#array01").click(function(){
+		orderByCd = "NEW";
+	});
+	$("#array02").click(function(){
+		orderByCd = "D1";
+	});
+	$("#array03").click(function(){
+		orderByCd = "A2";
+	});
+	$("#array04").click(function(){
+		orderByCd = "A1";
+	});
 	$("#moreBtn").click(function(){
 		endSeq += 10;
 		latestData();
@@ -501,6 +558,25 @@ function fn_latestData(resdata){
 	var res = resdata.resultMap;
 	var str = "";
 	maxSize = resdata.maxSize
+	
+	var conStr = "";
+
+	if(smsDivCd == "ALL"){
+		conStr ='<div class="latest_allLeft">'+"7"+'건 <span>'+"157000"+'</span></div>';
+		conStr ='<div class="latest_allRight">전자영수증 <span>'+"3건"+'</span> 발행</div>';
+		conStr ='<hr>';
+	}else if(smsDivCd == "ONLYREC"){
+		conStr ='<div class="latest_allRight">전자영수증 <span>'+"3건"+'</span> 발행</div>';
+		conStr ='<hr>';
+	}else if(smsDivCd == "ONLYSMS"){
+		conStr ='<div class="latest_allRight">'+"7"+'건 <span>'+"157000"+'</span></div>';
+		conStr ='<hr>';
+	}
+	$("latestConinfo").empty();
+	$("latestConinfo").append();
+	
+	
+	
 	for(var i = 0; i < res.length; i++){
 		str += '<ul data-modal-id="receip_box"  onclick="detailReceipt('+res[i].SALES_BARCODE+',\''+res[i].SHOP_BIZNO+'\')">';
 		str += '	<li>';
@@ -524,7 +600,7 @@ function fn_latestData(resdata){
 			if(res[i].SMS_DIV == '00'){ str += '전자영수증'; }else 
 			if(res[i].SMS_DIV == '01'){ str += 'SMS'; }
 			str += '</span></h3>';
-		}
+		}   
 		str += '</li>';
 		str += '<li class="mal_price">';
 		str += '<span>'+numCommas(res[i].TOTAL_AM)+'</span> 원';
@@ -543,7 +619,12 @@ function fn_latestData(resdata){
 }
 
 
-
+$("#setting_Btn").click(function(){
+	location.href = 'latestEmail.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+	
+	
+	
+})
 
 
 
