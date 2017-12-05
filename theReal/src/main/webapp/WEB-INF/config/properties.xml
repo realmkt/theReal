@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>ReceiptJsonData</comment>
+
+<!-- ReceiptJsonData Definition -->
+<entry key="cardInfo.cardAmt">111</entry>
+<entry key="cardInfo.cardInstallment">111</entry>
+<entry key="cardInfo.cardAppNo">111</entry>
+<entry key="cardInfo.cardDate">111</entry>
+<entry key="cardInfo.cardICom">111</entry>
+<entry key="cardInfo.cardPCom">111</entry>
+<entry key="cardInfo.cardNo">111</entry>
+<entry key="cardInfo.cashAmt">111</entry>
+<entry key="cardInfo.cashType">111</entry>
+<entry key="cardInfo.cashNo">111</entry>
+<entry key="cardInfo.cashAppNo">111</entry>
+<entry key="cardInfo.cashDate">111</entry>
+
+</properties>

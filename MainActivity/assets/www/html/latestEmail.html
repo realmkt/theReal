@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- main -->
+	<script src="../code/jquery.bxslider.min.js"></script>
+    <link href="../code/jquery.bxslider.css" rel="stylesheet" />
+    
+    <!-- tab -->
+	<script type='text/javascript' src='../code/tabs.js'></script>
+<script src="../code/jquery.bpopup.min.js"></script>
+
+
+
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+   <link href="../css/monthpicker.css" rel="stylesheet" />
+	<script src="../code/common.js"></script>
+<!-- 	<script type="text/javascript" charset="utf-8" src="../cordova.js"></script> -->
+	
+	
+</head>
+
+<body>
+	 
+	
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+
+
+    <div class="panel panel-left panel-reveal">
+    
+    	<div class="profile_box">
+        	<div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div>
+            
+            <div class="pf_txt">
+            	<h2>전진호</h2>
+                <p>쿠폰 <span>270</span>개</p>
+                <p>포인트 <span>2000</span>p</p>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        	<ul>
+            	<li onClick="location.href='latest.html'">
+                <div class="leftm_box leftm01"></div>
+                <a href="latest.do">영수증 관리</a>
+                </li>
+                
+            	<li onClick="location.href='history.html'">
+                <div class="leftm_box leftm02"></div>
+                <a href="#">영수증확인</a>
+                </li>
+                		
+            	<li onClick="location.href='#'">
+                <div class="leftm_box leftm03"></div>
+                <a href="#">가계부</a>
+                </li>
+                
+            	<li onClick="location.href='event.html'">
+                <div class="leftm_box leftm04"></div>
+                <a href="#">이벤트</a>
+                </li>
+                
+            	<li onClick="location.href='notice.html'">
+                <div class="leftm_box leftm05"></div>
+                <a href="#">공지사항</a>
+                </li>
+                	
+            </ul>
+        </div>
+	
+    </div>		
+    	
+    	
+    <div class="views">
+		<div class="view view-main">
+        	
+            <div class="navbar top_menu">
+                <div data-page="index" class="navbar-inner">
+                
+                    <div class="left">
+                    <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+                    </div>
+                    <div class="center sliding alen_logo" onClick="location.href='index.html'"></div>
+	
+                </div>
+                	
+                <div data-page="receipt_details" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">영수증 상세 내역</div>
+                </div>	
+                	
+                		
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                </div>
+                		
+                
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+                	
+                		 
+            </div>
+            	
+
+<style type="text/css">
+.latest_contitle { color:#747474; background:#0d0d0d; margin-bottom: 13px; }
+.latest_contitle h2 { padding:15px 15px; font-size:1em; font-weight:400; color:#fff; line-height:25px; } 
+.latest_contitle h2 span { float:right; color:#ddd; font-size:0.7em; padding:0 5px; margin-left:5px; line-height:21px; } 
+
+
+.emailButton {
+
+   -moz-box-shadow: 3px 4px 0px 0px #1564ad;
+   -webkit-box-shadow: 3px 4px 0px 0px #1564ad;
+   box-shadow: 3px 4px 0px 0px #1564ad;
+   background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5));
+   background:-moz-linear-gradient(top, #79bbff 5%, #378de5 100%);
+   background:-webkit-linear-gradient(top, #79bbff 5%, #378de5 100%);
+   background:-o-linear-gradient(top, #79bbff 5%, #378de5 100%);
+   background:-ms-linear-gradient(top, #79bbff 5%, #378de5 100%);
+   background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5',GradientType=0);
+   background-color:#79bbff;
+   -moz-border-radius:5px;
+   -webkit-border-radius:5px;
+   border-radius:5px;
+   border:1px solid #337bc4;
+   display:inline-block;
+   cursor:pointer;
+   color:#ffffff;
+   font-family:Arial;
+   font-size:12px;
+   font-weight:bold;
+   padding:4px 13px;
+   text-decoration:none;
+   text-shadow:0px 1px 0px #528ecc;
+}
+.emailButton:hover {
+   background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff));
+   background:-moz-linear-gradient(top, #378de5 5%, #79bbff 100%);
+   background:-webkit-linear-gradient(top, #378de5 5%, #79bbff 100%);
+   background:-o-linear-gradient(top, #378de5 5%, #79bbff 100%);
+   background:-ms-linear-gradient(top, #378de5 5%, #79bbff 100%);
+   background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff',GradientType=0);
+   background-color:#378de5;
+}
+.emailButton:active {
+   position:relative;
+   top:1px;
+}
+
+
+.latest_coninfo { padding:8px 15px; color:#bbb; background:#222; font-size:0.7em; text-align:left; border-bottom:1px solid #333;}
+.latest_coninfo .latest_allsms { width:50%; float:left; background:url(common/sms.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo .latest_allrec { width:50%; float:right; background:url(common/receipt.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo > div span { color:#e5e5e5; }
+
+
+
+.latest_conser { margin:2% 2% 1%; background:#fff; text-align:center; }
+.latest_conser input[type=radio] { display:none; margin:10px; }
+.latest_conser input[type=radio] + label {  float:left; padding:7px 12px; width:25%; background:#fff; font-size:12px; border-right:1px solid #e5e5e5;}
+.latest_conser input[type=radio] + label:last-child { border-right:0; }
+.latest_conser input[type=radio]:checked + label { background:#539bff; color:#fff;}
+.latest_conser input[type=date] { width: 115px; height: 18px;  } 
+.latest_conser input[type=button] { background: #424242; 
+
+
+border: none;	
+ 
+border-radius: 3px;
+
+color: #ffffff;	
+
+
+ 
+width: 40px;
+   
+height: 20px;	
+
+font: 13px "Gulim", "Dotum", Georgia, "Times New Roman", Times, serif;
+
+margin: 0 0 0 0; 
+   
+padding: 1px 1px 1px 1px;	
+ 
+text-shadow: 0px 0px 0px 0px #e7e7e7;  
+} 
+.latest_conlist { margin:4% 2%; background:#fff; text-align:center; }
+.latest_conlist ul { padding:15px 10px; position:relative; border-bottom:1px solid #e5e5e5;}
+.latest_conlist li { float:left; width:60%; text-align:left; }
+.latest_conlist li h2 { font-size:1em; font-weight:400; color:#000; padding-bottom:3px; }
+.latest_conlist li p { font-size:0.7em; font-weight:400; color:#555; padding-bottom:20px; }
+.latest_conlist li h3 { font-size:0.8em; font-weight:400; color:#555; padding-left:27px; line-height:16px; }
+.latest_conlist li h3 span { background:#f2f2f2; border:1px solid #ddd; border-radius:3px; padding:2px 5px; font-size:0.85em; color:#539bff; }
+.latest_conlist li h3.mal_credit { background:url(common/credit.gif) no-repeat left; }
+.latest_conlist li h3.mal_cash { background:url(common/cash.gif) no-repeat left; }
+.latest_conlist li.mal_price { width:40%; text-align:right; font-size:0.8em; font-weight:400; color:#555;  position:absolute; top:40%; right:10px; }
+.latest_conlist li.mal_price span { font-size:1.4em; font-weight:700; color:#000; }
+.mal_more { background:#f2f2f2; color:#666; font-size:0.8em; padding:10px 0; }
+.latest_conlist searchstyle {margin: 0 0; text-align:right;}
+
+   
+</style>  
+ 
+   
+	
+			<div class="pages navbar-through toolbar-through">
+                <div data-page="index" class="page">
+                    <div class="page-content">
+			
+                   			
+                    <div class="latest_contitle">
+                    
+                    	<h2>영수증 관리<span id="serbtn"  >
+                    		<input type="button" class="emailButton" value="영수증 발송"></span></h2>
+                    </div>	
+                   
+                   
+            	       
+                    	
+                    <div class="latest_conser alen_outbox" id="bbt">
+                    <input type="radio"    class="maint" id="latest01" name="latestsbox" value="latest" checked>
+                    <label for="latest01">전체영수증</label>
+                    			
+                    <input type="radio"  class="transno" name="latestsbox" id="latest02" value="week">
+                    <label for="latest02">미발행</label>
+                  			
+                    <input type="radio" class="transok" id="latest03" name="latestsbox" value="month" >
+                    <label for="latest03">발행</label>
+                     
+                    <input type="radio" id="latest04"  value="detail">
+                    <label for="latest04" data-modal-id="ser_box" >날짜검색</label>
+                    <hr>
+                 
+                    <hr>
+                    
+                   
+                  
+                    </div>
+                   <div class="latest_conlist alen_outbox searchstyle" >
+                    
+                    </div>
+					
+	
+                    <!-- 리스트 들어갈 DIV -->			
+                    <div class="latest_conlist alen_outbox" id="trans"> 
+                    </div>
+                    		
+                    	
+                    <div class="foot_info">
+                    
+                    	<div class="foot_box">
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree03">이용약관</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree01">개인정보 취급방침</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#">고객센터</a>
+                            </div>
+                            
+                            
+                            <hr>
+                        </div>
+<p>	
+(주)이베이 코리아   |   대표이사 : 변광윤<br>
+사업자등록번호 : 220-81-83676   |   통신판매업신고 강남 10630호<br>
+서울시 강남구 테헤란로 152 (역삼동 강남파이낸스센터)<br>
+이메일 :information@corp.auction.co.kr<br>
+고객센터 :1588-0184(오전9시~오후6시,토요일/공휴일휴무<br>
+</p>
+
+<p class="copytxt">Copyrightⓒnoname Co,.All rights reserved</p>
+                    </div>
+                    
+                    
+                    </div>
+                </div>
+                
+
+
+<style>
+.cpop_btn { font-size:3vmin; padding:0.3em 1.5em; background-color:#222; color:#e5e5e5; text-decoration:none; display:inline; border-radius:4px; -webkit-transition: background-color 1s ease; -moz-transition: background-color 1s ease; transition: background-color 1s ease; }
+.cpop_btn:hover { background-color: #ddd; -webkit-transition:background-color 1s ease; -moz-transition:background-color 1s ease; transition:background-color 1s ease; }
+.cpop_btn_small { padding:.5em 1.5em; font-size:0.8em; }
+
+.modal_box { display: none; position:fixed; z-index: 1000; background: white; width:90%; border-bottom: 1px solid #aaa; border-radius: 4px; box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1); background-clip: padding-box; }
+.modal_box .modal_body { padding: 1em 1em; }
+.modal_box footer, .modal_box .modal-footer { padding: 1em; border-top: 1px solid #ddd; background: rgba(0, 0, 0, 0.02); text-align: center; }
+.maildiv{ height: 30%;}
+.alen_modal_overlay { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
+
+
+.ser_datebox { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
+.ser_datebox input[type=date] { width:45%; height:40px; line-height:40px; border:none; box-sizing:border-box; text-align:center;  }
+
+.ser_2box { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
+.ser_2box input[type=radio] { display:none; margin:10px; }
+.ser_2box input[type=radio] + label { float:left; padding:10px 0; width:50%; background:#fff; font-size:12px; border-right:1px solid #ddd;}
+.ser_2box input[type=radio] + label.slast_radio { border-right:0; }
+.ser_2box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
+
+.ser_4box { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
+.ser_4box input[type=radio] { display:none; margin:10px; }
+.ser_4box input[type=radio] + label { float:left; padding:10px 0; width:25%; background:#fff; font-size:12px; border-right:1px solid #ddd;}
+.ser_4box input[type=radio] + label.slast_radio { border-right:0; }
+.ser_4box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
+
+.recdetail { max-width:500px; padding:1%; height:50;  position:absolute;}
+.recdetail .modal_body { height:100%; padding:0; }
+.close_icon { position:absolute; background-image:url(./common/close.png); background-color: #2E2E2E; background-repeat:no-repeat; background-size:cover; width:20px; height:20px; left:90%; top:1%; margin-left:-15px; }
+
+input[type=checkbox] {  
+    display: none;  
+}
+		 	  
+input[type=checkbox] + label{
+    display: inline-block;  
+    cursor: pointer;  
+    position: relative;  
+    padding-left: 25px;  
+    margin-right: 300px;  
+ 	margin-top : 30px;
+    font-size: 13px;
+}
+
+input[type=checkbox]+ label:before {     
+
+    content: "";  
+    display: inline-block;  
+  
+    width: 20px;  
+    height: 20px;  
+  
+    margin-right: 10px;  
+    position: absolute;  
+    left: 0;  
+    bottom: 1px;  
+    background-color: #ccc;  
+    border-radius: 2px; 
+    box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);  
+}
+
+input[type=checkbox]:checked + label:before { 
+
+    content: "\2713";  /* 체크모양 */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);  
+    font-size: 18px; 
+    font-weight:800; 
+    color: #fff;   	  
+    background:#2f87c1;
+    text-align: center;  
+    line-height: 18px;  
+
+
+
+</style>
+ 
+
+<div id="ser_box" class="modal_box">
+  		
+ <div class="modal_body">
+    <div class="close_icon js-modal-close"><a href="#" class="js-modal-close"></a></div>
+        <div class="ser_datebox">
+       <input type="date" id="first" size="8" class="first">ㅡ<input type="date" id="second" class="second">
+         </div>
+     </div>
+      
+         
+   
+
+	<footer> <a href="#" class="search" style="color: black; border: 3px">검색</a> </footer>
+	
+</div>
+
+<div id="receip_box" class="modal_box recdetail">
+ <div class="close_icon js-modal-close"><a href="#" class="js-modal-close"></a></div>
+	<!-- <iframe id="iframe">
+	</iframe> -->
+	<div id='maildiv'>
+	</div>
+		<input type='button'  value='메일전송' class='transemail'>
+		 <div class="show" style="position: absolute;">
+         	
+         </div>
+</div>
+
+<script type="text/javascript">
+
+function numCommas(x) { //3자리수 , 찍어주기
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+} 
+	
+	var request = new Request();
+	
+	var telNo = request.getParameter('telNo');
+	var uuId =  request.getParameter('uuId');
+	
+	var maxSize = 0;
+	var endSeq = 10;
+	var startDay = "";
+	var endDay   = "";
+	var payDivCd  = "ALL";
+	var orderByCd = "NEW";
+	var smsDivCd = "ONLYREC";
+	var dateDivCd = "";
+	var dateSrchCd = "N";	
+	var transMission = "";
+	
+	function allClear(){
+		startDay = "";
+		endDay   = "";
+		payDivCd  = "ALL";
+		orderByCd = "NEW";
+		dateDivCd = "";
+		smsDivCd = "ONLYREC";
+		dateSrchCd = "N";
+		endSeq = 10;
+		transMission = "";
+	}
+	
+	
+	//메인 영수증 목록
+	$(document).ready(function() {
+		latestData();
+	});
+	
+		
+	function latestData(){
+		//maxSize = $("#maxSize").val();
+		$.ajax({
+			type : "post",
+			url : commonIp() + "/theReal/receipt/latestData.do",
+			data : {
+				telNo : telNo,
+				startDay : startDay,
+				endDay : endDay,
+				endSeq : endSeq,
+				payDivCd : payDivCd,
+				orderByCd : orderByCd,
+				dateDivCd : dateDivCd,
+				smsDivCd : smsDivCd,
+				dateSrchCd: dateSrchCd,
+				maxSize : maxSize,
+				transMission : transMission 
+			},
+			success : fn_latestData,
+			error : whenError
+		});
+	}
+	
+	
+	//전체 영수증 돌아가기
+	$(".maint").click(function(){
+		latestData();
+	});
+	
+	//미발행 영수증 목록
+	 $(".transno").click(function(){
+		transMission = "Y02";
+		latestData();
+		//이미 transMission 은 'YO2'인 상태라 검색할때 그대로 가져간다?
+	});
+			
+	//발행된 영수증 목록
+	$(".transok").click(function(){
+		transMisson = "YO1";	  
+		latestData();	
+	});
+			
+		
+	//날짜별 검색
+	$(".search").click(function(){
+		 
+		dateSrchCd = "Y";
+		startDay = $(".first").val();
+		andDay = $(".second").val();
+		
+		//날짜 공백,범위검사
+		var firstArr = startDay.split('-');
+		var secondArr = andDay.split('-');
+		var firstCompare = new Date(firstArr[0], parseInt(firstArr[1])-1, firstArr[2]);
+	    var secondCompare = new Date(secondArr[0], parseInt(secondArr[1])-1, secondArr[2]);
+	   
+	   if(startDay==""||startDay==null||andDay==""||andDay==null){
+		   
+		   alert("시작날짜 종료날짜 모두 입력")
+		   
+		   return;
+	   }
+	     
+	   if(firstCompare.getTime() > secondCompare.getTime()) {
+            
+            alert("검색시작날짜 종료날짜 확인");
+            
+            return;
+	   }
+	   	
+	   latestData();
+	   
+	});
+	   
+	   
+		//영수증 리스트 append 
+	   function fn_latestData(resdata){
+		
+		var values = resdata.resultMap;
+		var str = "";
+		
+		$.each(values, function( index, value ) {
+				str += 		"<input type='checkbox' id='box1"+index+"' class='checkSelect' style='width: 250px; height: 30px;' value="+value.SALES_BARCODE+">";
+              	str += 		"	<label for='box1"+index+"'/></label>";
+              	str += 		"	<ul>";
+              	
+              	if(value.SMS_DIV == '00'){
+        			var tempDate = value.SALES_DATE;
+        			tempDate = tempDate.substring(0,4)+"-"+tempDate.substring(4,6)+"-"+tempDate.substring(6,8)/* +" "+tempDate.substring(8,10)+":"+tempDate.substring(10,12)+":"+tempDate.substring(12) */;
+        		}else{
+        			var tempDate = value.SALES_PRINT_DATE;
+        		}
+              	str += 			"<li><h2>"+value.SHOP_NAME+"</h2><p>"+tempDate+"</p>";
+            	
+            if(value.CARD_ICOM == ""){  
+              			
+            	str += 			"<h3 class='mal_credit'>현금결제<span>SMS</span></h3></li>";
+            } 
+               						
+            else{  
+              
+            	str += 			"<h3 class='mal_credit'>"+value.CARD_ICOM+"<span>SMS</span></h3></li>";
+            }
+            
+              	str +=			"<li class='mal_price'><span>"+numCommas(value.TOTAL_AM)+"</span>원</li><hr>";
+				
+              	str +=      "</ul>"; 
+              	 	
+        });
+				
+		
+		$("#trans").empty(); 	
+		$("#trans").append(str).trigger("create"); 
+	}; 
+		
+	 
+var send_array = new Array();
+ 
+//현재 사용자 이메일 가져오기
+	$(".emailButton").click(function(){ 
+		$.ajax({
+			type : "post",
+			url : commonIp() + "/theReal/receipt/eMailChk.do",
+			data : {
+				telNo : telNo
+			},
+			success : fn_mailOk,
+			error : whenError
+		});
+	});
+  
+//이메일 확인 화면 append
+	function fn_mailOk(data) {
+		
+		var send_cnt = 0;
+		var chkbox = $(".checkSelect");
+		
+		for(var i=0;i<chkbox.length;i++) {
+		    if (chkbox[i].checked == true){
+		    	send_array[send_cnt] = chkbox[i].value;
+		        send_cnt++;
+		    }
+		}
+	
+//체크박스 선택 유무
+		if(send_cnt==0){
+			alert("선택안됨");
+			return;
+		}
+
+	  
+//통과하면 append 	
+		  
+		var email = data;
+		var str = "";
+		
+		var i = email.indexOf("@");
+		var first = email.substring(0,i);
+		var last = email.substring(i+1);
+		
+			
+		str	+= 		"<input type='text' id='first_email' size='10' value="+first+">";
+		str	+= 		"@<input type='text' id='last_email' size='10' value="+last+">";
+		str +=			"<select id='email_select'>";
+		str +=              "<option value='' selected>::선택하기::</option>";
+		str +=				"<option value='naver.com'>naver.com</option>";
+		str += 				"<option value='nate.com'>nate.com</option>";
+		str += 				"<option value='daum.net'>daum.net</option>";
+		str +=  			"<option value='gmail.com'>gmail.com</option>";
+		str += 				"<option value='hotmail.com'>hotmail.com</option>";
+		str +=				"<option value='bondingedu.com'>bondingedu.com</option>";
+		str +=				"<option value='hanmir.com'>hanmir.com</option>";
+		str +=				"<option value='empas.com'>empas.com</option>";
+		str +=				"<option value='dreamwiz.com'>dreamwiz.com</option>";
+		str +=				"<option value='korea.com'>korea.com</option>";
+		str	+=				"<option value='lycos.co.kr'>lycos.co.kr</option>";
+		str +=				"<option value='freechal.com'>freechal.com</option>";
+		str +=				"<option value='1'>::직접입력::</option>";
+		str += 			"</select>"; 
+		
+		
+		$("#maildiv").empty();
+		$("#maildiv").append(str).trigger("create");
+			 	
+		$("#receip_box").fadeIn(500);
+		$(".alen_modal_overlay").fadeTo(300, 0.7);
+	}
+	
+
+	
+	
+//이메일 컨트롤러로 전송
+	$(".transemail").click(function(){
+		var first = $("#first_email").val();
+		var last = $("#last_email").val();
+			
+		var mail = first += "@";
+				  	
+		mail += last;
+		  
+			 
+		//이메일 체크
+		if(email_check(mail)==false){
+			alert("잘못된 이메일 형식입니다");
+			return; 
+		} 
+		
+		
+		$.ajax({  
+	    	type : 'post',
+	    	url :	commonIp() + "/theReal/receipt/sendMail.do", 
+	    	dataType : 'text',
+	    	async: false,
+	    	data: {
+	    		barcode : send_array,
+	    	 	email : mail,
+	    	 	telNo : telNo
+	    	 	},
+	    	error : function() {
+	       		alert('통신실패!!'); 
+	    	},	 		   			
+	    	success : function(data) {
+	    		alert('전송성공');
+	    		   
+	    		$("#receip_box").fadeOut(500, function() {
+	    				$(".alen_modal_overlay").remove();
+				});
+	    		
+	    	}
+	   }); 	
+	});
+	   
+//이메일 정규식 유효성 체크 
+	function email_check(mail) {
+		
+		var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+	
+			return (mail != '' && mail != 'undefined' && regex.test(mail));
+	}
+
+//이메일 셀렉트
+	$(document).change($('#email_select'), function() {
+		   
+		if($('#email_select').val() == "1"){
+	   	 	
+			$("#last_email").val(""); 
+		    
+			$("#last_email").prop("readonly",false); 
+		   
+		}else if($('#email_select').val() == ""){
+		   
+			$("#last_email").val(""); 
+		    
+			$("#last_email").prop("readonly",true); 
+		}else{
+		    
+			$("#last_email").val($('#email_select').val()); 
+		    
+			$("#last_email").prop("readonly",true); 
+		}
+	});
+
+
+
+	
+
+
+
+
+	 
+
+ 
+	
+	
+		
+	
+
+//영수증 리스트 
+	function dataList(resultdata) {
+		
+		var values = resultdata.resultMap;
+		var str = "";
+		   
+		$.each(values, function( index, value ) {
+            	
+				str += 		"<input type='checkbox' id='box1"+index+"' class='checkSelect' style='width: 250px; height: 30px;' value="+value.SALES_BARCODE+">";
+              
+              	str += 		"<label for='box1"+index+"'/></label>";
+              
+              	str += 		"<ul>";
+              	
+              	str += 			"<li><h2>"+value.SHOP_NAME+"</h2><p>"+value.CASH_DATE+"</p>";
+            	
+            if(value.CARD_ICOM == ""){  
+              			
+            	str += 			"<h3 class='mal_credit'>현금결제<span>SMS</span></h3></li>";
+            } 
+               							
+            else{  
+              
+            	str += 			"<h3 class='mal_credit'>"+value.CARD_ICOM+"<span>SMS</span></h3></li>";
+            }
+            
+              	str +=			"<li class='mal_price'><span>"+value.SALES_SUM_OP_AMT+"</span>원</li><hr>";
+				
+              	str +=      "</ul>"; 
+              	 	
+        });
+				str += 		"<input type='hidden' value="+pageType+">";
+		
+		$("#trans").empty(); 	
+		$("#trans").append(str).trigger("create"); 
+	}; 
+
+	
+				var appendthis = ("<div class='alen_modal_overlay js-modal-close'></div>");
+							 	ㄴ
+								     				
+						$('[data-modal-id]').click(function(e) {
+							  e.preventDefault();  
+						$(".pages").append(appendthis);
+						$(".alen_modal_overlay").fadeTo(300, 0.7);
+						$(".js-modalbox").fadeIn(500);
+							 var modalBox = $(this).attr('data-modal-id'); 
+							$('#'+modalBox).fadeIn($(this).data());
+						});    
+					
+						
+ 	 
+						 $(".js-modal-close, .alen_modal_overlay")
+								.click(function() {
+							$(".modal_box, .alen_modal_overlay").fadeOut(300,function() {
+									$(".alen_modal_overlay").remove()
+							});
+						});
+
+						$(".alen_arrow")
+								.click(
+										function() {
+											$(
+													'input[name="latestsbox"]:radio[value="detail"]')
+													.prop('checked', true);
+										});
+
+						$(window).resize(
+								function() {
+									$(".modal_box").css(
+											{
+				 								top : ($(window).height() - $(
+														".modal_box")
+														.outerHeight()) / 2,
+												left : ($(window).width() - $(
+														".modal_box")
+														.outerWidth()) / 2
+											});
+								}); 
+
+						$(window).resize();
+						
+						
+function whenError(){
+	alert("오류");	
+}
+</script>
+                	
+                	   
+                <div data-page="agree01" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree01.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                	  
+                	
+                <div data-page="agree03" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="js/framework7.js"></script>
+
+<script type="text/javascript" src="js/my-app.js"></script>
+
+
+</body>
+
+</html>
