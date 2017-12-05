@@ -74,7 +74,7 @@ public class ReceiptController {
 	@Resource(name = "receiptService")
 	private ReceiptService receiptService;
 	// private Object reqJsonObj;
-	int i = 0;
+	int i = 0;   
 
 	/*
 	 * 샘플 게시판 리스트 화면

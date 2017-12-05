@@ -1326,7 +1326,7 @@
          </choose>	
 		<choose>
              <when test="'SRCHY'.equals(dateSrchCd)">
-                AND DATE_FORMAT(x.FRT_CREA_DTM,'%Y-%m-%d') BETWEEN #{startDay} AND #{endDay}
+                AND DATE_FORMAT(x.FRT_CREA_DTM,'%Y-%m-%d') BETWEEN #{startDay} AND #{endDay}  
              </when>
              <otherwise>
              </otherwise>
