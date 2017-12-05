@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/java/com/company/first/Item.java=euc-kr
+encoding//src/main/java/com/company/first/Packet.java=euc-kr
+encoding//src/main/java/com/company/first/TcpClientTest.java=euc-kr
+encoding//src/main/java/com/company/first/TcpServerTest.java=euc-kr
+encoding//src/main/java/com/company/first/TestClient2.java=euc-kr
+encoding//src/main/java/first/common/util/JsonParse.java=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/login/loginResult2.jsp=UTF-8
+encoding//src/main/webapp/editor/sample/photo_uploader/file_uploader1.jsp=UTF-8
+encoding//src/main/webapp/index.jsp=UTF-8
+encoding//src/test/java=UTF-8

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <userKey value="userKey" >00000000000</userKey>
+  <commonInfo value="commonInfo" >
+    <comCd value="comCd" >TRM01001010100</comCd>
+    <divCd value="divCd" >010</divCd>
+    <dealSerialNum value="dealSerialNum" >2016051000</dealSerialNum>
+    <recSendDate value="recSendDate" >20160510173215</recSendDate>
+    <StandardVer value="StandardVer" >1.0</StandardVer>
+    <jsonDivCd value="jsonDivCd" >0100</jsonDivCd>
+    <workDivCd value="workDivCd" >010</workDivCd>
+    <communicationFlag value="communicationFlag" >T</communicationFlag>
+  </commonInfo>
+  <shopInfo value="shopInfo" >
+    <name value="name" >매장이름</name>
+    <businessNumber value="businessNumber" >000-00-00000</businessNumber>
+    <address value="address" >제주특별자치도 제주시 노형동 182-1</address>
+    <ceo value="ceo" >홍길동</ceo>
+    <phone value="phone" > 064-000-1234</phone>
+    <cashier value="cashier" >계산원Test케셔</cashier>
+  </shopInfo>
+  <salesInfo value="salesInfo" >
+    <salesBarCode value="salesBarCode" >영수증의 바코드 번호</salesBarCode>
+    <salesDate value="salesDate" >20160510173215</salesDate>
+    <printDate value="printDate" >20160510173215</printDate>
+    <salesType value="salesType" >RCP01</salesType>
+    <totAmt value="totAmt" >77000</totAmt>
+    <chgAmt value="chgAmt" >77000</chgAmt>
+    <paidAmt value="paidAmt" >77000</paidAmt>
+    <dscAmt value="dscAmt" >3000</dscAmt>
+    <taxAmt value="taxAmt" >7000</taxAmt>
+    <dfAmt value="dfAmt" >0</dfAmt>
+    <rePrint value="rePrint" >0</rePrint>
+    <detilCnt value="detilCnt" >2</detilCnt>
+  </salesInfo>
+  <salesList>
+    <seqNo value="seqNo" >1</seqNo>
+    <pName value="pName" >상품1</pName>
+    <pPrice value="pPrice" >4000</pPrice>
+    <taxPrice value="taxPrice" >400</taxPrice>
+    <fpPrice value="fpPrice" >4400</fpPrice>
+    <qty value="qty" >10</qty>
+    <opPrice value="opPrice" >4400</opPrice>
+  </salesList>
+  <cashInfo value="cashInfo" >
+    <cashAmt value="cashAmt" >77000</cashAmt>
+    <cashType value="cashType" >CH01</cashType>
+    <cashNo value="cashNo" >01040510000</cashNo>
+    <cashAppNo value="cashAppNo" >12345678 </cashAppNo>
+    <cashDate value="cashDate" >20160510173215</cashDate>
+  </cashInfo>
+  <cardInfo value="cardInfo" >
+    <cardAmt value="cardAmt" >77000</cardAmt>
+    <cardInstallment value="cardInstallment" >0</cardInstallment>
+    <cardAppNo value="cardAppNo" >41465456456454</cardAppNo>
+    <cardDate value="cardDate" >20160510173215</cardDate>
+    <cardICom value="cardICom" >신한카드</cardICom>
+    <cardPCom value="cardPCom" >신한카드</cardPCom>
+    <cardNo value="cardNo" >1234567890123456</cardNo>
+  </cardInfo>
+  <customerInfo value="customerInfo" >
+    <pointAmt value="pointAmt" >0</pointAmt>
+    <getPoint value="getPoint" >100</getPoint>
+    <customerCode value="customerCode" >123456</customerCode>
+    <customerPoint value="customerPoint" >1100</customerPoint>
+  </customerInfo>
+</root>

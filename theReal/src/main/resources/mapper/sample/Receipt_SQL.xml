@@ -1,0 +1,2801 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sample">
+	
+	<select id="selectBoardList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			(SELECT COUNT(0) FROM TB_BOARD WHERE DEL_GB = 'N') AS TOTAL_COUNT ,
+			SEQ,
+			BOARD_TITLE,
+			HIT_CNT
+		FROM
+			TB_BOARD
+		WHERE
+			DEL_GB= 'N'
+		ORDER BY SEQ DESC
+		Limit #{START} , #{END}
+		]]>
+	</select>
+
+	<insert id="insertBoard" parameterType="hashmap"  useGeneratedKeys="true" keyProperty="IDX">
+		<selectKey keyProperty="IDX" resultType="string" order="BEFORE">
+			SELECT MAX(SEQ)+1 FROM TB_BOARD;
+		</selectKey>
+		<![CDATA[
+			
+			INSERT INTO TB_BOARD
+			(
+			    BOARD_TITLE, 
+			    BOARD_CONTENTS, 
+			    HIT_CNT, 
+			    DEL_GB, 
+			    MAIN_GB, 
+			    CREA_DTM, 
+			    CREA_ID
+			)
+			VALUES
+			(
+			    #{TITLE}, 
+			    #{CONTENTS}, 
+			    0, 
+			    #{DEL_GB}, 
+			    #{MAIN_GB}, 
+			    now(), 
+			    'Admin'
+			)
+		]]>
+	</insert>
+	
+	<update id="updateHitCnt" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_BOARD 
+			SET
+				HIT_CNT = HIT_CNT+ 1
+			WHERE
+				SEQ = #{IDX}	
+		]]>
+	</update>
+	
+	<select id="selectBoardDetail" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				SEQ,
+				HIT_CNT,
+				DEL_GB,
+				MAIN_GB,
+				BOARD_TITLE,
+				BOARD_CONTENTS
+			FROM
+				TB_BOARD
+			WHERE
+				SEQ = #{IDX}		
+		]]>
+	</select>
+	
+	<select id="monthAllDate" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				SMS_NO,
+				APP_DT,
+				APP_CO,
+				CARD_APP_DIV,
+				CARD_APP_CO,
+				ACC_SUM_AMMOUNT,
+				INST_DIV,
+				APP_AMOUNT,
+				FRT_CREA_DTM
+			FROM
+				TB_SMS_MASTER
+			WHERE
+				REC_TEN_NO = #{telNo}	
+			AND
+				FRT_CREA_DTM LIKE CONCAT('%', #{date}, '%') 		
+			ORDER BY FRT_CREA_DTM DESC
+		]]>
+	</select>
+	
+	<update id="updateBoard" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_BOARD 
+			SET
+				BOARD_TITLE = #{TITLE},
+				BOARD_CONTENTS = #{CONTENTS}
+			WHERE
+				SEQ = #{IDX}	
+		]]>
+	</update>
+
+	<update id="deleteBoard" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_BOARD
+			SET
+				DEL_GB = 'Y'
+			WHERE
+				SEQ = #{IDX}
+		]]>
+	</update>
+	
+	<insert id="insertFile" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO TB_FILE
+			(
+				BOARD_IDX,
+				ORIGINAL_FILE_NAME,
+				STORED_FILE_NAME,
+				FILE_SIZE,
+			    DEL_GB, 
+			    CREA_DTM, 
+			    CREA_ID
+			)
+			VALUES
+			(
+				#{BOARD_IDX},
+				#{ORIGINAL_FILE_NAME},
+				#{STORED_FILE_NAME},
+				#{FILE_SIZE},
+			    'N', 
+			    now(), 
+			    'Admin'				
+			)
+		]]>
+	</insert>
+	
+	<select id="selectFileList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+			    SEQW,
+			    ORIGINAL_FILE_NAME,
+			    ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
+			FROM
+			    TB_FILE
+			WHERE
+			    BOARD_IDX = #{IDX}
+			    AND DEL_GB = 'N'
+		]]>
+	</select>
+	
+	<update id="deleteFileList" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_FILE SET 
+				DEL_GB = 'Y' 
+			WHERE 
+				BOARD_IDX = #{IDX}	
+		]]>
+	</update>
+	
+	<update id="updateFile" parameterType="hashmap" >
+		<![CDATA[
+			UPDATE TB_FILE SET
+				DEL_GB = 'N'
+			WHERE
+				SEQ = #{FILE_IDX}	
+		]]>
+	</update>
+	
+	<insert id="insertReceiptInfo" parameterType="hashmap" useGeneratedKeys="true" keyProperty="SEQ" >
+		<selectKey keyProperty="SEQ" resultType="integer" order="BEFORE">
+			SELECT MAX(SEQ)+1 FROM TB_USER_DATA;
+		</selectKey>		    
+		<![CDATA[
+			INSERT INTO TB_USER_DATA
+			(
+				TNB, 
+				EMAIL, 
+				BZN, 
+				PAY_AM, 
+				PAY_GOODS, 
+				PAY_DIV	,
+				PAY_DIV_CD,
+				ETP_NM,
+			    CREA_DTM, 
+			    CREA_ID				
+			)
+			VALUES
+			(
+				#{TNB},
+				#{EMAIL},
+				#{BZN},
+				#{PAY_AM},
+				#{PAY_GOODS},
+				#{PAY_DIV},
+				#{PAY_DIV_CD},
+				#{ETP_NM},
+			    now(), 
+			    'Admin'
+			)
+		]]>
+	</insert>	
+	
+	
+	<insert id="insertMember" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO TB_USER
+			(
+				EMAIL, 
+				PASSWORD,				
+			    CREA_DTM, 
+			    CREA_ID				
+			)
+			VALUES
+			(
+				#{id},
+				#{password},
+			    now(), 
+			    'Admin'
+			)
+		]]>
+	</insert>	
+	
+	<select id="selectMemberChk" parameterType="hashmap" resultType="integer">
+		<![CDATA[
+		SELECT
+			COUNT(EMAIL) AS CNT
+		FROM
+			TB_USER
+		WHERE 
+			EMAIL = #{id}
+		]]>
+	</select>		
+	
+	<select id="selectLgnChk" parameterType="hashmap" resultType="integer">
+		<![CDATA[
+		SELECT
+			COUNT(EMAIL) AS CNT
+		FROM
+			TB_USER
+		WHERE 
+			EMAIL = #{id}
+		AND
+			PASSWORD = #{password}
+		]]>
+	</select>		
+	
+	<select id="selectUserInfoList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			SEQ,
+			ETP_NM,
+			FORMAT(PAY_AM,0) AS PAY_AM,
+        	(SELECT CAST(CREA_DTM AS DATE)) AS USE_DATE
+		FROM
+			TB_USER_DATA
+		WHERE
+			EMAIL= #{id}
+		ORDER BY CREA_DTM DESC
+        LIMIT 0,2
+        
+		]]>
+	</select>	
+
+	<select id="selectE01List" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			A.SEQ,
+			A.EMAIL,
+			A.ETP_NM,
+			A.PAY_AM,
+			A.PAY_DIV,
+			A.PAY_DIV_CD,
+			A.PAY_GOODS,
+			A.USE_DATE_ORG,
+			A.USE_DATE,
+			(
+				SELECT
+					FORMAT(SUM(B.ORG_PAY_AM),0) 
+				FROM
+				(
+					SELECT
+						PAY_AM AS ORG_PAY_AM
+					FROM
+						TB_USER_DATA
+					WHERE
+						EMAIL = #{id}
+					ORDER BY CREA_DTM DESC
+					LIMIT 0,10
+				)B
+			)AS TOTAL_AM
+		FROM
+			(
+				SELECT
+					SEQ,
+					EMAIL,
+					ETP_NM,
+					FORMAT(PAY_AM,0) AS PAY_AM,
+					PAY_AM AS ORG_PAY_AM,
+					PAY_DIV,
+					PAY_DIV_CD,
+					PAY_GOODS,
+					DATE_FORMAT(CREA_DTM, '%Y-%m-%d %h:%m') AS USE_DATE_ORG,
+					CAST(CREA_DTM AS DATE) AS USE_DATE
+				FROM
+					TB_USER_DATA
+				WHERE
+					EMAIL = #{id}
+				ORDER BY CREA_DTM DESC
+				LIMIT 0,10
+			)
+		A 
+		]]>
+	</select>
+
+	<select id="selectF01List" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			SEQ,
+			EMAIL,
+			ETP_NM,
+			FORMAT(PAY_AM,0) AS PAY_AM,
+			PAY_DIV,
+			PAY_DIV_CD,
+			PAY_GOODS,
+			DATE_FORMAT(CREA_DTM, '%Y-%m-%d %h:%m') AS USE_DATE_ORG,
+        	(SELECT CAST(CREA_DTM AS DATE)) AS USE_DATE,
+            (SELECT FORMAT(SUM(PAY_AM),0) FROM TB_USER_DATA WHERE EMAIL = #{id} AND CREA_DTM BETWEEN #{startDay} AND #{endDay}) AS TOTAL_AM,
+            (SELECT COUNT(SEQ) FROM TB_USER_DATA WHERE EMAIL = #{id} AND CREA_DTM BETWEEN #{startDay} AND #{endDay}) AS TOTAL_CNT
+		FROM
+			TB_USER_DATA
+		WHERE
+			EMAIL = #{id}
+		AND 
+			CREA_DTM BETWEEN #{startDay} AND #{endDay}
+		]]>
+        <choose>
+             <when test="'A1'.equals(orderByCd)">
+                 ORDER BY CREA_DTM DESC
+             </when>
+             <when test="'B1'.equals(orderByCd)">
+                 ORDER BY convert(`PAY_AM`, decimal)  DESC
+             </when>
+             <otherwise>
+                 ORDER BY convert(`PAY_AM`, decimal)  ASC
+             </otherwise>
+         </choose>		
+     		 LIMIT 0,10	  
+	</select>
+		
+	<select id="selectMonthF01List" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			SEQ,
+			ETP_NM,
+			FORMAT(PAY_AM,0) AS PAY_AM,
+			PAY_DIV,
+			EMAIL,
+			PAY_DIV_CD,
+			PAY_GOODS,
+			DATE_FORMAT(CREA_DTM, '%Y-%m-%d %h:%m') AS USE_DATE_ORG,
+			(SELECT CAST(CREA_DTM AS DATE)) AS USE_DATE,
+			(SELECT FORMAT(SUM(PAY_AM),0) FROM TB_USER_DATA WHERE EMAIL= #{eMail} AND CREA_DTM BETWEEN #{startDate} AND #{endDate}) AS TOTAL_AM,
+			(SELECT COUNT(SEQ) FROM TB_USER_DATA WHERE EMAIL= #{eMail} AND CREA_DTM BETWEEN #{startDate} AND #{endDate}) AS TOTAL_CNT
+		FROM
+			TB_USER_DATA
+		WHERE
+			EMAIL = #{eMail}
+		AND 
+			CREA_DTM BETWEEN #{startDate} AND #{endDate}
+		]]>
+        <choose>
+             <when test="'A1'.equals(orderByCd)">
+                 ORDER BY CREA_DTM DESC
+             </when>
+             <when test="'B1'.equals(orderByCd)">
+                 ORDER BY convert(`PAY_AM`, decimal)  DESC
+             </when>
+             <otherwise>
+                 ORDER BY convert(`PAY_AM`, decimal)  ASC
+             </otherwise>
+         </choose>		
+     		 LIMIT 0,10	 		
+	</select>	
+		
+	<select id="selectAddListF01" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			SEQ,
+			ETP_NM,
+			FORMAT(PAY_AM,0) AS PAY_AM,
+			PAY_DIV,
+			EMAIL,
+			PAY_DIV_CD,
+			PAY_GOODS,
+			DATE_FORMAT(CREA_DTM, '%Y-%m-%d %h:%m') AS USE_DATE_ORG,
+			(SELECT CAST(CREA_DTM AS DATE)) AS USE_DATE,
+			(SELECT FORMAT(SUM(PAY_AM),0) FROM TB_USER_DATA WHERE EMAIL= #{eMail} AND CREA_DTM BETWEEN #{startDate} AND #{endDate}) AS TOTAL_AM,
+			(SELECT COUNT(SEQ) FROM TB_USER_DATA WHERE EMAIL= #{eMail} AND CREA_DTM BETWEEN #{startDate} AND #{endDate}) AS TOTAL_CNT			
+		FROM
+			TB_USER_DATA
+		WHERE
+			EMAIL = #{eMail}
+			AND CREA_DTM BETWEEN #{startDate} AND #{endDate}
+
+		]]>
+       <if test="!''.equals(divCd)">
+                AND PAY_DIV_CD = #{divCd}
+       </if>	
+        <choose>
+             <when test="'A1'.equals(orderByCd)">
+                 ORDER BY CREA_DTM DESC
+             </when>
+             <when test="'B1'.equals(orderByCd)">
+                 ORDER BY convert(`PAY_AM`, decimal)  DESC
+             </when>
+             <otherwise>
+                 ORDER BY convert(`PAY_AM`, decimal)  ASC
+             </otherwise>
+         </choose>		
+		LIMIT #{addStartCnt},10         	
+	</select>	
+	
+	<select id="selectDateCntListF01" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d') AS CNT_DATE, 
+   			COUNT(*) AS CONUT,
+			(SELECT FORMAT(SUM(SALES_PAID_AMT),0) FROM TB_USER_DATA WHERE EMAIL= #{eMail} AND FRT_CREA_DTM BETWEEN #{startDate} AND #{endDate}) AS TOTAL_AM,
+			(SELECT COUNT(SEQ) FROM TB_USER_DATA WHERE EMAIL= #{eMail} AND FRT_CREA_DTM BETWEEN #{startDate} AND #{endDate}) AS TOTAL_CNT       			
+		FROM 
+			TB_USER_DATA
+		WHERE 
+			EMAIL = #{eMail} 
+			AND FRT_CREA_DTM BETWEEN #{startDate} AND #{endDate}
+		GROUP BY
+		    DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d')
+		ORDER BY
+		    DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d')
+		]]>
+	</select>	
+	
+	<select id="selectDailyListF01" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			SEQ,
+			ETP_NM,
+			FORMAT(PAY_AM,0) AS PAY_AM,
+			PAY_DIV,
+			EMAIL,
+			PAY_DIV_CD,
+			PAY_GOODS,
+			DATE_FORMAT(CREA_DTM, '%Y-%m-%d %h:%m') AS USE_DATE_ORG,
+			(SELECT CAST(CREA_DTM AS DATE)) AS USE_DATE,
+			(SELECT FORMAT(SUM(PAY_AM),0) FROM TB_USER_DATA WHERE EMAIL= #{eMail} AND CAST(CREA_DTM AS DATE) = #{date}) AS TOTAL_AM,
+			(SELECT COUNT(SEQ) FROM TB_USER_DATA WHERE EMAIL= #{eMail} AND CAST(CREA_DTM AS DATE) = #{date}) AS TOTAL_CNT
+		FROM
+			TB_USER_DATA
+		WHERE
+			EMAIL = #{eMail}
+		AND 
+			CAST(CREA_DTM AS DATE) = #{date}
+		]]>
+        <choose>
+             <when test="'A1'.equals(orderByCd)">
+                 ORDER BY CREA_DTM DESC
+             </when>
+             <when test="'B1'.equals(orderByCd)">
+                 ORDER BY convert(`PAY_AM`, decimal)  DESC
+             </when>
+             <otherwise>
+                 ORDER BY convert(`PAY_AM`, decimal)  ASC
+             </otherwise>
+         </choose>			
+	</select>		
+	
+	<select id="selectNoticeMove" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			(SELECT COUNT(0) FROM TB_BOARD WHERE DEL_GB = 'N') AS TOTAL_COUNT ,
+			SEQ,
+			BOARD_TITLE,
+			BOARD_CONTENTS,
+			HIT_CNT,
+			DATE_FORMAT(CREA_DTM, '%Y-%m-%d %h:%m') AS CREA_DTM
+		FROM
+			TB_BOARD
+		WHERE
+			DEL_GB= 'N'
+		ORDER BY SEQ DESC
+		Limit #{startNo} , #{endNo}
+
+		]]>
+	</select>
+	
+	<select id="selectDivSearch" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			SEQ,
+			EMAIL,
+			ETP_NM,
+			FORMAT(PAY_AM,0) AS PAY_AM,
+			PAY_DIV,
+			PAY_DIV_CD,
+			PAY_GOODS,
+			DATE_FORMAT(CREA_DTM, '%Y-%m-%d %h:%m') AS USE_DATE_ORG,
+        	(SELECT CAST(CREA_DTM AS DATE)) AS USE_DATE,
+            (SELECT FORMAT(SUM(PAY_AM),0) FROM TB_USER_DATA WHERE EMAIL = #{eMail} AND CREA_DTM BETWEEN #{startDate} AND #{endDate} AND PAY_DIV_CD = #{divCd}) AS TOTAL_AM,
+            (SELECT COUNT(SEQ) FROM TB_USER_DATA WHERE EMAIL = #{eMail} AND CREA_DTM BETWEEN #{startDate} AND #{endDate} AND PAY_DIV_CD = #{divCd}) AS TOTAL_CNT
+		FROM
+			TB_USER_DATA
+		WHERE
+			EMAIL = #{eMail}
+		AND 
+			CREA_DTM BETWEEN #{startDate} AND #{endDate}
+		AND 
+			PAY_DIV_CD = #{divCd}
+		]]>
+        <choose>
+             <when test="'A1'.equals(orderByCd)">
+                 ORDER BY CREA_DTM DESC
+             </when>
+             <when test="'B1'.equals(orderByCd)">
+                 ORDER BY convert(`PAY_AM`, decimal)  DESC
+             </when>
+             <otherwise>
+                 ORDER BY convert(`PAY_AM`, decimal)  ASC
+             </otherwise>
+         </choose>					
+        LIMIT 0,10;
+	</select>
+	
+	<select id="selectBoardMng" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			(SELECT COUNT(0) FROM TB_BOARD WHERE DEL_GB = 'N') AS TOTAL_COUNT ,
+			SEQ,
+			BOARD_TITLE,
+			BOARD_CONTENTS,
+			HIT_CNT,
+			DATE_FORMAT(CREA_DTM, '%Y-%m-%d %h:%m') AS CREA_DTM
+		FROM
+			TB_BOARD
+		WHERE
+			DEL_GB= 'N'
+		ORDER BY SEQ DESC
+		Limit #{startNo} , #{endNo}
+
+		]]>
+	</select>	
+	
+	<update id="updateAdminBoard" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_BOARD 
+			SET
+				BOARD_TITLE = #{TITLE},
+				BOARD_CONTENTS = #{CONTENTS},
+				MAIN_GB = #{MAIN_GB},
+				DEL_GB = #{DEL_GB}
+			WHERE
+				SEQ = #{IDX}	
+		]]>
+	</update>
+	
+	<select id="selectAppE01" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			SEQ,
+			BOARD_TITLE,
+			BOARD_CONTENTS,
+			HIT_CNT,
+			MAIN_GB,
+			DEL_GB,
+			DATE_FORMAT(CREA_DTM, '%Y-%m-%d %h:%m') AS CREA_DTM
+		FROM
+			TB_BOARD
+		WHERE
+			DEL_GB= 'N'
+		AND 
+			MAIN_GB= 'Y'
+		ORDER BY SEQ DESC
+		]]>
+	</select>	
+	
+	
+	<select id="selectAppChart" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			A.*
+		FROM
+			(
+			SELECT
+		            (SELECT FORMAT(SUM(PAY_AM),0) FROM TB_USER_DATA WHERE EMAIL = #{id} AND CREA_DTM BETWEEN #{startDate} AND #{endDate} AND PAY_DIV_CD = 'A1') AS TOTAL_AM,
+		            (SELECT FORMAT(SUM(PAY_AM),0) FROM TB_USER_DATA WHERE EMAIL = #{id} AND CREA_DTM BETWEEN #{startDate} AND #{endDate} AND PAY_DIV_CD = 'A2') AS TOTAL_AM1,
+		            (SELECT FORMAT(SUM(PAY_AM),0) FROM TB_USER_DATA WHERE EMAIL = #{id} AND CREA_DTM BETWEEN #{startDate} AND #{endDate} AND PAY_DIV_CD = 'A3') AS TOTAL_AM2,
+		            (SELECT FORMAT(SUM(PAY_AM),0) FROM TB_USER_DATA WHERE EMAIL = #{id} AND CREA_DTM BETWEEN #{startDate} AND #{endDate} AND PAY_DIV_CD = 'A4') AS TOTAL_AM3,
+		            (SELECT FORMAT(SUM(PAY_AM),0) FROM TB_USER_DATA WHERE EMAIL = #{id} AND CREA_DTM BETWEEN #{startDate} AND #{endDate} AND PAY_DIV_CD = 'A5') AS TOTAL_AM4,
+		            (SELECT FORMAT(SUM(PAY_AM),0) FROM TB_USER_DATA WHERE EMAIL = #{id} AND CREA_DTM BETWEEN #{startDate} AND #{endDate} AND PAY_DIV_CD = 'A6') AS TOTAL_AM5,
+		            (SELECT FORMAT(SUM(PAY_AM),0) FROM TB_USER_DATA WHERE EMAIL = #{id} AND CREA_DTM BETWEEN #{startDate} AND #{endDate} AND PAY_DIV_CD = 'A7') AS TOTAL_AM6,
+		            (SELECT COUNT(SEQ) FROM TB_USER_DATA WHERE EMAIL = #{id} AND CREA_DTM BETWEEN #{startDate} AND #{endDate}) AS TOTAL_CNT
+			FROM
+					TB_USER_DATA
+			WHERE
+					EMAIL = #{id}
+					AND CREA_DTM BETWEEN #{startDate} AND #{endDate}
+		            Limit 1
+		     )A;
+		]]>
+	</select>		
+	
+	<insert id="insertReceiptData" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO 
+				TB_USER_DATA
+					(
+						USER_KEY				,
+						SALES_BARCODE           ,
+						ETC_MEMO	            ,
+						ETC_EVENT	            ,
+						SHOP_NAME	            ,
+						SHOP_BIZNO	            ,
+						SHOP_ADDR	            ,
+						SHOP_CEO	            ,
+						SHOP_TEL_NUM	        ,
+						SHOP_CASHIER	        ,
+						SALES_DATE	            ,
+						SALES_PRINT_DATE	    ,
+						SALES_TYPE	            ,
+						SALES_SUM_DF_AMT	    ,
+						SALES_SUM_FP_AMT	    ,
+						SALES_SUM_TAX_AMT       ,
+						SALES_SUM_ALL_AMT	    ,
+						SALES_SUM_OP_AMT	    ,
+						SALES_CHG_AMT	        ,
+						SALES_PAID_AMT	        ,
+						SALES_RE_PRINT	        ,
+						SALES_DT_CNT	        ,
+						CASH_AMT	            ,
+						CASH_TYPE	            ,
+						CASH_NO            ,
+						CASH_APP_N0	            ,
+						CASH_DATE	            ,
+						CARD_AMT	            ,
+						CARD_INSTALLMENT	    ,
+						CARD_APP_NO	            ,
+						CARD_DATE	            ,
+						CARD_ICOM	            ,
+						CARD_PCOM	            ,
+						CARD_NO            		,
+						POINT_CARD				,
+						POINT_AMT	            ,
+						GET_POINT	            ,
+						CUSTOMER_CODE	        ,
+						CUSTOMER_POINT	        ,
+						REC_VIEW_YN	            ,
+						EMAIL	            ,
+						FRT_CREA_DTM	        ,
+						FRT_REGN_NM	            ,
+						FNL_MOF_DTM	            ,
+						FNL_MDF_NM				,
+						REC_NO				,
+						ORIGIN_REC_NO				,
+						ORIGIN_SALES_DATE,
+						UPLUS_USER_KEY
+					)
+					VALUES
+					(
+						#{userKey}				,
+						#{salesBarCode}			,
+						#{memo}            	 	,
+						#{event}            	,
+						#{name}	        		,
+						#{businessNumber}	    ,
+						#{address}	        	,
+						#{ceo}	            	,
+						#{phone}	        	,
+						#{cashier}	        	,
+						#{salesDate}	        ,
+						#{printDate}	    	,
+						#{salesType}	        ,
+						#{sumDfAmt}	    		,
+						#{sumFpAmt}	    		,
+						#{sumTaxAmt}    		,
+						#{sumSlAmt}	    		,
+						#{sumOpAmt}	    		,
+						#{chgAmt}	    		,
+						#{paidAmt}	    		,
+						#{rePrint}	    		,
+						#{detilCnt}	        	,
+						#{cashAmt}	            ,
+						#{cashType}	        	,
+						#{cashNo}              	,
+						#{cashAppNo}	        ,
+						#{cashDate}	        	,
+						#{cardAmt}	            ,
+						#{cardInstallment}	    ,
+						#{cardAppNo}	        ,
+						#{cardDate}	        	,
+						#{cardICom}	        	,
+						#{cardPCom}	        	,
+						#{cardNo}              	,
+						#{pointCard}			,
+						#{pointAmt}	        	,
+						#{getPoint}	        	,
+						#{customerCode}	    	,
+						#{customerPoint}	    ,
+						'N'	        			,
+						#{eMail}	    		,
+						now()	        		,
+						'Admin'	        		,
+						now()	        		,
+						'Admin'					,
+						#{recNO}	        	,
+						#{originRecNo}	    	,
+						#{originSalesDate}	    ,
+						#{uplusUserKey}
+					)
+			
+			
+
+		]]>
+	</insert>	
+	
+	<insert id="insertReceiptDeatailData" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO 
+				TB_USER_DATA_DETAIL
+					(
+					USER_KEY			,
+					SALES_SEQ_NO		,
+					SALES_BARCODE		,
+					SALES_PNAME	    	,
+					SALES_PPRICE		,
+					SALES_OPRICE		,
+					SALES_QTY	    	,
+					SALES_DF_AMT		,
+					SALES_FP_AMT		,
+					SALES_TAX_AMT		,
+					SALES_SL_AMT		,
+					SALES_OP_AMT		,
+					SALES_TYPE			,
+					FRT_CREA_DTM		,
+					FRT_REGN_NM     	,
+					FNL_MOF_DTM	    	,
+					FNL_MDF_NM			,
+					UPLUS_USER_KEY		,
+					SHOP_BIZNO
+					)
+				VALUES
+					(
+					#{userKey}          ,
+					#{seqNo}            ,
+					#{salesBarCode}     ,
+					#{pName}            ,
+					#{pPrice}           ,
+					#{oPrice}           ,
+					#{qty}              ,
+					#{dfAmt}			,	
+					#{fpAmt}            ,
+					#{taxAmt}           ,
+					#{slAmt}            ,
+					#{opAmt}            ,
+					#{salesType}		,
+					now()               ,
+					'admin'             ,
+					now()				,
+					'admin'				,
+					#{uplusUserKey}		,
+					#{shopBizNo}
+					)
+		]]>
+	</insert>	
+	
+	<!-- 
+	설유진 추가
+	 -->
+	<insert id="insertSmsData" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO 
+				TB_SMS_MASTER
+					(
+					REC_TEN_NO			,
+					SEND_TEN_NO			,	
+					APP_DT				,
+					APP_CO				,
+					CARD_APP_DIV		,
+					CARD_APP_CO			,
+					ACC_SUM_AMMOUNT		,
+					INST_DIV			,
+					APP_AMOUNT			,
+					APP_CO_DIV			,
+					FRT_CREA_DTM		,
+					FRT_REGN_NM			,
+					FNL_MOF_DTM			,
+					FNL_MDF_NM			
+					)
+				VALUES
+					(
+					#{REC_TEN_NO}          ,
+					#{SEND_TEN_NO}            ,
+					#{APP_DT}     ,
+					#{APP_CO}            ,
+					#{CARD_APP_DIV}           ,
+					#{CARD_APP_CO}           ,
+					#{ACC_SUM_AMOUNT}              ,
+					#{INST_DIV}			,	
+					#{APP_AMOUNT}            ,
+					#{APP_CO_DIV}            ,
+					now()               ,
+					#{REC_TEN_NO}          ,
+					now()				,
+					#{REC_TEN_NO}          
+					)
+		]]>
+	</insert>	
+
+
+	
+	<insert id="appMemberInsert" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO TB_USER
+			(
+				UUID		,
+				PWD		,
+				EMAIL		    ,
+				TEL_NO		    ,
+				USER_NM	        ,
+				USER_RRN	    ,
+				SEX_DIV_CD	    ,
+				TEL_COM_CD	    ,
+				LOCAL_DIV_CD	,
+				FRT_CREA_DTM	,
+				FRT_REGN_NM		,
+				FNL_MOF_DTM	    ,
+				FNL_MDF_NM,
+				PUSH_KEY				,
+				PUSH_YN,
+			)
+			VALUES
+			(
+				#{uuId},
+				#{pwd},
+				#{eMail},
+				#{telNo},
+				#{userNm},
+				#{birthDay},
+				#{sex},
+				#{tService},
+				#{nation},
+			    now(), 
+			    'Admin',
+			    now(), 
+			    'Admin',
+				#{pushKey},
+			    'Y',
+			)
+		]]>
+	</insert>
+	
+	<update id="telUserNumInit" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_USER 
+			SET
+				TEL_NO 				=  '',
+				FNL_MOF_DTM 	=	now(), 
+				FNL_MDF_NM		= 'Admin'				
+			WHERE
+				TEL_NO = #{telNo}
+		]]>
+	</update>
+	
+	<update id="telDataNumInit" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_USER_DATA 
+			SET
+				TEL_NO 				=  '',
+				FNL_MOF_DTM 	=	now(), 
+				FNL_MDF_NM		= 'Admin'				
+			WHERE
+				USER_KEY = #{telNo}
+		]]>
+	</update>
+	
+	<update id="telDetailDataNumInit" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_USER_DATA_DETAIL 
+			SET
+				TEL_NO 				=  '',
+				FNL_MOF_DTM 	=	now(), 
+				FNL_MDF_NM		= 'Admin'				
+			WHERE
+				USER_KEY = #{telNo}
+		]]>
+	</update>
+
+		<update id="latestUpdateData" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_USER_DATA 
+			SET
+				REC_VIEW_YN 	=  'Y',
+				FNL_MOF_DTM 	=	now(), 
+				FNL_MDF_NM		= 'Admin'				
+			WHERE
+				USER_KEY = #{telNo}
+			AND
+				SALES_BARCODE = #{barcode}		
+		]]>
+		<if test="!''.equals(userKey)">
+                AND UPLUS_USER_KEY = #{userKey}
+       </if>			
+	</update>
+	
+	<update id="appMemberUpdate" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_USER 
+			SET
+				PUSH_KEY 				#{pushKey}
+			WHERE
+				TEL_NO = #{telNo}
+		]]>
+	</update>
+	
+	
+	<select id="lgnChk" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			TEL_NO,
+			UUID,
+			USER_STATE
+		FROM
+			TB_USER
+		WHERE 
+			EMAIL = #{eMail}
+		AND
+			PWD = #{pwd}
+		]]>
+	</select>		
+	
+	<select id="getId" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			EMAIL,
+			USER_STATE
+		FROM
+			TB_USER
+		WHERE 
+			TEL_NO = #{telNo}
+		AND
+			USER_NM = #{userNm}
+		AND
+			TEL_COM_CD = #{telComDiv}
+		]]>
+	</select>		
+	
+	<select id="getPw" parameterType="hashmap" resultType="String">
+		<![CDATA[
+		SELECT
+			PWD
+		FROM
+			TB_USER
+		WHERE 
+			TEL_NO = #{telNo}
+		AND
+			USER_NM = #{userNm}
+		AND
+			TEL_COM_CD = #{telComDiv}
+		AND
+			EMAIL = #{email}
+		]]>
+	</select>		
+	
+	<select id="eMailChk" parameterType="string" resultType="string">
+		<![CDATA[
+		SELECT 
+			EMAIL
+		FROM
+			TB_USER	
+		WHERE
+			TEL_NO = #{telNo}
+		AND
+			EMAIL != 'UPLUS'
+		AND
+			USER_STATE = '01'
+		]]>
+	</select>		
+	
+	<select id="uPlusChk" parameterType="string" resultType="string">
+		<![CDATA[
+		SELECT 
+			UPLUS_USER_KEY
+		FROM
+			TB_USER	
+		WHERE
+			TEL_NO = #{telNo}
+		AND
+            EMAIL = 'UPLUS'
+        AND
+			USER_STATE = '01'
+		]]>
+	</select>		
+	
+	<select id="pushChk" parameterType="string" resultType="string">
+		<![CDATA[
+		SELECT 
+			PUSH_KEY
+		FROM
+			TB_USER	
+		WHERE
+			EMAIL = #{eMailChk}
+		AND
+			USER_STATE = '01'
+		]]>
+	</select>		
+	
+	
+	<select id="joinChkId" parameterType="string" resultType="Integer">
+		<![CDATA[
+		SELECT 
+			COUNT(EMAIL) AS CNT
+		FROM
+			TB_USER	
+		WHERE
+			EMAIL = #{eMail}
+		AND
+			USER_STATE = '01'
+		]]>
+	</select>		
+	
+	<select id="latestDetailData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			SALES_BARCODE	,
+			SALES_SEQ_NO	,
+			USER_KEY	    ,
+			SALES_PNAME	    ,
+			SALES_PPRICE	,
+			SALES_OPRICE	,
+			SALES_QTY	    ,
+			SALES_DF_AMT	,
+			SALES_FP_AMT	,
+			SALES_TAX_AMT	,
+			SALES_SL_AMT	, 
+			SALES_OP_AMT	,
+			SALES_TYPE		,
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d %H:%i:%s') AS FRT_CREA_DTM
+		FROM
+			TB_USER_DATA_DETAIL
+		WHERE
+			USER_KEY= #{telNo}
+		AND
+			SALES_BARCODE = #{salesBarcode}	
+		AND
+			SALES_TYPE = #{salesType}
+		ORDER BY FRT_CREA_DTM DESC
+		]]>
+	</select>		
+	
+	
+	<select id="getSalesType" parameterType="hashmap" resultType="String">
+	    <![CDATA[
+	    SELECT
+	    	SALES_TYPE
+	    FROM 
+	    	TB_USER_DATA
+	    WHERE
+	    	USER_KEY = #{telNo}
+	    AND
+	    	SALES_BARCODE = #{salesBarcode}
+	    ]]>
+	</select>
+	
+	<select id="latestDataBak" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			A.SEQ               ,
+			A.SALES_BARCODE     ,
+			A.USER_KEY          ,
+			A.ETC_MEMO          ,
+			A.ETC_EVENT	      ,
+			A.SHOP_NAME	      ,
+			A.SHOP_BIZNO	      ,
+			A.SHOP_ADDR	      ,
+			A.SHOP_CEO	      ,
+			A.SHOP_TEL_NUM      ,
+			A.SHOP_CASHIER      ,
+			A.SALES_DATE	      ,
+			A.SALES_TYPE        ,
+			A.SALES_SUM_DF_AMT  ,
+			A.SALES_SUM_FP_AMT  ,
+			A.SALES_SUM_TAX_AMT ,
+			A.SALES_SUM_ALL_AMT  ,
+			A.SALES_SUM_OP_AMT  ,
+			A.SALES_CHG_AMT	  ,
+			A.SALES_PAID_AMT ,
+			A.SALES_RE_PRINT	  ,
+			A.SALES_DT_CNT	  ,
+			A.CASH_AMT          ,
+			A.CASH_TYPE         ,
+			A.CASH_NO           ,
+			A.CASH_APP_N0       ,
+			A.CASH_DATE         ,
+			A.CARD_AMT          ,
+			A.CARD_INSTALLMENT  ,
+			A.CARD_APP_NO       ,
+			A.CARD_DATE         ,
+			A.CARD_ICOM         ,
+			A.CARD_PCOM         ,
+			A.CARD_NO           ,
+			A.POINT_AMT         ,
+			A.GET_POINT         ,
+			A.CUSTOMER_CODE	  ,
+			A.CUSTOMER_POINT	  ,
+			A.REC_VIEW_YN       ,
+			A.CARD_CASH_DIV     ,
+			A.EMAIL             ,
+			FORMAT(A.SALES_SUM_ALL_AMT,0) AS SALES_SUM_ALL_AMT,
+        	(SELECT CAST(A.SALES_PRINT_DATE AS DATE)) AS SALES_PRINT_DATE,
+        	B.USER_NM,
+			(
+				SELECT
+					FORMAT(SUM(A1.SALES_SUM_ALL_AMT),0) 
+				FROM
+					(select * from TB_USER_DATA
+				WHERE
+					USER_KEY = #{telNo}
+				ORDER BY FRT_CREA_DTM DESC
+				LIMIT 0,10) A1
+			)AS TOTAL_AM        	
+		FROM
+			TB_USER_DATA A,
+			TB_USER B
+		WHERE
+			A.USER_KEY = #{telNo}
+		AND 
+			B.TEL_NO = #{telNo}
+		AND 		
+			B.TEL_NO = A.USER_KEY
+		]]>
+		<choose>
+             <when test="'Y'.equals(dateSrchCd)">
+                AND A.FRT_CREA_DTM BETWEEN #{startDay} AND #{endDay}
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+		<choose>
+             <when test="'SRCHY'.equals(dateSrchCd)">
+                AND A.FRT_CREA_DTM BETWEEN #{startDay} AND #{endDay}
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+		<choose>
+             <when test="'TODAY'.equals(dateDivCd)">
+                 AND date(A.FRT_CREA_DTM) = date(now())
+             </when>
+             <when test="'WEEK'.equals(dateDivCd)">
+				 <![CDATA[AND	date(A.FRT_CREA_DTM) >= date(subdate(now(), INTERVAL 7 DAY)) and date(A.FRT_CREA_DTM) <= date(now())]]>
+             </when>
+             <when test="'MONTH'.equals(dateDivCd)">
+				 <![CDATA[AND	date(A.FRT_CREA_DTM) >= date(subdate(now(), INTERVAL 30 DAY)) and date(A.FRT_CREA_DTM) <= date(now())]]>
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+        <choose>
+             <when test="'CARD'.equals(payDivCd)">
+				<![CDATA[AND A.CARD_ICOM <> '']]>
+             </when>
+             <when test="'CASH'.equals(payDivCd)">
+				<![CDATA[AND A.CARD_ICOM = '']]>
+             </when>
+             <when test="'ETC'.equals(payDivCd)">
+				<![CDATA[AND A.POINT_AMT <> '']]>
+             </when>
+             <otherwise>
+ 				
+             </otherwise>
+         </choose>	
+        <choose>
+             <when test="'D1'.equals(orderByCd)">
+				ORDER BY A.FRT_CREA_DTM ASC
+             </when>
+             <when test="'A1'.equals(orderByCd)">
+				ORDER BY ABS(A.SALES_SUM_ALL_AMT) ASC
+             </when>
+             <when test="'A2'.equals(orderByCd)">
+				ORDER BY ABS(A.SALES_SUM_ALL_AMT) DESC
+             </when>
+             <otherwise>
+ 				ORDER BY A.FRT_CREA_DTM DESC
+             </otherwise>
+         </choose>	
+        LIMIT 0,10
+	</select>		
+
+		<select id="latestData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			x.TEL_NO
+			,x.FNL_MOF_DTM
+			,x.FRT_CREA_DTM
+			,x.SHOP_NAME
+			,x.TOTAL_AM
+			,x.SMS_DIV
+			,x.SEQ
+			,x.SALES_BARCODE
+			,x.SHOP_ADDR
+			,x.SHOP_BIZNO
+			,x.SHOP_CEO
+			,x.SHOP_TEL_NUM
+			,x.SHOP_CASHIER
+			,x.SALES_DATE
+			,x.CARD_APP_NO
+			,x.CARD_NO
+			,x.CARD_ICOM
+			,x.CARD_INSTALLMENT
+			,x.APP_CO_DIV
+			,x.EMAIL
+			,x.USER_NM
+			,x.SALES_SUM_TAX_AMT
+			,x.SALES_SUM_DF_AMT
+			,x.SALES_SUM_FP_AMT
+			,x.SALES_SUM_ALL_AMT
+			,x.SALES_PAID_AMT
+			,x.SALES_PRINT_DATE
+			,x.SALES_TYPE
+			,x.POINT_AMT
+			,x.TRANS_MISSION 
+		FROM
+		(
+			SELECT 
+				A.USER_KEY AS TEL_NO
+				,CAST(A.FRT_CREA_DTM AS DATE) AS SALES_PRINT_DATE
+				,A.FNL_MOF_DTM AS FNL_MOF_DTM
+				,A.FRT_CREA_DTM AS FRT_CREA_DTM
+				,A.SHOP_NAME AS SHOP_NAME
+				,A.SALES_SUM_ALL_AMT AS TOTAL_AM
+				,'00' AS SMS_DIV 
+				,A.SEQ AS SEQ
+				,A.SALES_BARCODE AS SALES_BARCODE
+				,A.SHOP_ADDR AS SHOP_ADDR
+				,A.SHOP_BIZNO AS SHOP_BIZNO
+				,A.SHOP_CEO AS SHOP_CEO
+				,A.SHOP_TEL_NUM AS SHOP_TEL_NUM
+				,A.SHOP_CASHIER AS SHOP_CASHIER
+				,A.SALES_DATE AS SALES_DATE
+				,A.CARD_APP_NO AS CARD_APP_NO
+				,A.CARD_NO AS CARD_NO
+				,A.CARD_ICOM AS CARD_ICOM
+				,A.CARD_INSTALLMENT AS CARD_INSTALLMENT
+				,'' AS APP_CO_DIV
+				,A.EMAIL AS EMAIL
+				,C.USER_NM AS USER_NM
+				,A.SALES_SUM_TAX_AMT AS SALES_SUM_TAX_AMT
+				,A.SALES_SUM_DF_AMT AS SALES_SUM_DF_AMT
+				,A.SALES_SUM_FP_AMT AS SALES_SUM_FP_AMT
+				,A.SALES_SUM_ALL_AMT AS SALES_SUM_ALL_AMT
+				,A.SALES_PAID_AMT AS SALES_PAID_AMT
+				,A.SALES_TYPE AS SALES_TYPE
+				,A.POINT_AMT AS POINT_AMT
+				,A.TRANS_MISSION 
+			FROM 
+				TB_USER_DATA A 
+				,TB_USER C
+			WHERE
+				A.USER_KEY = #{telNo}
+			AND 
+				C.TEL_NO = #{telNo}
+			AND 		
+				C.TEL_NO = A.USER_KEY
+			AND
+				C.EMAIL != 'UPLUS'
+			UNION
+			SELECT 
+				B.REC_TEN_NO AS TEL_NO
+				,CAST(B.FRT_CREA_DTM AS DATE) AS SALES_PRINT_DATE
+				,B.FNL_MOF_DTM AS FNL_MOF_DTM
+				,B.FRT_CREA_DTM AS FRT_CREA_DTM
+				,B.APP_CO AS SHOP_NAME
+				,B.APP_AMOUNT AS TOTAL_AM
+				,'01' AS SMS_DIV
+				,B.SMS_NO AS SEQ
+				,'' AS SALES_BARCODE
+				,'' AS SHOP_ADDR
+				,'' AS SHOP_BIZNO
+				,'' AS SHOP_CEO
+				,'' AS SHOP_TEL_NUM
+				,'' AS SHOP_CASHIER
+				,'' AS SALES_DATE
+				,'' AS CARD_APP_NO
+				,'' AS CARD_NO
+				,B.CARD_APP_CO AS CARD_ICOM
+				,B.INST_DIV AS CARD_INSTALLMENT
+				,B.APP_CO_DIV AS APP_CO_DIV
+				,'' AS EMAIL
+				,'' AS USER_NM
+				,'' AS SALES_SUM_TAX_AMT
+				,'' AS SALES_SUM_DF_AMT
+				,'' AS SALES_SUM_FP_AMT
+				,B.APP_AMOUNT AS SALES_SUM_ALL_AMT
+				,'' AS SALES_PAID_AMT
+				,'' AS SALES_TYPE
+				,'' AS POINT_AMT
+				,'' AS TRANS_MISSION 
+				
+			FROM 
+				TB_SMS_MASTER B
+		)x
+		where
+			x.TEL_NO = #{telNo}
+		]]>
+		<choose>
+             <when test="'Y'.equals(dateSrchCd)">
+                AND DATE_FORMAT(x.FRT_CREA_DTM,'%Y-%m-%d') BETWEEN #{startDay} AND #{endDay}
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+		<choose>
+             <when test="'SRCHY'.equals(dateSrchCd)">
+                AND DATE_FORMAT(x.FRT_CREA_DTM,'%Y-%m-%d') BETWEEN #{startDay} AND #{endDay}
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+		<choose>
+             <when test="'ONLYSMS'.equals(smsDivCd)">
+	                AND x.SMS_DIV = '01'
+             </when>
+             <when test="'ONLYREC'.equals(smsDivCd)">
+	                AND x.SMS_DIV = '00'
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+		<choose>
+             <when test="'TODAY'.equals(dateDivCd)">
+                 AND date(x.FRT_CREA_DTM) = date(now())
+             </when>
+             <when test="'WEEK'.equals(dateDivCd)">
+				 <![CDATA[AND	date(x.FRT_CREA_DTM) >= date(subdate(now(), INTERVAL 7 DAY)) and date(x.FRT_CREA_DTM) <= date(now())]]>
+             </when>
+             <when test="'MONTH'.equals(dateDivCd)">
+				 <![CDATA[AND	date(x.FRT_CREA_DTM) >= date(subdate(now(), INTERVAL 30 DAY)) and date(x.FRT_CREA_DTM) <= date(now())]]>
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+        <choose>
+             <when test="'CARD'.equals(payDivCd)">
+				<![CDATA[AND x.CARD_ICOM <> '']]>
+             </when>
+             <when test="'CASH'.equals(payDivCd)">
+				<![CDATA[AND x.CARD_ICOM = '']]>
+             </when>
+             <when test="'ETC'.equals(payDivCd)">
+				<![CDATA[AND x.POINT_AMT <> '']]>
+             </when>
+             <otherwise>
+ 				
+             </otherwise>
+         </choose>	
+        <choose>
+             <when test="'D1'.equals(orderByCd)">
+				ORDER BY x.FRT_CREA_DTM ASC
+             </when>
+             <when test="'A1'.equals(orderByCd)">
+				ORDER BY ABS(x.SALES_SUM_ALL_AMT) ASC
+             </when>
+             <when test="'A2'.equals(orderByCd)">
+				ORDER BY ABS(x.SALES_SUM_ALL_AMT) DESC
+             </when>
+             <otherwise>
+ 				ORDER BY x.FRT_CREA_DTM DESC
+             </otherwise>
+         </choose>	
+          <choose>
+             <when test="'Y01'.equals(transMission)">
+                AND TRANS_MISSION > 0
+             </when>
+             <when test="'Y02'.equals(transMission)">
+                AND TRANS_MISSION = 0
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>   
+         
+	LIMIT #{startSeq},#{endSeq}
+	</select>	
+	
+		<select id="affliateData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			AFFLIATE_NO,
+			AFFLIATE_NM,
+			AFF_DETAIL_EXPLAIN,
+			AFF_DETAIL_LAT,
+			AFF_DETAIL_LNG,
+			AFF_DETAIL_IMAGE,
+			SHOP_BRANCH
+		FROM
+			TB_AFFLIATE_MASTER
+		WHERE
+			JIBUN_ADDR LIKE CONCAT('%', #{dong}, '%')
+		OR
+			AFFLIATE_NM LIKE CONCAT ('%', #{dong}, '%')		
+		AND
+			AFF_ALLIANCE = 'Y'
+		]]>
+		</select>
+		
+		
+		
+		
+	<select id="smsLatestData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			SMS_NO,
+			REC_TEN_NO,
+			APP_DT,
+			APP_CO,
+			CARD_APP_CO,
+			INST_DIV,
+			APP_AMOUNT,
+			FNL_MOF_DTM,
+		]]>
+		<choose>
+             <when test="'TODAY'.equals(dateDivCd)">
+					(SELECT FORMAT(SUM(APP_AMOUNT),0) AS TOTAL_AM FROM TB_SMS_MASTER WHERE REC_TEN_NO = #{telNo} AND date(FNL_MOF_DTM) = date(now()))AS TEST1,	
+					(SELECT COUNT(SMS_NO) AS TOTAL_AM FROM TB_SMS_MASTER WHERE REC_TEN_NO = #{telNo} AND date(FNL_MOF_DTM) = date(now()))AS TEST2			
+				FROM
+					TB_SMS_MASTER
+				WHERE 
+					REC_TEN_NO = #{telNo}
+                AND date(FNL_MOF_DTM) = date(now())
+             </when>
+             <when test="'WEEK'.equals(dateDivCd)">
+					(SELECT FORMAT(SUM(APP_AMOUNT),0) AS TOTAL_AM FROM TB_SMS_MASTER WHERE REC_TEN_NO = #{telNo} <![CDATA[AND	date(FNL_MOF_DTM) >= date(subdate(now(), INTERVAL 7 DAY)) and date(FNL_MOF_DTM) <= date(now())]]>)AS TEST1,	
+					(SELECT COUNT(SMS_NO) AS TOTAL_AM FROM TB_SMS_MASTER WHERE REC_TEN_NO = #{telNo} <![CDATA[AND	date(FNL_MOF_DTM) >= date(subdate(now(), INTERVAL 7 DAY)) and date(FNL_MOF_DTM) <= date(now())]]>)AS TEST2			
+				FROM
+					TB_SMS_MASTER
+				WHERE 
+					REC_TEN_NO = #{telNo}
+				 <![CDATA[AND	date(FNL_MOF_DTM) >= date(subdate(now(), INTERVAL 7 DAY)) and date(FNL_MOF_DTM) <= date(now())]]>
+             </when>
+             <when test="'MONTH'.equals(dateDivCd)">
+					(SELECT FORMAT(SUM(APP_AMOUNT),0) AS TOTAL_AM FROM (select * from TB_SMS_MASTER WHERE REC_TEN_NO = #{telNo} <![CDATA[AND date(FNL_MOF_DTM) >= date(subdate(now(), INTERVAL 30 DAY)) and date(FNL_MOF_DTM) <= date(now())]]> ORDER BY FNL_MOF_DTM DESC LIMIT 0,10) A)AS TEST1,	
+					(SELECT COUNT(SMS_NO) AS TOTAL_AM FROM TB_SMS_MASTER WHERE REC_TEN_NO = #{telNo} <![CDATA[AND	date(FNL_MOF_DTM) >= date(subdate(now(), INTERVAL 30 DAY)) and date(FNL_MOF_DTM) <= date(now())]]>)AS TEST2			
+					FROM
+						TB_SMS_MASTER
+					WHERE 
+						REC_TEN_NO = #{telNo}
+					 	<![CDATA[AND	date(FNL_MOF_DTM) >= date(subdate(now(), INTERVAL 30 DAY)) and date(FNL_MOF_DTM) <= date(now())]]>
+             </when>
+             <otherwise>
+				(SELECT FORMAT(SUM(APP_AMOUNT),0) AS TOTAL_AM FROM (select * from TB_SMS_MASTER WHERE REC_TEN_NO = #{telNo} ORDER BY FNL_MOF_DTM DESC LIMIT 0,10) A) AS TEST1,	
+				(SELECT COUNT(A.SMS_NO) AS TOTAL_AM FROM (select * from TB_SMS_MASTER WHERE REC_TEN_NO = #{telNo} ORDER BY FNL_MOF_DTM DESC LIMIT 0,10) A)AS TEST2								
+				FROM
+					TB_SMS_MASTER
+				WHERE 
+					REC_TEN_NO = #{telNo}
+             </otherwise>
+         </choose>	
+		ORDER BY FNL_MOF_DTM DESC
+        LIMIT 0,10
+	</select>		
+	
+	<select id="startCurDatabak" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			SEQ,
+			CARD_CASH_DIV,
+			CARD_ICOM,
+			SHOP_NAME,
+			FORMAT(SALES_PAID_AMT,0) AS SALES_PAID_AMT,
+        	(SELECT CAST(SALES_PRINT_DATE AS DATE)) AS SALES_PRINT_DATE
+		FROM
+			TB_USER_DATA
+		WHERE
+			USER_KEY= #{telNo}
+		ORDER BY FRT_CREA_DTM DESC
+        LIMIT 0,3
+		]]>
+	</select>		
+	
+	<select id="startCurData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			x.TEL_NO
+			,x.SHOP_NAME
+			,x.SALES_SUM_ALL_AMT
+			,x.CARD_ICOM
+			,x.SALES_PRINT_DATE
+			,x.FRT_CREA_DTM
+		FROM
+		(
+			SELECT 
+				A.USER_KEY AS TEL_NO
+				,A.SHOP_NAME AS SHOP_NAME
+				,A.SALES_SUM_ALL_AMT AS SALES_SUM_ALL_AMT
+				,A.CARD_ICOM AS CARD_ICOM
+				,CAST(A.FRT_CREA_DTM AS DATE) AS SALES_PRINT_DATE
+				,A.FRT_CREA_DTM
+			FROM 
+				TB_USER_DATA A 
+			WHERE
+				A.USER_KEY = #{telNo}
+			UNION
+			SELECT 
+				B.REC_TEN_NO AS TEL_NO
+				,B.APP_CO AS SHOP_NAME
+				,B.APP_AMOUNT AS SALES_SUM_ALL_AMT
+				,B.CARD_APP_CO AS CARD_ICOM
+				,CAST(B.FRT_CREA_DTM AS DATE) AS SALES_PRINT_DATE
+				,B.FRT_CREA_DTM
+			FROM TB_SMS_MASTER B
+		)x
+		WHERE
+			x.TEL_NO = #{telNo}
+		ORDER BY x.FRT_CREA_DTM DESC
+		LIMIT 0,3
+		]]>
+	</select>		
+	
+	<select id="startUserData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			TEL_NO,
+			EMAIL,
+			UUID,
+			USER_NM,
+			PUSH_YN
+		FROM
+			TB_USER	
+		WHERE
+			TEL_NO= #{telNo}
+		AND
+			EMAIL != 'UPLUS'
+		]]>
+	</select>		
+		
+	<select id="startSumDatabak" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			IFNULL(SUM(CASE WHEN SALES_PRINT_DATE LIKE #{endDate} THEN SALES_PAID_AMT END),0) AS TOTAL_AM,
+			IFNULL(SUM(CASE WHEN SALES_PRINT_DATE LIKE #{startDate} THEN SALES_PAID_AMT END),0) AS TOTAL_AM2
+		FROM
+			TB_USER_DATA
+		WHERE
+			USER_KEY = #{telNo}
+		AND
+			EMAIL != 'UPLUS'
+		]]>
+	</select>		
+		
+	<select id="startSumData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			IFNULL(SUM(CASE WHEN DATE_FORMAT(FRT_CREA_DTM,'%Y%m%d') LIKE #{startDate} THEN APP_AMOUNT END),0) AS TOTAL_AM,
+			IFNULL(SUM(CASE WHEN DATE_FORMAT(FRT_CREA_DTM,'%Y%m%d') LIKE #{endDate} THEN APP_AMOUNT END),0) AS TOTAL_AM2,
+			COUNT((CASE WHEN DATE_FORMAT(FRT_CREA_DTM,'%Y%m%d') LIKE #{startDate} THEN APP_AMOUNT END)) AS TOTAL_CNT,
+			COUNT((CASE WHEN DATE_FORMAT(FRT_CREA_DTM,'%Y%m%d') LIKE #{endDate} THEN APP_AMOUNT END)) AS TOTAL_CNT2
+		FROM
+			TB_SMS_MASTER
+		WHERE
+			REC_TEN_NO = #{telNo}
+		]]>
+	</select>		
+		
+	<select id="startRecYnData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			A.* ,
+			B.*
+		FROM 
+			(SELECT COUNT(SEQ) AS TOTAL_CNT FROM TB_USER_DATA WHERE USER_KEY = #{telNo} AND substring(SALES_PRINT_DATE, 1, 8) BETWEEN #{endDate} AND #{startDate} AND EMAIL != 'UPLUS')A,
+			(SELECT COUNT(SEQ) AS TOTAL_NO_READ_CNT FROM TB_USER_DATA WHERE REC_VIEW_YN = 'N' AND USER_KEY = #{telNo} AND substring(SALES_PRINT_DATE, 1, 8) BETWEEN #{endDate} AND #{startDate} AND EMAIL != 'UPLUS' )B			
+		]]>
+	</select>		
+	
+	<select id="houseHoldbak" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d') AS CNT_DATE, 
+   			COUNT(*) AS CONUT,
+			(SELECT FORMAT(SUM(SALES_PAID_AMT),0) FROM TB_USER_DATA WHERE USER_KEY= #{eMail} AND FRT_CREA_DTM BETWEEN #{startCurDate} AND #{endCurDate}) AS TOTAL_AM,
+			(SELECT COUNT(SEQ) FROM TB_USER_DATA WHERE USER_KEY= #{eMail} AND FRT_CREA_DTM BETWEEN #{startCurDate} AND #{endCurDate}) AS TOTAL_CNT       			
+		FROM 
+			TB_USER_DATA
+		WHERE 
+			USER_KEY = #{eMail} 
+			AND FRT_CREA_DTM BETWEEN #{startDate} AND #{endDate}
+		GROUP BY
+		    DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d')
+		ORDER BY
+		    DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d')
+		]]>
+	</select>		
+	
+	<select id="houseHold" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d') AS CNT_DATE, 
+   			COUNT(*) AS CONUT,
+			(SELECT FORMAT(SUM(APP_AMOUNT),0) FROM TB_SMS_MASTER WHERE REC_TEN_NO= #{eMail} AND DATE_FORMAT(FRT_CREA_DTM,'%Y%m%d') BETWEEN #{startCurDate} AND #{endCurDate}) AS TOTAL_AM,
+			(SELECT COUNT(SMS_NO) FROM TB_SMS_MASTER WHERE REC_TEN_NO= #{eMail} AND DATE_FORMAT(FRT_CREA_DTM,'%Y%m%d') BETWEEN #{startCurDate} AND #{endCurDate}) AS TOTAL_CNT       			
+		FROM 
+			TB_SMS_MASTER
+		WHERE 
+			REC_TEN_NO = #{eMail} 
+			AND FRT_CREA_DTM BETWEEN #{startDate} AND #{endDate}
+		GROUP BY
+		    DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d')
+		ORDER BY
+		    DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d')
+		]]>
+	</select>		
+	
+	<select id="houseHoldDetailbak" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			(SELECT FORMAT(SUM(SALES_SUM_ALL_AMT),0) FROM TB_USER_DATA WHERE USER_KEY= #{telNo} and date(FRT_CREA_DTM) = date(#{startDate})) AS TOTAL_AM,
+			(SELECT FORMAT(SUM(CASH_AMT),0) FROM TB_USER_DATA WHERE USER_KEY= #{telNo} and date(FRT_CREA_DTM) = date(#{startDate})) AS CASH_AM,
+			(SELECT FORMAT(SUM(CARD_AMT),0) FROM TB_USER_DATA WHERE USER_KEY= #{telNo} and date(FRT_CREA_DTM) = date(#{startDate})) AS CARD_AM,
+			(SELECT COUNT(CASH_AMT) FROM TB_USER_DATA WHERE USER_KEY= #{telNo} and date(FRT_CREA_DTM) = date(#{startDate}) and CASH_AMT<>'') AS CASH_CNT,
+			(SELECT COUNT(CARD_AMT) FROM TB_USER_DATA WHERE USER_KEY= #{telNo} and date(FRT_CREA_DTM) = date(#{startDate}) and CARD_AMT<>'') AS CARD_CNT	,
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d') AS CNT_DATE,
+			SHOP_NAME,
+			SALES_SUM_ALL_AMT,
+			CASH_AMT,
+			CARD_AMT,
+			CARD_ICOM
+		FROM 
+			TB_USER_DATA
+		WHERE 
+			USER_KEY = #{telNo} 
+			AND date(FRT_CREA_DTM) = date(#{startDate})
+
+		]]>
+	</select>		
+	
+	<select id="houseHoldDetail" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			(SELECT FORMAT(SUM(APP_AMOUNT),0) FROM TB_SMS_MASTER WHERE REC_TEN_NO= #{telNo} and date(FRT_CREA_DTM) = date(#{startDate})) AS TOTAL_AM,
+			DATE_FORMAT(FRT_CREA_DTM,'%H:%i:%s') AS CNT_DATE,
+			FRT_CREA_DTM,
+			APP_CO,
+			APP_CO_DIV,
+			APP_AMOUNT,
+			INST_DIV,
+			CARD_APP_CO
+		FROM 
+			TB_SMS_MASTER
+		WHERE 
+			REC_TEN_NO = #{telNo} 
+			AND date(FRT_CREA_DTM) = date(#{startDate})
+		ORDER BY 
+			FRT_CREA_DTM DESC
+		]]>
+	</select>		
+	
+	<select id="monthChartData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			MONTH(FRT_CREA_DTM) AS MONTH, 
+			COUNT(SMS_NO) AS MONTH_CNT, 
+			FORMAT(SUM(APP_AMOUNT),0) AS TOTAL_AMT 
+		FROM 
+			TB_SMS_MASTER
+		WHERE 
+			DATE(FRT_CREA_DTM) >= DATE(SUBDATE(NOW(), INTERVAL 300 DAY)) AND DATE(FRT_CREA_DTM) <= DATE(NOW()) -- 시간 범위 조건
+			AND REC_TEN_NO = #{telNo} 
+		GROUP BY MONTH(FRT_CREA_DTM)
+		]]>
+	</select>		
+	
+	<select id="dayDivChartData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT CASE WHEN DAYOFWEEK(FRT_CREA_DTM) = 1 THEN '일'
+		            WHEN DAYOFWEEK(FRT_CREA_DTM) = 2 THEN '월'
+		            WHEN DAYOFWEEK(FRT_CREA_DTM) = 3 THEN '화'
+		            WHEN DAYOFWEEK(FRT_CREA_DTM) = 4 THEN '수'
+		            WHEN DAYOFWEEK(FRT_CREA_DTM) = 5 THEN '목'
+		            WHEN DAYOFWEEK(FRT_CREA_DTM) = 6 THEN '금'
+		            WHEN DAYOFWEEK(FRT_CREA_DTM) = 7 THEN '토'
+		        ELSE '오류' END WEEK_NAME
+		, COUNT(SMS_NO) AS DAY_CNT,FORMAT(SUM(APP_AMOUNT),0) AS DAY_AMT FROM TB_SMS_MASTER
+		WHERE 
+			DATE(FRT_CREA_DTM) >= DATE(SUBDATE(NOW(), INTERVAL 7 DAY)) AND DATE(FRT_CREA_DTM) <= DATE(NOW()) -- 시간 범위 조건
+		AND 
+			REC_TEN_NO = #{telNo}
+		GROUP BY DAYOFWEEK(FRT_CREA_DTM); -- 요일별 그룹
+		]]>
+	</select>		
+	
+	<select id="instDivChartData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT CASE WHEN INST_DIV = '일시불' THEN '일시불'
+		            WHEN INST_DIV = '01개월' THEN '01개월'
+		            WHEN INST_DIV = '02개월' THEN '02개월'
+		            WHEN INST_DIV = '03개월' THEN '03개월'
+		            WHEN INST_DIV = '04개월' THEN '04개월'
+		            WHEN INST_DIV = '05개월' THEN '05개월'
+		            WHEN INST_DIV = '06개월' THEN '06개월'
+		            WHEN INST_DIV = '07개월' THEN '07개월'
+		            WHEN INST_DIV = '08개월' THEN '08개월'
+		            WHEN INST_DIV = '09개월' THEN '09개월'
+		            WHEN INST_DIV = '10개월' THEN '10개월'
+		            WHEN INST_DIV = '11개월' THEN '11개월'
+		            WHEN INST_DIV = '12개월' THEN '12개월'																				            
+		        ELSE '오류' END INST_DIV
+		 , COUNT(SMS_NO) AS DAY_CNT,FORMAT(SUM(APP_AMOUNT),0) AS DAY_AMT 
+		FROM 
+			TB_SMS_MASTER
+		WHERE 
+			DATE(FRT_CREA_DTM) >= DATE(SUBDATE(NOW(), INTERVAL 7 DAY)) AND DATE(FRT_CREA_DTM) <= DATE(NOW())
+		AND 
+			REC_TEN_NO = #{telNo}
+		GROUP BY  INST_DIV 
+		]]>
+	</select>
+			
+	<select id="dayOfMonthChartData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT DAYOFMONTH(FRT_CREA_DTM) AS 'DAY'
+		      , COUNT(SMS_NO) AS CNT,
+		      FORMAT(SUM(APP_AMOUNT),0) AS DAY_AMT
+		FROM TB_SMS_MASTER
+		WHERE 
+			DATE(FRT_CREA_DTM) >= DATE(SUBDATE(NOW(), INTERVAL 7 DAY)) AND DATE(FRT_CREA_DTM) <= DATE(NOW())
+		AND 
+			REC_TEN_NO = #{telNo}
+		GROUP BY DAYOFMONTH(FRT_CREA_DTM)
+		ORDER BY DAYOFMONTH(FRT_CREA_DTM) DESC;
+
+		]]>
+	</select>		
+	
+	
+	<update id="updatePushYn" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_USER
+			SET
+				PUSH_YN = #{pushYn}
+			WHERE
+				TEL_NO = #{telNo}
+		]]>
+	</update>
+	
+	<update id="settingChkPw" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_USER
+			SET
+				PWD = #{pwd}
+			WHERE
+				TEL_NO = #{telNo}
+		]]>
+	</update>
+	
+	
+	<select id="eventBoardList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				SEQ,
+				BOARD_DIV,
+				BOARD_TITLE,
+				BOARD_CONTENTS,
+				HIT_CNT,
+				DEL_GB,
+				MAIN_GB,
+				EVENT_START_DATE,
+				EVENT_END_DATE,
+				LINK_URL,
+				DATE_FORMAT(CREA_DTM, '%Y-%m-%d %h:%m') AS USE_DATE_ORG				
+			FROM
+				TB_BOARD
+			WHERE
+				BOARD_DIV = #{boardDiv}
+			AND
+				DEL_GB = 'N'
+		]]>
+		<choose>
+             <when test="'com'.equals(procDivCd)">
+				<![CDATA[	AND EVENT_END_DATE <= #{nowDay}]]>	
+             </when>
+             <when test="'prog'.equals(procDivCd)">
+				<![CDATA[	AND EVENT_END_DATE > #{nowDay}]]>					
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+        ORDER BY CREA_DTM DESC
+	</select>	
+	
+	<select id="selectUplusJoinChk" parameterType="hashmap" resultType="Integer">
+		<![CDATA[
+		SELECT
+			COUNT(EMAIL) AS CNT
+		FROM
+			TB_USER
+		WHERE 
+			TEL_NO = #{telNo}
+		AND
+			EMAIL != 'UPLUS'
+		]]>
+	</select>	
+	
+	<select id="selectUsedTelChk" parameterType="hashmap" resultType="Integer">
+		<![CDATA[
+		SELECT
+			COUNT(*) AS CNT
+		FROM
+			TB_USER
+		WHERE 
+			TEL_NO = #{telNo}
+		AND
+			EMAIL='UPLUS'
+		AND
+			USER_STATE = '01'
+		]]>
+	</select>	
+	
+	
+	<update id="updateUplusDataUser" parameterType="hashmap">
+		<![CDATA[
+			UPDATE 
+				TB_USER
+			SET
+				USER_STATE = #{userState},
+				USER_STATE_CHANGE = now()
+			WHERE
+				TEL_NO = #{telNo}
+			AND
+				EMAIL = 'UPLUS'
+			AND
+				USER_STATE = '01'
+				
+		]]>
+	</update>
+	
+	
+	<select id="selectEmail" parameterType="hashmap" resultType="String">
+		<![CDATA[
+		SELECT
+			EMAIL
+		FROM
+			TB_USER
+		WHERE 
+			TEL_NO = #{telNo}
+		]]>
+	</select>
+	
+	<!-- <update id="updateUsedData" parameterType="hashmap">
+		    <![CDATA[
+		    	UPDATE TB_USER_DATA AS a, TB_USER_DATA_DETAIL AS b, TB_SMS_MASTER AS c, TB_USER AS d
+			SET
+				a.USER_KEY = #{id}, 
+				b.USER_KEY = #{id}, 
+				c.REC_TEN_NO = #{id}, 
+				d.TEL_NO = #{id}
+			WHERE
+				a.USER_KEY = #{telNo} 
+			AND b.USER_KEY = #{telNo} 
+			AND c.REC_TEN_NO = #{telNo}
+			AND d.TEL_NO = #{telNo}
+		    ]]>
+		</update> -->
+		
+	
+	<update id="updateUplusDrop" parameterType="hashmap">
+		    <![CDATA[
+		    	UPDATE TB_USER
+			SET
+				USER_STATE = #{userState},
+				USER_STATE_CHANGE = now()
+			WHERE
+				TEL_NO = #{telNo}
+			AND
+				USER_STATE = '01'
+			AND
+				UPLUS_USER_KEY = #{originUplusUserKey}
+		    ]]>
+		</update>
+		
+		
+		
+		
+	<insert id="receiveUplusJoin" parameterType="hashmap">
+		<![CDATA[
+		    	INSERT INTO TB_USER
+		    	(
+		    		EMAIL,
+		    		TEL_NO,
+		    		USER_NM,
+		    		USER_RRN,
+		    		LOCAL_DIV_CD,
+		    		SEX_DIV_CD,
+		    		UPLUS_USER_KEY,
+		    		FRT_CREA_DTM,
+		    		FRT_REGN_NM,
+		    		FNL_MOF_DTM,
+		    		FNL_MDF_NM
+		    	)
+		    	VALUES
+		    	(	
+		    		'UPLUS',  
+		    		#{telNo},
+		    		#{userNm},
+		    		#{userBirth},
+		    		#{localDivCd},
+		    		#{sexDivCd},
+		    		#{uplusUserKey},
+		    		now(),
+					'Admin',
+					now(),
+					'Admin'
+		    	)
+		]]>
+	</insert>
+	
+	<select id="originUplusUserKey" parameterType="hashmap" resultType="String">
+		<![CDATA[
+		SELECT
+			UPLUS_USER_KEY
+		FROM
+			TB_USER
+		WHERE 
+			TEL_NO = #{telNo}
+		AND 
+			USER_STATE = '01'
+		AND
+			EMAIL = 'UPLUS'
+		]]>
+	</select>
+	
+	<select id="depth01List" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			left(a.ds,6) as STANDARD_MONTH,
+			(COUNT(b.SMS_NO))/2 AS MONTH_CNT, 
+			case when FORMAT((SUM(b.APP_AMOUNT))/2,0) is null then 0 else FORMAT((SUM(b.APP_AMOUNT))/2,0) end AS TOTAL_AMT
+		FROM 
+			(
+				SELECT 
+					MIN(FRT_CREA_DTM) AS MIN_DATE
+				FROM 
+					TB_SMS_MASTER
+				WHERE 
+					REC_TEN_NO=#{telNo}
+				AND
+					FRT_CREA_DTM BETWEEN #{startDate} AND #{endDate}
+			)c
+		 	left outer join 
+			(
+			SELECT 
+				* 
+			FROM 
+				date_t1 
+			where 
+				ds BETWEEN #{startDate} AND #{endDate}
+			)a
+			on a.d >= DATE_FORMAT(c.MIN_DATE,'%Y-%m-%d')		
+			left outer join 
+			(
+			SELECT 
+				* 
+			FROM 
+				TB_SMS_MASTER 
+			WHERE 
+				REC_TEN_NO=#{telNo}
+			)b
+			on a.d = DATE_FORMAT(b.FRT_CREA_DTM,'%Y-%m-%d')		
+		group by STANDARD_MONTH
+		order by STANDARD_MONTH desc
+		]]>
+	</select>		
+	
+	<select id="depth02CardList" parameterType="hashmap" resultType="hashmap">
+<!-- 		SELECT 
+			DATE_FORMAT(FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
+			CARD_APP_CO,
+			COUNT(SMS_NO) AS MONTH_CNT, 
+			FORMAT(SUM(APP_AMOUNT),0) AS TOTAL_AMT 
+		FROM 
+			TB_SMS_MASTER
+		WHERE 
+			DATE_FORMAT(FRT_CREA_DTM,'%Y%m') BETWEEN #{startDateMonth} AND #{endDateMonth}
+			AND REC_TEN_NO = #{telNo}
+		GROUP BY CARD_APP_CO,DIV_MONTH
+		ORDER BY DIV_MONTH DESC -->
+		<![CDATA[
+		
+		SELECT 
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
+			A.REC_TEN_NO,
+			A.CARD_APP_CO,
+			COUNT(A.SMS_NO) AS MONTH_CNT, 
+			FORMAT(SUM(A.APP_AMOUNT),0) AS TOTAL_AMT 
+		FROM 
+			TB_SMS_MASTER A,
+			TB_USER B
+		WHERE 
+			A.REC_TEN_NO = #{telNo}
+			AND A.REC_TEN_NO = B.TEL_NO
+			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
+		GROUP BY CARD_APP_CO,DIV_MONTH
+		ORDER BY DIV_MONTH DESC, convert(SUM(A.APP_AMOUNT), decimal)  DESC		
+		
+		]]>
+	</select>		
+	
+	<select id="depth03CardList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y-%m-%d') AS DIV_MONTH,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_WEEK,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%H:%i') AS DIV_SEC,
+			A.APP_AMOUNT,
+			A.APP_CO AS APP_CO,
+			A.CARD_APP_CO,
+			case when A.APP_CO_DIV is null then 'etc' else A.APP_CO_DIV end AS APP_CO_DIV,
+			A.INST_DIV
+		FROM
+			TB_SMS_MASTER A,
+			TB_USER B
+		WHERE
+			A.REC_TEN_NO = #{telNo}
+			AND A.REC_TEN_NO = B.TEL_NO
+			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
+		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) DESC;
+		
+		]]>
+	</select>		
+	
+	<select id="depth02DayList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y-%m-%d') AS DIV_DAY,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%m-%d') AS DIV_DATE,			
+			COUNT(A.SMS_NO) AS MONTH_CNT, 
+			FORMAT(SUM(A.APP_AMOUNT),0) AS TOTAL_AMT 	
+		FROM 
+			TB_SMS_MASTER A,
+			TB_USER B
+		WHERE 
+			A.REC_TEN_NO = #{telNo}
+			AND A.REC_TEN_NO = B.TEL_NO
+			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
+		GROUP BY DIV_DAY
+		ORDER BY DIV_DAY DESC
+		]]>
+	</select>		
+	
+	<select id="depth03DayList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y-%m-%d') AS DIV_MONTH,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_WEEK,
+			A.APP_AMOUNT,
+			A.APP_CO AS APP_CO,
+			A.CARD_APP_CO
+		FROM
+			TB_SMS_MASTER A,
+			TB_USER B
+		WHERE
+			A.REC_TEN_NO = #{telNo}
+			AND A.REC_TEN_NO = B.TEL_NO
+			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
+		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) DESC
+		]]>
+	</select>		
+	
+	<select id="depth02DivList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
+			A.REC_TEN_NO,
+			A.CARD_APP_CO,
+			case when A.APP_CO_DIV is null then 'etc' else A.APP_CO_DIV end AS APP_CO_DIV,
+			COUNT(A.SMS_NO) AS MONTH_CNT, 
+			FORMAT(SUM(A.APP_AMOUNT),0) AS TOTAL_AMT 
+		FROM 
+			TB_SMS_MASTER A,
+			TB_USER B
+		WHERE 
+			A.REC_TEN_NO = #{telNo}
+			AND A.REC_TEN_NO = B.TEL_NO
+			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
+		GROUP BY APP_CO_DIV,DIV_MONTH
+		ORDER BY DIV_MONTH DESC, convert(SUM(A.APP_AMOUNT), decimal)  DESC
+		]]>
+	</select>		
+	
+	<select id="depth03DivList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y-%m-%d') AS DIV_MONTH,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_WEEK,
+			A.APP_AMOUNT,
+			A.APP_CO AS APP_CO,
+			A.CARD_APP_CO
+		FROM
+			TB_SMS_MASTER A,
+			TB_USER B
+		WHERE
+			A.REC_TEN_NO = #{telNo}
+			AND A.REC_TEN_NO = B.TEL_NO
+			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
+		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) DESC
+		]]>
+	</select>		
+	
+	<select id="receiveUplusDtlData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			A.UPLUS_USER_KEY,
+			B.SALES_BARCODE,
+			A.TEL_NO,
+			B.ETC_MEMO,
+			B.ETC_EVENT,
+			B.SHOP_NAME,
+			B.SHOP_BIZNO,
+			B.SHOP_ADDR,
+			B.SHOP_CEO,
+			B.SHOP_TEL_NUM,
+			B.SHOP_CASHIER,
+			B.SALES_DATE,
+			B.SALES_PRINT_DATE,
+			B.SALES_TYPE,
+			B.SALES_SUM_DF_AMT,
+			B.SALES_SUM_FP_AMT,
+			B.SALES_SUM_TAX_AMT,
+			B.SALES_SUM_ALL_AMT,
+			B.SALES_SUM_OP_AMT,
+			B.SALES_CHG_AMT,
+			B.SALES_PAID_AMT,
+			B.SALES_RE_PRINT,
+			B.SALES_DT_CNT,
+			B.POINT_AMT
+		FROM
+			TB_USER A,
+			TB_USER_DATA B
+		WHERE
+			A.UPLUS_USER_KEY = #{userKey}
+			AND A.TEL_NO = B.USER_KEY
+			AND  B.SALES_BARCODE = #{erecNo}
+		]]>
+	</select>		
+	
+	<select id="receiveUplusDtlArrayData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			B.SALES_SEQ_NO,
+			B.SALES_PNAME,
+			B.SALES_PPRICE,
+			B.SALES_OPRICE,
+			B.SALES_QTY,
+			B.SALES_DF_AMT,
+			B.SALES_FP_AMT,
+			B.SALES_TAX_AMT,
+			B.SALES_SL_AMT,
+			B.SALES_OP_AMT
+		FROM
+			TB_USER A,
+			TB_USER_DATA_DETAIL B
+		WHERE
+			A.UPLUS_USER_KEY = #{userKey}
+			AND A.TEL_NO = B.USER_KEY
+			AND  B.SALES_BARCODE = #{erecNo}
+		]]>
+	</select>		
+	
+	<select id="affDetail" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			AFFLIATE_NO,
+			AFFLIATE_NM,
+			JIBUN_ADDR,
+			ETC_ADDR,
+			SHOP_TEL_NO,
+			AFF_DETAIL_TIME,
+			AFF_DETAIL_MENU,
+			AFF_DETAIL_EXPLAIN,
+			AFF_DETAIL_HASHTAG,
+			AFF_DETAIL_LAT,
+			AFF_DETAIL_LNG,
+			AFF_ALLIANCE,
+			AFF_DETAIL_IMAGE
+		FROM
+			TB_AFFLIATE_MASTER
+		WHERE
+			AFFLIATE_NO = #{affliateNo}
+		]]>
+	</select>	
+
+	
+	<select id="couponList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				SEQ,
+				AFFLIATE_NO,
+				COUPON_CREA_ID,
+				COUPON_CRE_DATE,
+				COUPON_TITLE,
+				COUPON_CONTENT,
+				COUPON_NAME,
+				COUPON_TYPE,
+				COUPON_VAL,
+				COUPON_TOTAL,
+				COUPON_START_DATE,
+				COUPON_END_DATE,
+				COUPON_DEL,
+				COUPON_CNT,
+				DATE_FORMAT(COUPON_CRE_DATE, '%Y-%m-%d %h:%m') AS USE_DATE_ORG				
+			FROM
+				TB_AFF_COUPON
+			WHERE
+				COUPON_DEL = 'N'
+			
+		]]>
+		<choose>
+             <when test="'com'.equals(procDivCd)">
+				<![CDATA[	AND COUPON_END_DATE <= #{nowDay}]]>	
+             </when>
+             <when test="'pro'.equals(procDivCd)">
+				<![CDATA[	AND COUPON_END_DATE+1 > #{nowDay}]]>					
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+        ORDER BY COUPON_CRE_DATE DESC
+	</select>	
+	
+	
+	<select id="couponRead" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				SEQ,
+				AFFLIATE_NO,
+				COUPON_CREA_ID,
+				COUPON_CRE_DATE,
+				COUPON_TITLE,
+				COUPON_CONTENT,
+				COUPON_DOWNLOAD,
+				COUPON_NAME,
+				COUPON_TYPE,
+				COUPON_VAL,
+				COUPON_TOTAL,
+				COUPON_START_DATE,
+				COUPON_END_DATE,
+				COUPON_DEL,
+				COUPON_CNT,
+				COUPON_EXP,
+				DATE_FORMAT(COUPON_CRE_DATE, '%Y-%m-%d %h:%m') AS USE_DATE_ORG				
+			FROM
+				TB_AFF_COUPON
+			WHERE
+				SEQ = #{seq}
+        ]]>
+	</select>	
+
+		<update id="coucntAdd" parameterType="hashmap">
+		    <![CDATA[
+		    	UPDATE TB_AFF_COUPON
+			SET
+				COUPON_CNT = COUPON_CNT + 1
+			WHERE
+				SEQ = #{seq}	
+		    ]]>
+		</update>
+		
+		<select id="valiCoupon" parameterType="hashmap" resultType="integer">
+		    <![CDATA[
+		    	SELECT 
+		    		COUNT(*)
+		    	FROM 
+		    		TB_USER_COUPON
+		    	WHERE
+		    		COUPON_NO = #{seq}
+		    	AND
+		    		USER_KEY = #{telNo}
+		    ]]>
+		</select>
+		
+		
+		<insert id="couponAdd">
+		    <![CDATA[
+		    	INSERT INTO TB_USER_COUPON
+		    	(
+		    		COUPON_NO,
+		    		USER_KEY,
+		    		AFFLIATE_NO_COUPON,
+		    		COUPON_TYPE,
+		    		COUPON_VAL,
+		    		COUPON_DATE_ISSUE,
+		    		COUPON_DATE_OUT,
+		    		COUPON_TITLE
+		    	)
+		    	VALUES
+		    	(
+		    		#{seq},
+		    		#{telNo},
+		    		#{affliateNo},
+		    		#{couponType},
+		    		#{couponVal},
+		    		now(),
+		    		#{couponOut},
+		    		#{couponTitle}
+		    	)
+		    ]]>
+		</insert>
+		
+	
+	
+		<select id="couponMyList" parameterType="hashmap" resultType="hashmap">
+		    <![CDATA[
+		    SELECT
+	    		COUPON_NO,
+	    		USER_KEY,
+	    		AFFLIATE_NO_COUPON,
+	    		COUPON_TYPE,
+	    		COUPON_VAL,
+	    		COUPON_DATE_ISSUE,
+	    		COUPON_DATE_OUT,
+	    		COUPON_USE,
+	    		AFFLIATE_NM,
+	    		SHOP_BRANCH,
+	    		JIBUN_ADDR,
+	    		COUPON_TITLE
+	    		
+	    	FROM
+	    		TB_USER_COUPON AS A JOIN TB_AFFLIATE_MASTER AS B
+	    	ON
+	    		(A.AFFLIATE_NO_COUPON = B.AFFLIATE_NO)
+	    	WHERE
+	    		USER_KEY = #{telNo}
+	    	AND 
+	    		DATE_ADD(NOW(), INTERVAL -1 DAY) <= COUPON_DATE_OUT
+	    	AND
+	    		COUPON_USE = 'N'
+	    	ORDER BY COUPON_DATE_ISSUE DESC
+		    ]]>
+		</select>
+		
+		
+		<select id="couponDown" parameterType="hashmap" resultType="hashmap">
+		    <![CDATA[
+		    	SELECT 
+		    		COUPON_TOTAL,
+		 			(SELECT COUNT(COUPON_NO) FROM TB_USER_COUPON WHERE COUPON_NO=#{seq}) AS CNT,
+		 			SEQ
+		 		FROM 
+		 			TB_AFF_COUPON
+				WHERE 	
+					SEQ=#{seq}
+		    ]]>
+		</select>
+		
+		
+		<select id="couponDetail" parameterType="hashmap" resultType="hashmap">
+		    <![CDATA[
+		    	SELECT 
+		    		SEQ,
+		    		A.AFFLIATE_NO,
+		    		COUPON_TITLE,
+		    		COUPON_CONTENT,
+		    		COUPON_NAME,
+		    		COUPON_VAL,
+		    		COUPON_TYPE,
+		    		COUPON_EXP,
+		    		AFFLIATE_NM,
+		    		SHOP_BRANCH,
+		    		JIBUN_ADDR,
+		    		SHOP_TEL_NO,
+		    		COUPON_DOWNLOAD
+		 		FROM 
+		 			TB_AFF_COUPON AS A JOIN TB_AFFLIATE_MASTER AS B
+		 		ON	
+		 			(A.AFFLIATE_NO = B.AFFLIATE_NO)
+				WHERE 	
+					SEQ=#{seq}
+		    ]]>
+		</select>
+		
+		<update id="couponUsing" parameterType="hashmap">
+		    <![CDATA[
+			UPDATE TB_USER_COUPON
+			SET
+				COUPON_USE = 'Y',
+				COUPON_USING_DATE = now()
+			WHERE	
+				COUPON_NO = #{seq}
+			AND
+				USER_KEY = #{telNo}
+		]]>
+		    
+		    
+		</update>
+		
+		<update id="couponDounUp" parameterType="hashmap">
+		    <![CDATA[
+			UPDATE TB_AFF_COUPON
+			SET
+		    	COUPON_DOWNLOAD = COUPON_DOWNLOAD + 1
+			WHERE
+		    	SEQ = #{seq}	
+		]]>
+		    
+		</update>
+		
+		<select id="cancleReceipt" parameterType="hashmap" resultType="hashmap">
+		    <![CDATA[
+		    	SELECT 
+		    		USER_KEY,
+		    		CONNECTION_COM,
+		    		SHOP_NAME,
+		    		SHOP_BIZNO,
+		    		ETC_MEMO,
+		    		ETC_EVENT,
+		    		ERCP_REG_NO,
+		    		SHOP_ADDR,
+		    		SHOP_CEO,
+		    		SHOP_TEL_NUM,
+		    		SHOP_CASHIER,
+		    		SALES_DATE,
+		    		SALES_PRINT_DATE,
+		    		SALES_SUM_DF_AMT,
+		    		SALES_SUM_FP_AMT,
+		    		SALES_SUM_TAX_AMT,
+		    		SALES_SUM_ALL_AMT,
+		    		SALES_SUM_OP_AMT,
+		    		SALES_CHG_AMT,
+		    		SALES_PAID_AMT,
+		    		SALES_RE_PRINT,
+		    		SALES_DT_CNT,
+		    		CASH_AMT,
+		    		CASH_TYPE,
+		    		CASH_NO,
+		    		CASH_APP_N0,
+		    		CASH_DATE,
+		    		CARD_AMT,
+		    		CARD_INSTALLMENT,
+		    		CARD_APP_NO,
+		    		CARD_DATE,
+		    		CARD_ICOM,
+		    		CARD_PCOM,
+		    		CARD_NO,
+		    		POINT_CARD,
+		    		POINT_AMT,
+		    		GET_POINT,
+		    		CUSTOMER_CODE,
+		    		CUSTOMER_POINT,
+		    		CARD_CASH_DIV,
+		    		EMAIL,
+		    		UPLUS_USER_KEY
+		 		FROM 
+		 			TB_USER_DATA
+				WHERE 	
+					SALES_BARCODE = #{originRecNo}
+				AND
+					SHOP_BIZNO = #{shopBizNo}
+					
+		    ]]>
+		</select>
+		
+		
+		
+		<!-- uplus Receipt -->
+		
+		<select id="uplusReceiptData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			x.TEL_NO
+			,x.FNL_MOF_DTM
+			,x.FRT_CREA_DTM
+			,x.SHOP_NAME
+			,x.TOTAL_AM
+			,x.SMS_DIV
+			,x.SEQ
+			,x.SALES_BARCODE
+			,x.SHOP_ADDR
+			,x.SHOP_BIZNO
+			,x.SHOP_CEO
+			,x.SHOP_TEL_NUM
+			,x.SHOP_CASHIER
+			,x.SALES_DATE
+			,x.CARD_APP_NO
+			,x.CARD_NO
+			,x.CARD_ICOM
+			,x.CARD_INSTALLMENT
+			,x.APP_CO_DIV
+			,x.USER_NM
+			,x.SALES_SUM_TAX_AMT
+			,x.SALES_SUM_DF_AMT
+			,x.SALES_SUM_FP_AMT
+			,x.SALES_SUM_ALL_AMT
+			,x.SALES_PAID_AMT
+			,x.SALES_PRINT_DATE
+			,x.SALES_TYPE
+			,x.POINT_AMT
+			,x.UPLUS_USER_KEY
+		FROM
+		(
+			SELECT 
+				A.USER_KEY AS TEL_NO
+				,CAST(A.FRT_CREA_DTM AS DATE) AS SALES_PRINT_DATE
+				,A.FNL_MOF_DTM AS FNL_MOF_DTM
+				,A.FRT_CREA_DTM AS FRT_CREA_DTM
+				,A.SHOP_NAME AS SHOP_NAME
+				,A.SALES_SUM_ALL_AMT AS TOTAL_AM
+				,'00' AS SMS_DIV 
+				,A.SEQ AS SEQ
+				,A.SALES_BARCODE AS SALES_BARCODE
+				,A.SHOP_ADDR AS SHOP_ADDR
+				,A.SHOP_BIZNO AS SHOP_BIZNO
+				,A.SHOP_CEO AS SHOP_CEO
+				,A.SHOP_TEL_NUM AS SHOP_TEL_NUM
+				,A.SHOP_CASHIER AS SHOP_CASHIER
+				,A.SALES_DATE AS SALES_DATE
+				,A.CARD_APP_NO AS CARD_APP_NO
+				,A.CARD_NO AS CARD_NO
+				,A.CARD_ICOM AS CARD_ICOM
+				,A.CARD_INSTALLMENT AS CARD_INSTALLMENT
+				,'' AS APP_CO_DIV
+				,C.USER_NM AS USER_NM
+				,A.SALES_SUM_TAX_AMT AS SALES_SUM_TAX_AMT
+				,A.SALES_SUM_DF_AMT AS SALES_SUM_DF_AMT
+				,A.SALES_SUM_FP_AMT AS SALES_SUM_FP_AMT
+				,A.SALES_SUM_ALL_AMT AS SALES_SUM_ALL_AMT
+				,A.SALES_PAID_AMT AS SALES_PAID_AMT
+				,A.SALES_TYPE AS SALES_TYPE
+				,A.POINT_AMT AS POINT_AMT
+				,A.UPLUS_USER_KEY
+			FROM 
+				TB_USER_DATA A 
+				,TB_USER C
+			WHERE
+				A.USER_KEY = #{telNo}
+			AND 
+				C.TEL_NO = #{telNo}
+			AND 		
+				C.TEL_NO = A.USER_KEY
+			AND
+				A.UPLUS_USER_KEY = #{userKey}
+			AND
+				C.UPLUS_USER_KEY = #{userKey}
+			UNION
+			SELECT 
+				B.REC_TEN_NO AS TEL_NO
+				,CAST(B.FRT_CREA_DTM AS DATE) AS SALES_PRINT_DATE
+				,B.FNL_MOF_DTM AS FNL_MOF_DTM
+				,B.FRT_CREA_DTM AS FRT_CREA_DTM
+				,B.APP_CO AS SHOP_NAME
+				,B.APP_AMOUNT AS TOTAL_AM
+				,'01' AS SMS_DIV
+				,B.SMS_NO AS SEQ
+				,'' AS SALES_BARCODE
+				,'' AS SHOP_ADDR
+				,'' AS SHOP_BIZNO
+				,'' AS SHOP_CEO
+				,'' AS SHOP_TEL_NUM
+				,'' AS SHOP_CASHIER
+				,'' AS SALES_DATE
+				,'' AS CARD_APP_NO
+				,'' AS CARD_NO
+				,B.CARD_APP_CO AS CARD_ICOM
+				,B.INST_DIV AS CARD_INSTALLMENT
+				,B.APP_CO_DIV AS APP_CO_DIV
+				,'' AS USER_NM
+				,'' AS SALES_SUM_TAX_AMT
+				,'' AS SALES_SUM_DF_AMT
+				,'' AS SALES_SUM_FP_AMT
+				,B.APP_AMOUNT AS SALES_SUM_ALL_AMT
+				,'' AS SALES_PAID_AMT
+				,'' AS SALES_TYPE
+				,'' AS POINT_AMT
+				,B.UPLUS_USER_KEY
+			FROM 
+				TB_SMS_MASTER B
+		)x
+		where
+			x.TEL_NO = #{telNo}
+		AND
+			x.UPLUS_USER_KEY = #{userKey}
+		]]>
+		<choose>
+             <when test="'Y'.equals(dateSrchCd)">
+                AND DATE_FORMAT(x.FRT_CREA_DTM,'%Y-%m-%d') BETWEEN #{startDay} AND #{endDay}
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+		<choose>
+             <when test="'SRCHY'.equals(dateSrchCd)">
+                AND DATE_FORMAT(x.FRT_CREA_DTM,'%Y-%m-%d') BETWEEN #{startDay} AND #{endDay}
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+		<choose>
+             <when test="'ONLYSMS'.equals(smsDivCd)">
+	                AND x.SMS_DIV = '01'
+             </when>
+             <when test="'ONLYREC'.equals(smsDivCd)">
+	                AND x.SMS_DIV = '00'
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+		<choose>
+             <when test="'TODAY'.equals(dateDivCd)">
+                 AND date(x.FRT_CREA_DTM) = date(now())
+             </when>
+             <when test="'WEEK'.equals(dateDivCd)">
+				 <![CDATA[AND	date(x.FRT_CREA_DTM) >= date(subdate(now(), INTERVAL 7 DAY)) and date(x.FRT_CREA_DTM) <= date(now())]]>
+             </when>
+             <when test="'MONTH'.equals(dateDivCd)">
+				 <![CDATA[AND	date(x.FRT_CREA_DTM) >= date(subdate(now(), INTERVAL 30 DAY)) and date(x.FRT_CREA_DTM) <= date(now())]]>
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>	
+        <choose>
+             <when test="'CARD'.equals(payDivCd)">
+				<![CDATA[AND x.CARD_ICOM <> '']]>
+             </when>
+             <when test="'CASH'.equals(payDivCd)">
+				<![CDATA[AND x.CARD_ICOM = '']]>
+             </when>
+             <when test="'ETC'.equals(payDivCd)">
+				<![CDATA[AND x.POINT_AMT <> '']]>
+             </when>
+             <otherwise>
+ 				
+             </otherwise>
+         </choose>	
+        <choose>
+             <when test="'D1'.equals(orderByCd)">
+				ORDER BY x.FRT_CREA_DTM ASC
+             </when>
+             <when test="'A1'.equals(orderByCd)">
+				ORDER BY ABS(x.SALES_SUM_ALL_AMT) ASC
+             </when>
+             <when test="'A2'.equals(orderByCd)">
+				ORDER BY ABS(x.SALES_SUM_ALL_AMT) DESC
+             </when>
+             <otherwise>
+ 				ORDER BY x.FRT_CREA_DTM DESC
+             </otherwise>
+         </choose>	
+	LIMIT #{startSeq},#{endSeq}
+	</select>	
+	
+		<select id="getShopInfo" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT 
+				SALES_BARCODE,
+				USER_KEY,
+				SHOP_NAME,
+				SHOP_BIZNO,
+				SHOP_ADDR,
+				SHOP_CEO,
+				SHOP_TEL_NUM,
+				SALES_DATE,
+				SALES_PRINT_DATE,
+				SALES_TYPE,
+				SALES_SUM_FP_AMT,
+				SALES_SUM_TAX_AMT,
+				SALES_SUM_ALL_AMT,
+				SALES_PAID_AMT,
+				CASH_AMT,
+				CASH_TYPE,
+				CASH_DATE,
+				CARD_AMT,
+				CARD_INSTALLMENT,
+				CARD_APP_NO,
+				CARD_DATE,
+				CARD_ICOM,
+				CARD_NO,
+				EMAIL,
+				POINT_CARD
+			FROM
+				TB_USER_DATA
+			WHERE
+				USER_KEY = #{telNo}
+			AND
+				UPLUS_USER_KEY = #{userKey}
+			AND
+				SHOP_BIZNO = #{bizNo}
+			AND
+				SALES_BARCODE = #{barcode}
+
+		]]>
+		</select>
+		
+		
+		<select id="uplusReceiptDetail" parameterType="hashmap" resultType="hashmap">
+			<![CDATA[
+				SELECT
+			SALES_BARCODE	,
+			SALES_SEQ_NO	,
+			USER_KEY	    ,
+			SALES_PNAME	    ,
+			SALES_PPRICE	,
+			SALES_OPRICE	,
+			SALES_QTY	    ,
+			SALES_DF_AMT	,
+			SALES_FP_AMT	,
+			SALES_TAX_AMT	,
+			SALES_SL_AMT	, 
+			SALES_OP_AMT	,
+			SALES_TYPE		,
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d %H:%i:%s') AS FRT_CREA_DTM
+		FROM
+			TB_USER_DATA_DETAIL
+		WHERE
+			USER_KEY= #{telNo}
+		AND
+			SALES_BARCODE = #{barcode}	
+		AND
+			SALES_TYPE = #{salesType}
+		AND
+			UPLUS_USER_KEY = #{userKey}
+		ORDER BY FRT_CREA_DTM DESC
+			]]>
+		</select>
+		
+		<select id="getDetailReceipt" parameterType="hashmap" resultType="hashmap">
+			<![CDATA[
+		SELECT
+			SALES_BARCODE	,
+			SALES_SEQ_NO	,
+			USER_KEY	    ,
+			SALES_PNAME	    ,
+			SALES_PPRICE	,
+			SALES_OPRICE	,
+			SALES_QTY	    ,
+			SALES_DF_AMT	,
+			SALES_FP_AMT	,
+			SALES_TAX_AMT	,
+			SALES_SL_AMT	, 
+			SALES_OP_AMT	,
+			SALES_TYPE		,
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d %H:%i:%s') AS FRT_CREA_DTM,
+			SHOP_BIZNO
+		FROM
+			TB_USER_DATA_DETAIL
+		WHERE
+			SALES_BARCODE = #{originRecNo}
+		AND
+			SHOP_BIZNO = #{shopBizNo}	
+		ORDER BY FRT_CREA_DTM DESC
+			]]>
+		</select>
+		
+		
+		
+		
+		
+		
+	<!-- 진호씨 -->
+
+	<select id="latestDataEmail" parameterType="list" resultType="hashmap">
+
+		SELECT * FROM TB_USER_DATA 
+		<if test="list  != null">
+			WHERE
+			<foreach item="item" index="index" collection="list" separator="or">
+				SALES_BARCODE = "${item}"
+			</foreach>
+		</if>
+		ORDER BY CARD_DATE DESC
+	</select>
+
+	<select id="latestDataEmailDetail" parameterType="list" resultType="hashmap">
+		<![CDATA[
+		SELECT * FROM TB_USER_DATA_DETAIL 
+		]]>
+		<if test="list  != null">
+			WHERE
+			<foreach item="item" index="index" collection="list" separator="or">
+				SALES_BARCODE = "${item}"
+			</foreach>
+		</if>
+		ORDER BY FRT_CREA_DTM DESC
+	</select>
+		
+		
+		
+		
+</mapper>
