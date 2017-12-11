@@ -216,6 +216,10 @@ public interface ReceiptService {
 	
 	Map<String, Object> latestDataEmailDetail(List<String> list) throws Exception;
 	
+	void transUp(List<String> list) throws Exception;
 	
+	List<String> emailList(String telNo);
+
+	void lastEmailUpdate(Map<String, Object> emailMap);
 	
 }

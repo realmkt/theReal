@@ -193,6 +193,12 @@
 											거래실패
 											</c:if>
 										</span> </div>
+										<div>카드번호 : 
+										<span>
+											<c:set var="cardNo" value="${shopInfo.CARD_NO }"/>
+											${fn:substring(cardNo,0,4) }-${fn:substring(cardNo,4,6) }**-****-${fn:substring(cardNo,12,16) }
+										</span></div>
+										<div>승인번호 : <span>${shopInfo.CARD_APP_NO }</span></div>
                                 		<div>카드종류 : <span>${shopInfo.CARD_ICOM }</span> </div>
                                 		<div>거래일시 : <span>${salesDate}</span> </div>
                                 	</div>

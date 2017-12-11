@@ -70,7 +70,7 @@ public class TheRealShopToLpoint {
 			} else {
 				lpointUrl = "https://op.lpoint.com/op";
 			}
-			//lpointUrl = "https://devop.lpoint.com:8903/op";
+			lpointUrl = "https://devop.lpoint.com:8903/op";
 			log.debug("CommonUtils.ipChk():" + CommonUtils.ipChk());
 			log.debug("lpointUrl:" + lpointUrl);
 			HttpPost httpost = new HttpPost(new URI(lpointUrl));

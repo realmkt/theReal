@@ -690,6 +690,24 @@ public class ReceiptServiceImpl implements ReceiptService {
 	      resultMap.put("resultMap", list2);  
 	      return resultMap;  
 	}
+	
+	
+	@Override
+	   public void transUp(List<String> list) throws Exception {
+	      receiptDAO.transUp(list);
+	      
+	   }
+	
+	@Override
+	public List<String> emailList(String telNo) {
+		return receiptDAO.emailList(telNo);
+		
+	}
+
+	@Override
+	public void lastEmailUpdate(Map<String, Object> emailMap) {
+		receiptDAO.lastEmailUpdate(emailMap);
+	}
 
 	
 }

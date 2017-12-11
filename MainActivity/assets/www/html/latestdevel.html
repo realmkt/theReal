@@ -158,7 +158,7 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 .latest_conser input[type=radio] + label:last-child { border-right:0; }
 .latest_conser input[type=radio]:checked + label { background:#539bff; color:#fff; }
 
-.latest_conlist { margin:3% 2%; background:#fff; text-align:center; }
+.latest_conlist { margin:0 2% 3% 2%; background:#fff; text-align:center; }
 .latest_conlist ul { padding:15px 10px; position:relative; border-bottom:1px solid #e5e5e5;}
 .latest_conlist li { float:left; width:60%; text-align:left; }
 .latest_conlist li h2 { font-size:1em; font-weight:400; color:#000; padding-bottom:3px; }
@@ -170,7 +170,8 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 .latest_conlist li.mal_price { width:40%; text-align:right; font-size:0.8em; font-weight:400; color:#555;  position:absolute; top:40%; right:10px; }
 .latest_conlist li.mal_price span { font-size:1.4em; font-weight:700; color:#000; }
 .mal_more { background:#f2f2f2; color:#666; font-size:0.8em; padding:10px 0; }
-
+.latest_condate{ text-align: center; margin: 3% 2% 1px 2%; font-size: 15px; background: #ffffff; padding: 10px; }
+.latest_condate span{color: #539bff}
 
 .moreBtn { height: 41px;  padding: 14px;  background-color: #272727; color: #f2f2f2; position: relative; top: -2%; margin: 2%;text-align: center}
 .dis_none {display: none}
@@ -191,18 +192,18 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                     	</h2>
                     </div>
 						<div class="latest_coninfo" id="latestConinfo">
-							<div class="latest_allLeft">
+							<!-- <div class="latest_allLeft">
 								7건 <span>175,700원</span>
 							</div>
 							<div class="latest_allRight">
-								전자영수증 <span>3건</span> 발행
+								전자영수증 <span>3건</span>
 							</div>
-							<hr>
+							<hr> -->
 						</div>
 
 						<div class="latest_conser alen_outbox">
                     <input type="radio" id="latest01" name="latestsbox" value="latest" checked>
-                    <label for="latest01">최근</label>
+                    <label for="latest01">이번 달</label>
                     
                     <input type="radio" id="latest02" name="latestsbox" value="week">
                     <label for="latest02">일주일</label>
@@ -215,10 +216,16 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                     
                     <hr>
                     </div>
+                    <div class="latest_condate" id="latest_condate"></div>
+                    
                     
                     <div class="latest_conlist alen_outbox" id="receipt_div">
                     
+                    	
                     </div>
+                    
+                    
+                    
                     <div class="moreBtn dis_none" id="moreBtn">더보기</div>
                     
                     <div class="foot_info">
@@ -240,11 +247,9 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                             <hr>
                         </div>
 <p>
-(주)이베이 코리아   |   대표이사 : 변광윤<br>
-사업자등록번호 : 220-81-83676   |   통신판매업신고 강남 10630호<br>
-서울시 강남구 테헤란로 152 (역삼동 강남파이낸스센터)<br>
-이메일 :information@corp.auction.co.kr<br>
-고객센터 :1588-0184(오전9시~오후6시,토요일/공휴일휴무<br>
+(주)더리얼마케팅   |   대표이사 : 손종희<br>
+사업자등록번호 : 220-88-19101   |   서울시 강남구 압구정로 10길 13 마사빌딩 4F<br>
+이메일 :thereal@realmkt.co.kr<br>
 </p>
 
 <p class="copytxt">Copyrightⓒnoname Co,.All rights reserved</p>
@@ -297,7 +302,7 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
     <div class="modal_body">
     
         <div class="ser_datebox">
-        <input type="date"> - <input type="date">
+        <input type="date" id="startDate" onchange="startDateCh()"> - <input type="date" id="endDate" onchange="startDateCh()">
         </div>
 	
         <div class="ser_4box">
@@ -334,7 +339,10 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
     
     </div>
     
-	<footer> <a href="#" class="cpop_btn cpop_btn_small js-modal-close alen_arrow">조회</a> </footer>
+	<footer> 
+		<a href="#" class="cpop_btn cpop_btn_small" id="detailBtn">조회</a> 
+	    <a href="#" class="cpop_btn cpop_btn_small js-modal-close alen_arrow">취소</a> 
+	</footer>
 </div>
 
 <div id="receip_box" class="modal_box recdetail">
@@ -348,7 +356,7 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 </div>
 
 <script>
-/* $(function(){
+$(function(){
 
 var appendthis =  ("<div class='alen_modal_overlay js-modal-close'></div>");
 
@@ -382,7 +390,7 @@ $(window).resize(function() {
  
 $(window).resize();
  
-}); */
+});
 </script>
                 
                 
@@ -437,6 +445,9 @@ function allClear(){
 	dateDivCd = "";
 	dateSrchCd = "N";
 	endSeq = 10;
+	recCnt = 0;
+	smsCnt = 0;
+	smsTotal = 0;
 }
 
 var request = new Request();
@@ -444,15 +455,29 @@ var request = new Request();
 var telNo = request.getParameter('telNo');
 var uuId =  request.getParameter('uuId');
 
+var today = new Date();
+$("#latest_condate").empty();
+$("#latest_condate").append("<span>"+today.getFullYear()+"."+(today.getMonth()+1)+"월</span> 사용 내역");
+
+var month = today.getMonth()+1
+if(month.langth < 2){
+	month = "0"+month;
+}
+
 var maxSize = 0;
 var endSeq = 10;
-var startDay = "";
-var endDay   = "";
+var startDay = today.getFullYear()+"-"+month+"-01";
+var endDay   = today.getFullYear()+"-"+month+"-31";
 var payDivCd  = "ALL";
 var orderByCd = "NEW";
 var smsDivCd = "ALL";
 var dateDivCd = "";
-var dateSrchCd = "N";	//조회 버튼시 Y
+var dateSrchCd = "Y";	//조회 버튼시 Y
+var transMission ="";
+
+var recCnt = 0;
+var smsCnt = 0;
+var smsTotal = 0;
 
 $(document).ready(function() {
 	latestData();
@@ -484,6 +509,10 @@ $(document).ready(function() {
 	});
 	$("#latest01").click(function(){
 		allClear();
+		var startDay = today.getFullYear()+"-"+month+"-01";
+		var endDay   = today.getFullYear()+"-"+month+"-31";
+		$("#latest_condate").empty();
+		$("#latest_condate").append("<span>"+today.getFullYear()+"."+month+"월</span> 사용 내역");
 		latestData();
 	});
 	$("#latest02").click(function(){
@@ -501,6 +530,7 @@ $(document).ready(function() {
 	});
 	$("#pays02").click(function(){
 		payDivCd = "CARD";
+		alert()
 	});
 	$("#pays03").click(function(){
 		payDivCd = "CASH";
@@ -523,8 +553,40 @@ $(document).ready(function() {
 	$("#moreBtn").click(function(){
 		endSeq += 10;
 		latestData();
-	})
-
+	});
+	$("#detailBtn").click(function(){
+		startDay = $("#startDate").val();
+		endDay = $("#endDate").val();
+		endSeq = 10;
+		DaySrchCd = "";
+		var startDay2 = startDay.substring(0,4) + startDay.substring(5,7) + startDay.substring(8,10); 
+		var endDay2 = endDay.substring(0,4) + endDay.substring(5,7) + endDay.substring(8,10); 
+		
+		if(startDay == ''){
+			alert("시작날짜를 입력하세요");
+			return false;
+		}
+		
+		if(endDay == ''){
+			alert("종료날짜를 입력하세요");
+			return false;
+		}
+		
+		if(startDay2 > endDay2){
+			alert("종료날짜가 시작날짜보다 이전입니다.");
+			return false;
+		}
+		$("#latest04").prop("checked",true);
+		DaySrchCd = "SRCHY";
+		//startDay = startDay2;
+		//endDay = endDay2;
+		$('#ser_box').hide();
+		$('#modal_body').hide();
+		$(".modal_box, .alen_modal_overlay").fadeOut(300, function() {
+			$(".alen_modal_overlay").remove();
+		});
+		latestData();
+	});
 
 
 
@@ -545,7 +607,8 @@ function latestData(){
 			dateDivCd : dateDivCd,
 			smsDivCd : smsDivCd,
 			dateSrchCd: dateSrchCd,
-			maxSize : maxSize
+			maxSize : maxSize,
+			transMission : transMission
 			
 		},
 		success : fn_latestData
@@ -557,73 +620,78 @@ function fn_latestData(resdata){
 	var res = resdata.resultMap;
 	var str = "";
 	maxSize = resdata.maxSize
-	
 	var conStr = "";
 
-	if(smsDivCd == "ALL"){
-		conStr ='<div class="latest_allLeft">'+"7"+'건 <span>'+"157000"+'</span></div>';
-		conStr ='<div class="latest_allRight">전자영수증 <span>'+"3건"+'</span> 발행</div>';
-		conStr ='<hr>';
-	}else if(smsDivCd == "ONLYREC"){
-		conStr ='<div class="latest_allRight">전자영수증 <span>'+"3건"+'</span> 발행</div>';
-		conStr ='<hr>';
-	}else if(smsDivCd == "ONLYSMS"){
-		conStr ='<div class="latest_allRight">'+"7"+'건 <span>'+"157000"+'</span></div>';
-		conStr ='<hr>';
-	}
-	$("latestConinfo").empty();
-	$("latestConinfo").append();
 	
 	
-	
-	for(var i = 0; i < res.length; i++){
-		str += '<ul data-modal-id="receip_box"  onclick="detailReceipt('+res[i].SALES_BARCODE+',\''+res[i].SHOP_BIZNO+'\')">';
-		str += '	<li>';
-		str += '		<h2>'+res[i].SHOP_NAME+'</h2>';
-		if(res[i].SMS_DIV == '00'){
-			var tempDate = res[i].SALES_DATE;
-			tempDate = tempDate.substring(0,4)+"-"+tempDate.substring(4,6)+"-"+tempDate.substring(6,8)/* +" "+tempDate.substring(8,10)+":"+tempDate.substring(10,12)+":"+tempDate.substring(12) */;
-		
-		}else{
-			var tempDate = res[i].SALES_PRINT_DATE;
-		}
-		str += '		<p>'+ tempDate  +'</p>';
-		
-		if(res[i].CARD_ICOM != ''){
-		str += '<h3 class="mal_credit">'+res[i].CARD_ICOM+'&nbsp;<span> ';
-			if(res[i].SMS_DIV == '00'){ str += '전자영수증'; }else 
-			if(res[i].SMS_DIV == '01'){ str += 'SMS'; }
-			str += '</span></h3>';
-		}else if(res[i].CARD_ICOM == ''){
-		str += '<h3 class="mal_cash">현금&nbsp;<span>';
-			if(res[i].SMS_DIV == '00'){ str += '전자영수증'; }else 
-			if(res[i].SMS_DIV == '01'){ str += 'SMS'; }
-			str += '</span></h3>';
-		}   
-		str += '</li>';
-		str += '<li class="mal_price">';
-		str += '<span>'+numCommas(res[i].TOTAL_AM)+'</span> 원';
-		str += '</li>';
-		str += '<hr></ul>';
-	}
-	
-	if(res.length % 10 == 0 && maxSize != res.length){
-		$("#moreBtn").removeClass("dis_none");
+	if(maxSize==0){
+		str = '<img alt="noFile" src="../common/emptyList01.jpg">';
 	}else{
-		$("#moreBtn").addClass("dis_none");
+		for(var i = 0; i < res.length; i++){
+			str += '<ul data-modal-id="receip_box"  onclick="detailReceipt('+res[i].SALES_BARCODE+',\''+res[i].SHOP_BIZNO+'\')">';
+			str += '	<li>';
+			str += '		<h2>'+res[i].SHOP_NAME+'</h2>';
+			if(res[i].SMS_DIV == '00'){
+				var tempDate = res[i].SALES_DATE;
+				tempDate = tempDate.substring(0,4)+"-"+tempDate.substring(4,6)+"-"+tempDate.substring(6,8)/* +" "+tempDate.substring(8,10)+":"+tempDate.substring(10,12)+":"+tempDate.substring(12) */;
+		
+			}else{
+				var tempDate = res[i].SALES_PRINT_DATE;
+			}
+			str += '		<p>'+ tempDate  +'</p>';
+		
+			if(res[i].CARD_ICOM != ''){
+			str += '<h3 class="mal_credit">'+res[i].CARD_ICOM+'&nbsp;<span> ';
+				if(res[i].SMS_DIV == '00'){ 
+					str += '전자영수증'; 
+				}else if(res[i].SMS_DIV == '01'){ 
+					str += 'SMS'; 
+				}
+				str += '</span></h3>';
+			}else if(res[i].CARD_ICOM == ''){
+			str += '<h3 class="mal_cash">현금&nbsp;<span>';
+				if(res[i].SMS_DIV == '00'){ 
+					str += '전자영수증'; 
+				}else if(res[i].SMS_DIV == '01'){ 
+					str += 'SMS'; 
+				}
+			str += '</span></h3>';
+			}   
+			str += '</li>';
+			str += '<li class="mal_price">';
+			str += '<span>'+numCommas(res[i].TOTAL_AM)+'</span> 원';
+			str += '</li>';
+			str += '<hr></ul>';
+		}
+		alert(smsCnt);
+		if(res.length % 10 == 0 && maxSize != res.length){
+			$("#moreBtn").removeClass("dis_none");
+		}else{
+			$("#moreBtn").addClass("dis_none");
+		}
 	}
-	
 	$("#receipt_div").empty();
 	$("#receipt_div").append(str);
+	
+	if(smsDivCd == "ALL"){
+		conStr +='<div class="latest_allLeft">'+smsCnt+'건 <span>'+numCommas(smsTotal)+'</span></div>';
+		conStr +='<div class="latest_allRight">전자영수증 <span>'+smsCnt+"건"+'</span></div>';
+		conStr +='<hr>';
+	}else if(smsDivCd == "ONLYREC"){
+		conStr +='<div class="latest_allRight">전자영수증 <span>'+recCnt+"건"+'</span></div>';
+		conStr +='<hr>';
+	}else if(smsDivCd == "ONLYSMS"){
+		conStr +='<div class="latest_allRight">'+smsCnt+'건 <span>'+numCommas(smsTotal)+'</span></div>';
+		conStr +='<hr>';
+	}
+	$("#latestConinfo").empty();
+	$("#latestConinfo").append(conStr);
 }
 
 
 $("#setting_Btn").click(function(){
 	location.href = 'latestEmail.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
-	
-	
-	
-})
+});
 
 
 

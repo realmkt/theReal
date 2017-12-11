@@ -46,7 +46,6 @@ import com.google.android.gcm.server.Sender;
 import com.google.gson.Gson;
 
 import first.common.common.CommandMap;
-import first.common.common.SendMailTest;
 import first.common.filter.SmsParse;
 import first.common.util.AES256;
 import first.common.util.CharTokenizer;
@@ -1664,7 +1663,7 @@ public class ReceiptController {
 				resultMap.put("ceo", resultMap.get("SHOP_CEO"));
 				resultMap.put("phone", resultMap.get("SHOP_TEL_NUM"));
 				resultMap.put("cashier", resultMap.get("SHOP_CASHIER"));
-				resultMap.put("salesBarCode",var.find("salesInfo.salesBarCode").toString());
+				resultMap.put("salesBarCode",var.find("salesInfo.salesBarCode").toString()+"P02");
 				resultMap.put("salesDate", resultMap.get("SALES_DATE"));
 				resultMap.put("printDate", resultMap.get("SALES_PRINT_DATE"));
 				resultMap.put("sumDfAmt", resultMap.get("SALES_SUM_DF_AMT"));
@@ -1718,7 +1717,7 @@ public class ReceiptController {
 					
 					temp.put("uplusUserKey", uplusUserKey);
 					temp.put("shopBizNo", temp.get("SHOP_BIZNO"));
-					temp.put("salesBarCode", temp.get("SALES_BARCODE"));
+					temp.put("salesBarCode", temp.get("SALES_BARCODE")+"P02");
 					temp.put("userKey", telNo);
 					temp.put("salesType", "RCP02");
 					temp.put("seqNo", temp.get("SALES_SEQ_NO"));
@@ -1850,8 +1849,8 @@ public class ReceiptController {
 				map.put("cardInstallment", var.find("cardInfo.cardInstallment").toString());
 				map.put("cardAppNo", var.find("cardInfo.cardAppNo").toString());
 				map.put("cardDate", var.find("cardInfo.cardDate").toString());
-				map.put("cardICom", "");
-				map.put("cardPCom", "");
+				map.put("cardICom", var.find("cardInfo.cardICom").toString());
+				map.put("cardPCom", var.find("cardInfo.cardPCom").toString());
 				if(var.find("cardInfo.cardICom").toString().contains("L포인트")){
 					if(var.find("cardInfo.cardICom").toString().contains("사용")){
 						map.put("pointCard", "L.POINT 사용");
@@ -2476,7 +2475,8 @@ public class ReceiptController {
 		System.out.println("orderByCd" + commandMap.get("orderByCd"));
 		System.out.println("dateDivCd" + commandMap.get("dateDivCd"));
 		System.out.println("smsDivCd" + commandMap.get("smsDivCd"));
-		System.out.println("endSeq" + commandMap.get("endSeq"));
+		System.out.println("endSeq" + commandMap.get("endSeq"));	
+		System.out.println("transMission" + commandMap.get("transMission"));
 		if ("Y".equals(commandMap.get("dateSrchCd"))) {
 			// map.put("dateSrchCd", commandMap.get("dateSrchCd"));
 			map.put("dateSrchCd", "SRCHY");
@@ -2487,6 +2487,7 @@ public class ReceiptController {
 		map.put("payDivCd", commandMap.get("payDivCd"));
 		map.put("orderByCd", commandMap.get("orderByCd"));
 		map.put("dateDivCd", commandMap.get("dateDivCd"));
+		map.put("transMission", commandMap.get("transMission"));
 		System.out.println("--------------");
 		map.put("startSeq", 0);
 		map.put("endSeq", Integer.parseInt((String) commandMap.get("endSeq")));
@@ -2497,7 +2498,20 @@ public class ReceiptController {
 		System.out.println();
 		map.put("endSeq", 2147483647);
 		Map maxMap = receiptService.latestData(map);
-		int maxSize = ((List)maxMap.get("resultMap")).size();
+		List<String> maxList = (List)maxMap.get("resultMap");
+		int maxSize = maxList.size();
+	/*	
+		
+		int smsTotal, smsCnt, recCnt = 0;
+		for (int i = 0; i < maxSize; i++) {
+			Map<String,Object> temp = (HashMap<String>)maxList.get(i);
+			
+			
+			
+		}
+		*/
+		
+		
 		resultMap.put("maxSize", maxSize);
 		resultMap.put("code", "OK");
 		System.out.println("프로그램이 끝났습니다@@@@@@@@@@@@@@@@@@@");
@@ -3710,7 +3724,6 @@ public class ReceiptController {
 		Map<String,Object> maxMap = null;
 		int listSize =0;
 		String str;
-		String jsonResData = "";
 		StringBuffer paramData = new StringBuffer();
 		
 		ModelAndView mv = new ModelAndView();
@@ -3722,10 +3735,6 @@ public class ReceiptController {
 		System.out.println("@@paramDataparamData@@:" + paramData);
 		BufferedReader br = null;
 
-		// JSON데이터를 넣어 JSON Object 로 만들어 준다.
-		JSONParser jsonParser = new JSONParser();
-		JSONObject jsonObject = null; 
-       
 		try {
 			br = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
 			System.out.println("@@br@@:" + br);
@@ -3748,8 +3757,6 @@ public class ReceiptController {
 			e.printStackTrace();
 			throw e;
 		}
-		String resStr = "";
-		String transactionId = "";
 		try {
 			
 		System.out.println("@@paramData@@:" + paramData);
@@ -3757,12 +3764,9 @@ public class ReceiptController {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		//String telNo ="2idwEtgYslaHJ+jwJF5+kA==";
-		//String userKey = "LR5VTt5I2YBXFNyS5k/aPaY0JwooJI/3Y7tBtLKsjbQ=";
 		String telNo = (String)commandMap.get("telNo");
 		String userKey =  (String)commandMap.get("userKey");
 		if(telNo.contains(" ")){
-			System.out.println("수정");
 			telNo = telNo.replaceAll(" ", "+");
 		}
 		if(userKey.contains(" ")){
@@ -3770,29 +3774,26 @@ public class ReceiptController {
 		}
 		System.out.println("parameter data - "+telNo +"      /         "+userKey);
 		
+		if(telNo.length() > 11){
+			telNo = aes.decryptBase64String(telNo);
+		}
+		if(userKey.length() > 21){
+			userKey = aes.decryptBase64String(userKey);
+		}
 		
-		String decTelNo = aes.decryptBase64String(telNo);
-		String decUserKey = aes.decryptBase64String(userKey);
-		
-		System.out.println("디코딩 결과 - " + decTelNo + "      /         " + decUserKey );
+		System.out.println("디코딩 결과 - " + telNo + "      /         " + userKey );
 		
 		map.put("smsDivCd", "ONLYREC");
 		map.put("startSeq", 0);
 		map.put("endSeq", 10);
 		
-		map.put("telNo", decTelNo);
-		map.put("userKey", decUserKey);
+		map.put("telNo", telNo);
+		map.put("userKey", userKey);
 		
 		resultMap = receiptService.uplusReceiptData(map);
 		List resultList = (List)resultMap.get("resultMap");
 		
 		listSize = resultList.size();
-		/*int sumAmt = 0;
-		for (int i = 0; i < resultList.size(); i++) {
-			Map<String, Object> tempMap = (Map<String, Object>)resultList.get(i);
-			sumAmt += (int)tempMap.get("TOTAL_AM");
-		}
-		System.out.println(sumAmt);*/
 		
 		System.out.println("size" + listSize);
 		
@@ -3803,9 +3804,6 @@ public class ReceiptController {
 		mv.addObject("maxSize",maxSize);
 		mv.addObject("telNo", telNo);
 		mv.addObject("userKey", userKey);
-		mv.addObject("decTelNo", decTelNo);
-		mv.addObject("decUserKey", decUserKey);
-		//mv.addObject("sumAmt", sumAmt);
 		
 		} catch (Exception e) {
 			System.out.println(e);
@@ -3814,8 +3812,6 @@ public class ReceiptController {
 		mv.addObject("resultMap", resultMap);
 		
 		mv.setViewName("/uplusReceipt");
-		
-		
 		
 		
 		return mv;
@@ -3866,7 +3862,19 @@ public class ReceiptController {
 		map.put("orderByCd", commandMap.get("orderByCd"));
 		map.put("startDate", commandMap.get("payDivCd"));
 		map.put("dateDivCd", commandMap.get("dateDivCd"));
-
+		if(telNo.contains(" ")){
+			System.out.println("수정");
+			telNo = telNo.replaceAll(" ", "+");
+		}
+		if(userKey.contains(" ")){
+			userKey = userKey.replaceAll(" ", "+");
+		}
+		if(telNo.length() > 11){
+			telNo = aes.decryptBase64String(telNo);
+		}
+		if(userKey.length() > 21){
+			userKey = aes.decryptBase64String(userKey);
+		}
 		map.put("telNo", telNo);
 		map.put("userKey", userKey);
 		
@@ -3897,7 +3905,7 @@ public class ReceiptController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int listSize =0;
 		String str;
-		
+		AES256 aes = new AES256("LGU+210987654321");
 		JSONObject json = null;
 		try {
 			
@@ -3906,10 +3914,29 @@ public class ReceiptController {
 		String barcode = (String)commandMap.get("barcode");
 		String bizNo = (String)commandMap.get("bizNo");
 		
+		if(telNo.contains(" ")){
+			System.out.println("수정");
+			telNo = telNo.replaceAll(" ", "+");
+		}
+		if(userKey.contains(" ")){
+			userKey = userKey.replaceAll(" ", "+");
+		}
+		System.out.println("parameter data - "+telNo +"      /         "+userKey);
+		
+		if(telNo.length() > 11){
+			telNo = aes.decryptBase64String(telNo);
+		}
+		if(userKey.length() > 21){
+			userKey = aes.decryptBase64String(userKey);
+		}
+		
+		
 		map.put("telNo", telNo);
 		map.put("userKey", userKey);
 		map.put("barcode",  barcode);
 		map.put("bizNo", bizNo);
+		
+		
 		
 		shopMap = receiptService.getShopInfo(map);
 		
@@ -3944,12 +3971,12 @@ public class ReceiptController {
 	@SuppressWarnings("unchecked")
 	   @RequestMapping(value = "/receipt/sendMail.do")
 	   @ResponseBody
-	   public void sendMail(@RequestParam(value="barcode[]", required=false) String[] barcode, HttpServletRequest request, String email, CommandMap commandMap) throws Exception{
+	   public void sendMail(@RequestParam(value="barcode[]", required=false) String[] barcode, HttpServletRequest request, String email, CommandMap commandMap, String subject, String content, String telNo) throws Exception{
 		  Map<String, Object> userDataMap = new HashMap<String, Object>();
 	      Map<String, Object> userDataDtailMap = new HashMap<String, Object>();
 	      Map<String, Object> telMap = new HashMap();
 	      /*
-    	  telMap.put("telNo", (String)commandMap.get("telNo"));
+ 	  telMap.put("telNo", (String)commandMap.get("telNo"));
 	      Map<String,Object> userMap = receiptService.startUserData(telMap);
 	      System.out.println(userMap);
 	      telMap = (Map<String,Object>) userMap.get("reslutMap");
@@ -3961,13 +3988,13 @@ public class ReceiptController {
 	      for (int i = 0; i < barcode.length; i++) {
 	         list.add(barcode[i]);
 	      }
-	      System.out.println(list);
+	      
 	      //data
 	      result = receiptService.latestDataEmail(list);
 	      System.out.println("result :: "+result);
 	      ArrayList resultList= (ArrayList) result.get("resultMap");
-	      /*//trans 증가
-	      sampleService.transUp(list);*/
+	      
+	     
 	      detailResult = receiptService.latestDataEmailDetail(list);
 	      ArrayList<HashMap<String, Object>> resultDetailList= (ArrayList<HashMap<String, Object>>) detailResult.get("resultMap");
 	      String[] body = new String[200];
@@ -4006,7 +4033,7 @@ public class ReceiptController {
 
 	               }
 	            }
-	            System.out.println("eeeeeeeeeeee");
+	          
 	            body[i]+= "<tr>"
 	                
 	              +"</table>"
@@ -4038,7 +4065,7 @@ public class ReceiptController {
 	              
 	              body[i]+="<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both'>거래일시:: "+userDataMap.get("FRT_CREA_DTM")+"</div></div>"
 	            +"</div><div class='rt_copy'style='text-align: center; font-size: 12px;'>본 전자영수증은 거래의 참고용으로 사용하시기 바랍니다.</div>"
-	              +"</td></tr></table></td></tr></table></td>"
+	              +"</td></tr></table></td></tr></tsable></td>"
 	            +"</tr></table></body></html>";
 	      forResult += body[i];
 	      }
@@ -4054,29 +4081,61 @@ public class ReceiptController {
 	      }catch(Exception e)
 	      {
 	    	  e.printStackTrace();
-	      }
-	      
-	            String emailMsgTxt = "";                                    //내용
-	             String emailSubjectTxt = "";                              //제목
+	      }		
+	      					
+	                           //제목
 	             String emailFromAddress = "rhkdhlgkrtod@naver.com"; //보내는 이 이메일주소
 	             String[] emailList = {email}; 
 	             
 	            try {
 	                  consoleMail smtpMailSender = new consoleMail();
-	                  smtpMailSender.postMail(emailList, emailSubjectTxt, emailMsgTxt, emailFromAddress, "test");
+	                  smtpMailSender.postMail(emailList, subject, content, emailFromAddress, "test");
+	                  
+	                 
 	                  
 	               } catch (Exception e) {
 	            	   System.out.println(e);
 	                  e.printStackTrace();
 	               }
+	            
+	            
+	            try {
+	            		//진호 수정 발송횟수 증가
+	                receiptService.transUp(list);
+				} catch (Exception e) {
+					e.getMessage();
+					e.printStackTrace();
+				}
+	            
+	            try {
+	            	//진호수정 메일비교 후 지난 이메일 업데이트 
+	            	String emailResult = receiptService.eMailChk(telNo);
+	            	if(emailResult != email){
+	            		Map<String, Object> emailMap = new HashMap<>();
+	            		emailMap.put("email", email);
+	            		emailMap.put("telNo", telNo);
+	            		receiptService.lastEmailUpdate(emailMap);
+	            	}
+	            }catch (Exception e){
+	            	e.getMessage();
+	            }
 	      }
 	
 	
 	
-	
-	
-	
-	
+	@ResponseBody	
+	 @RequestMapping(value = "/receipt/emailOk.do")
+	 public Map<String, Object> emailOk(String telNo){
+		Map<String,Object> map = new HashMap<>();
+		
+		 List<String> list = receiptService.emailList(telNo);
+		
+		 map.put("resultMap", list);
+		 
+		 return map;
+		 
+		 
+	}
 	
 
 }

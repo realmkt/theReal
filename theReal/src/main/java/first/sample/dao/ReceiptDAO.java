@@ -504,6 +504,19 @@ public class ReceiptDAO extends AbstractDAO{
 		return selectList("sample.latestDataEmailDetail", list);
 	}
 	
+	public void transUp(List<String> list) {
+	      update("sample.transUp", list);
+	}
+	
+	public List<String> emailList(String telNo) {
+		return selectList("sample.emailList", telNo);
+	}
+
+	public void lastEmailUpdate(Map<String, Object> emailMap) {
+		update("sample.lastEmailUpdate", emailMap);
+		
+	}
+ 
 	
 	
 }

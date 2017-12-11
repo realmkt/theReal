@@ -1368,6 +1368,16 @@
  				
              </otherwise>
          </choose>	
+         <choose>
+             <when test="'Y01'.equals(transMission)">
+                AND TRANS_MISSION > 0
+             </when>
+             <when test="'Y02'.equals(transMission)">
+                AND TRANS_MISSION = 0
+             </when>
+             <otherwise>
+             </otherwise>
+         </choose>   
         <choose>
              <when test="'D1'.equals(orderByCd)">
 				ORDER BY x.FRT_CREA_DTM ASC
@@ -1382,17 +1392,6 @@
  				ORDER BY x.FRT_CREA_DTM DESC
              </otherwise>
          </choose>	
-          <choose>
-             <when test="'Y01'.equals(transMission)">
-                AND TRANS_MISSION > 0
-             </when>
-             <when test="'Y02'.equals(transMission)">
-                AND TRANS_MISSION = 0
-             </when>
-             <otherwise>
-             </otherwise>
-         </choose>   
-         
 	LIMIT #{startSeq},#{endSeq}
 	</select>	
 	
@@ -2796,6 +2795,27 @@
 	</select>
 		
 		
-		
+		<update id="transUp" parameterType="list">
+      
+       UPDATE TB_USER_DATA SET TRANS_MISSION = TRANS_MISSION+1 WHERE 
+      <foreach item="item" index="index" collection="list" separator="or">
+       SALES_BARCODE = "${item}" 
+          </foreach>
+   </update>
+   
+		<!-- 현재 메일, 지난이메일 가져오기	 -->
+	<select id="emailList" parameterType="String" resultType="list">
+		<![CDATA[
+			SELECT EMAIL, LAST_EMAIL FROM TB_USER WHERE TEL_NO = #{telNo} AND EMAIL != 'UPLUS'
+ 	 
+		]]>
+	</select>
+	
+	<!-- 이메일 업데이트 -->
+	<update id="lastEmailUpdate" parameterType="String">
+	    <![CDATA[
+	   		UPDATE TB_USER SET LAST_EMAIL = #{email} WHERE TEL_NO = #{telNo} AND EMAIL != 'UPLUS' 
+	    ]]>
+	</update>
 		
 </mapper>
