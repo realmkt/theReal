@@ -204,7 +204,7 @@ public interface ReceiptService {
 	
 	Map<String, Object> getShopInfo(Map<String, Object> map) throws Exception;
 	
-	Map<String, Object> uplusReceiptDetail(Map<String, Object> map) throws Exception;
+	Map<String, Object> ReceiptDetail(Map<String, Object> map) throws Exception;
 	
 	Map<String, Object> getDetailReceipt(Map<String, Object> map) throws Exception;
 
@@ -218,8 +218,10 @@ public interface ReceiptService {
 	
 	void transUp(List<String> list) throws Exception;
 	
-	List<String> emailList(String telNo);
+	Map<String, Object> emailList(String telNo);
 
 	void lastEmailUpdate(Map<String, Object> emailMap);
+
+	Map<String, Object> smsDetailData(Map<String, Object> map) throws Exception;
 	
 }

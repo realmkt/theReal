@@ -1904,7 +1904,6 @@ public class ReceiptController {
 				map.put("cashAppNo", "");
 				map.put("cashDate", "");
 			}
-
 			map.put("pointAmt", var.find("salesInfo.pointamt").toString());
 			map.put("getPoint", var.find("customerInfo.getPoint").toString());
 			map.put("customerCode", var.find("customerInfo.customerCode").toString());
@@ -2498,18 +2497,23 @@ public class ReceiptController {
 		System.out.println();
 		map.put("endSeq", 2147483647);
 		Map maxMap = receiptService.latestData(map);
-		List<String> maxList = (List)maxMap.get("resultMap");
+		List<Map<String, Object>> maxList = (ArrayList<Map<String, Object>>)maxMap.get("resultMap");
 		int maxSize = maxList.size();
-	/*	
 		
-		int smsTotal, smsCnt, recCnt = 0;
-		for (int i = 0; i < maxSize; i++) {
-			Map<String,Object> temp = (HashMap<String>)maxList.get(i);
+			int smsTotal=0, smsCnt = 0, recCnt = 0;
+			for (int i = 0; i < maxSize; i++) {
+				Map<String, Object> temp = maxList.get(i);
+				if(temp.get("SMS_DIV").equals("00")){
+					recCnt++;
+				}else{
+					smsCnt++;
+					smsTotal += Integer.parseInt((String)temp.get("TOTAL_AM"));
+				}
+			}
 			
-			
-			
-		}
-		*/
+		resultMap.put("recCnt",recCnt);
+		resultMap.put("smsCnt",smsCnt);
+		resultMap.put("smsTotal",smsTotal);
 		
 		
 		resultMap.put("maxSize", maxSize);
@@ -2517,6 +2521,73 @@ public class ReceiptController {
 		System.out.println("프로그램이 끝났습니다@@@@@@@@@@@@@@@@@@@");
 		return resultMap;
 	}
+	
+	
+	
+	
+	
+	
+	// -----------------------------------------------------------------------
+	// 전자영수증 uplus 상세페이지
+	// -----------------------------------------------------------------------
+	
+	@RequestMapping(value = "/receipt/latestDataDetail.do")
+	@ResponseBody
+	public Object latestDataDetail(CommandMap commandMap,HttpSession session, ServletRequest request) throws Exception {
+		Map<String,Object> shopMap = null;
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int listSize =0;
+		String str;
+		try {
+			
+		String type = (String)commandMap.get("type");
+		if(type.equals("00")){
+			map.put("type", type);
+			map.put("barcode", (String)commandMap.get("barcode"));
+			map.put("biz", (String)commandMap.get("biz"));
+			
+			shopMap = receiptService.getShopInfo(map);
+			
+			resultMap = receiptService.ReceiptDetail(map);
+			resultMap.put("shopInfo",shopMap);
+			
+			String date = (String)shopMap.get("SALES_DATE");
+			date = date.substring(0, 4)+"-"+date.substring(4, 6)+"-"+date.substring(6, 8)+" "+date.substring(8, 10)+":"+date.substring(10, 12)+":"+date.substring(12, 14);
+			resultMap.put("salesDate", date);
+			
+			
+			
+		}else{
+			map.put("telNo", (String)commandMap.get("telNo"));
+			map.put("type", (String)commandMap.get("type"));
+			map.put("seq", (String)commandMap.get("seq"));
+			
+			resultMap = receiptService.smsDetailData(map);
+			
+			
+			System.out.println("sms result" + resultMap);
+		}
+		
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		System.out.println("resssssss :: "+resultMap);
+			
+		return resultMap;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@RequestMapping(value = "/receipt/latestDetailData.do")
 	@ResponseBody
@@ -3893,7 +3964,7 @@ public class ReceiptController {
 	
 	
 	// -----------------------------------------------------------------------
-	// 전자영수증 메인페이지
+	// 전자영수증 uplus 상세페이지
 	// -----------------------------------------------------------------------
 	
 	@RequestMapping(value = "/receipt/uplusReceiptDetail.do")
@@ -3948,7 +4019,7 @@ public class ReceiptController {
 		mv.addObject("salesDate", date);
 		mv.addObject("shopInfo", shopMap);
 		
-		resultMap = receiptService.uplusReceiptDetail(map);
+		resultMap = receiptService.ReceiptDetail(map);
 		resultMap.put("shopInfo", shopMap);
 		receiptService.latestUpdateData(map);
 		
@@ -3967,7 +4038,6 @@ public class ReceiptController {
 	
 	//진호씨 
 	
-	
 	@SuppressWarnings("unchecked")
 	   @RequestMapping(value = "/receipt/sendMail.do")
 	   @ResponseBody
@@ -3976,7 +4046,7 @@ public class ReceiptController {
 	      Map<String, Object> userDataDtailMap = new HashMap<String, Object>();
 	      Map<String, Object> telMap = new HashMap();
 	      /*
- 	  telMap.put("telNo", (String)commandMap.get("telNo"));
+	  telMap.put("telNo", (String)commandMap.get("telNo"));
 	      Map<String,Object> userMap = receiptService.startUserData(telMap);
 	      System.out.println(userMap);
 	      telMap = (Map<String,Object>) userMap.get("reslutMap");
@@ -4031,11 +4101,10 @@ public class ReceiptController {
 	                  + "</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='padding: 6px; color:#666; font-size: 12px;'>"+replaceComma(Integer.parseInt((String)userDataDtailMap.get("SALES_PPRICE")))+"</th>"
 	                  + "<th style='13px gulim;  padding:6px; color:#666; font-size: 12px;'>"+userDataDtailMap.get("SALES_QTY")+"</th><th style='13px gulim;  padding:6px; color:#666; font-size: 12px; font-size: 12px;'>"+replaceComma(Integer.parseInt((String)userDataDtailMap.get("SALES_FP_AMT")))+"</th></tr>";
 
-	               }
-	            }
-	          
+	               }  
+	            }	
+	            
 	            body[i]+= "<tr>"
-	                
 	              +"</table>"
 	              +"<br><hr width='100%' style='border:1px dashed #cccccc'><table width='100%' cellspacing='0' cellpadding='0'><tr>"
 	              +"<th style='color: black; padding: 6px; font-size: 17px' align='left' >과세물품가액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
@@ -4084,7 +4153,7 @@ public class ReceiptController {
 	      }		
 	      					
 	                           //제목
-	             String emailFromAddress = "rhkdhlgkrtod@naver.com"; //보내는 이 이메일주소
+	      		String emailFromAddress = "thereal@realmkt.co.kr";
 	             String[] emailList = {email}; 
 	             
 	            try {
@@ -4110,11 +4179,13 @@ public class ReceiptController {
 	            try {
 	            	//진호수정 메일비교 후 지난 이메일 업데이트 
 	            	String emailResult = receiptService.eMailChk(telNo);
-	            	if(emailResult != email){
+	            	if(!emailResult.equals(email)){
 	            		Map<String, Object> emailMap = new HashMap<>();
 	            		emailMap.put("email", email);
 	            		emailMap.put("telNo", telNo);
 	            		receiptService.lastEmailUpdate(emailMap);
+	            	}else{
+	            		return;
 	            	}
 	            }catch (Exception e){
 	            	e.getMessage();
@@ -4122,17 +4193,19 @@ public class ReceiptController {
 	      }
 	
 	
-	
 	@ResponseBody	
 	 @RequestMapping(value = "/receipt/emailOk.do")
 	 public Map<String, Object> emailOk(String telNo){
-		Map<String,Object> map = new HashMap<>();
+		Map<String,Object> resultMap = new HashMap<>();
+		System.out.println(telNo);
+		try {
+			resultMap = receiptService.emailList(telNo);
+		} catch (Exception e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
 		
-		 List<String> list = receiptService.emailList(telNo);
-		
-		 map.put("resultMap", list);
-		 
-		 return map;
+		return resultMap;
 		 
 		 
 	}

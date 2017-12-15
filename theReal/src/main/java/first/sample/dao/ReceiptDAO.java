@@ -488,8 +488,8 @@ public class ReceiptDAO extends AbstractDAO{
 		return (Map<String, Object>) selectOne("sample.getShopInfo", map);
 	}
 	
-	public List<Map<String, Object>> uplusReceiptDetail(Map<String,Object> map){
-		return selectList("sample.uplusReceiptDetail", map);
+	public List<Map<String, Object>> ReceiptDetail(Map<String,Object> map){
+		return selectList("sample.ReceiptDetail", map);
 	}
 	
 	public List<Map<String, Object>> getDetailReceipt(Map<String,Object> map){
@@ -508,14 +508,22 @@ public class ReceiptDAO extends AbstractDAO{
 	      update("sample.transUp", list);
 	}
 	
-	public List<String> emailList(String telNo) {
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> emailList(String telNo) {
 		return selectList("sample.emailList", telNo);
 	}
+
 
 	public void lastEmailUpdate(Map<String, Object> emailMap) {
 		update("sample.lastEmailUpdate", emailMap);
 		
 	}
+	
+	
+	public Map<String, Object> smsDetailData(Map<String, Object> map) {
+		return (Map<String, Object>) selectOne("sample.smsDetailData", map);
+	}
+	
  
 	
 	

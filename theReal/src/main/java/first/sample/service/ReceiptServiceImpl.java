@@ -660,9 +660,15 @@ public class ReceiptServiceImpl implements ReceiptService {
 		return resultMap;
 	}
 	
-	public Map<String, Object> uplusReceiptDetail(Map<String,Object> map) throws Exception{
+	@Override
+	public Map<String, Object> smsDetailData(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = receiptDAO.smsDetailData(map); 
+		return resultMap;
+	}
+	
+	public Map<String, Object> ReceiptDetail(Map<String,Object> map) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		List<Map<String, Object>> list = receiptDAO.uplusReceiptDetail(map);
+		List<Map<String, Object>> list = receiptDAO.ReceiptDetail(map);
 		resultMap.put("resultMap", list);
 		return resultMap;
 	}
@@ -698,12 +704,15 @@ public class ReceiptServiceImpl implements ReceiptService {
 	      
 	   }
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<String> emailList(String telNo) {
-		return receiptDAO.emailList(telNo);
+	public Map<String, Object> emailList(String telNo) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+	      List<Map<String, Object>> list2 = receiptDAO.emailList(telNo);
+	      resultMap.put("resultMap", list2);  
+	      return resultMap;  
 		
 	}
-
 	@Override
 	public void lastEmailUpdate(Map<String, Object> emailMap) {
 		receiptDAO.lastEmailUpdate(emailMap);

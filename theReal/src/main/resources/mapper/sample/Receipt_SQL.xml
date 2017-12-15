@@ -1470,7 +1470,31 @@
          </choose>	
 		ORDER BY FNL_MOF_DTM DESC
         LIMIT 0,10
-	</select>		
+	</select>	
+	
+	<select id="smsDetailData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			SMS_NO,
+			CARD_APP_DIV,
+			REC_TEN_NO,
+			APP_DT,
+			APP_CO,
+			APP_CO_DIV,
+			CARD_APP_CO,
+			INST_DIV,
+			APP_AMOUNT,
+			ACC_SUM_AMMOUNT,
+			date_format(FNL_MOF_DTM,'%Y-%m-%d %H:%i:%s') AS MOT_DATE,
+			SMS_MEMO
+		FROM
+			TB_SMS_MASTER
+		WHERE
+			SMS_NO = #{seq}
+		AND
+			REC_TEN_NO = #{telNo}
+		]]>
+	</select>	
 	
 	<select id="startCurDatabak" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
@@ -2690,7 +2714,16 @@
 				POINT_CARD
 			FROM
 				TB_USER_DATA
-			WHERE
+			]]>
+			<choose>
+             <when test="'00'.equals(type)">
+            WHERE 
+            	SHOP_BIZNO = #{biz}
+            AND
+            	SALES_BARCODE = #{barcode}
+             </when>
+             <otherwise>
+            WHERE
 				USER_KEY = #{telNo}
 			AND
 				UPLUS_USER_KEY = #{userKey}
@@ -2698,12 +2731,15 @@
 				SHOP_BIZNO = #{bizNo}
 			AND
 				SALES_BARCODE = #{barcode}
+             </otherwise>
+         </choose>	
+			
 
-		]]>
+		
 		</select>
 		
 		
-		<select id="uplusReceiptDetail" parameterType="hashmap" resultType="hashmap">
+		<select id="ReceiptDetail" parameterType="hashmap" resultType="hashmap">
 			<![CDATA[
 				SELECT
 			SALES_BARCODE	,
@@ -2722,16 +2758,25 @@
 			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d %H:%i:%s') AS FRT_CREA_DTM
 		FROM
 			TB_USER_DATA_DETAIL
-		WHERE
-			USER_KEY= #{telNo}
-		AND
-			SALES_BARCODE = #{barcode}	
-		AND
-			SALES_TYPE = #{salesType}
-		AND
-			UPLUS_USER_KEY = #{userKey}
-		ORDER BY FRT_CREA_DTM DESC
-			]]>
+		]]>
+			<choose>
+             <when test="'00'.equals(type)">
+            WHERE 
+            	SHOP_BIZNO = #{biz}
+            AND
+            	SALES_BARCODE = #{barcode}
+             </when>
+             <otherwise>
+            WHERE
+				USER_KEY = #{telNo}
+			AND
+				UPLUS_USER_KEY = #{userKey}
+			AND
+				SHOP_BIZNO = #{bizNo}
+			AND
+				SALES_BARCODE = #{barcode}
+             </otherwise>
+         </choose>	
 		</select>
 		
 		<select id="getDetailReceipt" parameterType="hashmap" resultType="hashmap">
@@ -2803,10 +2848,14 @@
           </foreach>
    </update>
    
-		<!-- 현재 메일, 지난이메일 가져오기	 -->
-	<select id="emailList" parameterType="String" resultType="list">
+	<!-- 현재 메일, 지난이메일 가져오기	 -->
+	<select id="emailList" parameterType="String" resultType="hashmap">
 		<![CDATA[
-			SELECT EMAIL, LAST_EMAIL FROM TB_USER WHERE TEL_NO = #{telNo} AND EMAIL != 'UPLUS'
+			SELECT 
+				EMAIL, 
+				LAST_EMAIL 
+			FROM 
+				TB_USER WHERE TEL_NO = #{telNo} AND EMAIL != 'UPLUS'
  	 
 		]]>
 	</select>
@@ -2814,7 +2863,14 @@
 	<!-- 이메일 업데이트 -->
 	<update id="lastEmailUpdate" parameterType="String">
 	    <![CDATA[
-	   		UPDATE TB_USER SET LAST_EMAIL = #{email} WHERE TEL_NO = #{telNo} AND EMAIL != 'UPLUS' 
+	   		UPDATE 
+	   			TB_USER 
+	   		SET 
+	   			LAST_EMAIL = #{email} 
+	   		WHERE 
+	   			TEL_NO = #{telNo} 
+	   		AND 
+	   			EMAIL != 'UPLUS' 
 	    ]]>
 	</update>
 		
