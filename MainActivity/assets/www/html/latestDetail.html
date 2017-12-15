@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- main -->
+	<script src="../code/jquery.bxslider.min.js"></script>
+    <link href="../code/jquery.bxslider.css" rel="stylesheet" />
+    
+    <!-- tab -->
+	<script type='text/javascript' src='../code/tabs.js'></script>
+<script src="../code/jquery.bpopup.min.js"></script>
+
+
+
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+   <link href="../css/monthpicker.css" rel="stylesheet" />
+	<script src="../code/common.js"></script>
+<!-- 	<script type="text/javascript" charset="utf-8" src="../cordova.js"></script> -->
+<style type="text/css">
+
+@font-face {font-family: barcode-font; src:url("../barcode-font/barcode-font.ttf")}
+
+/* .on { color: blue; border: 1px solid blue; } */
+.on { background-color:#DDF4FE;}
+.list-block {display: none; }
+.item-title.small-fonts{font-size: small;}
+
+.alen_list_box2 {margin:0px 0px; background:#fff; border:0; }
+.alen_list_box2 li { background-color:#fff; }
+.alen_list_combtnbox { height:42px; background-color: #fff/*margin-bottom:5px;*/ }
+.alen_list_combtn { margin:0 5px; padding:0 5px 0 5px; border:1px solid #539bff; color:#fff; /* font-size:1.5em; */ font-weight:400; text-align:center; line-height:50px; cursor:pointer; background:#539bff; -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
+.albpad { padding:0px 0 0px 0; }
+
+.alen_list_btn2 {background-color:#fff;padding:5px 5px;border-top:1px solid #ddd;}
+/* .alen_list_btn2 { margin:10px 10px 10px 10px; padding:0; border-radius:10px; background:#333; } */
+.alen_list_btn2item { width:20%;float:left; text-align:center; /* color:#a99f9f;  */}
+.alen_list_btn2item:nth-of-type(5){margin-right:0;}
+/* .alen_list_btn2item { width:20%; float:left;; text-align:center; color:#fff; } */
+.alen_list_btn2item .al_btn_txt {padding:8px 0; border:1px solid #ddd; border-radius:5px;margin-right:2px; font-family: bold;font-size: 13px;}
+.alen_list_btn2item .al_btn_txt:nth-of-type(5) {margin-right:0;}
+/* .alen_list_btn2item .al_btn_txt { padding:10px 0; border-right:1px solid #666; } */
+.alen_list_btn2item .al_btn_txt.last {background-color:#ddd; }
+
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner { padding-right: 15px; text-align:center; }
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner .item-title { margin:0 auto; }
+.alen_list_box2 label.label-radio input[type="radio"]:checked ~ .item-inner { background: no-repeat center; background-position: 50% 3px; background-position: -webkit-calc(50% - 8px) 3px; background-position: calc(50% - 8px ) 3px; -webkit-background-size: 13px 10px; background-size: 13px 10px; 
+background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23539bff'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");  }
+.divPage{background: url(../common/divPage.png) no-repeat 0 0;background-position: 0% 0%; height: 30px;"}
+.alen_radio_box2 { margin:10px; border:1px solid #e5e5e5; }
+
+
+.alen_table_in { border-radius:5px; margin:0 5px;}
+
+</style>
+</head>
+
+<body>
+<input type="hidden" value="" id="dealDate">
+
+
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+
+
+    <div class="panel panel-left panel-reveal">
+    
+    	<div class="profile_box">
+        	<!-- <div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div> -->
+            
+            <div class="pf_txt">
+            	<h2>김종현</h2>
+                <p>쿠폰 <span>0</span>개</p>
+                <p>포인트 <span>200</span>p</p>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        </div>
+
+    </div>
+    
+    <div class="views">
+		<div class="view view-main">
+        
+            
+<!-- 리뉴얼 스타일 -->            
+<style type="text/css">
+.page { background:#333333 !important; overflow:visible !important; }
+.page-content { padding-top:0 !important; max-width: 450px; margin: 0 auto;}
+
+.latest_contitle { color:#747474; background:#0d0d0d; }
+.latest_contitle h2 { padding:15px 15px; font-size:1em; font-weight:400; color:#fff; line-height:25px; }
+.latest_contitle h2 span { float:right; color:#ddd; border:1px solid #666; border-radius:8px; font-size:0.7em; padding:0 5px; margin-left:5px; line-height:21px; }
+.latest_contitle h2 span.active { border:1px solid #539bff; color:#539bff; }
+
+.latest_coninfo { padding:8px 15px; color:#bbb; background:#222; font-size:0.7em; text-align:left; border-bottom:1px solid #333;}
+.latest_coninfo .latest_allsms { width:50%; float:left; background:url(common/sms.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo .latest_allrec { width:50%; float:right; background:url(common/receipt.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo > div span { color:#e5e5e5; }
+
+
+.rec_top { position:relative; width:100%; height:40px; border-bottom:1px solid #e5e5e5;  }
+.rec_top .rec_arrow { width:30px; height:40px; position:absolute; z-index:20; top:0px; }
+.rec_top .left_arrow { background:url(common/left.png) no-repeat; left:20px; }
+.rec_top .right_arrow { background:url(common/right.png) no-repeat; right:20px; }
+
+.rtpage_box { background:#333333; margin-bottom:20px; font-size:12px; line-height:1.2em; }
+.rtpage_inbox { background:#fff; padding:15px 15px; border-radius:4px; margin: 20px }
+.rtpage_holl { padding:5px 5px 15px 5px; height:35px; }
+.rtpage_holl div { width:6%; height:100%; margin:0 2%; border-radius:30px; border:1px solid #e5e5e5; float:left; background:#f2f2f2; }
+
+.rt_title { padding:30px 0 20px 0; }
+.rt_title h2 { text-align:center; font-size:2em; font-weight:700; color:#000; clear:both; padding:5px 0 15px 0; }
+.rt_title p { text-align:center; font-size:1em; color:#000; clear:both; }
+
+.rt_txt01 { text-align:left; font-size:1em; color:#666; clear:both; padding:0px 10px; }
+.rt_txt01 span { text-align:right; float:right; }
+
+.rt_tax { text-align:left; font-size:1.3em; font-weight:500; color:#333; clear:both; padding:10px 10px; border-top:1px dashed #aaa;border-bottom:1px dashed #aaa; margin-top:10px;}
+.rt_tax span { text-align:right; float:right; }
+
+.rt_sms { text-align:left; font-size:1.3em; font-weight:500; color:#333; clear:both; padding:10px 10px; border-bottom:1px solid #ddd; margin-top:10px;}
+.rt_sms span { text-align:right; float:right; font-size: 13px;}
+
+.rt_total { text-align:left; font-size:1.5em; font-weight:700; color:#000; clear:both; padding:20px 10px; border-bottom:1px dashed #aaa;  }
+.rt_total span { text-align:right; float:right; }
+
+.rt_orderno { border-bottom:1px dashed #aaa; border-top:1px dashed #aaa; padding:20px 0; margin-top:20px; }
+.rt_orderno p { text-align:center; font-size:1.2em; color:#666; clear:both; }
+.rt_orderno h2 { text-align:center; font-size:1.8em; color:#000; clear:both; padding:5px 0; }
+
+.rt_table { border-top:1px solid #ddd; margin:20px 5px 0px 5px;  }
+.rt_table .rt_tabletitle { border-bottom:1px solid #ddd; background:#fff;}
+.rt_table li { float:left; padding:5px 0; text-align:center; color:#333; }
+.rt_table li.rt_mlat01 { width:45%; }
+.rt_table li.rt_mlat02 { width:20%; }
+.rt_table li.rt_mlat03 { width:10%; }
+.rt_table li.rt_mlat04 { width:25%; text-align:right; padding-right:5px; }
+
+.rt_etc { text-align:left; font-size:1.3em; font-weight:700; color:#333; clear:both; padding:10px 10px; border-bottom:1px dashed #aaa; }
+.rt_etc span { text-align:right; float:right; }
+
+.rt_copy { text-align:center; font-size:0.7em; margin-bottom: 30px; }
+
+.rt_btn { margin-bottom:30px; text-align:center;}
+.rt_email { border-radius:4px; background:#222; color:#fff; text-align:center; padding:8px 10px; width:35%; font-size:13px; margin:0 auto; }
+
+.rt_card{  padding: 10px; color: #232323; font-size: 12px; border-bottom: 1px dashed #aaaaaa; }
+
+.exit_a img{width: 30px;position: absolute;right: 35px;}
+
+.rt_textarea{ width:  100%; height: 110px; border-top: none; border-left: 1px solid #ddd; border-bottom:  1px solid #ddd; border-right:  1px solid #ddd;}
+
+.receipt{background-color: #666}
+</style>            
+
+
+			<div class="pages navbar-through toolbar-through">
+                <div data-page="index" class="page">
+                    <div class="page-content receipt">
+
+                   <div class="pages navbar-through toolbar-through">
+                <div data-page="index" class="page">
+                    <div class="page-content">
+
+					<div class="receipt_con">
+                    
+						<div class="rtpage_box">
+                        	<div class="rtpage_inbox" id="rtpage">
+                            
+                            </div>
+                        </div>
+                        
+                        <div style="height:50px;"></div>
+                    
+                    </div>
+                    </div>
+                </div>
+			</div>
+                    
+                    </div>
+                </div>
+                
+
+
+
+
+
+                
+                
+                
+			</div>
+            
+
+		</div>
+
+    </div>
+
+
+
+
+
+
+<script type="text/javascript">
+function numCommas(x) { //3자리수 , 찍어주기
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+} 
+
+var request = new Request();
+var telNo = request.getParameter('telNo');
+var type = "";
+var barcode = "";
+var biz = "";
+var seq = "";
+$(document).ready(function() {
+	type = request.getParameter('type');
+	
+	if (type == "00") {
+			barcode = request.getParameter('barcode');
+			biz = request.getParameter('biz');
+			$.ajax({
+				type : "post",
+				url : commonIp() + "/theReal/receipt/latestDataDetail.do",
+				data : {
+					type : type,
+					barcode : barcode,
+					biz : biz
+				},
+				success : fn_latestDetailData
+			});
+
+		} else {
+			seq = request.getParameter('seq');
+
+			$.ajax({
+				type : "post",
+				url : commonIp() + "/theReal/receipt/latestDataDetail.do",
+				data : {
+					type : type,
+					seq : seq,
+					telNo : telNo
+				},
+				success : fn_latestSmsData
+			});
+		}
+	})
+
+	function fn_latestDetailData(resdata) {
+		var res = resdata.resultMap;
+		var shop = resdata.shopInfo;
+		
+		var str = "";
+		
+		str +='<a class="exit_a" href="javascript:exit()"> <img alt="exit" src="../common/exit.png" style="width:15px"></a>  '	;
+		str +='<div class="rt_title"><h2>'+shop.SHOP_NAME+'</h2></div>'															;
+		str +='<div class="rt_txt01">'+shop.SHOP_NAME+'<span>'+resdata.salesDate+'</span></div>'								;
+		str +='<div class="rt_txt01">사업자번호:'+shop.SHOP_BIZNO+'</div>'															;
+		str +='<div class="rt_txt01">대표:'+shop.SHOP_CEO+'</div>'																;
+		str +='<div class="rt_txt01">전화:'+shop.SHOP_TEL_NUM +'</div>'															;
+		str +='<div class="rt_txt01">주소:'+shop.SHOP_ADDR+'</div>'																;
+		str +='<div class="rt_table">';
+		str +='		<ul class="rt_tabletitle">';
+		str +='			<li class="rt_mlat01">상품명</li>';
+		str +='			<li class="rt_mlat02">단가</li>';
+		str +='			<li class="rt_mlat03">수량</li>';
+		str +='			<li class="rt_mlat04">금액</li>';
+		str +='			<hr>';
+		str +='		</ul>';
+		
+	for(var i=0; i<res.length; i++){
+		str +='		<ul>';
+		str +='			<li class="rt_mlat01">'+res[i].SALES_PNAME+'</li>														';
+		str +='			<li class="rt_mlat02">'+numCommas(res[i].SALES_SL_AMT/res[i].SALES_QTY)+'</li>							';
+		str +='			<li class="rt_mlat03">'+res[i].SALES_QTY+'</li>															';
+		str +='			<li class="rt_mlat04">'+numCommas(res[i].SALES_SL_AMT)+'</li>											';
+		str +='			<hr>																									';
+		str +='		</ul>																										';
+	}
+		str +='</div>																											';
+		
+		str +='<div class="rt_tax">																								';
+		str +='		주문합계<span>'+numCommas(shop.SALES_PAID_AMT)+'</span><br><br>												';
+		str +='		공급가금액<span>'+numCommas(shop.SALES_SUM_FP_AMT)+'</span><br><br>												';
+		str +='		부가세<span>'+numCommas(shop.SALES_SUM_TAX_AMT)+'</span>														';
+		str +='</div>																											';
+		str +='<div class="rt_total">Total<span>'+numCommas(shop.SALES_PAID_AMT)+'</span></div>									';
+		
+	if(shop.CARD_ICOM != ''){
+		str +='<div class="rt_card">';
+		str +='<div>거래종류 : <sapn>카드거래</span></div>';
+		str +='<div>카드승인 : <sapn>';
+		if(shop.SALES_TYPE =='RCP01'){
+			str += '승인';
+		}else if(shop.SALES_TYPE =='RCP02'){
+			str += '취소';
+		}else{
+			str += '거래실패';
+		} 
+		str += '</span></div>';
+		str +='<div>카드번호 : <span>';
+		var cardNo = shop.CARD_NO;
+		if(cardNo.length <= 16){
+			cardNo = cardNo.substring(0,4)+"-"+cardNo.substring(4,6)+"**-****-"+cardNo.substring(12,16);
+		}else if(cardNo.length > 16){
+			cardNo = cardNo.substring(0,7)+"**-****"+cardNo.substring(14,19);
+		}
+		
+		str += cardNo+'</span></div>';
+		str +='		<div>승인번호 : <span>'+shop.CARD_APP_NO+'</span></div>';
+		str +='		<div>카드종류 : <span>'+shop.CARD_ICOM+'</span></div>';
+		str +='		<div>거래일시 : <span>'+resdata.salesDate+'</span></div>';
+		str +='</div>'; 
+	}else if(shop.CARD_ICOM == ''){
+		str +='<div class="rt_card">';
+		str +='		<div>거래종류 : <span>현금거래</span> </div>';
+		str +='		<div>거래일시 : <span>'+resdata.salesDate+'</span></div></div>';
+	}
+		
+		
+		str +='<div class="rt_copy">본 영수증은 거래의 참고용으로 사용하시기 바랍니다.</div>';
+		
+		
+		$("#rtpage").empty();
+		$("#rtpage").append(str);
+	}
+	
+	
+function fn_latestSmsData(resdata){
+	//var res = resdata.resultMap;
+	
+	str = "";
+	
+	str +='<a class="exit_a" href="javascript:exit()"> <img alt="exit" src="../common/exit.png" style="width:15px"></a>  '	;
+	str += '<div class="rt_title">';
+	str += '	<h2>문자 상세 내역</h2>';
+	str += '</div>';
+	
+	str += '<div class="rt_sms"> 내역 <span>'+resdata.APP_CO+'</span></div><hr>';
+	str += '<div class="rt_sms"> 카드 <span>'+resdata.CARD_APP_CO+'</span></div><hr>';
+	str += '<div class="rt_sms"> 금액 <span>'+numCommas(resdata.APP_AMOUNT)+'</span></div><hr>';
+	str += '<div class="rt_sms"> 일시 <span>'+resdata.MOT_DATE+'</span></div><hr>';
+	if(resdata.INST_DIV!="체크"){
+		str += '<div class="rt_sms"> 할부 <span>'+resdata.INST_DIV+'</span></div><hr>';
+	}
+	
+	var sumAmount = resdata.ACC_SUM_AMMOUNT;
+	if(sumAmount != null){
+		str += '<div class="rt_sms"> 누적 <span>'+numCommas(sumAmount)+'</span></div><hr>';
+	}
+	
+	str += '<div class="rt_sms"> 항목 <span>'+resdata.APP_CO_DIV+'</span></div><hr>';
+	
+	str += '<div class="rt_sms"> 메모</div><hr>';
+	str += '<textarea class="rt_textarea" readonly>'+resdata.SMS_MEMO+'</textarea>';
+	
+	
+	$("#rtpage").empty();
+	$("#rtpage").append(str);
+}
+
+function exit(){
+	window.history.back();
+}
+</script>
+
+</body>
+</html>

@@ -24,7 +24,7 @@ $(function () {
 $(document).ready(function(){
 	
  	$(document).on('click','#leftMenuLatest',function(){
- 		location.href='latestdevel.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='latest.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
  	});
 /* 	$(document).on('click','#leftMenuHistory',function(){
  		location.href='latest.html?telNo='+request.getParameter('telNo');

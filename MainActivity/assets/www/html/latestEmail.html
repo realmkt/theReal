@@ -15,11 +15,11 @@
     <!-- main -->
 	<script src="../code/jquery.bxslider.min.js"></script>
     <link href="../code/jquery.bxslider.css" rel="stylesheet" />
-    
+    	
     <!-- tab -->
 	<script type='text/javascript' src='../code/tabs.js'></script>
-<script src="../code/jquery.bpopup.min.js"></script>
-
+	<script src="../code/jquery.bpopup.min.js"></script>
+	
 
 
     <!-- scroll -->
@@ -33,11 +33,55 @@
 <!-- 	<script type="text/javascript" charset="utf-8" src="../cordova.js"></script> -->
 	
 	
+	 <link rel="stylesheet" href="webjars/jquery-ui/1.11.4/jquery-ui.min.css"/>
+
+  <script src="/webjars/jquery/2.2.1/jquery.min.js"/></script>
+
+
+  <script src="/webjars/jquery-ui/1.11.4/jquery-ui.min.js"/></script>
+
+<style type="text/css">
+
+@font-face {font-family: barcode-font; src:url("../barcode-font/barcode-font.ttf")}
+
+/* .on { color: blue; border: 1px solid blue; } */
+.on { background-color:#DDF4FE;}
+.list-block {display: none; }
+.item-title.small-fonts{font-size: small;}
+
+.alen_list_box2 {margin:0px 0px; background:#fff; border:0; }
+.alen_list_box2 li { background-color:#fff; }
+.alen_list_combtnbox { height:42px; background-color: #fff/*margin-bottom:5px;*/ }
+.alen_list_combtn { margin:0 5px; padding:0 5px 0 5px; border:1px solid #539bff; color:#fff; /* font-size:1.5em; */ font-weight:400; text-align:center; line-height:50px; cursor:pointer; background:#539bff; -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
+.albpad { padding:0px 0 0px 0; }
+
+.alen_list_btn2 {background-color:#fff;padding:5px 5px;border-top:1px solid #ddd;}
+/* .alen_list_btn2 { margin:10px 10px 10px 10px; padding:0; border-radius:10px; background:#333; } */
+.alen_list_btn2item { width:20%;float:left; text-align:center; /* color:#a99f9f;  */}
+.alen_list_btn2item:nth-of-type(5){margin-right:0;}
+/* .alen_list_btn2item { width:20%; float:left;; text-align:center; color:#fff; } */
+.alen_list_btn2item .al_btn_txt {padding:8px 0; border:1px solid #ddd; border-radius:5px;margin-right:2px; font-family: bold;font-size: 13px;}
+.alen_list_btn2item .al_btn_txt:nth-of-type(5) {margin-right:0;}
+/* .alen_list_btn2item .al_btn_txt { padding:10px 0; border-right:1px solid #666; } */
+.alen_list_btn2item .al_btn_txt.last {background-color:#ddd; }
+
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner { padding-right: 15px; text-align:center; }
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner .item-title { margin:0 auto; }
+.alen_list_box2 label.label-radio input[type="radio"]:checked ~ .item-inner { background: no-repeat center; background-position: 50% 3px; background-position: -webkit-calc(50% - 8px) 3px; background-position: calc(50% - 8px ) 3px; -webkit-background-size: 13px 10px; background-size: 13px 10px; 
+background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23539bff'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");  }
+.divPage{background: url(../common/divPage.png) no-repeat 0 0;background-position: 0% 0%; height: 30px;"}
+.alen_radio_box2 { margin:10px; border:1px solid #e5e5e5; }
+
+
+.alen_table_in { border-radius:5px; margin:0 5px;}
+.dd{position: fixed;}
+</style>	
 </head>
 
 <body>
-	 
-	
+	<input type="hidden" value="" id="dealDate">
+
+
     <!-- Status bar overlay for fullscreen mode-->
     <div class="statusbar-overlay"></div>
 
@@ -45,95 +89,73 @@
     <!-- Panels overlay-->
     <div class="panel-overlay"></div>
 
-
+	
     <div class="panel panel-left panel-reveal">
     
     	<div class="profile_box">
-        	<div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div>
+        	<!-- <div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div> -->
             
             <div class="pf_txt">
-            	<h2>전진호</h2>
-                <p>쿠폰 <span>270</span>개</p>
-                <p>포인트 <span>2000</span>p</p>
+            	<h2>김종현</h2>
+                <p>쿠폰 <span>0</span>개</p> 
+                <p>포인트 <span>200</span>p</p>
             </div>
             <hr>
         </div>
         
         <div class="left_menu">
-        	<ul>
-            	<li onClick="location.href='latest.html'">
-                <div class="leftm_box leftm01"></div>
-                <a href="latest.do">영수증 관리</a>
-                </li>
-                
-            	<li onClick="location.href='history.html'">
-                <div class="leftm_box leftm02"></div>
-                <a href="#">영수증확인</a>
-                </li>
-                		
-            	<li onClick="location.href='#'">
-                <div class="leftm_box leftm03"></div>
-                <a href="#">가계부</a>
-                </li>
-                
-            	<li onClick="location.href='event.html'">
-                <div class="leftm_box leftm04"></div>
-                <a href="#">이벤트</a>
-                </li>
-                
-            	<li onClick="location.href='notice.html'">
-                <div class="leftm_box leftm05"></div>
-                <a href="#">공지사항</a>
-                </li>
-                	
-            </ul>
-        </div>
-	
-    </div>		
-    	
-    	
+    			
+    	</div>
+    </div>
     <div class="views">
 		<div class="view view-main">
-        	
+        
             <div class="navbar top_menu">
                 <div data-page="index" class="navbar-inner">
-                
-                    <div class="left">
-                    <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
-                    </div>
-                    <div class="center sliding alen_logo" onClick="location.href='index.html'"></div>
-	
+                   <div class="left">
+                    <div class="left sliding"><a class="back link" onclick="back();"> <i class="icon icon-back"></i><span class="backfont">Back</span></a></div>
+                    		
+                    </div>	
+                   
+                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 18%; text-align: center"><img src="../common/logo_01.png" width="200px" height="44px"></div> 
+
                 </div>
-                	
-                <div data-page="receipt_details" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                
+                <div data-page="receipt_details" class="navbar-inner cached" >
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backS">Back</span></a></div>
                 <div class="center sliding">영수증 상세 내역</div>
-                </div>	
-                	
-                		
+                </div>
+                
+                
                 <div data-page="agree01" class="navbar-inner cached">
                 <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
                 <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
                 </div>
-                		
+                
                 
                 <div data-page="agree03" class="navbar-inner cached">
                 <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
                 <div class="center sliding">본인확인서비스 이용약관</div>
                 </div>
-                	
-                		 
+                
+                <div data-page="detailSearch" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">상세조회</div>
+                </div>
+                
+                
             </div>
-            	
 
 <style type="text/css">
+.dis_none{display: none;}
+.moreBtn { height: 41px;  padding: 14px;  background-color: #272727; color: #f2f2f2; position: relative; top: -2%; margin: 2%;text-align: center}
+.mal_more { background:#f2f2f2; color:#666; font-size:0.8em; padding:10px 0; }
+
+
 .latest_contitle { color:#747474; background:#0d0d0d; margin-bottom: 13px; }
 .latest_contitle h2 { padding:15px 15px; font-size:1em; font-weight:400; color:#fff; line-height:25px; } 
 .latest_contitle h2 span { float:right; color:#ddd; font-size:0.7em; padding:0 5px; margin-left:5px; line-height:21px; } 
-
-
 .emailButton {
-
    -moz-box-shadow: 3px 4px 0px 0px #1564ad;
    -webkit-box-shadow: 3px 4px 0px 0px #1564ad;
    box-shadow: 3px 4px 0px 0px #1564ad;
@@ -173,15 +195,10 @@
    position:relative;
    top:1px;
 }
-
-
 .latest_coninfo { padding:8px 15px; color:#bbb; background:#222; font-size:0.7em; text-align:left; border-bottom:1px solid #333;}
-.latest_coninfo .latest_allsms { width:50%; float:left; background:url(common/sms.png) no-repeat left; line-height:20px; padding-left:25px;}
-.latest_coninfo .latest_allrec { width:50%; float:right; background:url(common/receipt.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo .latest_allsms { width:50%; float:left; background:url(../common/sms.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo .latest_allrec { width:50%; float:right; background:url(../common/receipt.png) no-repeat left; line-height:20px; padding-left:25px;}
 .latest_coninfo > div span { color:#e5e5e5; }
-
-
-
 .latest_conser { margin:2% 2% 1%; background:#fff; text-align:center; }
 .latest_conser input[type=radio] { display:none; margin:10px; }
 .latest_conser input[type=radio] + label {  float:left; padding:7px 12px; width:25%; background:#fff; font-size:12px; border-right:1px solid #e5e5e5;}
@@ -189,22 +206,15 @@
 .latest_conser input[type=radio]:checked + label { background:#539bff; color:#fff;}
 .latest_conser input[type=date] { width: 115px; height: 18px;  } 
 .latest_conser input[type=button] { background: #424242; 
-
-
 border: none;	
  
 border-radius: 3px;
-
 color: #ffffff;	
-
-
  
 width: 40px;
    
 height: 20px;	
-
 font: 13px "Gulim", "Dotum", Georgia, "Times New Roman", Times, serif;
-
 margin: 0 0 0 0; 
    
 padding: 1px 1px 1px 1px;	
@@ -218,19 +228,91 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
 .latest_conlist li p { font-size:0.7em; font-weight:400; color:#555; padding-bottom:20px; }
 .latest_conlist li h3 { font-size:0.8em; font-weight:400; color:#555; padding-left:27px; line-height:16px; }
 .latest_conlist li h3 span { background:#f2f2f2; border:1px solid #ddd; border-radius:3px; padding:2px 5px; font-size:0.85em; color:#539bff; }
-.latest_conlist li h3.mal_credit { background:url(common/credit.gif) no-repeat left; }
-.latest_conlist li h3.mal_cash { background:url(common/cash.gif) no-repeat left; }
-.latest_conlist li.mal_price { width:40%; text-align:right; font-size:0.8em; font-weight:400; color:#555;  position:absolute; top:40%; right:10px; }
+.latest_conlist li h3.mal_credit { background:url(../common/credit.gif) no-repeat left; }
+.latest_conlist li h3.mal_cash { background:url(../common/cash.gif) no-repeat left; }
+
+.latest_conlist li.mal_price { width:40%; text-align:right; font-size:0.8em; font-weight:400; color:#555;  position:absolute; top:68%; right:10px; }
 .latest_conlist li.mal_price span { font-size:1.4em; font-weight:700; color:#000; }
 .mal_more { background:#f2f2f2; color:#666; font-size:0.8em; padding:10px 0; }
 .latest_conlist searchstyle {margin: 0 0; text-align:right;}
+  
+  
+.cpop_btn { font-size:3vmin; padding:0.3em 1.5em; background-color:#222; color:#e5e5e5; text-decoration:none; display:inline; border-radius:4px; -webkit-transition: background-color 1s ease; -moz-transition: background-color 1s ease; transition: background-color 1s ease; }
+.cpop_btn:hover { background-color: #ddd; -webkit-transition:background-color 1s ease; -moz-transition:background-color 1s ease; transition:background-color 1s ease; }
+.cpop_btn_small { padding:.5em 1.5em; font-size:0.8em; }
+.modal_box { display: none; position:fixed; z-index: 1000; background: white; width:90%; border-bottom: 1px solid #aaa; border-radius: 4px; box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1); background-clip: padding-box; }
+.modal_box .modal_body { padding: 3em 2em; }
+.modal_box footer, .modal_box .modal-footer { padding: 1em; border-top: 1px solid #ddd; background: rgba(0, 0, 0, 0.02); text-align: center; }
+.maildiv{ height: 30%;}
+.alen_modal_overlay { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
+.alen_modal_overlay2 { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
+.ser_datebox { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%; height:50px;  }
+.ser_datebox input[type=date] { width:45%; height:40px; line-height:40px; border:none; box-sizing:border-box; text-align:center; }
+.ser_2box { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
+.ser_2box input[type=radio] { display:none; margin:10px; }
+.ser_2box input[type=radio] + label { float:left; padding:10px 0; width:50%; background:#fff; font-size:12px; border-right:1px solid #ddd;}
+.ser_2box input[type=radio] + label.slast_radio { border-right:0; }
+.ser_2box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
+.ser_4box { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
+.ser_4box input[type=radio] { display:none; margin:10px; }
+.ser_4box input[type=radio] + label { float:left; padding:10px 0; width:25%; background:#fff; font-size:12px; border-right:1px solid #ddd;}
+.ser_4box input[type=radio] + label.slast_radio { border-right:0; }
+.ser_4box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
+.recdetail { max-width:500px; padding:1%; height:50;  position:absolute;}
+.recdetail .modal_body { height:100%; padding:0; }
+.close_icon { position:absolute; background-image:url(../common/close.png); background-color: #2E2E2E; background-repeat:no-repeat; background-size:cover; width:20px; height:20px; left:90%; top:1%; margin-left:-15px; }
+.abcd { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
+ input[type=checkbox] {  
+  	display: none; 
+   
+ }
+ 	
+ input[type=checkbox] + label{
+    display: inline; 
+    cursor: pointer; 
+    float: left; 
+    position: absolute;
+    padding-left: 17px;
+    margin-right: 300px;  
+ 	margin-top : 27px;
+    font-size: 13px;
+    margin-left: 22px;
+ }
 
-   
-</style>  
+ input[type=checkbox]+ label:before {     
+    content: "";  
+    display: inline; 
+    width: 25px;  
+    height: 25px;  
+   	margin-right: 15px;  
+    position: absolute;  
+    left: 200;  
+    bottom: 2px;  
+   	background-color: #F2F2F2;  
+    border-radius: 2px; 
+    box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8); 
+    
+ }
+
+ input[type=checkbox]:checked + label:before { 
+    content: "\2713";  /* 체크모양 */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);  
+    font-size: 27px; 
+    font-weight:800; 
+    color: #fff;   	  
+    background:#58ACFA;
+    text-align: center;  
+    line-height: 18px;  
+    
+
+
+
+
+   </style>  
  
-   
+   	
 	
-			<div class="pages navbar-through toolbar-through">
+			<div class="pages navbar-through toolbar-through" id="abcd">
                 <div data-page="index" class="page">
                     <div class="page-content">
 			
@@ -245,33 +327,30 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
             	       
                     	
                     <div class="latest_conser alen_outbox" id="bbt">
-                    <input type="radio"    class="maint" id="latest01" name="latestsbox" value="latest" checked>
-                    <label for="latest01">전체영수증</label>
+                  <input type="radio" id="latest01" name="latestsbox" value="latest" checked> 
+                    <label for="latest01" class="maint">전체영수증</label>
                     			
-                    <input type="radio"  class="transno" name="latestsbox" id="latest02" value="week">
-                    <label for="latest02">미발행</label>
+                   <input type="radio" name="latestsbox" id="latest02" value="week"> 
+                    <label for="latest02" class="transno">미발행</label>
                   			
-                    <input type="radio" class="transok" id="latest03" name="latestsbox" value="month" >
-                    <label for="latest03">발행</label>
+                 <input type="radio" id="latest03" name="latestsbox" value="month" >
+                    <label for="latest03" class="transok">발행</label>
                      
-                    <input type="radio" id="latest04"  value="detail">
-                    <label for="latest04" data-modal-id="ser_box" >날짜검색</label>
+                    <input type="radio" id="latest04"  name="latestsbox" value="detail">
+                    <label for="latest04" id="dda" onclick="ass();">날짜검색</label>
                     <hr>
                  
                     <hr>
                     
-                   
-                  
+               </div>
+             
+                 
+                   <div class="latest_conlist alen_outbox" id="receipt_div">
+                    	
                     </div>
-                   <div class="latest_conlist alen_outbox searchstyle" >
-                    
-                    </div>
-					
+					 <div class="moreBtn dis_none" id="moreBtn">더보기</div>
 	
-                    <!-- 리스트 들어갈 DIV -->			
-                    <div class="latest_conlist alen_outbox" id="trans"> 
-                    </div>
-                    		
+                  
                     	
                     <div class="foot_info">
                     
@@ -308,123 +387,50 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
                 
 
 
-<style>
-.cpop_btn { font-size:3vmin; padding:0.3em 1.5em; background-color:#222; color:#e5e5e5; text-decoration:none; display:inline; border-radius:4px; -webkit-transition: background-color 1s ease; -moz-transition: background-color 1s ease; transition: background-color 1s ease; }
-.cpop_btn:hover { background-color: #ddd; -webkit-transition:background-color 1s ease; -moz-transition:background-color 1s ease; transition:background-color 1s ease; }
-.cpop_btn_small { padding:.5em 1.5em; font-size:0.8em; }
+<div id="closeMan">
 
-.modal_box { display: none; position:fixed; z-index: 1000; background: white; width:90%; border-bottom: 1px solid #aaa; border-radius: 4px; box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1); background-clip: padding-box; }
-.modal_box .modal_body { padding: 1em 1em; }
-.modal_box footer, .modal_box .modal-footer { padding: 1em; border-top: 1px solid #ddd; background: rgba(0, 0, 0, 0.02); text-align: center; }
-.maildiv{ height: 30%;}
-.alen_modal_overlay { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
-
-
-.ser_datebox { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
-.ser_datebox input[type=date] { width:45%; height:40px; line-height:40px; border:none; box-sizing:border-box; text-align:center;  }
-
-.ser_2box { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
-.ser_2box input[type=radio] { display:none; margin:10px; }
-.ser_2box input[type=radio] + label { float:left; padding:10px 0; width:50%; background:#fff; font-size:12px; border-right:1px solid #ddd;}
-.ser_2box input[type=radio] + label.slast_radio { border-right:0; }
-.ser_2box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
-
-.ser_4box { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
-.ser_4box input[type=radio] { display:none; margin:10px; }
-.ser_4box input[type=radio] + label { float:left; padding:10px 0; width:25%; background:#fff; font-size:12px; border-right:1px solid #ddd;}
-.ser_4box input[type=radio] + label.slast_radio { border-right:0; }
-.ser_4box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
-
-.recdetail { max-width:500px; padding:1%; height:50;  position:absolute;}
-.recdetail .modal_body { height:100%; padding:0; }
-.close_icon { position:absolute; background-image:url(./common/close.png); background-color: #2E2E2E; background-repeat:no-repeat; background-size:cover; width:20px; height:20px; left:90%; top:1%; margin-left:-15px; }
-
-input[type=checkbox] {  
-    display: none;  
-}
-		 	  
-input[type=checkbox] + label{
-    display: inline-block;  
-    cursor: pointer;  
-    position: relative;  
-    padding-left: 25px;  
-    margin-right: 300px;  
- 	margin-top : 30px;
-    font-size: 13px;
-}
-
-input[type=checkbox]+ label:before {     
-
-    content: "";  
-    display: inline-block;  
-  
-    width: 20px;  
-    height: 20px;  
-  
-    margin-right: 10px;  
-    position: absolute;  
-    left: 0;  
-    bottom: 1px;  
-    background-color: #ccc;  
-    border-radius: 2px; 
-    box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);  
-}
-
-input[type=checkbox]:checked + label:before { 
-
-    content: "\2713";  /* 체크모양 */
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);  
-    font-size: 18px; 
-    font-weight:800; 
-    color: #fff;   	  
-    background:#2f87c1;
-    text-align: center;  
-    line-height: 18px;  
-
-
-
-</style>
- 
 
 <div id="ser_box" class="modal_box">
   		
  <div class="modal_body">
     <div class="close_icon js-modal-close"><a href="#" class="js-modal-close"></a></div>
         <div class="ser_datebox">
-       <input type="date" id="first" size="8" class="first">ㅡ<input type="date" id="second" class="second">
+      <input type="date" id="first" size="8" class="first">ㅡ<input type="date" id="second" class="second">
          </div>
      </div>
       
          
    
-
-	<footer> <a href="#" class="search" style="color: black; border: 3px">검색</a> </footer>
+	<footer> <a href="#" class="search" style="color: black; border: 3px">조회</a> </footer>
 	
 </div>
 
-<div id="receip_box" class="modal_box recdetail">
- <div class="close_icon js-modal-close"><a href="#" class="js-modal-close"></a></div>
-	<!-- <iframe id="iframe">
-	</iframe> -->
-	<div id='maildiv'>
-	</div>
-		<input type='button'  value='메일전송' class='transemail'>
-		 <div class="show" style="position: absolute;">
-         	
-         </div>
+
 </div>
 
-<script type="text/javascript">
+	<!-- <iframe id="iframe">
+	</iframe> -->
 
+<!-- <script src="../js/monthpicker.min.js"></script>
+<script src="../js/monthpicker-dom.min.js"></script>
+<script src="../js/monthpicker.js"></script> -->
+<script type="text/javascript" src="../js/framework7.js"></script>
+
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+<script type="text/javascript">
 function numCommas(x) { //3자리수 , 찍어주기
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 } 
-	
+	var appendthis = ("<div class='alen_modal_overlay2 js-modal-close' id='dadadadada'></div>");
+	//체크여부변수
+	var checkV = new Array();
 	var request = new Request();
 	
 	var telNo = request.getParameter('telNo');
 	var uuId =  request.getParameter('uuId');
-	
+				
 	var maxSize = 0;
 	var endSeq = 10;
 	var startDay = "";
@@ -435,7 +441,8 @@ function numCommas(x) { //3자리수 , 찍어주기
 	var dateDivCd = "";
 	var dateSrchCd = "N";	
 	var transMission = "";
-	
+
+		
 	function allClear(){
 		startDay = "";
 		endDay   = "";
@@ -448,14 +455,15 @@ function numCommas(x) { //3자리수 , 찍어주기
 		transMission = "";
 	}
 	
-	
+				
 	//메인 영수증 목록
 	$(document).ready(function() {
 		latestData();
 	});
-	
-		
+	 
+								
 	function latestData(){
+				
 		//maxSize = $("#maxSize").val();
 		$.ajax({
 			type : "post",
@@ -474,119 +482,199 @@ function numCommas(x) { //3자리수 , 찍어주기
 				transMission : transMission 
 			},
 			success : fn_latestData,
-			error : whenError
+			error : function(request,status,error){
+			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
 		});
 	}
-	
-	
-	//전체 영수증 돌아가기
+		
+	//전체 영수증 돌아가기 			
 	$(".maint").click(function(){
+		allClear()
+		checkV = new Array(); 
 		latestData();
 	});
-	
-	//미발행 영수증 목록
-	 $(".transno").click(function(){
+		
+	 //미발행 영수증 목록
+	  $(".transno").click(function(){
 		transMission = "Y02";
+		checkV = new Array(); 
 		latestData();
-		//이미 transMission 은 'YO2'인 상태라 검색할때 그대로 가져간다?
-	});
-			
+	}); 
+		
 	//발행된 영수증 목록
 	$(".transok").click(function(){
-		transMisson = "YO1";	  
+		transMission = "Y01";
+		checkV = new Array(); 
 		latestData();	
 	});
-			
+									
+	//더보기 버튼 	
+	$("#moreBtn").click(function(){
+		endSeq += 10;
+		var arr=$("input[type='checkbox']");
+		var count = 0;
 		
+		//새로고침 전 체크상태 확인
+		$(arr).each(function(){
+			if(this.checked){
+				checkV[count]=this.value;
+				count++;
+			}	
+		}); 
+			
+		latestData(); 
+	});
+			
 	//날짜별 검색
 	$(".search").click(function(){
-		 
 		dateSrchCd = "Y";
-		startDay = $(".first").val();
-		andDay = $(".second").val();
-		
+		startDay = $(".first").val(); 
+		endDay = $(".second").val();		
+							 				
 		//날짜 공백,범위검사
 		var firstArr = startDay.split('-');
-		var secondArr = andDay.split('-');
+		var secondArr = endDay.split('-');
 		var firstCompare = new Date(firstArr[0], parseInt(firstArr[1])-1, firstArr[2]);
 	    var secondCompare = new Date(secondArr[0], parseInt(secondArr[1])-1, secondArr[2]);
-	   
-	   if(startDay==""||startDay==null||andDay==""||andDay==null){
-		   
+	   	
+	   if(startDay==""||startDay==null||endDay==""||endDay==null){
+		   	
 		   alert("시작날짜 종료날짜 모두 입력")
-		   
-		   return;
-	   }
-	     
+		   	
+		   return false;
+	   }	
+	     				
 	   if(firstCompare.getTime() > secondCompare.getTime()) {
             
             alert("검색시작날짜 종료날짜 확인");
             
-            return;
-	   }
-	   	
-	   latestData();
+            return false;
+	   }	
 	   
-	});
-	   
-	   
-		//영수증 리스트 append 
-	   function fn_latestData(resdata){
-		
-		var values = resdata.resultMap;
+	   		$('#ser_box').hide();  	
+			$('#modal_body').hide();
+			$(".modal_box, .alen_modal_overlay2").fadeOut(300, function() {
+			$(".alen_modal_overlay2").remove();
+		});
+	   							
+	  latestData();	
+	   			 		
+	});	
+				 	
+	 	 function checkProp(data){
+	 		 
+	 	 	if($('input:checkbox[id="'+data+'"]').is(":checked")){
+	           	 $('input[id="'+data+'"]').prop('checked',false);
+	             $('.'+data+'').css({"background":"#ffffff"});
+	        }else{
+	             $('input[id="'+data+'"]').prop('checked',true);
+	             $('.'+data+'').css({"background":"#eeeeee"});
+	        } 
+	    }  
+ 			
+	 				
+	function fn_latestData(resdata){	
+		var res = resdata.resultMap;	
 		var str = "";
-		
-		$.each(values, function( index, value ) {
-				str += 		"<input type='checkbox' id='box1"+index+"' class='checkSelect' style='width: 250px; height: 30px;' value="+value.SALES_BARCODE+">";
-              	str += 		"	<label for='box1"+index+"'/></label>";
-              	str += 		"	<ul>";
-              	
-              	if(value.SMS_DIV == '00'){
-        			var tempDate = value.SALES_DATE;
-        			tempDate = tempDate.substring(0,4)+"-"+tempDate.substring(4,6)+"-"+tempDate.substring(6,8)/* +" "+tempDate.substring(8,10)+":"+tempDate.substring(10,12)+":"+tempDate.substring(12) */;
-        		}else{
-        			var tempDate = value.SALES_PRINT_DATE;
-        		}
-              	str += 			"<li><h2>"+value.SHOP_NAME+"</h2><p>"+tempDate+"</p>";
-            	
-            if(value.CARD_ICOM == ""){  
-              			
-            	str += 			"<h3 class='mal_credit'>현금결제<span>SMS</span></h3></li>";
-            } 
-               						
-            else{  
-              
-            	str += 			"<h3 class='mal_credit'>"+value.CARD_ICOM+"<span>SMS</span></h3></li>";
-            }
-            
-              	str +=			"<li class='mal_price'><span>"+numCommas(value.TOTAL_AM)+"</span>원</li><hr>";
+						
+		for(var i = 0; i < res.length; i++){
+			str += '<div class ="'+res[i].SALES_BARCODE+'" id="checkDivv" onclick="checkProp(\''+res[i].SALES_BARCODE+'\');">';
+			str += '<ul data-modal-id="receip_box")>';
+			str += '	<li class="checkli">';
+			str += '		<h2>'+res[i].SHOP_NAME+'</h2>';
 				
-              	str +=      "</ul>"; 
-              	 	
-        });
+			if(res[i].SMS_DIV == '00'){
+				var tempDate = res[i].SALES_DATE;
+				tempDate = tempDate.substring(0,4)+"-"+tempDate.substring(4,6)+"-"+tempDate.substring(6,8)/* +" "+tempDate.substring(8,10)+":"+tempDate.substring(10,12)+":"+tempDate.substring(12) */;
+ 								
+			}else{
+				var tempDate = res[i].SALES_PRINT_DATE;
+			}
+			str += '		<p>'+ tempDate  +'</p>';
+					 
+			if(res[i].CARD_ICOM != ''){
+			str += '<h3 class="mal_credit">'+res[i].CARD_ICOM+'&nbsp;<span> ';
+				if(res[i].SMS_DIV == '00'){ str += '전자영수증'; }else 
+				if(res[i].SMS_DIV == '01'){ str += 'SMS'; }
+				str += '</span></h3>';
+			}else if(res[i].CARD_ICOM == ''){
+			str += '<h3 class="mal_cash">현금&nbsp;<span>';
+				if(res[i].SMS_DIV == '00'){ str += '전자영수증'; }else 
+				if(res[i].SMS_DIV == '01'){ str += 'SMS'; }
+				str += '</span></h3>';
+			} 	
+			str += '</li>';
+			str += '<li class="mal_price">';
+			str += '<span id="price">'+numCommas(res[i].TOTAL_AM)+'</span> 원';
+			str += '</li>';
+			str += '<input type="checkbox" name="haha" id="'+res[i].SALES_BARCODE+'" class="checkSelect" value='+res[i].SALES_BARCODE+'><label for="receipt_div"></label>'
+			str += '<hr></ul>';
+			str += '</div>';
+		}
+		
+		if(res.length % 10 == 0 && maxSize != res.length){
+			$("#moreBtn").removeClass("dis_none");
+		}else{
+			$("#moreBtn").addClass("dis_none");
+		}
+		
+		$("#receipt_div").empty();
+		$("#receipt_div").append(str).trigger("create");
+		
+		//새로고침 전 체크여부
+		if(checkV==''||checkV==null){
+			
+		}
+		else{
 				
-		
-		$("#trans").empty(); 	
-		$("#trans").append(str).trigger("create"); 
-	}; 
-		
-	 
+			for(var i=0; i<checkV.length; i++){
+				$('#'+checkV[i]+'').prop('checked', true);
+				$('.'+checkV[i]+'').css({"background":"#eeeeee"});
+			}
+		} 
+	};	
+	
 var send_array = new Array();
  
-//현재 사용자 이메일 가져오기
+			
 	$(".emailButton").click(function(){ 
-		$.ajax({
-			type : "post",
-			url : commonIp() + "/theReal/receipt/eMailChk.do",
-			data : {
-				telNo : telNo
-			},
-			success : fn_mailOk,
-			error : whenError
+		var arr=$("input[type='checkbox']");
+		var count = "";
+		var str="";
+		
+		$(arr).each(function(){
+			if(this.checked){
+				str+="barcode=";
+				str+=this.value;
+				str+="&";
+				count++;
+			}
 		});
+				
+		if(count==0){
+			alert("선택안됨");
+			return false;
+		}
+			
+		str=str.substring(0,str.length-1);
+		
+			
+	 	location.href = 'emailOk2.html?'+str+'&telNo='+request.getParameter('telNo')+'&uuid='+request.getParameter('uuid');
+						
 	});
-  
-//이메일 확인 화면 append
+		
+		
+	/* 	$.ajax({
+	type : "post",
+	url : commonIp() + "/theReal/receipt/eMailChk.do",
+	data : {
+		telNo : telNo
+	},
+	success : fn_mailOk,
+	error : whenError
+}); */
+//이메일 확인 화면 append 	
 	function fn_mailOk(data) {
 		
 		var send_cnt = 0;
@@ -598,24 +686,23 @@ var send_array = new Array();
 		        send_cnt++;
 		    }
 		}
-	
+			 					
 //체크박스 선택 유무
 		if(send_cnt==0){
 			alert("선택안됨");
 			return;
 		}
-
-	  
+		 		
 //통과하면 append 	
 		  
-		var email = data;
+		var email = data; 
 		var str = "";
 		
 		var i = email.indexOf("@");
 		var first = email.substring(0,i);
 		var last = email.substring(i+1);
 		
-			
+				
 		str	+= 		"<input type='text' id='first_email' size='10' value="+first+">";
 		str	+= 		"@<input type='text' id='last_email' size='10' value="+last+">";
 		str +=			"<select id='email_select'>";
@@ -634,193 +721,147 @@ var send_array = new Array();
 		str +=				"<option value='freechal.com'>freechal.com</option>";
 		str +=				"<option value='1'>::직접입력::</option>";
 		str += 			"</select>"; 
+					
 		
-		
-		$("#maildiv").empty();
+		/* $("#maildiv").empty();
 		$("#maildiv").append(str).trigger("create");
-			 	
+		
+		$(".pages").append(appendthis);
+		
 		$("#receip_box").fadeIn(500);
-		$(".alen_modal_overlay").fadeTo(300, 0.7);
+		$(".alen_modal_overlay").fadeTo(300, 0.7);      */
 	}
 	
+	
+	//이메일 영수증 발송 모달 끄는 fun
+	$("#dadadadada").click(function(){
+			
+		$(".modal_box").fadeOut(300,function(){
+			
+			$(".alen_modal_overlay2").remove()
+	});	 
+		});		
+	
+	var modalBox = "";	
+			
+		
+	//날짜 검색 모달
+	function ass(){
 
+		$(".pages").append(appendthis);
+		$(".modal_box").fadeIn(300);	
+		$(".alen_modal_overlay2").fadeTo(300, 0.7);   	
+	};    	
 	
-	
-//이메일 컨트롤러로 전송
-	$(".transemail").click(function(){
+	$(".alen_modal_overlay2").click(function() {
+		
+		$(".modal_box").fadeOut(300, function() {
+			$(".alen_modal_overlay2").remove()
+							
+		});
+	});	
+
+	//이메일 컨트롤러로 전송
+	$(".transemail").click(function() {
 		var first = $("#first_email").val();
 		var last = $("#last_email").val();
-			
-		var mail = first += "@";
-				  	
+
+		var mail = first += "@"; 
+
 		mail += last;
-		  
-			 
+
 		//이메일 체크
-		if(email_check(mail)==false){
+		if (email_check(mail) == false) {
 			alert("잘못된 이메일 형식입니다");
-			return; 
-		} 
-		
-		
-		$.ajax({  
-	    	type : 'post',
-	    	url :	commonIp() + "/theReal/receipt/sendMail.do", 
-	    	dataType : 'text',
-	    	async: false,
-	    	data: {
-	    		barcode : send_array,
-	    	 	email : mail,
-	    	 	telNo : telNo
-	    	 	},
-	    	error : function() {
-	       		alert('통신실패!!'); 
-	    	},	 		   			
-	    	success : function(data) {
-	    		alert('전송성공');
-	    		   
-	    		$("#receip_box").fadeOut(500, function() {
-	    				$(".alen_modal_overlay").remove();
+			return;
+		}
+
+		$.ajax({
+			type : 'post',
+			url : commonIp() + "/theReal/receipt/sendMail.do",
+			dataType : 'text',
+			async : false,
+			data : {
+				barcode : send_array,
+				email : mail,
+				telNo : telNo
+			},
+			error : function() {
+				alert('통신실패!!');
+			},
+			success : function(data) {
+				alert('전송성공');
+
+				$("#receip_box").fadeOut(500, function() {
+					$(".alen_modal_overlay").remove();
 				});
-	    		
-	    	}
-	   }); 	
+			}
+		});
 	});
-	   
-//이메일 정규식 유효성 체크 
+							
+	//이메일 정규식 유효성 체크  
 	function email_check(mail) {
-		
-		var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-	
-			return (mail != '' && mail != 'undefined' && regex.test(mail));
+
+		var regex = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+
+		return (mail != '' && mail != 'undefined' && regex.test(mail));
 	}
 
-//이메일 셀렉트
+	//이메일 셀렉트
 	$(document).change($('#email_select'), function() {
-		   
-		if($('#email_select').val() == "1"){
-	   	 	
-			$("#last_email").val(""); 
-		    
-			$("#last_email").prop("readonly",false); 
-		   
-		}else if($('#email_select').val() == ""){
-		   
-			$("#last_email").val(""); 
-		    
-			$("#last_email").prop("readonly",true); 
-		}else{
-		    
-			$("#last_email").val($('#email_select').val()); 
-		    
-			$("#last_email").prop("readonly",true); 
+
+		if ($('#email_select').val() == "1") {
+
+			$("#last_email").val("");
+
+			$("#last_email").prop("readonly", false);
+
+		} else if ($('#email_select').val() == "") {
+
+			$("#last_email").val("");
+
+			$("#last_email").prop("readonly", true);
+		} else {
+
+			$("#last_email").val($('#email_select').val());
+
+			$("#last_email").prop("readonly", true);
 		}
 	});
-
-
-
-	
-
-
-
-
-	 
-
- 
-	
-	
-		
-	
-
-//영수증 리스트 
-	function dataList(resultdata) {
-		
-		var values = resultdata.resultMap;
-		var str = "";
-		   
-		$.each(values, function( index, value ) {
-            	
-				str += 		"<input type='checkbox' id='box1"+index+"' class='checkSelect' style='width: 250px; height: 30px;' value="+value.SALES_BARCODE+">";
-              
-              	str += 		"<label for='box1"+index+"'/></label>";
-              
-              	str += 		"<ul>";
-              	
-              	str += 			"<li><h2>"+value.SHOP_NAME+"</h2><p>"+value.CASH_DATE+"</p>";
-            	
-            if(value.CARD_ICOM == ""){  
-              			
-            	str += 			"<h3 class='mal_credit'>현금결제<span>SMS</span></h3></li>";
-            } 
-               							
-            else{  
-              
-            	str += 			"<h3 class='mal_credit'>"+value.CARD_ICOM+"<span>SMS</span></h3></li>";
-            }
-            
-              	str +=			"<li class='mal_price'><span>"+value.SALES_SUM_OP_AMT+"</span>원</li><hr>";
 				
-              	str +=      "</ul>"; 
-              	 	
-        });
-				str += 		"<input type='hidden' value="+pageType+">";
-		
-		$("#trans").empty(); 	
-		$("#trans").append(str).trigger("create"); 
-	}; 
+	$(".js-modal-close").click(function() {
+		$(".modal_box").fadeOut(300, function() {
+			
+			$(".alen_modal_overlay2").remove()
 
+		});	
+	});
+				
+	$(".alen_arrow").click(
+			function() {
+				$('input[name="latestsbox"]:radio[value="detail"]').prop(
+						'checked', true);
+			});
 	
-				var appendthis = ("<div class='alen_modal_overlay js-modal-close'></div>");
-							 	ㄴ
-								     				
-						$('[data-modal-id]').click(function(e) {
-							  e.preventDefault();  
-						$(".pages").append(appendthis);
-						$(".alen_modal_overlay").fadeTo(300, 0.7);
-						$(".js-modalbox").fadeIn(500);
-							 var modalBox = $(this).attr('data-modal-id'); 
-							$('#'+modalBox).fadeIn($(this).data());
-						});    
-					
+	$(window).resize(function() {
+		$(".modal_box").css({
+			top : ($(window).height() - $(".modal_box").outerHeight()) / 2,
+			left : ($(window).width() - $(".modal_box").outerWidth()) / 2
+		});
+	});		
+	
+	$(window).resize();
 						
- 	 
-						 $(".js-modal-close, .alen_modal_overlay")
-								.click(function() {
-							$(".modal_box, .alen_modal_overlay").fadeOut(300,function() {
-									$(".alen_modal_overlay").remove()
-							});
-						});
-
-						$(".alen_arrow")
-								.click(
-										function() {
-											$(
-													'input[name="latestsbox"]:radio[value="detail"]')
-													.prop('checked', true);
-										});
-
-						$(window).resize(
-								function() {
-									$(".modal_box").css(
-											{
-				 								top : ($(window).height() - $(
-														".modal_box")
-														.outerHeight()) / 2,
-												left : ($(window).width() - $(
-														".modal_box")
-														.outerWidth()) / 2
-											});
-								}); 
-
-						$(window).resize();
-						
-						
-function whenError(){
-	alert("오류");	
-}
+	function whenError(request, status, error) {
+		alert("에러");
+	}
+		
+	function back(){
+		history.back(-1);
+	}
 </script>
-                	
-                	   
+                		 
+           					     	 	  			
                 <div data-page="agree01" class="page cached">
                     <div class="page-content agree_acon">
                         <div class="content-block">
@@ -828,31 +869,17 @@ function whenError(){
                         </div>
                     </div>
                 </div>
-                	  
-                	
+                			   
+        								
                 <div data-page="agree03" class="page cached">
                     <div class="page-content agree_acon">
                         <div class="content-block">
 						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
                         </div>
                     </div>
-                </div>
+                </div> 
              </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-<script type="text/javascript" src="js/framework7.js"></script>
-
-<script type="text/javascript" src="js/my-app.js"></script>
-
-
 </body>
-
 </html>

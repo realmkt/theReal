@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+   
+    
+   <title>더리얼마케팅 전자영수증</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- main -->
+	<script src="../code/jquery.bxslider.min.js"></script>
+    <link href="../code/jquery.bxslider.css" rel="stylesheet" />
+    						
+    <!-- tab -->
+	<script type='text/javascript' src='../code/tabs.js'></script>
+	<script src="../code/jquery.bpopup.min.js"></script>
+
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+   <link href="../css/monthpicker.css" rel="stylesheet" />
+	<script src="../code/common.js"></script>
+    <script src="../js/monthpicker.min.js"></script>
+<script src="../js/monthpicker-dom.min.js"></script>
+<script src="../js/monthpicker.js"></script>
+<script type="text/javascript" src="../js/framework7.js"></script>
+
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+</head>
+
+<body>
+
+
+
+<style>
+    .etitle {position: absolute;top:43px;left:0;width:100%;padding:7px 15px; background-color:#222;color:#ddd;font-size:12px;line-height: 20px;}
+    
+    .mail {padding:96px 10px 0px 10px;}
+    		
+    .email .email_radio {margin:0 0 20px 0px;vertical-align: middle}
+    .email .email_radio input[type="radio"] {vertical-align: middle;} 
+    .email .email_radio label {margin-right:8px;}
+    
+    .email_box>label {display:block;}
+    
+    .email .email_box .email_adr {padding:6px 5px;margin:5px 0 20px 0px;max-width:30%;border-bottom:1px solid #ddd;border-top:0; border-left:0;border-right:0;}
+    .email .email_box .email_adr2 {padding:6px 5px;margin:5px 0 20px 0;max-width:31%;border-bottom:1px solid #ddd;border-top:0; border-left:0;border-right:0;}
+    
+    .email .email_box select {padding:6px 0px;margin:5px 0 20px 5px;vertical-align: bottom;max-width:30%;border-top:0; border-left:0;border-right:0;border-bottom:1px solid #ddd;}
+    
+    .email .email_title {padding:8px 5px;display:block; width:100%; margin:5px 0 20px 0;border:0 0 1px 0;border:1px solid #ddd;}
+    
+    .email textarea {width:100%; display:block;margin:5px 0 20px 0;padding:10px 5px;font-family: inherit;border:1px solid #ddd;}
+    
+    .email input::-webkit-input-placeholder {color:#2E2E2E;}
+    .email input:-moz-placeholder {color:#2E2E2E;}
+    .email textarea::-webkit-input-placeholder {color:#2E2E2E;}
+    .email textarea:-moz-placeholder {color:#2E2E2E;}
+    
+     button{width:100%;display:block; padding:11px 5px;border:0;background-color:#0d0d0d;color:#fff;font-size:15px;}
+    
+  	.couponR{background-color: #0d0d0d;}
+    .navbar span.backfont {color: #fff; font-weight: 200;}
+	.sub{padding: 10px 5px; background: #222; color: #fff; }
+	label.label-checkbox i.icon-form-checkbox { background-color:#D8D8D8; width: 22px; height: 22px; position: relative; border-radius: 22px; border: 1px solid #D8D8D8; box-sizing: border-box; 
+		right: 18px;}
+	
+			
+
+	.item-title{left: 30px;}
+</style>
+
+
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+
+	
+    <div class="panel panel-left panel-reveal">
+    
+    	<div class="profile_box">
+        	<!-- <div class="pf_photo" style="background:url(../common/profile.jpg) no-repeat center;"></div> -->
+            
+            <div class="pf_txt">
+            	<h2>김종현</h2>
+                <p>쿠폰 <span>0</span>개</p>
+                <p>포인트 <span>200</span>p</p>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        	<ul>
+            </ul>
+        </div>
+
+    </div>
+    
+    
+    <div class="views">
+		<div class="view view-main">
+        		
+            <div class="navbar top_menu couponR">
+                <div data-page="index" class="navbar-inner">
+                
+                    <div class="left">
+                    <div class="left sliding"><a class="back link" onclick="back();"> <i class="icon icon-back"></i><span class="backfont">Back</span></a></div>
+                    		
+                    </div>	
+                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 27%;"></div>
+                    <div class="etitle" >
+                        이메일 확인
+                    </div>
+                </div>
+                   
+                <div data-page="receipt_details" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">영수증 상세 내역</div>
+                </div>
+                	
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                </div>
+
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+                
+                <div data-page="detailSearch" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">상세조회</div>
+                </div> 
+                                            
+            </div> 
+	<div id="mailDiv" style="padding:96px 10px 0px 10px">
+  		
+	</div>     
+	</div>
+ 				
+  </div> 
+   	                    
+ 
+    
+
+      
+<script type="text/javascript">
+var request = new Request();
+				
+var telNo = request.getParameter('telNo');
+var uuId =  request.getParameter('uuId');
+			
+var emailList = new Array();
+	
+var now_email = "";		 		
+var last_email = "";
+
+//바코트 파라미터 뽑기
+var param = new Array();
+
+var barcode = new Array();
+
+var url = decodeURIComponent(location.href);
+
+url = decodeURIComponent(url);
+
+var params;
+	
+params = url.substring( url.indexOf('?')+1, url.length );
+
+params = params.split("&");
+
+var size = params.length;
+var key, value;
+
+for(var i=0 ; i < size ; i++) {
+    key = params[i].split("=")[0];
+    value = params[i].split("=")[1];
+    if(key == 'barcode'){
+    	barcode[i] = value;
+    }
+}
+		
+$(document).ready(function() {
+	  //이메일 불러오기
+	 mailChk()   
+						
+	
+	  
+
+}); 
+
+function change(){
+	   	
+		if($('#email_select').val() == "1"){
+	   	 	
+			$("#lastEmailValue").val("");  
+		    
+			$("#lastEmailValue").prop("readonly",false); 
+		   
+		}else if($('#email_select').val() == ""){
+		    
+			$("#lastEmailValue").val("");  
+		    
+			$("#lastEmailValue").prop("readonly",true); 
+		}else{
+		    		
+			$("#lastEmailValue").val($('#email_select').val()); 
+		    
+			$("#lastEmailValue").prop("readonly",true); 
+		}	
+	};
+		
+
+//내 이메일, 지난이메일  가져오기
+ function mailChk(){
+		$.ajax({
+			type : "post",
+			url : commonIp() + "/theReal/receipt/emailOk.do",
+		data : {
+			telNo : telNo
+		},
+		success : fn_mailOk,
+		error : whenError
+	}); 
+}  
+			
+function whenError(){
+	alert("에러");
+} 
+
+//이메일 append	
+function fn_mailOk(resdata){
+	
+ 	 var res = resdata.resultMap;	
+	
+	for(var i = 0; i < res.length; i++){
+		now_email = res[i].EMAIL;
+		last_email = res[i].LAST_EMAIL;
+	} 
+	 
+	
+				
+	var str = "";
+					
+	var i = now_email.indexOf("@");
+	var first = now_email.substring(0,i);
+	var last = now_email.substring(i+1); 
+	
+	  	
+	str += '<div class="email_radio">';
+	
+	str += '<div class="log_auto" style="float:left;">';
+	
+	str += '<label class="label-checkbox item-content" onclick="nowEmail(this);">';
+	
+	str += '<input type="checkbox" id="checked" name="ks-checkbox" value="Food" checked>';
+	
+	str += '<div class="item-media" id="asf"><i class="icon icon-form-checkbox activeChk" id="asd"></i></div>';
+	
+	str += '<div class="item-inner">';
+	
+	str += '<div class="item-title" style="color: black; margin-left: -18px;">내게보내기</div>';
+	
+	str += '</div>';
+	
+	str += '</label>';
+			
+	str += '<hr>';
+	
+	str += '</div>';
+
+	str += '<div class="log_auto">';
+	
+	str += '<label class="label-checkbox item-content" id="checked22" onclick="lastEmail(this);">';
+	
+	str += '<input type="checkbox" name="ks-checkbox" value="Food" id="checked" >';
+	
+	str += '<div class="item-media" id="asf"><i class="icon icon-form-checkbox abcd" id="asd"></i></div>';
+	
+	str += '<div class="item-inner">';
+	
+	str += '<div class="item-title" style="color: black; margin-left: -18px;">지난이메일</div>';
+	
+	str += '</div>';
+	
+	str += '</label>';
+	
+	str += '<hr>';
+		
+	str += '</div>';
+	
+	str += '</div>';
+	
+	str += '<div class="email_box">';
+
+	str += '<label class="sub"><b>받는사람</b></label>';
+	
+	str += '<input type="text" class="email_adr" value='+first+' id="firstEmailValue">';
+	
+	str += '<span>@</span>';
+	
+	str += '<input type="text" class="email_adr2" value='+last+' id="lastEmailValue" >';
+	
+	 str += '			<select id="email_select" onchange="change();">																';
+		
+	 str += '				<option value="" selected>::선택하기::</option>										';
+	 
+	 str += '				<option value="naver.com">naver.com</option>										';
+	
+	 str += '				<option value="nate.com">nate.com</option>											';
+	
+	 str += '				<option value="daum.net">daum.net</option>											';
+	
+	 str += '				<option value="gmail.com">gmail.com</option>										';
+	
+	 str += '				<option value="hotmail.com">hotmail.com</option>									';
+	
+	 str +=	'				<option value="bondingedu.com">bondingedu.com</option>								';
+	
+	 str +=	'				<option value="hanmir.com">hanmir.com</option>										';
+		
+	 str +=	'				<option value="empas.com">empas.com</option>										';
+	
+	 str +=	'				<option value="dreamwiz.com">dreamwiz.com</option>									';
+	
+	 str +=	'				<option value="korea.com">korea.com</option>										';
+	
+	 str+=	'				<option value="lycos.co.kr">lycos.co.kr</option>									';
+	
+	 str +=	'				<option value="freechal.com">freechal.com</option>									';
+	
+	 str +=	'				<option value="1">::직접입력::</option>												';
+	
+	 str += '			</select>																				';
+	
+	str += '<label class="sub">';
+
+	str += '<b>제목</b>';
+
+	str += '</label>';
+
+	str += '<input type="text" placeholder="THEREAL# 이메일 영수증" class="email_title" id="subject" >';
+
+	str += '<label class="sub">';
+
+	str += '<b>내용</b>';
+	
+	str += '</label>';
+
+	str += '<textarea name="" id="content" cols="30" rows="10" placeholder="THEREAL# 이메일영수증 입니다."></textarea>';
+	
+	str += '</div>';
+	
+	str += '<button onclick="mailsend();">보내기</button>';
+		
+		 $("#mailDiv").empty();
+	     $("#mailDiv").addClass("email"); 
+		 $("#mailDiv").append(str).trigger("create");
+};
+
+
+
+//현재 내 이메일  버튼
+function nowEmail(a){
+	
+	
+	//하나만 체크
+	var obj = document.getElementsByName("ks-checkbox");
+
+    for(var i=0; i<obj.length; i++){
+    	
+        if(obj[i] != a){
+				
+            obj[i].checked = false;
+		}
+
+    }
+   	 
+    
+	 	
+		var i = now_email.indexOf("@");
+		var first = now_email.substring(0,i);
+		var last = now_email.substring(i+1); 
+		
+		
+		$("#firstEmailValue").val(first);  
+		$("#lastEmailValue").val(last); 
+		
+};
+		
+
+//지난 이메일버튼
+function lastEmail(a){
+
+  				
+	//하나만 체크
+	var obj = document.getElementsByName("ks-checkbox");
+	
+    for(var i=0; i<obj.length; i++){
+			
+        if(obj[i] != a){
+			
+            obj[i].checked = false;
+				
+        }
+
+    }	
+  
+    $("#lastEmailValue").val("")	
+	if(last_email==null || last_email==''){
+		 alert("지난 이메일이 없습니다.");
+		 return false;
+	 }
+		
+	
+		
+		var i = last_email.indexOf("@");
+		var first = last_email.substring(0,i);
+		var last = last_email.substring(i+1); 
+	
+		  
+		$("#firstEmailValue").val(first);
+		$("#lastEmailValue").val(last);   
+};
+//이메일 보내기 컨트롤러로 전송 
+function mailsend(){
+	
+	 var first = $("#firstEmailValue").val();
+	 var last = $("#lastEmailValue").val();
+	 var mail = first += "@";
+	 var subject = $("#subject").val();
+	 var content = $("#content").val();
+	 	
+	if($("#subject").val()==null||$("#subject").val()==""){
+		subject = "THEREAL# 이메일 영수증";
+	}			
+	
+	if($("#content").val()==null||$("#content").val()==""){
+		content = "THEREAL# 이메일영수증 입니다.";
+	}
+		
+	mail += last;
+								
+							 					
+		//이메일 체크
+		if(email_check(mail)==false){
+			alert("잘못된 이메일 형식입니다");
+			return; 
+		} 
+		 		
+																
+		  $.ajax({  
+	    	type : 'post',
+	    	url :	commonIp() + "/theReal/receipt/sendMail.do", 
+	    	dataType : 'text',
+	    	async: false,
+	    	data: {
+	    		barcode : barcode,
+	    	 	email : mail,
+	    	 	telNo : telNo,
+	    	 	subject : subject,
+	    	 	content : content
+	    	 	},
+	    	error : function() {
+	       		alert('통신실패. 관리자에게 문의하세요.'); 
+	    	},	 		   			
+	    	success : function(data) {
+	    		alert('이메일 전송에 성공하였습니다.');
+	    		history.back();									
+	    	}
+	   }); 	  
+	};
+							
+				
+				
+//이메일 정규식 유효성 체크  
+	function email_check(mail) {	
+			
+		var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+	
+			return (mail != '' && mail != 'undefined' && regex.test(mail));
+	}
+			
+function back(){
+	history.back(-1);
+}
+</script>
+</body>
+</html>
