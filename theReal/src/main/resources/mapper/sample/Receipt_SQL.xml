@@ -1969,8 +1969,8 @@
 		<![CDATA[
 		SELECT 
 			left(a.ds,6) as STANDARD_MONTH,
-			(COUNT(b.SMS_NO))/2 AS MONTH_CNT, 
-			case when FORMAT((SUM(b.APP_AMOUNT))/2,0) is null then 0 else FORMAT((SUM(b.APP_AMOUNT))/2,0) end AS TOTAL_AMT
+			(COUNT(b.SMS_NO))/8 AS MONTH_CNT, 
+			case when FORMAT((SUM(b.APP_AMOUNT))/8,0) is null then 0 else FORMAT((SUM(b.APP_AMOUNT))/8,0) end AS TOTAL_AMT
 		FROM 
 			(
 				SELECT 

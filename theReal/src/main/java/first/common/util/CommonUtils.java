@@ -145,6 +145,7 @@ public class CommonUtils {
 
 	public static String smsAppCoDicParse(String divAppCo) {
 		String divAppCoCd = "";
+		System.out.println("appCoDiv Test"  +  divAppCo );
 		if (divAppCo.contains("CGV") || divAppCo.contains("롯데시네마") || divAppCo.contains("메가박스")
 				|| divAppCo.contains("아트홀")) {
 			divAppCoCd = "A01";

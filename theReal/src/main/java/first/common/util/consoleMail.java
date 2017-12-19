@@ -27,24 +27,24 @@ import com.top.eng.entity.Entity;
 import org.apache.poi.util.StringUtil;
 
 public class consoleMail {
-	 private static final String SMTP_HOST_NAME = "smtp.naver.com";    //HOST
-	 private static final String SMTP_AUTH_USER = "rhkdhlgkrtod@naver.com";              //ID
-	 private static final String SMTP_AUTH_PWD = "wkdtk9769";                  //PASSWORD
+	 private static final String SMTP_HOST_NAME = "smtp.cafe24.com";    //HOST
+	 private static final String SMTP_AUTH_USER = "thereal@reakmkt.co.kr";              //ID
+	 private static final String SMTP_AUTH_PWD = "thereal7404!";                  //PASSWORD
 	 
-	 
+	  
 	  public void postMail(String recipients[], String subject, String message, String from, String userNm) throws Exception {
-		  System.out.println("console1");
+		 
 		  boolean debug = false;
 		  
 		  try {
-		   System.out.println("console2");
+		   
 		  //Set the host smtp address
 		  Properties props = new Properties();
 		  props.put("mail.transport.protocol", "smtp");
 		  props.put("mail.smtp.starttls.enable","true");
 		  props.put("mail.smtp.host", SMTP_HOST_NAME);
 		  props.put("mail.smtp.auth", "true");
-		 
+		  props.put("mail.smtp.port", "587");
 		  Authenticator auth = new SMTPAuthenticator();
 		  Session session = Session.getDefaultInstance(props, auth);
 		 
@@ -62,13 +62,9 @@ public class consoleMail {
 		   addressTo[i] = new InternetAddress(recipients[i]);
 		  }
 		  msg.setRecipients(Message.RecipientType.TO, addressTo);
+		  msg.setSubject(MimeUtility.encodeText(subject,"EUC-KR","B"));
 		 
-		  //메일 제목///
-		  subject = "결제 영수증 입니당";/*StringUtil.getDate( StringUtil.getOffsetDateToDate(StringUtil.getToday("yyyyMMdd"), -1), "yyyy-MM-dd")+"일 정보입니다.";*/
-		msg.setSubject(MimeUtility.encodeText(subject,"EUC-KR","B"));
 		 
-		  //메일 내용
-		  message = "<html><body><font color=green>더리얼 결제영수증 입니다.</font></body></html>";
 		  
 		  MimeBodyPart mbp_cont = new MimeBodyPart();
 		  mbp_cont.setContent(message, "text/html; charset=euc-kr");   //한글 과 html사용  

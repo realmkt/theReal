@@ -401,7 +401,7 @@ public class SmsParse {
 					
 					//상호명
 					else{
-						if(i!=0){
+						if(i!=0 && !smsStr[i].contains("법인")){
 							app_co += smsStr[i]+" ";
 							insertMap.put("APP_CO", app_co);
 							}
@@ -540,6 +540,10 @@ public class SmsParse {
 					}
 					else if(smsStr[i].contains("취소")){
 						insertMap.put("CARD_APP_DIV", "취소");
+					}
+					
+					else if(smsStr[i].matches(".*[*][0-9][*].*")){
+						
 					}
 					
 					//자동결제 
