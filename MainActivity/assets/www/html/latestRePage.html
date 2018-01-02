@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- main -->
+	<script src="../code/jquery.bxslider.min.js"></script>
+    <link href="../code/jquery.bxslider.css" rel="stylesheet" />
+    
+    <!-- tab -->
+	<script type='text/javascript' src='../code/tabs.js'></script>
+<script src="../code/jquery.bpopup.min.js"></script>
+
+
+
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+   <link href="../css/monthpicker.css" rel="stylesheet" />
+	<script src="../code/common.js"></script>
+<!-- 	<script type="text/javascript" charset="utf-8" src="../cordova.js"></script> -->
+<style type="text/css">
+
+@font-face {font-family: barcode-font; src:url("../barcode-font/barcode-font.ttf")}
+
+/* .on { color: blue; border: 1px solid blue; } */
+.on { background-color:#DDF4FE;}
+.list-block {display: none; }
+.item-title.small-fonts{font-size: small;}
+
+.alen_list_box2 {margin:0px 0px; background:#fff; border:0; }
+.alen_list_box2 li { background-color:#fff; }
+.alen_list_combtnbox { height:42px; background-color: #fff/*margin-bottom:5px;*/ }
+.alen_list_combtn { margin:0 5px; padding:0 5px 0 5px; border:1px solid #539bff; color:#fff; /* font-size:1.5em; */ font-weight:400; text-align:center; line-height:50px; cursor:pointer; background:#539bff; -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
+.albpad { padding:0px 0 0px 0; }
+
+.alen_list_btn2 {background-color:#fff;padding:5px 5px;border-top:1px solid #ddd;}
+/* .alen_list_btn2 { margin:10px 10px 10px 10px; padding:0; border-radius:10px; background:#333; } */
+.alen_list_btn2item { width:20%;float:left; text-align:center; /* color:#a99f9f;  */}
+.alen_list_btn2item:nth-of-type(5){margin-right:0;}
+/* .alen_list_btn2item { width:20%; float:left;; text-align:center; color:#fff; } */
+.alen_list_btn2item .al_btn_txt {padding:8px 0; border:1px solid #ddd; border-radius:5px;margin-right:2px; font-family: bold;font-size: 13px;}
+.alen_list_btn2item .al_btn_txt:nth-of-type(5) {margin-right:0;}
+/* .alen_list_btn2item .al_btn_txt { padding:10px 0; border-right:1px solid #666; } */
+.alen_list_btn2item .al_btn_txt.last {background-color:#ddd; }
+
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner { padding-right: 15px; text-align:center; }
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner .item-title { margin:0 auto; }
+.alen_list_box2 label.label-radio input[type="radio"]:checked ~ .item-inner { background: no-repeat center; background-position: 50% 3px; background-position: -webkit-calc(50% - 8px) 3px; background-position: calc(50% - 8px ) 3px; -webkit-background-size: 13px 10px; background-size: 13px 10px; 
+background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23539bff'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");  }
+.divPage{background: url(../common/divPage.png) no-repeat 0 0;background-position: 0% 0%; height: 30px;"}
+.alen_radio_box2 { margin:10px; border:1px solid #e5e5e5; }
+
+
+.alen_table_in { border-radius:5px; margin:0 5px;}
+
+</style>
+</head>
+
+<body>
+<input type="hidden" value="" id="dealDate">
+
+
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+
+
+    <div class="panel panel-left panel-reveal">
+    
+    	<div class="profile_box">
+        	<!-- <div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div> -->
+            
+            <div class="pf_txt">
+            	<h2>김종현</h2>
+                <p>쿠폰 <span>0</span>개</p>
+                <p>포인트 <span>200</span>p</p>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        </div>
+
+    </div>
+    
+    <div class="views">
+		<div class="view view-main">
+
+            <div class="navbar top_menu">
+                <div data-page="index" class="navbar-inner">
+                
+                    <div class="left">
+                    <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+                    </div>
+                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 18%; text-align: center"><img src="../common/logo_01.png" width="200px" height="44px"></div>
+
+                </div>
+                
+                <div data-page="receipt_details" class="navbar-inner cached" >
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backS">Back</span></a></div>
+                <div class="center sliding">영수증 상세 내역</div>
+                </div>
+                
+                
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                </div>
+                
+                
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+                
+                <div data-page="detailSearch" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">상세조회</div>
+                </div>
+                
+                
+            </div>
+            
+<!-- 리뉴얼 스타일 -->            
+<style type="text/css">
+.latest_contitle { color:#747474; background:#0d0d0d; }
+.latest_contitle h2 { padding:15px 15px; font-size:1em; font-weight:400; color:#fff; line-height:25px; }
+.latest_contitle h2 span { float:right; color:#ddd; border:1px solid #666; border-radius:8px; font-size:0.7em; padding:0 5px; margin-left:5px; line-height:21px; }
+.latest_contitle h2 span.active { border:1px solid #539bff; color:#539bff; }
+
+.latest_coninfo { padding:8px 15px; color:#bbb; background:#222; font-size:0.7em; text-align:left; border-bottom:1px solid #333;}
+.latest_coninfo .latest_allLeft { width:50%; float:left; background:url(../common/sms.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo .latest_allRight { width:50%; float:right; background:url(../common/receipt.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo > div span { color:#e5e5e5; }
+
+
+
+
+.latest_conser { margin:3% 2% 0; background:#fff; text-align:center; }
+.latest_conser input[type=radio] { display:none; margin:10px; }
+.latest_conser input[type=radio] + label { float:left; padding:7px 12px; width:25%; background:#fff; font-size:12px; border-right:1px solid #e5e5e5;}
+.latest_conser input[type=radio] + label:last-child { border-right:0; }
+.latest_conser input[type=radio]:checked + label { background:#539bff; color:#fff; }
+
+.latest_conlist { margin:0 2% 3% 2%; background:#fff; text-align:center; }
+.latest_conlist ul { padding:15px 10px; position:relative; border-bottom:1px solid #e5e5e5;}
+.latest_conlist li { float:left; width:60%; text-align:left; }
+.latest_conlist li h2 { font-size:1em; font-weight:400; color:#000; padding-bottom:3px; }
+.latest_conlist li p { font-size:0.7em; font-weight:400; color:#555; padding-bottom:20px; }
+.latest_conlist li h3 { font-size:0.8em; font-weight:400; color:#555; padding-left:27px; line-height:16px; }
+.latest_conlist li h3 span { background:#f2f2f2; border:1px solid #ddd; border-radius:3px; padding:2px 5px; font-size:0.85em; color:#539bff; }
+.latest_conlist li h3.mal_credit { background:url(../common/credit.gif) no-repeat left; }
+.latest_conlist li h3.mal_cash { background:url(../common/cash.gif) no-repeat left; }
+.latest_conlist li.mal_price { width:40%; text-align:right; font-size:0.8em; font-weight:400; color:#555;  position:absolute; top:40%; right:10px; }
+.latest_conlist li.mal_price span { font-size:1.4em; font-weight:700; color:#000; }
+.mal_more { background:#f2f2f2; color:#666; font-size:0.8em; padding:10px 0; }
+.latest_condate{ text-align: center; margin: 3% 2% 1px 2%; font-size: 15px; background: #ffffff; padding: 10px; }
+.latest_condate span{color: #539bff}
+
+.moreBtn { height: 41px;  padding: 14px;  background-color: #272727; color: #f2f2f2; position: relative; top: -2%; margin: 2%;text-align: center}
+.dis_none {display: none}
+
+.latest_conser .latestsbox{ float: left;  line-height: 30px; width: 25%;border-right:1px solid #eeeeee }
+.latest_conser .latestsbox:last-child{border-right: 1px solid;}
+.activebox{background-color:#539bff; color:#ffffff}
+
+.loadingView{text-align: center; background-color: #272727; opacity : 0.6;   width:  100%; height:  100%; position: absolute; z-index:  9999; }
+.loadingView img{width: 90px ; position: relative; top: 40%}
+
+</style>            
+
+
+			<div class="pages navbar-through toolbar-through">
+                <div data-page="index" class="page">
+                    <div class="page-content">
+				<div id="loadingView" class="loadingView">
+					<img src="../common/loadingBar.gif" id="loading_gif">
+				</div>
+                   
+                    <div class="latest_contitle">
+                    	<h2>최근사용내역
+                    	<span id="setting_Btn">영수증 관리</span>
+                    	<span id="onlyRec">전자영수증</span>
+                    	<span id="onlySms">SMS</span>
+                    	<span class="active" id="allBtn">전체</span>
+                    	</h2>
+                    </div>
+						<div class="latest_coninfo" id="latestConinfo">
+							<!-- <div class="latest_allLeft">
+								7건 <span>175,700원</span>
+							</div>
+							<div class="latest_allRight">
+								전자영수증 <span>3건</span>
+							</div>
+							<hr> -->
+						</div>
+
+						<div class="latest_conser alen_outbox">
+                    <div id="latest01" class="latestsbox activebox">이번 달</div>
+                    
+                    <div id="latest02" class="latestsbox">일주일</div>
+                    
+                    <div id="latest03" class="latestsbox">한달</div>
+                    
+                    <div id="latest04" class="latestsbox" data-modal-id="ser_box" >상세</div>
+                    
+                    <hr>
+                    </div>
+                    <div class="latest_condate" id="latest_condate"></div>
+                    
+                    
+                    <div class="latest_conlist alen_outbox" id="receipt_div">
+                    
+                    	
+                    </div>
+                    
+                    
+                    
+                    <div class="moreBtn dis_none" id="moreBtn">더보기</div>
+                    
+                    <div class="foot_info">
+                    
+                    	<div class="foot_box">
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree03">이용약관</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree01">개인정보 취급방침</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#">고객센터</a>
+                            </div>
+                            
+                            
+                            <hr>
+                        </div>
+<p>
+(주)더리얼마케팅   |   대표이사 : 손종희<br>
+사업자등록번호 : 220-88-19101   |   서울시 강남구 압구정로 10길 13 마사빌딩 4F<br>
+이메일 :thereal@realmkt.co.kr<br>
+</p>
+
+<p class="copytxt">Copyrightⓒnoname Co,.All rights reserved</p>
+                    </div>
+                    
+                    
+                    </div>
+                </div>
+                
+
+
+<style>
+.cpop_btn { font-size:3vmin; padding:0.3em 1.5em; background-color:#222; color:#e5e5e5; text-decoration:none; display:inline; border-radius:4px; -webkit-transition: background-color 1s ease; -moz-transition: background-color 1s ease; transition: background-color 1s ease; }
+.cpop_btn:hover { -webkit-transition:background-color 1s ease; -moz-transition:background-color 1s ease; transition:background-color 1s ease; }
+.cpop_btn_small { padding:7px 25px; font-size:0.8em; }
+
+.modal_box { display: none; position:fixed; z-index: 1000; background: white; width:90%; border-bottom: 1px solid #aaa; border-radius: 4px; box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1); background-clip: padding-box; }
+.modal_box .modal_body { padding: 1em 1em; }
+.modal_box footer, .modal_box .modal-footer { padding: 1em; border-top: 1px solid #ddd; background: rgba(0, 0, 0, 0.02); text-align: center; }
+
+.alen_modal_overlay { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
+
+
+.ser_datebox { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
+.ser_datebox input[type=date] { width:45%; height:40px; line-height:40px; border:none; box-sizing:border-box; text-align:center;  }
+
+.ser_2box { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
+.ser_2box input[type=radio] { display:none; margin:10px; }
+.ser_2box input[type=radio] + label { float:left; padding:10px 0; width:50%; background:#fff; font-size:12px; border-right:1px solid #ddd;}
+.ser_2box input[type=radio] + label.slast_radio { border-right:0; }
+.ser_2box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
+
+.ser_4box { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
+.ser_4box input[type=radio] { display:none; margin:10px; }
+.ser_4box input[type=radio] + label { float:left; padding:10px 0; width:25%; background:#fff; font-size:12px; border-right:1px solid #ddd;}
+.ser_4box input[type=radio] + label.slast_radio { border-right:0; }
+.ser_4box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
+
+.recdetail { max-width:500px; padding:1%; height:90%; top:5% !important; }
+.recdetail .modal_body { height:100%; padding:0; }
+.close_icon { position:absolute; background-image:url(common/close.png); background-repeat:no-repeat; background-size:cover; width:30px; height:30px; left:50%; top:1%; margin-left:-15px; }
+
+.add_box{padding: 12px; border: 1px solid #bbbbbb; background-color: #3e3e3e;}
+.add_box a{color: #e8e8e8;}
+
+.serdivbox{line-height: 30px;float: left;width: 25%;border-right:1px solid #dddddd }
+.serdivbox:last-child{border-right: none;}
+.ser_active{background-color: #f2f2f2 }
+</style>
+
+
+<div id="ser_box" class="modal_box">
+    
+    <div class="modal_body">
+    
+        <div class="ser_datebox">
+        <input type="date" id="startDate" onchange="startDateCh()"> - <input type="date" id="endDate" onchange="startDateCh()">
+        </div>
+	
+        <div class="ser_4box">
+        <div id="pays01" class="serdivbox ser_active">전체</div>
+        
+        <div id="pays02" class="serdivbox">카드</div>
+        
+        <div id="pays03" class="serdivbox">현금</div>
+        
+        <div id="pays04" class="serdivbox" style="border-right: none;">기타</div>
+        
+        <hr>
+        </div>
+        
+        <div class="ser_4box">
+        
+        <div id="array01" class="serdivbox ser_active">최신 순</div>
+        
+        <div id="array02" class="serdivbox">과거 순</div>
+        
+        <div id="array03" class="serdivbox">높은금액</div>
+        
+        <div id="array04" class="serdivbox" style="border-right: none;">낮은금액</div>
+        
+        <hr>
+        </div>
+    
+    </div>
+    
+	<footer> 
+		<a href="#" class="cpop_btn cpop_btn_small" id="detailBtn">조회</a> 
+	    <a href="#" class="cpop_btn cpop_btn_small js-modal-close alen_arrow">취소</a> 
+	</footer>
+</div>
+
+<div id="receip_box" class="modal_box recdetail">
+    
+    <div class="close_icon js-modal-close"><a href="#" class="js-modal-close"></a></div>
+    
+    <div class="modal_body">
+		<iframe src="receipt_pop.html" frameborder="0" scrolling="no" width="100%" height="100%" style="padding:0; margin:0;"></iframe>
+    </div>
+
+</div>
+
+<script>
+$(function(){
+
+var appendthis =  ("<div class='alen_modal_overlay js-modal-close'></div>");
+
+	$('[data-modal-id]').click(function(e) {
+		e.preventDefault();
+    $(".pages").append(appendthis);
+    $(".alen_modal_overlay").fadeTo(300, 0.7);
+    //$(".js-modalbox").fadeIn(500);
+		var modalBox = $(this).attr('data-modal-id');
+		$('#'+modalBox).fadeIn($(this).data());
+	});  
+  
+  
+$(".js-modal-close, .alen_modal_overlay").click(function() {
+    $(".modal_box, .alen_modal_overlay").fadeOut(300, function() {
+        $(".alen_modal_overlay").remove();
+    });
+ 
+});
+
+$(".alen_arrow").click(function() {
+	$('input[name="latestsbox"]:radio[value="detail"]').prop('checked',true);
+});
+ 
+$(window).resize(function() {
+    $(".modal_box").css({
+        top: ($(window).height() - $(".modal_box").outerHeight()) / 2,
+        left: ($(window).width() - $(".modal_box").outerWidth()) / 2
+    });
+});
+ 
+$(window).resize();
+ 
+});
+</script>
+                
+                
+                <div data-page="agree01" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree01.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div data-page="agree03" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+			</div>
+            
+
+		</div>
+
+    </div>
+
+
+<script src="../js/monthpicker.min.js"></script>
+<script src="../js/monthpicker-dom.min.js"></script>
+<script src="../js/monthpicker.js"></script>
+<script type="text/javascript" src="../js/framework7.js"></script>
+
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+
+
+
+
+
+
+<script type="text/javascript">
+//안드로이드 디바이스 back 키 누를때 발생하는 이벤트
+history.pushState(null,null,location.href);
+window.onpopstate = function(event){
+	if(page){
+		history.back();
+	}else{
+		history.pushState(null,null,location.href);
+		page = true;
+		$("#backS").trigger("click");
+	}
+}
+
+function numCommas(x) { //3자리수 , 찍어주기
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+} 
+
+
+
+
+function allClear(){
+	startDay = "";
+	endDay   = "";
+	payDivCd  = "ALL";
+	orderByCd = "NEW";
+	dateDivCd = "";
+	dateSrchCd = "N";
+	endSeq = 10;
+	recCnt = 0;
+	smsCnt = 0;
+	smsTotal = 0;
+	dateStr= "";
+	valDate = new Date();
+}
+
+var request = new Request();
+
+var telNo = request.getParameter('telNo');
+var uuId =  request.getParameter('uuId');
+
+var today = new Date();
+$("#latest_condate").empty();
+$("#latest_condate").append("<span>"+(today.getMonth()+1)+"월</span> 사용 내역");
+
+var month = today.getMonth()+1
+var day = today.getDate()
+if(month.langth < 2){
+	month = "0"+month;
+}
+if(day.langth < 2){
+	day = "0"+day;
+}
+var todayStr = today.getFullYear()+"."+month+"."+day
+
+var valDate = new Date();
+var setMon = "";
+var setDay = "";
+
+
+var maxSize = 0;
+var endSeq = 10;
+var startDay = today.getFullYear()+"-"+month+"-01";
+var endDay   = today.getFullYear()+"-"+month+"-31";
+var payDivCd  = "ALL";
+var orderByCd = "NEW";
+var smsDivCd = "ALL";
+var dateDivCd = "";
+var dateSrchCd = "Y";	//조회 버튼시 Y
+var transMission ="";
+
+var dateStr = "";
+
+var recCnt = 0;
+var smsCnt = 0;
+var smsTotal = 0;
+
+
+//ajax 통신 로딩바 
+
+$(document).ready(function() {
+	$("#loadingView").hide();
+	
+	
+	commonUserData();
+	latestData();
+});
+	 $(document).ajaxStart(function(){
+	 $('#loadingView').show();
+	})
+	.ajaxStop(function(){
+	   $('#loadingView').hide();
+	});
+ 
+
+		
+
+	$("#allBtn").click(function(){
+		smsDivCd = "ALL";
+		$("#onlyRec").removeClass("active");
+		$("#onlySms").removeClass("active");
+		$("#allBtn").addClass("active");
+		latestData();
+	});
+	$("#onlySms").click(function(){
+		smsDivCd = "ONLYSMS";
+		$("#allBtn").removeClass("active");
+		$("#onlyRec").removeClass("active");
+		$("#onlySms").addClass("active");
+		latestData();
+	});
+	$("#onlyRec").click(function(){
+		smsDivCd = "ONLYREC";
+		$("#allBtn").removeClass("active");
+		$("#onlySms").removeClass("active");
+		$("#onlyRec").addClass("active");
+		latestData();
+	});
+	$("#latest01").click(function(){
+		activeBox(1,"main");
+		allClear();
+		dateSrchCd = "Y";
+		startDay = today.getFullYear()+"-"+month+"-01";
+		endDay   = today.getFullYear()+"-"+month+"-31";
+		dateStr = "<span>"+month+"월</span> 사용 내역";
+		changeDate(dateStr);
+		latestData();
+	});
+	$("#latest02").click(function(){
+		activeBox(2,"main");
+		allClear();
+		dateDivCd = "WEEK";
+		valDate.setDate(valDate.getDate() - 7);
+		setMon = (valDate.getMonth()+1)
+		setDay = valDate.getDate()
+		if(setMon<10){ setMon = "0"+setMon }
+		if(setDay<10){ setDay = "0"+setDay }
+		
+		var startStr = valDate.getFullYear()+"."+setMon +"."+setDay;
+		
+		dateStr = startStr +" - "+ todayStr;
+		changeDate(dateStr);
+		latestData();
+	});
+	$("#latest03").click(function(){
+		activeBox(3,"main");
+		allClear();
+		dateDivCd = "MONTH";
+		valDate.setDate(valDate.getDate() - 30);
+		setMon = (valDate.getMonth()+1)
+		setDay = valDate.getDate()
+		if(setMon<10){ setMon = "0"+setMon }
+		if(setDay<10){ setDay = "0"+setDay }
+		
+		var startStr = valDate.getFullYear()+"."+setMon +"."+setDay;
+		
+		dateStr = startStr +" - "+ todayStr;
+		changeDate(dateStr);
+		latestData();
+	});
+	$("#pays01").click(function(){
+		activeBox(1,"pay");
+		payDivCd = "ALL";
+	});
+	$("#pays02").click(function(){
+		activeBox(2,"pay");
+		payDivCd = "CARD";
+	});
+	$("#pays03").click(function(){
+		activeBox(3,"pay");
+		payDivCd = "CASH";
+	});
+	$("#pays04").click(function(){
+		activeBox(4,"pay");
+		payDivCd = "ETC";
+	});
+	$("#array01").click(function(){
+		activeBox(1,"order");
+		orderByCd = "NEW";
+	});
+	$("#array02").click(function(){
+		activeBox(2,"order");
+		orderByCd = "D1";
+	});
+	$("#array03").click(function(){
+		activeBox(3,"order");
+		orderByCd = "A2";
+	});
+	$("#array04").click(function(){
+		activeBox(4,"order");
+		orderByCd = "A1";
+	});
+	$("#moreBtn").click(function(){
+		endSeq += 10;
+		latestData();
+	});
+	$("#detailBtn").click(function(){
+		dateDivCd = "";
+		startDay = $("#startDate").val();
+		endDay = $("#endDate").val();
+		endSeq = 10;
+		DaySrchCd = "Y";
+		var startDay2 = startDay.substring(0,4) + startDay.substring(5,7) + startDay.substring(8,10); 
+		var endDay2 = endDay.substring(0,4) + endDay.substring(5,7) + endDay.substring(8,10); 
+		
+		if(startDay == ''){
+			alert("시작날짜를 입력하세요");
+			return false;
+		}
+		
+		if(endDay == ''){
+			alert("종료날짜를 입력하세요");
+			return false;
+		}
+		
+		if(startDay2 > endDay2){
+			alert("종료날짜가 시작날짜보다 이전입니다.");
+			return false;
+		}
+		DaySrchCd = "SRCHY";
+		//startDay = startDay2;
+		//endDay = endDay2;
+		$('#ser_box').hide();
+		$('#modal_body').hide();
+		$(".modal_box, .alen_modal_overlay").fadeOut(300, function() {
+			$(".alen_modal_overlay").remove();
+		});
+		
+		changeDate(startDay.substring(0,4) +"."+ startDay.substring(5,7) +"."+  startDay.substring(8,10) + " - " + endDay.substring(0,4) +"."+ endDay.substring(5,7) +"."+ endDay.substring(8,10));
+		activeBox(4,"main");
+		latestData();
+	});
+
+	function changeDate(str){
+		$("#latest_condate").empty();
+		$("#latest_condate").append(str);
+	}
+	
+	function activeBox(val, type){
+		
+		if(type=="main"){
+			$("#latest01, #latest02, #latest03, #latest04").removeClass("activebox");
+
+			switch(val){
+			case 1: $("#latest01").addClass("activebox"); break;
+			case 2: $("#latest02").addClass("activebox"); break;
+			case 3: $("#latest03").addClass("activebox"); break;
+			case 4: $("#latest04").addClass("activebox"); break;
+			default : break;
+			}
+		}else if(type=="pay"){
+			$("#pays01, #pays02, #pays03, #pays04").removeClass("ser_active");
+
+			switch(val){
+			case 1: $("#pays01").addClass("ser_active"); break;
+			case 2: $("#pays02").addClass("ser_active"); break;
+			case 3: $("#pays03").addClass("ser_active"); break;
+			case 4: $("#pays04").addClass("ser_active"); break;
+			default : break;
+			}
+		}else if(type=="order"){
+			$("#array01, #array02, #array03, #array04").removeClass("ser_active");
+
+			switch(val){
+			case 1: $("#array01").addClass("ser_active"); break;
+			case 2: $("#array02").addClass("ser_active"); break;
+			case 3: $("#array03").addClass("ser_active"); break;
+			case 4: $("#array04").addClass("ser_active"); break;
+			default : break;
+			}
+		}
+	}
+
+function latestData(){
+	//maxSize = $("#maxSize").val();
+	$.ajax({
+		type : "post",
+		url : commonIp() + "/theReal/receipt/latestData.do",
+		data : {
+			telNo : telNo,
+			startDay : startDay,
+			endDay : endDay,
+			endSeq : endSeq,
+			payDivCd : payDivCd,
+			orderByCd : orderByCd,
+			dateDivCd : dateDivCd,
+			smsDivCd : smsDivCd,
+			dateSrchCd: dateSrchCd,
+			maxSize : maxSize,
+			transMission : transMission
+			
+		},
+		success : fn_latestData
+	});
+}
+
+
+function fn_latestData(resdata){
+	var res = resdata.resultMap;
+	var str = "";
+	maxSize = resdata.maxSize
+	var conStr = "";
+
+	
+	
+	if(maxSize==0){
+		str = '<img alt="noFile" src="../common/emptyList01.jpg">';
+	}else{
+		for(var i = 0; i < res.length; i++){
+			if(res[i].SMS_DIV == '00'){
+				str += '<ul data-modal-id="receip_box"  onclick="detailReceipt(\''+res[i].SEQ+'\',\''+res[i].SALES_BARCODE+'\',\''+res[i].SHOP_BIZNO+'\')">';
+			}else{
+				str += '<ul data-modal-id="receip_box"  onclick="detailSmsReceipt('+res[i].SEQ+')">';
+			}
+			
+			str += '	<li>';
+			str += '		<h2>'+res[i].SHOP_NAME+'</h2>';
+			if(res[i].SMS_DIV == '00'){
+				var tempDate = res[i].SALES_DATE;
+				tempDate = tempDate.substring(0,4)+"-"+tempDate.substring(4,6)+"-"+tempDate.substring(6,8)/* +" "+tempDate.substring(8,10)+":"+tempDate.substring(10,12)+":"+tempDate.substring(12) */;
+		
+			}else{
+				var tempDate = res[i].SALES_PRINT_DATE;
+			}
+			str += '		<p>'+ tempDate  +'</p>';
+		
+			if(res[i].CARD_ICOM != ''){
+			str += '<h3 class="mal_credit">'+res[i].CARD_ICOM+'&nbsp;<span> ';
+				if(res[i].SMS_DIV == '00'){ 
+					str += '전자영수증'; 
+				}else if(res[i].SMS_DIV == '01'){ 
+					str += 'SMS'; 
+				}
+				str += '</span></h3>';
+			}else if(res[i].CARD_ICOM == ''){
+			str += '<h3 class="mal_cash">현금&nbsp;<span>';
+				if(res[i].SMS_DIV == '00'){ 
+					str += '전자영수증'; 
+				}else if(res[i].SMS_DIV == '01'){ 
+					str += 'SMS'; 
+				}
+			str += '</span></h3>';
+			}   
+			str += '</li>';
+			str += '<li class="mal_price">';
+			str += '<span>'+numCommas(res[i].TOTAL_AM)+'</span> 원';
+			str += '</li>';
+			str += '<hr></ul>';
+		}
+		if(res.length % 10 == 0 && maxSize != res.length){
+			$("#moreBtn").removeClass("dis_none");
+		}else{
+			$("#moreBtn").addClass("dis_none");
+		}
+	}
+	$("#receipt_div").empty();
+	$("#receipt_div").append(str);
+	
+	if(smsDivCd == "ALL"){
+		conStr +='<div class="latest_allLeft">'+resdata.smsCnt+'건 <span>'+numCommas(resdata.smsTotal)+'</span> 원</div>';
+		conStr +='<div class="latest_allRight">전자영수증 <span>'+resdata.recCnt+""+'</span> 건</div>';
+		conStr +='<hr>';
+	}else if(smsDivCd == "ONLYREC"){
+		conStr +='<div class="latest_allRight">전자영수증 <span>'+resdata.recCnt+""+'</span> 건</div>';
+		conStr +='<hr>';
+	}else if(smsDivCd == "ONLYSMS"){
+		conStr +='<div class="latest_allRight">'+resdata.smsCnt+'건 <span>'+numCommas(resdata.smsTotal)+'</span> 원</div>';
+		conStr +='<hr>';
+	}
+	$("#latestConinfo").empty();
+	$("#latestConinfo").append(conStr);
+	
+	
+}
+
+
+$("#setting_Btn").click(function(){
+	location.href = 'latestEmail.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo')+'&pageType=ALL&endSeq=10&startDay=2000-01-01&endDay=2000-12-12';
+});
+
+
+function detailReceipt(seq, barcode, biz){
+	location.href = 'latestDetail.html?telNo='+request.getParameter('telNo')+'&seq='+seq+'&uuId='+request.getParameter('uuId')+'&barcode='+barcode+'&biz='+biz+'&type=00';
+}
+function detailSmsReceipt(seq){
+	location.href = 'latestDetail.html?telNo='+request.getParameter('telNo')+'&uuId='+request.getParameter('uuId')+'&seq='+seq+'&type=01';
+}
+
+
+/* jQuery(function($) {
+	var loading = $('<img alt="loading" id="loadingImg" src="img/ajax_loader.gif">')
+	.appendTo(document.body).hide();
+		
+	$(window.ajaxStart(function(){
+		   loading.show();
+		   wrapWindowByMask();
+		})
+		.ajaxStop(function(){
+		   loading.hide();
+		   $('#mask').hide();
+		});
+});
+ */
+
+	
+</script>
+
+</body>
+</html>
