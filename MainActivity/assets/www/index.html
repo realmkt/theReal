@@ -28,7 +28,7 @@
     
 	<script src="code/common.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    
+<script type="text/javascript" charset="utf-8" src="telephonenumber.js"></script>
 </head>
 
 <body class="login_page">
@@ -217,9 +217,21 @@ function checkFineLocationPermissionCallback(status) {
   }
 
 }); */
-
+var exit = "";
 $(document).ready(function(){
 	 //var permissions = cordova.require("plugins/cordova-plugin-android-permissions/www/permissions.js");
+	var telephoneNumber = cordova.require("cordova/plugin/telephonenumber");
+	
+	telephoneNumber.get(function(result) {
+        console.log("result = " + result);
+        result = result.replace( "+82", "0");
+        checkLogic()
+    }, function() {
+    	alert("등록된 번호가 없습니다.");
+    	exit();
+    	return false;
+    });
+	
 
 	/**
 	자동로그인 체크로직
@@ -239,12 +251,15 @@ $(document).ready(function(){
 	}else{
 		//자동로그인 설정안되어있을시 1.5초 뒤에 로그인 페이지로 이동
 		setTimeout(function() {
-			location.href='login.html';
+			location.href='login.html?exit='+exit;
 		}, 1500);
-	}		
+	}
 })
 
-
+function exit(){
+	navigator.app.exitApp();
+}
+	
 	/*
 	자동로그인 체크로직 성공함수
 	*/

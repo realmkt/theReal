@@ -295,7 +295,7 @@ var reSendYn = false;
 var smsMemId = "V27340000000";           
 var smsServerIp = "x";      
 var smsSiteUrl = "117.52.97.40:80";      
-var smsSiteDomain = "샤샥스토어"; 
+var smsSiteDomain = "(주)더리얼마케팅"; 
 var smsEndPointURL = "http://safe.ok-name.co.kr/KcbWebService/OkNameService";    
 //var smsEndPointURL ="http://tsafe.ok-name.co.kr:29080/KcbWebService/OkNameService";    
 var smsLogPath = "/LOGS";
@@ -523,11 +523,12 @@ var pushKey = "";
 	function fn_settingChkPw(){
 			var newPwd = $("#newPwd").val();
 			var pwdChk = $("#pwdChk").val();
-	  		if(!chkPwd(newPwd) && !chkPwd(pwdChk)){
-				$('#newPwd').val('');
-				$('#pwdChk').val('');
+			if(!chkPwd(newPwd)){
 				$('#newPwd').focus();
-				alert("비밀번호는 영문,숫자,특수기호를 조합한 8자리 이상으로 입력해주시기 바랍니다.");
+				return false;
+	  		}
+	  		if(!chkPwd(pwdChk)){
+				$('#newPwd').focus();
 				return false;
 	  		}
 			if(newPwd == pwdChk){

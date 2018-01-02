@@ -241,18 +241,29 @@ function numberWithCommas(x) {
 function parseAppCoDiv(appCoCd) {
 	var appCoCdNm ="";
 	switch (appCoCd) {
-	  case 'A01'  : appCoCdNm ='레져/문화'; break;
-	  case 'B01'  : appCoCdNm ='뷰티/미용'; break;
-	  case 'C01'  : appCoCdNm ='카페/베이커리'; break;
-	  case 'E01'  : appCoCdNm ='주유'; break;
-	  case 'E02'  : appCoCdNm ='음식점'; break;
-	  case 'F01'  : appCoCdNm ='프렌차이즈'; break;
-	  case 'M01'  : appCoCdNm ='생활/마트'; break;
-	  case 'M02'  : appCoCdNm ='의료/건강'; break;
-	  case 'S01'  : appCoCdNm ='쇼핑'; break;
-	  case 'T01'  : appCoCdNm ='교통'; break;
-	  case 'T02'  : appCoCdNm ='통신'; break;
-	  default   : appCoCdNm ='기타'; break;
+	case "000": appCoCdNm = "미확인"; break;
+	case "001": appCoCdNm = "외식/식사" ;break;
+	case "002": appCoCdNm = "카페/베이커리" ;break;
+	case "003": appCoCdNm = "술/유흥" ;break;
+	case "004": appCoCdNm = "마트/편의" ;break;
+	case "005": appCoCdNm = "뷰티/미용" ;break;
+	case "006": appCoCdNm = "주거/생활" ;break;
+	case "007": appCoCdNm = "교통/주유" ;break;
+	case "008": appCoCdNm = "통신"; break;
+	case "009": appCoCdNm = "쇼핑"; break;
+	case "010": appCoCdNm = "온라인쇼핑"; break;
+	case "011": appCoCdNm = "문화/예술"; break;
+	case "012": appCoCdNm = "서점/문구"; break;
+	case "013": appCoCdNm = "레저/스포츠" ;break;
+	case "014": appCoCdNm = "의료/건강" ;break;
+	case "015": appCoCdNm = "여행/숙박"; break;
+	case "016": appCoCdNm = "교육"; break;
+	case "017": appCoCdNm = "육아/아동"; break;
+	case "018": appCoCdNm = "경조사/종교"; break;
+	case "019": appCoCdNm = "금융"; break;
+	case "020": appCoCdNm = "세금"; break;
+	case "021": appCoCdNm = "자동차/관리"; break;
+	case "999": appCoCdNm = "기타/미확인"; break;
 	}			
 	return appCoCdNm;
 }
@@ -431,4 +442,37 @@ var Request = function()
 }
 
 
-
+function category(divCd){
+	var div
+	
+	switch (divCd) {
+	case "000": div = "미확인"; break;
+	case "001": div = "외식/식사" ;break;
+	case "002": div = "카페/베이커리" ;break;
+	case "003": div = "술/유흥" ;break;
+	case "004": div = "마트/편의" ;break;
+	case "005": div = "뷰티/미용" ;break;
+	case "006": div = "주거/생활" ;break;
+	case "007": div = "교통/주유" ;break;
+	case "008": div = "통신"; break;
+	case "009": div = "쇼핑"; break;
+	case "010": div = "온라인쇼핑"; break;
+	case "011": div = "문화/예술"; break;
+	case "012": div = "서점/문구"; break;
+	case "013": div = "레저/스포츠" ;break;
+	case "014": div = "의료/건강" ;break;
+	case "015": div = "여행/숙박"; break;
+	case "016": div = "교육"; break;
+	case "017": div = "육아/아동"; break;
+	case "018": div = "경조사/종교"; break;
+	case "019": div = "금융"; break;
+	case "020": div = "세금"; break;
+	case "021": div = "자동차/관리"; break;
+	case "999": div = "기타/미확인";break;
+	default:
+		break;
+	}
+	
+	
+	
+}

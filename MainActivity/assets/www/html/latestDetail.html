@@ -236,12 +236,14 @@ $(document).ready(function() {
 	type = request.getParameter('type');
 	
 	if (type == "00") {
+			seq =  request.getParameter('seq');
 			barcode = request.getParameter('barcode');
 			biz = request.getParameter('biz');
 			$.ajax({
 				type : "post",
 				url : commonIp() + "/theReal/receipt/latestDataDetail.do",
 				data : {
+					seq : seq,
 					type : type,
 					barcode : barcode,
 					biz : biz
@@ -368,7 +370,7 @@ function fn_latestSmsData(resdata){
 		str += '<div class="rt_sms"> 누적 <span>'+numCommas(sumAmount)+'</span></div><hr>';
 	}
 	
-	str += '<div class="rt_sms"> 항목 <span>'+resdata.APP_CO_DIV+'</span></div><hr>';
+	str += '<div class="rt_sms"> 항목 <span>'+parseAppCoDiv(resdata.APP_CO_DIV)+'</span></div><hr>';
 	
 	str += '<div class="rt_sms"> 메모</div><hr>';
 	str += '<textarea class="rt_textarea" readonly>'+resdata.SMS_MEMO+'</textarea>';

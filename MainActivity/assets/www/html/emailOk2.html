@@ -74,14 +74,26 @@
 	.sub{padding: 10px 5px; background: #222; color: #fff; }
 	label.label-checkbox i.icon-form-checkbox { background-color:#D8D8D8; width: 22px; height: 22px; position: relative; border-radius: 22px; border: 1px solid #D8D8D8; box-sizing: border-box; 
 		right: 18px;}
-	
-			
-
 	.item-title{left: 30px;}
+	.alen_modal_overlay2 { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:9000; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
+	.alert_box { position:fixed; top:40%; left:50%; margin-left:-30%;box-shadow:1px 1px 10px #aaa; background: #fff; width:60%; z-index:9990;}
+.alert_box:after {clear:both; display:block; content:'';}
+.alert_box .alert_txt { text-align:center; padding:20px 10px 20px; color:#666; font-size:1.2em; }
+.alert_box .alert_btnR { text-align:center; padding:10px 10px 10px 5px;  text-shadow: 1px 1px 3px #666666; width:50%; float:right; }
+.alert_box .alert_btnL { text-align:center; padding:10px 5px 10px 10px;  text-shadow: 1px 1px 3px #666666; background: #ffff;  width:50%;float:left;  }
+.alert_box .alert_btnR a { text-shadow: 1px 1px 3px #999; color: #ffffff; font-size: 1.2em;  display:inline-block; text-decoration: none;width:100%;
+   padding:10px 20px;background-color: #272727;}
+.alert_box .alert_btnL a { text-shadow: 1px 1px 3px #999; color: #fff; font-size: 1.2em; display:inline-block; text-decoration: none;padding:10px 20px; background-color: #272727;width:100%;}
+.alert_box .alert_btn { text-align:center; padding:10px;  text-shadow: 1px 1px 3px #666666; background: #0d0d0d; padding:12px; border-top:1px solid #e5e5e5; }
+.alert_box .alert_btn a { text-shadow: 1px 1px 3px #999; color: #ffffff; font-size: 1.2em;  width:100%;display:block; text-decoration: none; }
+
 </style>
+	  	
 
-
-    <!-- Status bar overlay for fullscreen mode-->
+<div class="alert_box" style="display: none;">
+	
+</div>	
+    <!-- Status bar overlay fsor fullscreen mode-->
     <div class="statusbar-overlay"></div>
 
     <!-- Panels overlay-->
@@ -108,9 +120,13 @@
 
     </div>
     
-    
+   
+                          
+                            
+                   
     <div class="views">
-		<div class="view view-main">
+		<div class="pages navbar-through toolbar-through" id="abcd">
+       <div class="view view-main">
         		
             <div class="navbar top_menu couponR">
                 <div data-page="index" class="navbar-inner">
@@ -121,7 +137,7 @@
                     </div>	
                     <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 27%;"></div>
                     <div class="etitle" >
-                        이메일 확인
+                        	이메일 확인
                     </div>
                 </div>
                    
@@ -148,30 +164,47 @@
             </div> 
 	<div id="mailDiv" style="padding:96px 10px 0px 10px">
   		
-	</div>     
+	</div>  
+	   
 	</div>
- 				
-  </div> 
-   	                    
+		</div>
+	</div>
+	
+ 		
+   	    	                
  
-    
-
+	
+	
       
 <script type="text/javascript">
+
+
+
+
 var request = new Request();
 				
 var telNo = request.getParameter('telNo');
 var uuId =  request.getParameter('uuId');
-			
+var pageType = request.getParameter('pageType');
+var endSeq = parseInt(request.getParameter('endSeq'));
+var startDay = request.getParameter('startDay');
+var endDay = request.getParameter('endDay');
+var mail = "";
+/* var scrollValue = request.getParameter("scroll"); */
+
+
 var emailList = new Array();
-	
+var appendthis = ("<div class='alen_modal_overlay2 js-modal-close' id='dadadadada'></div>");	
 var now_email = "";		 		
 var last_email = "";
+
 
 //바코트 파라미터 뽑기
 var param = new Array();
 
 var barcode = new Array();
+
+var barcodeResult = "";
 
 var url = decodeURIComponent(location.href);
 
@@ -197,10 +230,6 @@ for(var i=0 ; i < size ; i++) {
 $(document).ready(function() {
 	  //이메일 불러오기
 	 mailChk()   
-						
-	
-	  
-
 }); 
 
 function change(){
@@ -365,7 +394,7 @@ function fn_mailOk(resdata){
 	
 	str += '</div>';
 	
-	str += '<button onclick="mailsend();">보내기</button>';
+	str += '<button onclick="emailcheck();">보내기</button>';
 		
 		 $("#mailDiv").empty();
 	     $("#mailDiv").addClass("email"); 
@@ -422,7 +451,18 @@ function lastEmail(a){
   
     $("#lastEmailValue").val("")	
 	if(last_email==null || last_email==''){
-		 alert("지난 이메일이 없습니다.");
+		var str = "";
+   		
+		str +=  '<div class="alert_txt" id="alert_desc">지난이메일이 없습니다.</div>';
+	   	str +=  '<div class="alert_btn" onclick="out();"><a href="#">확인</a></div>';
+	   	
+	   	$(".pages").append(appendthis);
+	   	$(".alert_box").empty();
+	  	$(".alert_box").append(str).trigger("create");
+	  	$(".alen_modal_overlay2").fadeTo(300, 0.7);   	
+		
+	 	$(".alert_box").fadeIn(300);
+	 		
 		 return false;
 	 }
 		
@@ -432,38 +472,94 @@ function lastEmail(a){
 		var first = last_email.substring(0,i);
 		var last = last_email.substring(i+1); 
 	
-		  
 		$("#firstEmailValue").val(first);
 		$("#lastEmailValue").val(last);   
 };
+
+//발송확인
+function mailcheck(){
+	$(".pages").append(appendthis); 
+	var str = "";
+	
+	str += '<div class="alert_txt" id="alert_desc">발송하시겠습니까?</div>';
+	str += '<div class="alert_btnR"><a href="#" onclick="yes();">확인</a></div>';
+    str += '<div class="alert_btnL"><a href="#" onclick="no();">취소</a></div>';
+	
+    $(".alert_box").empty();
+    $(".alert_box").append(str).trigger("create");
+    
+	$(".alert_box").fadeIn(300);
+	$(".alen_modal_overlay2").fadeTo(300, 0.7); 
+ 	
+}
+
+//발송
+function yes(){
+	
+	mailsend();
+}
+
+function no(){
+	$(".alert_box").fadeOut(300, function() {
+		$(".alen_modal_overlay2").remove();
+	});
+}
+function out(){
+	
+	$(".alert_box").fadeOut(300); 
+	$(".alen_modal_overlay2").remove(); 
+}
+
 //이메일 보내기 컨트롤러로 전송 
-function mailsend(){
+function emailcheck(){
 	
 	 var first = $("#firstEmailValue").val();
 	 var last = $("#lastEmailValue").val();
-	 var mail = first += "@";
-	 var subject = $("#subject").val();
-	 var content = $("#content").val();
-	 	
+	 mail = first += "@";
+	 mail += last;
+	
+	 //이메일 체크
+		if(email_check(mail)==false){
+			
+			$(".pages").append(appendthis);  
+			var str = "";
+			
+			str += '<div class="alert_txt" id="alert_desc">잘못된 이메일 형식입니다.</div>';
+			str += '<div class="alert_btn"><a href="#" onclick="no();">확인</a></div>';
+		   
+			$(".alert_box").empty();
+		    $(".alert_box").append(str).trigger("create");
+		    
+			$(".alert_box").fadeIn(300);
+			$(".alen_modal_overlay2").fadeTo(300, 0.7);  
+			
+			return; 
+		
+		}else{
+			mailcheck();
+		}
+}; 
+	
+	function mailsend(){
+	
+	 var subject = "";
+	 var content = "";
+		
 	if($("#subject").val()==null||$("#subject").val()==""){
 		subject = "THEREAL# 이메일 영수증";
-	}			
+	}
+	else{
+		subject = $("#subject").val();
+	}
 	
 	if($("#content").val()==null||$("#content").val()==""){
 		content = "THEREAL# 이메일영수증 입니다.";
 	}
+	else{
+		content = $("#content").val();
+	}
 		
-	mail += last;
-								
-							 					
-		//이메일 체크
-		if(email_check(mail)==false){
-			alert("잘못된 이메일 형식입니다");
-			return; 
-		} 
-		 		
-																
-		  $.ajax({  
+		$.ajax({  
 	    	type : 'post',
 	    	url :	commonIp() + "/theReal/receipt/sendMail.do", 
 	    	dataType : 'text',
@@ -476,16 +572,32 @@ function mailsend(){
 	    	 	content : content
 	    	 	},
 	    	error : function() {
-	       		alert('통신실패. 관리자에게 문의하세요.'); 
+	       		alert('통신실패!!'); 
 	    	},	 		   			
 	    	success : function(data) {
-	    		alert('이메일 전송에 성공하였습니다.');
-	    		history.back();									
+	    		
+	    		$(".pages").append(appendthis);  
+				var str = "";
+				
+				str += '<div class="alert_txt" id="alert_desc">전송완료</div>';
+				str += '<div class="alert_btn"><a href="#" onclick="historyback();">확인</a></div>';
+			   
+				$(".alert_box").empty();
+			    $(".alert_box").append(str).trigger("create");
+			    		
+				$(".alert_box").fadeIn(300);
+				
+	    												
+													
 	    	}
 	   }); 	  
 	};
-							
-				
+	
+	
+	function historyback(){
+		
+		location.href = 'latestEmail.html?telNo='+request.getParameter('telNo')+'&uuid='+request.getParameter('uuid')+'&pageType=ALL&endSeq=10&startDay=2000-01-01&endDay=2000-12-12';
+	}			
 				
 //이메일 정규식 유효성 체크  
 	function email_check(mail) {	
@@ -496,7 +608,15 @@ function mailsend(){
 	}
 			
 function back(){
-	history.back(-1);
+	
+	for(var i=0; i<barcode.length; i++){
+		barcodeResult+="barcode=";
+		barcodeResult += barcode[i];
+		barcodeResult+="&";
+	}
+	
+	
+	location.href = 'latestEmail.html?'+barcodeResult+'&telNo='+request.getParameter('telNo')+'&uuid='+request.getParameter('uuid')+'&pageType='+pageType+'&endSeq='+endSeq+'&startDay='+startDay+'&endDay='+endDay+'';
 }
 </script>
 </body>

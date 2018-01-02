@@ -656,6 +656,8 @@
 						CARD_NO            		,
 						POINT_CARD				,
 						POINT_AMT	            ,
+						POINT_TYPE				,
+						POINT_ICOM				,
 						GET_POINT	            ,
 						CUSTOMER_CODE	        ,
 						CUSTOMER_POINT	        ,
@@ -706,8 +708,10 @@
 						#{cardICom}	        	,
 						#{cardPCom}	        	,
 						#{cardNo}              	,
-						#{pointCard}			,
+						#{pointCardNo}			,
 						#{pointAmt}	        	,
+						#{pointType}	        ,
+						#{pointIcom}	        ,
 						#{getPoint}	        	,
 						#{customerCode}	    	,
 						#{customerPoint}	    ,
@@ -841,16 +845,16 @@
 				FNL_MOF_DTM	    ,
 				FNL_MDF_NM,
 				PUSH_KEY				,
-				PUSH_YN,
+				PUSH_YN
 			)
-			VALUES
+			VALUES 
 			(
 				#{uuId},
 				#{pwd},
 				#{eMail},
 				#{telNo},
 				#{userNm},
-				#{birthDay},
+				#{birthDay},  
 				#{sex},
 				#{tService},
 				#{nation},
@@ -859,7 +863,7 @@
 			    now(), 
 			    'Admin',
 				#{pushKey},
-			    'Y',
+			    'Y'
 			)
 		]]>
 	</insert>
@@ -2717,7 +2721,9 @@
 			]]>
 			<choose>
              <when test="'00'.equals(type)">
-            WHERE 
+            WHERE
+            	SEQ = #{seq} 
+            AND
             	SHOP_BIZNO = #{biz}
             AND
             	SALES_BARCODE = #{barcode}
@@ -2761,7 +2767,7 @@
 		]]>
 			<choose>
              <when test="'00'.equals(type)">
-            WHERE 
+            WHERE
             	SHOP_BIZNO = #{biz}
             AND
             	SALES_BARCODE = #{barcode}

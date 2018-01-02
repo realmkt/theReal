@@ -985,15 +985,16 @@ $(document).ready(function(){
      function onDeviceReady() {
     	 onPushSet();
          var uuid = device.uuid;
-
 				console.log("device.uuid:"+device.uuid);
+alert(uuid)
 
                  var telephoneNumber = cordova.require("cordova/plugin/telephonenumber");
-                 
+alert(telephoneNumber)
                  
                  telephoneNumber.get(function(result) {
                          console.log("result = " + result);
                          result = result.replace( "+82", "0");
+                         alert(result)
 						$("#telNo").val(result);          
 						$("#uuId").val(result+uuid);          
                      }, function() {

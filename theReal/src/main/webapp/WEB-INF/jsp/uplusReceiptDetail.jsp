@@ -200,6 +200,18 @@
 										</span></div>
 										<div>승인번호 : <span>${shopInfo.CARD_APP_NO }</span></div>
                                 		<div>카드종류 : <span>${shopInfo.CARD_ICOM }</span> </div>
+                                		<div>할부정보 : <span>
+                                		
+                                		<c:choose>
+                                		
+                                		<c:when test="${shopInfo.CARD_INSTALLMENT == '0'}">
+                                			일시불
+                                		</c:when>
+                                		<c:otherwise>
+                                			${shopInfo.CARD_INSTALLMENT } 개월
+                                		</c:otherwise>
+                                		</c:choose>
+                                		</span> </div>
                                 		<div>거래일시 : <span>${salesDate}</span> </div>
                                 	</div>
                                 </c:if>
@@ -213,7 +225,7 @@
                                 
                                 
                                 
-                                <c:if test="${(shopInfo.POINT_CARD != NULL )}">
+                                <c:if test="${(shopInfo.POINT_CARD != '' )}">
                                 	<div  class="rt_card">
                                 	<c:if test="${shopInfo.GET_POINT == '0'}">
                                 		<div>포인트카드 : <span>${shopInfo.POINT_CARD }</span> </div>

@@ -2075,6 +2075,8 @@
                 }
                 // Go back
                 if (direction === 'to-right') {
+                	$("#top_menu").show();
+                	$(".page").css("background","#eee");
                     leftPage.removeClass(removeClasses).addClass('page-from-left-to-center');
                     rightPage.removeClass(removeClasses).addClass('page-from-center-to-right');
         

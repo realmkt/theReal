@@ -440,7 +440,7 @@ function fn_sucsettingChkPw(resData){
 }
 
 function whenError(){
-	alert("error");
+	alert("실패하였습니다. \n문제가 계속 발생시 문의하기를 통해 문제를 해결하세요.");
 }
 
 function fn_pushUpdate(pushYn){
@@ -465,11 +465,13 @@ function fn_settingChkPw(){
 	}else{
 		var newPwd = $("#newPwd").val();
 		var pwdChk = $("#pwdChk").val();
-  		if(!chkPwd(newPwd) && !chkPwd(pwdChk)){
-			$('#newPwd').val('');
-			$('#pwdChk').val('');
+  		
+		if(!chkPwd(newPwd)){
 			$('#newPwd').focus();
-			alert("비밀번호는 영문,숫자,특수기호를 조합한 8자리 이상으로 입력해주시기 바랍니다.");
+			return false;
+  		}
+  		if(!chkPwd(pwdChk)){
+			$('#pwdChk').focus();
 			return false;
   		}
 		if(newPwd == pwdChk){
@@ -485,9 +487,7 @@ function fn_settingChkPw(){
 		       }); 	
 		}else{
 			alert("비밀번호가 다릅니다.");
-			$("#newPwd").val("");
-			$("#pwdChk").val("");
-			$("#newPwd").focus();
+			$("#pwdChk").focus();
 			return false;
 		}
 	}

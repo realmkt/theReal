@@ -9,19 +9,20 @@
 
 .top_menu { background:#fff; border-bottom:1px solid #e5e5e5;}
 
-/* 로그인 */
 /* .login_page { background:#fae100; } */
-.login_page { background:#60afff; }
+.login_page { background:#539bff;/*#60afff;*/ }
 /* .login_box { height:100%; padding-top:100px; } */
 .login_box { height:100%; padding-top:120px; }
 .login_img { height:350px; text-align:center; margin:0 20px; padding-bottom:80px; }
 .login_img img { width:80%; max-width:350px; }
-.login_btnbox { position:absolute; bottom:20px; width:100%; height:60px; }
-.login_btn { margin:0 20px; padding:0 100px 0 5px; border:1px solid #dac300; color:#3c3136; font-size:1.8em; font-weight:400; text-align:center; line-height:60px; background:url(../common/log_btn.png) no-repeat right; cursor:pointer;  -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
+.login_btnbox { position:absolute; bottom:70px; width:100%; height:60px; }
+.login_btn { background-color:#272727;margin:0 20px; /*padding:0 100px 0 5px;*/ color:#fff; font-size:1.8em; font-weight:400; text-align:center; line-height:60px; /*background:url(../common/log_btn.png) no-repeat right; */cursor:pointer;  -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
+
+
 
 /* 약관 */
-.agree_btnbox { height:60px; margin-bottom:50px; }
-.agree_btn { margin:0 20px; padding:0 5px 0 5px; border:1px solid #539bff; color:#fff; font-size:1.8em; font-weight:400; text-align:center; line-height:60px; cursor:pointer; background:#539bff; -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
+.agree_btnbox { height:60px; margin:20px 0; }
+.agree_btn { margin:0 20px; padding:0 5px 0 5px;  color:#fff; font-size:1.4em; font-weight:400; text-align:center; line-height:55px; cursor:pointer; background:#272727; -webkit-border-radius:10; -moz-border-radius:10; }
 .agree_logobox { text-align:center; height:80px;}
 .agree_logobox img { width:80%; max-width:400px; }
 .alen_allcheck { padding-bottom:20px; }
@@ -61,12 +62,12 @@
 .login2_sub div.login2_join { color:#337bdf; }
 
 
-.join_box { margin:35px 20px; font-size:1.1em; background:#fff; padding:0px 0 0px 0; border:1px solid #ddd; }
+.join_box { margin:0px 20px; font-size:1.1em; background:#fff; padding:0px 0 0px 0; border-bottom:1px solid #e5e5e5; }
 .join_box li { border-bottom:1px solid #e5e5e5; height:50px; }
 .join_box li:last-child { border-bottom:1px solid #fff; }
 .join_box li.join_subtxt { font-size:0.7em; color:#999; line-height:1.3em; padding:5px 10px; height:40px; background:#f2f2f2; }
 
-.alen_table_title { width:30%; float:left; line-height:50px; color:#666; }
+.alen_table_title { width:30%; float:right; line-height:50px; color:#666; }
 .alen_table_title .tel_btn { width:100%; background:#539bff; height:50px; text-align:center; color:#fff; }
 .alen_table_con { width:70%; float:left; }
 .alen_table_con input[type="text"] { display:block; width:100%; height:48px; color:#666; font-size:1.1em; border:0; padding:0 20px; }
@@ -409,7 +410,7 @@
 .list-block input[type="time"],
 .list-block input[type="number"],
 .full_input select,
-.list-block textarea { -webkit-appearance:none; -moz-appearance:none; -ms-appearance:none; appearance: none; box-sizing: border-box; border: none; background: none; border-radius: 0 0 0 0; box-shadow:none; display:block; padding:0px; margin:0; width:100%; height:48px; color:#666; font-size:1.1em; font-family:inherit; padding:0 20px; }
+.list-block textarea {/* -webkit-appearance:none; -moz-appearance:none; -ms-appearance:none; appearance: none;*/ box-sizing: border-box; border: none; background: none; border-radius: 0 0 0 0; box-shadow:none; display:block; padding:0px; margin:0; width:97%; height:48px; color:#666; font-size:1.1em; font-family:inherit; padding:0 20px; }
 
 
 
@@ -708,7 +709,7 @@ html.pixel-ratio-3 .content-block-inner:after { -webkit-transform: scaleY(0.33);
 
 
 /* === Lists === */
-.list-block { margin:35px 20px; font-size: 17px; background:#fff;padding:20px 0 10px 0; }
+.list-block { margin:20px 20px; font-size: 14px; background:#F5F5F5;padding:10px 0 10px 0; color:#767676;} 
 .list-block ul { list-style: none; padding: 0; margin: 0; position: relative; }
 html.pixel-ratio-2 .list-block ul:before { -webkit-transform: scaleY(0.5); transform: scaleY(0.5); }
 html.pixel-ratio-3 .list-block ul:before { -webkit-transform: scaleY(0.33); transform: scaleY(0.33); }
@@ -904,7 +905,7 @@ html:not(.watch-active-state) .button.button-fill:active,
 .range-slider input[type="range"]::-ms-fill-lower { background: #539bff; }
 .range-slider input[type="range"]::-ms-fill-upper { background: #b7b8b7; }
 label.label-checkbox { cursor: pointer; }
-label.label-checkbox i.icon-form-checkbox { width: 22px; height: 22px; position: relative; border-radius: 22px; border: 1px solid #c7c7cc; box-sizing: border-box; }
+label.label-checkbox i.icon-form-checkbox { width: 18px; height:18px; position: relative; background-color:#fff; border: 1px solid #c7c7cc; box-sizing: border-box; }
 label.label-checkbox i.icon-form-checkbox:after { content: ' '; position: absolute; left: 50%; margin-left: -6px; top: 50%; margin-top: -4px; width: 12px; height: 9px; }
 label.label-checkbox input[type="checkbox"],
 label.label-checkbox input[type="radio"] { display: none; }
@@ -1640,3 +1641,32 @@ cursor:pointer; }
 .history_title { padding:10px 10px; background:#111; }
 .commonTitle .history_txt { float:left; width:40%; font-size:1rem; color:#fff; line-height:2em; }
 .commonTitle .history_total { float:right; width:60%; font-size:1em; color:#539bff; text-align:right; padding-top:10px; }
+
+
+
+/*join 추가 css*/
+
+.join_bar {position:absolute;top:0;padding:15px 15px;background:#272727;  width:100%;}
+.join_bar span {color:#fff;padding:0 10px;vertical-align: middle;}
+.join_title {padding:15px 15px; font-size:15px;/*font-weight:500;*/color:#5b5b5b;}
+
+
+/*아이디 회원가입*/
+
+.alen2_table_title { width:30%; float:right; line-height:50px; color:#666; }
+.alen2_table_title .id_btn { width:100%; background:#272727; height:50px; text-align:center; color:#fff; }
+
+
+
+/*아이디찾기 확인*/
+
+.id_box {background:#fff; margin:20px 20px;  font-size:17px;text-align: center;height:50px;line-height: 50px;}
+.id_box span {font-weight: 300;font-family: inherit;}
+.memo {margin:10px 20px; font-size:13px; }
+.search_log_btnbox {margin:0 auto; width:60%;  }
+.search_log_btn {width:100px;background:#272727;height:40px;line-height: 40px;text-align: center;font-size:15px;color:#fff;float:left;}
+.pass_btn{width:100px;background:#7a7a7a; height:40px; line-height: 40px; text-align: center; font-size:15px; color:#fff;float: right;}
+
+/*비번찾기*/
+.id_in {margin:0 20px;}
+.id_in>input[type="text"]{border:0; width:100%;display:block;height:48px;color:#666; font-size:1.1em;padding:0 20px;border-bottom:1px solid #e5e5e5;}

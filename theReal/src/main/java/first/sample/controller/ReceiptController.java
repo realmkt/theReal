@@ -1842,7 +1842,7 @@ public class ReceiptController {
 			map.put("originSalesDate", var.find("salesInfo.originSalesDate").toString());
 			map.put("recNO", var.find("salesInfo.recNO").toString());
 			map.put("originRecNo", var.find("salesInfo.originRecNo").toString());
-			}*/
+			}
 			
 			if (var.find("cardInfo").size() > 0 && var.find("cashInfo").size() > 0) {
 				map.put("cardAmt", var.find("cardInfo.cardAmt").toString());
@@ -1865,53 +1865,89 @@ public class ReceiptController {
 				map.put("cashNo", var.find("cashInfo.cashNo").toString());
 				map.put("cashAppNo", var.find("cashInfo.cashAppNo").toString());
 				map.put("cashDate", var.find("cashInfo.cashDate").toString());
-
-			} else if (var.find("cashInfo").size() > 0) {
-				map.put("cashAmt", var.find("cashInfo.cashAmt").toString());
-				map.put("cashType", var.find("cashInfo.cashType").toString());
-				map.put("cashNo", var.find("cashInfo.cashNo").toString());
-				map.put("cashAppNo", var.find("cashInfo.cashAppNo").toString());
-				map.put("cashDate", var.find("cashInfo.cashDate").toString());
-
-				map.put("cardAmt", "");
-				map.put("cardInstallment", "");
-				map.put("cardAppNo", "");
-				map.put("cardICom", "");
-				map.put("cardPCom", "");
-				map.put("cardNo", "");
-			} else if (var.find("cardInfo").size() > 0) {
-				map.put("cardAmt", var.find("cardInfo.cardAmt").toString());
-				map.put("cardInstallment", var.find("cardInfo.cardInstallment").toString());
-				map.put("cardAppNo", var.find("cardInfo.cardAppNo").toString());
-				map.put("cardDate", var.find("cardInfo.cardDate").toString());
-				map.put("cardICom", "");
-				map.put("cardPCom", "");
-				if(var.find("cardInfo.cardICom").toString().contains("L포인트")){
-					if(var.find("cardInfo.cardICom").toString().contains("사용")){
-						map.put("pointCard", "L.POINT 사용");
-					}else{
-						map.put("pointCard", "L.POINT 적립");
-					}
-				}else{
-				map.put("cardICom", var.find("cardInfo.cardICom").toString());
-				map.put("cardPCom", var.find("cardInfo.cardPCom").toString());
-				}
-				map.put("cardNo", var.find("cardInfo.cardNo").toString());
-
-				map.put("cashAmt", "");
-				map.put("cashType", "");
-				map.put("cashNo", "");
-				map.put("cashAppNo", "");
-				map.put("cashDate", "");
-			}
+			}*/
+			map.put("cashAmt", "");
+			map.put("cashType", "");
+			map.put("cashNo", "");
+			map.put("cashAppNo", "");
+			map.put("cashDate", "");
+			
+			
+			map.put("cardAmt", "");
+			map.put("cardInstallment", "");
+			map.put("cardAppNo", "");
+			map.put("cardDate", "");
+			map.put("cardICom", "");
+			map.put("cardPCom", "");
+			map.put("cardNo", "");
+			map.put("cardCompound", "");
+			map.put("pointIcom", "");
+			map.put("pointCardNo", "");
+			map.put("pointType", "");
+			map.put("pointAmt", "");
+			map.put("getPoint", "");
+			map.put("customerCode", "");
+			
 			map.put("pointAmt", var.find("salesInfo.pointamt").toString());
 			map.put("getPoint", var.find("customerInfo.getPoint").toString());
 			map.put("customerCode", var.find("customerInfo.customerCode").toString());
 			map.put("customerPoint", var.find("customerInfo.customerPoint").toString());
 
-			System.out.println("@@@" + map);
-			receiptService.insertReceiptData(map);
+			if (var.find("cashInfo").size() > 0) {
+				map.put("cashAmt", var.find("cashInfo.cashAmt").toString());
+				map.put("cashType", var.find("cashInfo.cashType").toString());
+				map.put("cashNo", var.find("cashInfo.cashNo").toString());
+				map.put("cashAppNo", var.find("cashInfo.cashAppNo").toString());
+				map.put("cashDate", var.find("cashInfo.cashDate").toString());
+			} 
 			
+			if(var.find("pointInfo").size() > 0 ){
+				for (int i = 0; i < var.find("pointInfo").size(); i++) {
+				map.put("pointIcom", var.find("pointInfo["+i+"].pointIcom").toString());
+				map.put("pointCardNo", var.find("pointInfo["+i+"].pointCardNo").toString());
+				map.put("pointType", var.find("pointInfo["+i+"].pointType").toString());
+				map.put("pointAmt", var.find("pointInfo["+i+"].pointAmt").toString());
+				map.put("getPoint", var.find("pointInfo["+i+"].getPoint").toString());
+				map.put("customerCode", var.find("pointInfo["+i+"].customerCode").toString());
+				}
+			}
+			
+			if (var.find("cardInfo").size() > 0) {
+				for (int i = 0; i < var.find("cardInfo").size(); i++) {
+					if(i==0){
+						map.put("cardAmt", var.find("cardInfo["+i+"].cardAmt").toString());
+						map.put("cardInstallment", var.find("cardInfo["+i+"].cardInstallment").toString());
+						map.put("cardAppNo", var.find("cardInfo["+i+"].cardAppNo").toString());
+						map.put("cardDate", var.find("cardInfo["+i+"].cardDate").toString());
+						map.put("cardICom", var.find("cardInfo["+i+"].cardPCom").toString());
+						map.put("cardPCom", var.find("cardInfo["+i+"].cardPCom").toString());
+						map.put("cardNo", var.find("cardInfo["+i+"].cardNo").toString());
+						if(var.find("cardInfo").size() > 1){
+							map.put("cardCompound", "Y");
+						}else{
+							map.put("cardCompound", "N");
+						}
+						}else{
+							map = new HashMap<>();
+							map.put("userKey", "");  
+							map.put("salesBarCode", var.find("salesInfo.salesBarCode").toString());
+							map.put("cardAmt", var.find("cardInfo["+i+"].cardAmt").toString());
+							map.put("cardInstallment", var.find("cardInfo["+i+"].cardInstallment").toString());
+							map.put("cardAppNo", var.find("cardInfo["+i+"].cardAppNo").toString());
+							map.put("cardDate", var.find("cardInfo["+i+"].cardDate").toString());
+							map.put("cardICom", var.find("cardInfo["+i+"].cardPCom").toString());
+							map.put("cardPCom", var.find("cardInfo["+i+"].cardPCom").toString());
+							map.put("cardNo", var.find("cardInfo["+i+"].cardNo").toString());
+							map.put("cardCompound", var.find("salesInfo.salesBarCode").toString());
+						}
+					System.out.println("cardInfo Use@@@" + map);
+					receiptService.insertReceiptData(map);
+				}
+				
+			}else{
+				System.out.println("cardInfo None@@@" + map);
+				receiptService.insertReceiptData(map);
+			}
 			
 			for (int i = 0; i < var.find("salesList").size(); i++) {
 				detailMap.put("uplusUserKey", uplusUserKey);
@@ -2544,6 +2580,7 @@ public class ReceiptController {
 		String type = (String)commandMap.get("type");
 		if(type.equals("00")){
 			map.put("type", type);
+			map.put("seq", (String)commandMap.get("seq"));
 			map.put("barcode", (String)commandMap.get("barcode"));
 			map.put("biz", (String)commandMap.get("biz"));
 			
@@ -2622,45 +2659,45 @@ public class ReceiptController {
 	public int KcbCertified(HttpServletRequest request, HttpServletResponse response, CommandMap commandMap)
 			throws IOException, ParseException {
 
-		String svcTxSeqno = (String) commandMap.get("smsSvcTxSeqno");
-		String name = (String) commandMap.get("smsName");
-		String birthday = (String) commandMap.get("smsBirthday");
-		String sex = (String) commandMap.get("smsGender");
-		String nation = (String) commandMap.get("smsNation");
-		String telComCd = (String) commandMap.get("smsComCd");
-		String mbphnNo = (String) commandMap.get("smsMbphnNo");
+		String svcTxSeqno = (String) commandMap.get("svcTxSeqno");
+		String name = (String) commandMap.get("name");
+		String birthday = (String) commandMap.get("birthday");
+		String sex = (String) commandMap.get("gender");
+		String nation = (String) commandMap.get("nation");
+		String telComCd = (String) commandMap.get("comCd");
+		String mbphnNo = (String) commandMap.get("mbphnNo");
 		String smsReSndYn = (String) commandMap.get("smsReSndYn");
-		String rsv1 = (String) commandMap.get("smsRsv1");
-		String rsv2 = (String) commandMap.get("smsRsv2");
-		String rqstMsrCd = (String) commandMap.get("smsRqstMsrCd");
-		String memId = (String) commandMap.get("smsMemId");
-		String serverIp = (String) commandMap.get("smsServerIp");
-		String siteUrl = (String) commandMap.get("smsSiteUrl");
-		String siteDomain = (String) commandMap.get("smsSiteDomain");
-		String endPointUrl = (String) commandMap.get("smsEndPointURL");
-		String logPath = (String) commandMap.get("smsLogPath");
-		String options = (String) commandMap.get("smsOption");
+		String rsv1 = (String) commandMap.get("rsv1");
+		String rsv2 = (String) commandMap.get("rsv2");
+		String rqstMsrCd = (String) commandMap.get("rqstMsrCd");
+		String memId = (String) commandMap.get("memId");
+		String serverIp = (String) commandMap.get("serverIp");
+		String siteUrl = (String) commandMap.get("siteUrl");
+		String siteDomain = (String) commandMap.get("siteDomain");
+		String endPointUrl = (String) commandMap.get("endPointURL");
+		String logPath = (String) commandMap.get("logPath");
+		String options = (String) commandMap.get("option");
 		String rqstCausCd = "10";
 
-		log.debug("svcTxSeqno==" + (String) commandMap.get("smsSvcTxSeqno"));
-		log.debug("name==" + (String) commandMap.get("smsName"));
-		log.debug("birthday==" + (String) commandMap.get("smsBirthday"));
-		log.debug("sex==" + (String) commandMap.get("smsGender"));
-		log.debug("nation==" + (String) commandMap.get("smsNation"));
-		log.debug("telComCd==" + (String) commandMap.get("smsComCd"));
-		log.debug("mbphnNo==" + (String) commandMap.get("smsMbphnNo"));
+		log.debug("svcTxSeqno==" + (String) commandMap.get("svcTxSeqno"));
+		log.debug("name==" + (String) commandMap.get("name"));
+		log.debug("birthday==" + (String) commandMap.get("birthday"));
+		log.debug("sex==" + (String) commandMap.get("gender"));
+		log.debug("nation==" + (String) commandMap.get("nation"));
+		log.debug("telComCd==" + (String) commandMap.get("comCd"));
+		log.debug("mbphnNo==" + (String) commandMap.get("mbphnNo"));
 		log.debug("smsReSndYn==" + (String) commandMap.get("smsReSndYn"));
-		log.debug("rsv1==" + (String) commandMap.get("smsRsv1"));
-		log.debug("rsv2==" + (String) commandMap.get("smsRsv2"));
+		log.debug("rsv1==" + (String) commandMap.get("rsv1"));
+		log.debug("rsv2==" + (String) commandMap.get("rsv2"));
 		log.debug("rqstMsrCd==" + rqstCausCd);
-		log.debug("serverIp==" + (String) commandMap.get("smsServerIp"));
-		log.debug("smsRqstCausCd==" + (String) commandMap.get("smsRqstCausCd"));
-		log.debug("memId==" + (String) commandMap.get("smsMemId"));
-		log.debug("smsSiteUrl==" + (String) commandMap.get("smsSiteUrl"));
-		log.debug("siteDomain==" + (String) commandMap.get("smsSiteDomain"));
-		log.debug("endPointUrl==" + (String) commandMap.get("smsEndPointURL"));
-		log.debug("logPath==" + (String) commandMap.get("smsLogPath"));
-		log.debug("options==" + (String) commandMap.get("smsOption"));
+		log.debug("serverIp==" + (String) commandMap.get("serverIp"));
+		log.debug("smsRqstCausCd==" + (String) commandMap.get("rqstCausCd"));
+		log.debug("memId==" + (String) commandMap.get("memId"));
+		log.debug("smsSiteUrl==" + (String) commandMap.get("siteUrl"));
+		log.debug("siteDomain==" + (String) commandMap.get("siteDomain"));
+		log.debug("endPointUrl==" + (String) commandMap.get("endPointURL"));
+		log.debug("logPath==" + (String) commandMap.get("logPath"));
+		log.debug("options==" + (String) commandMap.get("option"));
 
 		String[] cmd = new String[19];
 		cmd[0] = svcTxSeqno;
@@ -2770,13 +2807,12 @@ public class ReceiptController {
 
 			if (ret == 0) {// 성공일 경우 변수를 결과에서 얻음
 				retcode = (String) result.get(0);
-				log.debug("결과값 리스트0==" + (String) result.get(0));
-				log.debug("결과값 리스트1==" + (String) result.get(1));
-				log.debug("결과값 리스트2==" + (String) result.get(2));
-				log.debug("결과값 리스트3==" + (String) result.get(3));
-				log.debug("결과값 리스트4==" + (String) result.get(4));
-				log.debug("결과값 리스트5==" + (String) result.get(5));
-				log.debug("결과값 리스트5==" + (String) result.get(5));
+				log.debug("결과값 결과코드	==" + (String) result.get(0));
+				log.debug("결과값 결과코드설명	==" + (String) result.get(1));
+				log.debug("결과값 회원사 id 	==" + (String) result.get(2));
+				log.debug("결과값 거래번호 	==" + (String) result.get(3));
+				log.debug("결과값 DI값		==" + (String) result.get(4));
+				log.debug("결과값 CI값 		==" + (String) result.get(5));
 			} else {
 				java.text.DecimalFormat dcf = new java.text.DecimalFormat("000");
 				log.debug("결과값 리스트222==" + result);
@@ -4019,7 +4055,7 @@ public class ReceiptController {
 		mv.addObject("salesDate", date);
 		mv.addObject("shopInfo", shopMap);
 		
-		resultMap = receiptService.ReceiptDetail(map);
+		resultMap = receiptService.ReceiptDetail(map); 
 		resultMap.put("shopInfo", shopMap);
 		receiptService.latestUpdateData(map);
 		
@@ -4075,6 +4111,7 @@ public class ReceiptController {
 	      //data 반복
 	    
 	      body[i]="<html>"
+	    		  +"<head><meta charset='utf-8'></head>"
 	            +"<body><table style='background: #f2f2f2; width: 690px; font-family: Dotum,; font-size:12px; color:#999999;'><tr><td><img src='http://117.52.97.40/theReal/images/top.jpg'></td>"
 	              +"<tr><td></td></tr><tr><td align='center'><table style='background: #e5e5e5; width: 410px; border: 1px solid #ddd; margin: 50px;'></tr>"
 	            +"<tr><td height='4px' style='background: #e5e5e5;'></td></tr><tr><td align='center'>"
@@ -4141,7 +4178,7 @@ public class ReceiptController {
 	      FileWriter fWriter = null;
 	      BufferedWriter writer = null;
 	      try{
-	         fWriter = new FileWriter("../test -TheReal 이메일영수증.html");
+	         fWriter = new FileWriter("../TheReal 이메일영수증.html");
 	         writer = new BufferedWriter(fWriter);
 	         writer.write(forResult);
 	         writer.newLine(); // this is not actually needed for html files - can
