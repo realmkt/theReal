@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+    <!--fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <!-- main -->
+	<script src="../code/jquery.bxslider.min.js"></script>
+    <link href="../code/jquery.bxslider.css" rel="stylesheet" />
+    
+    <!-- tab -->
+	<script type='text/javascript' src='../code/tabs.js'></script>
+    
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+    
+	<script src="../code/common.js"></script>
+    
+<style>
+body{}
+	/* .mobile_content li a > div:first-child{margin-left:50px;} */
+	.oneTabOn {background-color:rgba(146, 221, 255, 0.15); }
+	
+	.twoTabOn { }
+	.threeTabOn {background-color: #eee }
+	.showOn {display: block; }
+	.showOff {display: none; }
+	.highPrice{background: url(../common/up.png) no-repeat 0 0; background-size: 13%,13%; background-position: right; }
+	.lowPrice{background: url(../common/down.png) no-repeat 0 0; background-size: 13%,13%; background-position: right; }
+/* 	.highPrice{background: url(../common/highPrice.png) no-repeat 0 0; background-size: 40px,40px; background-position: right; }
+	.lowPrice{background: url(../common/lowPrice.png) no-repeat 0 0; background-size: 40px,40px; background-position: right; } */
+	
+	.divPage{background: url(../common/divPage.png) no-repeat 0 0;background-position: 50% 50%; height: 30px;"}
+
+
+.on { }
+.list-block {display: none; }
+.item-title.small-fonts{font-size: small;}
+
+
+.alen_list_box2 { margin:0px 0px; background:none; border:0; }
+.alen_list_box2 li { margin:0 10px 0 10px; }
+.alen_list_combtnbox { height:35px; margin-bottom:5px; }
+.alen_list_combtn { margin:3px 10px 3px 10px; padding:0 5px 0 5px; border:1px solid #539bff; color:#fff; /* font-size:1.5em; */ font-weight:400; text-align:center; line-height:50px; cursor:pointer; background:#539bff; -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
+.albpad { padding:0px 0 0px 0; }
+
+.alen_list_btn2 { margin:10px 10px 10px 10px; padding:0; border-radius:10px; background:#333; }
+.alen_list_btn2item { width:20%; float:left;; text-align:center; color:#fff; }
+.alen_list_btn2item .al_btn_txt { padding:10px 0; border-right:1px solid #666; }
+.alen_list_btn2item .al_btn_txt.last { border-right:0; }
+
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner { padding-right: 15px; text-align:center; }
+.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner .item-title { margin:0 auto; }
+.alen_list_box2 label.label-radio input[type="radio"]:checked ~ .item-inner { background: no-repeat center; background-position: 50% 3px; background-position: -webkit-calc(50% - 8px) 3px; background-position: calc(50% - 8px ) 3px; -webkit-background-size: 13px 10px; background-size: 13px 10px; 
+background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23539bff'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");  }
+.alen_radio_box2 { margin:10px; border:1px solid #e5e5e5; }
+
+
+.alen_table_in { border-radius:5px; margin:0 5px;}
+	
+	
+
+</style>
+
+
+</head>
+
+<body>
+
+
+
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+
+
+    <div class="panel panel-left panel-reveal">
+    
+    	<div class="profile_box">
+        	<!-- <div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div> -->
+            
+            <div class="pf_txt">
+            	<h2>김종현</h2>
+                <p>쿠폰 <span>0</span>개</p>
+                <p>포인트 <span>200</span>p</p>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="left_menu">
+        </div>
+
+    </div>
+    
+    
+    <div class="views">
+		<div class="view view-main">
+        
+            <div class="navbar top_menu">
+                <div data-page="index" class="navbar-inner">
+                
+                    <div class="left">
+                    <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+                    </div>
+                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 27%;"><img style="width: 75%;height: 50%;margin: 0 auto" src="../common/logo_01.png"></div>
+
+                </div>
+                
+                <div data-page="receipt_details" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backS">Back</span></a></div>
+                <div class="center sliding">영수증 상세 내역</div>
+                </div>
+                
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                </div>
+                
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+                
+            </div>
+            
+<style type="text/css">
+.mobile_contitle { color:#747474; background:#0d0d0d; }
+.mobile_contitle h2 { padding:15px 15px; font-size:1em; font-weight:400; color:#fff; line-height:25px; }
+.mobile_contitle h2 span { float:right; color:#ddd; border:1px solid #666; border-radius:8px; font-size:0.7em; padding:0 5px; margin-left:5px; line-height:21px; }
+.mobile_contitle h2 span.active { border:1px solid #539bff; color:#539bff; }
+
+.mobile_coninfo { padding:8px 15px; color:#bbb; background:#222;  text-align:left; border-bottom:1px solid #333;}
+.mobile_coninfo .mobile_allLeft { width:50%; float:left;  line-height:20px; padding-left:25px; font-size:1.3em;}
+.mobile_coninfo .mobile_allLeft  span { color:#539bff; }
+.mobile_coninfo .mobile_allRight { width:50%; float:right;  line-height:20px; padding-right:25px; font-size:1.1em; text-align: right; }
+.mobile_coninfo .mobile_allRight span {color:#fff}
+
+
+
+
+.mobile_conser { margin:3% 2% 0; background:#fff; text-align:center; }
+.mobile_conser input[type=radio] { display:none; margin:10px; }
+.mobile_conser input[type=radio] + label { float:left; padding:7px 12px; width:25%; background:#fff; font-size:12px; border-right:1px solid #e5e5e5;}
+.mobile_conser input[type=radio] + label:last-child { border-right:0; }
+.mobile_conser input[type=radio]:checked + label { background:#539bff; color:#fff; }
+
+.mobile_conlist { margin:0 2% 3% 2%; background:#fff; text-align:center; }
+.mobile_conlist ul { padding:8px 10px; position:relative; border-bottom:1px solid #e5e5e5;}
+.mobile_conlist li { float:left; width:30%; text-align:left; }
+.mobile_conlist li h2 { font-size:1em; font-weight:400; color:#000; padding-bottom:3px; }
+.mobile_conlist li p { font-size:1.3em; font-weight:400; color:#555; padding:10px 0 3px 10px ; }
+.mobile_conlist li h3 { font-size:0.8em; font-weight:400; color:#555; padding-left:27px; line-height:16px; }
+.mobile_conlist li h3 span { background:#f2f2f2; border:1px solid #ddd; border-radius:3px; padding:2px 5px; font-size:0.85em; color:#539bff; }
+.mobile_conlist li h3.mal_credit { background:url(../common/credit.gif) no-repeat left; }
+.mobile_conlist li h3.mal_cash { background:url(../common/cash.gif) no-repeat left; }
+.mobile_conlist li.mal_price { width:25%; text-align:right; font-size:0.8em; font-weight:400; color:#555;  position:absolute; top:40%; right:10px; }
+.mobile_conlist li.mal_price span { font-size:1.4em; font-weight:700; color:#000; }
+.mal_more { background:#f2f2f2; color:#666; font-size:0.8em; padding:10px 0; }
+
+
+
+.mobile_condate{ text-align: center; margin: 3% 2% 1px 2%; font-size: 14px; background: #ddd; padding: 5px; height: 25px; font-family:'Droid Sans Fallback', sans-serif; font-weight: bold;}
+.mobile_condate span{color: #539bff; }
+.mobile_condate_left{padding: 0 10px; width: 50%; float: left; text-align: left;}
+.mobile_condate_right{padding: 0 10px; width: 50%; float: left; text-align: right;}
+
+
+
+.moreBtn { height: 41px;  padding: 14px;  background-color: #272727; color: #f2f2f2; position: relative; top: -2%; margin: 2%;text-align: center}
+.dis_none {display: none}
+
+.mobile_conser .mobilesbox{ float: left;  line-height: 30px; width: 33.3333333333333%;border-right:1px solid #eeeeee }
+.mobile_conser .mobilesbox:last-child{border-right: 1px solid;}
+.activebox{background-color:#539bff; color:#ffffff}
+
+.loadingView{text-align: center; background-color: #272727; opacity : 0.6;   width:  100%; height:  100%; position: absolute; z-index:  9999; }
+.loadingView img{width: 90px ; position: relative; top: 40%}
+
+
+</style>                    
+            
+			<div class="pages navbar-through toolbar-through">
+                <div data-page="index" class="page">
+                    <div class="page-content">
+				<!-- <div id="loadingView" class="loadingView">
+					<img src="../common/loadingBar.gif" id="loading_gif">
+				</div>
+                    -->
+                    <div class="mobile_contitle">
+                    	<h2>지출내역
+                    	<span id="cal">달력</span>
+                    	<span id="list"  class="active">리스트</span>
+                    	</h2>
+                    </div>
+						<div class="mobile_coninfo" id="mobileConinfo">
+							<div class="mobile_allLeft">
+								 2017.<span>12</span>
+							</div>
+							<div class="mobile_allRight">
+								 <span>134,500</span> 원
+							</div>
+							<hr>
+						</div>
+
+						<div class="mobile_conser alen_outbox">
+                    <div id="mobile01" class="mobilesbox activebox">날짜</div>
+                    
+                    <div id="mobile02" class="mobilesbox">카드</div>
+                    
+                    <div id="mobile03" class="mobilesbox">항목</div>
+                    
+                    <!-- <div id="mobile04" class="mobilesbox" data-modal-id="ser_box" >상세</div> -->
+                    
+                    <hr>
+                    </div>
+                    <div class="mobile_condate" id="mobile_condate">
+                    	<div class="mobile_condate_left"> 12월 18일</div>
+                    	<div class="mobile_condate_right"> 122,000원</div>
+                    </div>
+                    
+                    
+                    <div class="mobile_conlist alen_outbox" id="receipt_div">
+                    	<ul data-modal-id="receip_box">
+                        	<li style="width:25%">
+                            
+                            <p>13:20</p>
+                            
+                            </li>
+                            <li style="width: 50% ">
+                            
+                            	<span>육전식당</span><br>
+                            	<img alt="" src="../common/bc_card.png" style="width: 70px; height: 25px">
+                            
+                            </li>
+                            
+                            <li class="mal_price">
+                            <span>97,500</span> 원
+                            </li>
+                            <hr>
+                        </ul>
+                        <ul data-modal-id="receip_box">
+                        	<li style="width:25%">
+                            
+                            <p>13:20</p>
+                            
+                            </li>
+                            <li style="width: 50% ">
+                            
+                            	<span>육전식당</span><br>
+                            	<img alt="" src="../common/lotte_card.png" style="width: 90px; height: 25px">
+                            
+                            </li>
+                            
+                            <li class="mal_price">
+                            <span>97,500</span> 원
+                            </li>
+                            <hr>
+                        </ul>
+                        <ul data-modal-id="receip_box">
+                        	<li style="width:25%">
+                            
+                            <p>13:20</p>
+                            
+                            </li>
+                            <li style="width: 50% ">
+                            
+                            	<span>육전식당</span><br>
+                            	<img alt="" src="../common/bc_card.png" style="width: 70px; height: 25px">
+                            
+                            </li>
+                            
+                            <li class="mal_price">
+                            <span>97,500</span> 원
+                            </li>
+                            <hr>
+                        </ul>
+                        <ul data-modal-id="receip_box">
+                        	<li style="width:25%">
+                            
+                            <p>13:20</p>
+                            
+                            </li>
+                           <li style="width: 50% ">
+                            
+                            	<span>육전식당</span><br>
+                            	<img alt="" src="../common/bc_card.png" style="width: 70px; height: 25px">
+                            
+                            </li>
+                            
+                            <li class="mal_price">
+                            <span>97,500</span> 원
+                            </li>
+                            <hr>
+                        </ul>
+                        
+                    </div>
+                    
+                    
+                    <div class="mobile_condate" id="mobile_condate">
+                    	<div class="mobile_condate_left"> 12월 18일</div>
+                    	<div class="mobile_condate_right"> 122,000원</div>
+                    </div>
+                    
+                    
+                    <div class="mobile_conlist alen_outbox" id="receipt_div">
+                    	<ul data-modal-id="receip_box">
+                        	<li style="width:25%">
+                            
+                            <p>13:20</p>
+                            
+                            </li>
+                            <li style="width: 50%">
+                            
+                            	<span>육전식당</span><br>
+                            	<img alt="" src="../common/bc_card.png" style="width: 70px; height: 25px">
+                            
+                            </li>
+                            
+                            <li class="mal_price">
+                            <span>97,500</span> 원
+                            </li>
+                            <hr>
+                        </ul><ul data-modal-id="receip_box">
+                        	<li style="width:25%">
+                            
+                            <p>13:20</p>
+                            
+                            </li>
+                            <li style="width:50%">
+                            
+                            	<span>육전식당</span><br>
+                            	<img alt="" src="../common/bc_card.png" style="width: 70px; height: 25px">
+                            
+                            </li>
+                            
+                            <li class="mal_price">
+                            <span>97,500</span> 원
+                            </li>
+                            <hr>
+                        </ul>
+                        
+                    </div>
+                    
+                    
+                    <div class="moreBtn dis_none" id="moreBtn">더보기</div>
+                    
+                    <div class="foot_info">
+                    
+                    	<div class="foot_box">
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree03">이용약관</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree01">개인정보 취급방침</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#">고객센터</a>
+                            </div>
+                            
+                            
+                            <hr>
+                        </div>
+<p>
+(주)더리얼마케팅   |   대표이사 : 손종희<br>
+사업자등록번호 : 220-88-19101   |   서울시 강남구 압구정로 10길 13 마사빌딩 4F<br>
+이메일 :thereal@realmkt.co.kr<br>
+</p>
+
+<p class="copytxt">Copyrightⓒnoname Co,.All rights reserved</p>
+                    </div>
+                    
+                    
+                    </div>
+                </div>
+                
+
+
+<style>
+.cpop_btn { font-size:3vmin; padding:0.3em 1.5em; background-color:#222; color:#e5e5e5; text-decoration:none; display:inline; border-radius:4px; -webkit-transition: background-color 1s ease; -moz-transition: background-color 1s ease; transition: background-color 1s ease; }
+.cpop_btn:hover { -webkit-transition:background-color 1s ease; -moz-transition:background-color 1s ease; transition:background-color 1s ease; }
+.cpop_btn_small { padding:7px 25px; font-size:0.8em; }
+
+.modal_box { display: none; position:fixed; z-index: 1000; background: white; width:90%; border-bottom: 1px solid #aaa; border-radius: 4px; box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1); background-clip: padding-box; }
+.modal_box .modal_body { padding: 1em 1em; }
+.modal_box footer, .modal_box .modal-footer { padding: 1em; border-top: 1px solid #ddd; background: rgba(0, 0, 0, 0.02); text-align: center; }
+
+.alen_modal_overlay { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
+
+
+.ser_datebox { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
+.ser_datebox input[type=date] { width:45%; height:40px; line-height:40px; border:none; box-sizing:border-box; text-align:center;  }
+
+.ser_2box { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
+.ser_2box input[type=radio] { display:none; margin:10px; }
+.ser_2box input[type=radio] + label { float:left; padding:10px 0; width:50%; background:#fff; font-size:12px; border-right:1px solid #ddd;}
+.ser_2box input[type=radio] + label.slast_radio { border-right:0; }
+.ser_2box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
+
+.ser_4box { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
+.ser_4box input[type=radio] { display:none; margin:10px; }
+.ser_4box input[type=radio] + label { float:left; padding:10px 0; width:25%; background:#fff; font-size:12px; border-right:1px solid #ddd;}
+.ser_4box input[type=radio] + label.slast_radio { border-right:0; }
+.ser_4box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
+
+.recdetail { max-width:500px; padding:1%; height:90%; top:5% !important; }
+.recdetail .modal_body { height:100%; padding:0; }
+.close_icon { position:absolute; background-image:url(common/close.png); background-repeat:no-repeat; background-size:cover; width:30px; height:30px; left:50%; top:1%; margin-left:-15px; }
+
+.add_box{padding: 12px; border: 1px solid #bbbbbb; background-color: #3e3e3e;}
+.add_box a{color: #e8e8e8;}
+
+.serdivbox{line-height: 30px;float: left;width: 25%;border-right:1px solid #dddddd }
+.serdivbox:last-child{border-right: none;}
+.ser_active{background-color: #f2f2f2 }
+.receipt_a{display: block;}
+
+
+.receipt_details { background:#333333 !important; overflow:visible !important; }
+/*.page-content { padding-top:0 !important; max-width: 450px; margin: 0 auto;} */
+
+.rec_top { position:relative; width:100%; height:40px; border-bottom:1px solid #e5e5e5;  }
+.rec_top .rec_arrow { width:30px; height:40px; position:absolute; z-index:20; top:0px; }
+.rec_top .left_arrow { background:url(common/left.png) no-repeat; left:20px; }
+.rec_top .right_arrow { background:url(common/right.png) no-repeat; right:20px; }
+
+.rtpage_box { background:#333333; margin-bottom:20px; font-size:12px; line-height:1.2em; }
+.rtpage_inbox { background:#fff; padding:15px 15px; border-radius:4px; margin: 20px }
+.rtpage_holl { padding:5px 5px 15px 5px; height:35px; }
+.rtpage_holl div { width:6%; height:100%; margin:0 2%; border-radius:30px; border:1px solid #e5e5e5; float:left; background:#f2f2f2; }
+
+.rt_title { padding:30px 0 20px 0; }
+.rt_title h2 { text-align:center; font-size:2em; font-weight:700; color:#000; clear:both; padding:5px 0 15px 0; }
+.rt_title p { text-align:center; font-size:1em; color:#000; clear:both; }
+
+.rt_txt01 { text-align:left; font-size:1em; color:#666; clear:both; padding:0px 10px; }
+.rt_txt01 span { text-align:right; float:right; }
+
+.rt_tax { text-align:left; font-size:1.3em; font-weight:500; color:#333; clear:both; padding:10px 10px; border-top:1px dashed #aaa;border-bottom:1px dashed #aaa; margin-top:10px;}
+.rt_tax span { text-align:right; float:right; }
+
+.rt_sms { text-align:left; font-size:1.3em; font-weight:500; color:#333; clear:both; padding:10px 10px; border-bottom:1px solid #ddd; margin-top:10px;}
+.rt_sms span { text-align:right; float:right; font-size: 13px;}
+
+.rt_total { text-align:left; font-size:1.5em; font-weight:700; color:#000; clear:both; padding:20px 10px; border-bottom:1px dashed #aaa;  }
+.rt_total span { text-align:right; float:right; }
+
+.rt_orderno { border-bottom:1px dashed #aaa; border-top:1px dashed #aaa; padding:20px 0; margin-top:20px; }
+.rt_orderno p { text-align:center; font-size:1.2em; color:#666; clear:both; }
+.rt_orderno h2 { text-align:center; font-size:1.8em; color:#000; clear:both; padding:5px 0; }
+
+.rt_table { border-top:1px solid #ddd; margin:20px 5px 0px 5px;  }
+.rt_table .rt_tabletitle { border-bottom:1px solid #ddd; background:#fff;}
+.rt_table li { float:left; padding:5px 0; text-align:center; color:#333; }
+.rt_table li.rt_mlat01 { width:45%; }
+.rt_table li.rt_mlat02 { width:20%; }
+.rt_table li.rt_mlat03 { width:10%; }
+.rt_table li.rt_mlat04 { width:25%; text-align:right; padding-right:5px; }
+
+.rt_etc { text-align:left; font-size:1.3em; font-weight:700; color:#333; clear:both; padding:10px 10px; border-bottom:1px dashed #aaa; }
+.rt_etc span { text-align:right; float:right; }
+
+.rt_copy { text-align:center; font-size:0.7em; margin-bottom: 30px; }
+
+.rt_btn { margin-bottom:30px; text-align:center;}
+.rt_email { border-radius:4px; background:#222; color:#fff; text-align:center; padding:8px 10px; width:35%; font-size:13px; margin:0 auto; }
+
+.rt_card{  padding: 10px; color: #232323; font-size: 12px; border-bottom: 1px dashed #aaaaaa; }
+
+.exit_a img{width: 30px;position: absolute;right: 35px;}
+
+.rt_textarea{ width:  100%; height: 110px; border-top: none; border-left: 1px solid #ddd; border-bottom:  1px solid #ddd; border-right:  1px solid #ddd;}
+
+.receipt{background-color: #666}
+</style>
+
+
+<div id="ser_box" class="modal_box">
+    
+    <div class="modal_body">
+    
+        <div class="ser_datebox">
+        <input type="date" id="startDate" onchange="startDateCh()"> - <input type="date" id="endDate" onchange="startDateCh()">
+        </div>
+	
+        <div class="ser_4box">
+        <div id="pays01" class="serdivbox ser_active">전체</div>
+        
+        <div id="pays02" class="serdivbox">카드</div>
+        
+        <div id="pays03" class="serdivbox">현금</div>
+        
+        <div id="pays04" class="serdivbox" style="border-right: none;">기타</div>
+        
+        <hr>
+        </div>
+        
+        <div class="ser_4box">
+        
+        <div id="array01" class="serdivbox ser_active">최신 순</div>
+        
+        <div id="array02" class="serdivbox">과거 순</div>
+        
+        <div id="array03" class="serdivbox">높은금액</div>
+        
+        <div id="array04" class="serdivbox" style="border-right: none;">낮은금액</div>
+        
+        <hr>
+        </div>
+    
+    </div>
+    
+	<footer> 
+		<a href="#" class="cpop_btn cpop_btn_small" id="detailBtn">조회</a> 
+	    <a href="#" class="cpop_btn cpop_btn_small js-modal-close alen_arrow">취소</a> 
+	</footer>
+</div>
+
+<div id="receip_box" class="modal_box recdetail">
+    
+    <div class="close_icon js-modal-close"><a href="#" class="js-modal-close"></a></div>
+    
+    <div class="modal_body">
+		<iframe src="receipt_pop.html" frameborder="0" scrolling="no" width="100%" height="100%" style="padding:0; margin:0;"></iframe>
+    </div>
+
+</div>
+
+<script>
+$(function(){
+
+var appendthis =  ("<div class='alen_modal_overlay js-modal-close'></div>");
+
+	$('[data-modal-id]').click(function(e) {
+		e.preventDefault();
+    $(".pages").append(appendthis);
+    $(".alen_modal_overlay").fadeTo(300, 0.7);
+    //$(".js-modalbox").fadeIn(500);
+		var modalBox = $(this).attr('data-modal-id');
+		$('#'+modalBox).fadeIn($(this).data());
+	});  
+  
+  
+$(".js-modal-close, .alen_modal_overlay").click(function() {
+    $(".modal_box, .alen_modal_overlay").fadeOut(300, function() {
+        $(".alen_modal_overlay").remove();
+    });
+ 
+});
+
+$(".alen_arrow").click(function() {
+	$('input[name="mobilesbox"]:radio[value="detail"]').prop('checked',true);
+});
+ 
+$(window).resize(function() {
+    $(".modal_box").css({
+        top: ($(window).height() - $(".modal_box").outerHeight()) / 2,
+        left: ($(window).width() - $(".modal_box").outerWidth()) / 2
+    });
+});
+ 
+$(window).resize();
+ 
+});
+</script>
+                
+                
+                <div data-page="agree01" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree01.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div data-page="agree03" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div data-page="receipt_details" class="page cached" id="receipt_details">
+                    <div class="page-content">
+                        <div class="content-block">
+
+						<div class="rtpage_box">
+                        	<div class="rtpage_inbox" id ="detailRecData">
+                            </div>
+                        </div>
+                        
+<!-- 						<div class="receipt_box">
+                        	<div class="receipt_inbox" id ="detailRecData">
+                                
+                            </div>
+                        </div> -->
+                        
+                        <div class="mobile_btnbox">
+                            
+                        </div>
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                </div>
+			</div>
+            
+            
+            
+            
+
+		</div>
+    </div>
+
+
+
+<script type="text/javascript" src="../js/framework7.js"></script>
+
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+
+<script type="text/javascript">
+/* history.pushState(null,null,location.href);
+window.onpopstate = function(event){
+	if(pageCnt==0){
+		history.back();
+	}else{
+		pageCnt = 0;
+		location.reload();
+	}
+} */
+
+var pageCnt = 0;
+
+var request = new Request();
+
+var telNo = request.getParameter('telNo');
+var uuId = request.getParameter('uuId');
+var selMobTab ="";
+var seq = "";
+var array = new Array();
+commonUserData();	
+
+	
+
+
+
+function whenError(request,status,error){
+	//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+};	
+
+</script>
+
+</body>
+</html>
