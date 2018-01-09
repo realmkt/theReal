@@ -27,6 +27,12 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public Map<String, Object> selectBoardList(Map<String, Object> map) throws Exception {
 		return receiptDAO.selectBoardList(map);
 	}
+	
+	@Override
+	public String getCi(Map<String, Object> map) throws Exception {
+		String result = receiptDAO.getCi(map); 
+		return result;
+	}
 
 	@Override
 	public void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception {
@@ -267,6 +273,14 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public Map<String, Object> lgnChk(HashMap<String, String> map) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<Map<String, Object>> list = receiptDAO.lgnChk(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+	
+	@Override
+	public Map<String, Object> lgnChk2(HashMap<String, String> map) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.lgnChk2(map);
 		resultMap.put("resultMap", list);
 		return resultMap;
 	}
@@ -641,6 +655,12 @@ public class ReceiptServiceImpl implements ReceiptService {
 	}
 	
 	@Override
+	public Integer joinChk(HashMap<String, Object> map) throws Exception {
+		Integer result = receiptDAO.joinChk(map); 
+		return result;
+	}
+	
+	@Override
 	public void couponUsing(HashMap<String, Object> map) {
 		receiptDAO.couponUsing(map); 
 	}
@@ -716,6 +736,22 @@ public class ReceiptServiceImpl implements ReceiptService {
 	@Override
 	public void lastEmailUpdate(Map<String, Object> emailMap) {
 		receiptDAO.lastEmailUpdate(emailMap);
+	}
+	
+	@Override
+	public Map<String, Object> affliate() {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+	      List<Map<String, Object>> list = receiptDAO.affliate();
+	      resultMap.put("resultMap", list);  
+	      return resultMap;  
+	}
+
+	@Override
+	public Map<String, Object> affliateDetail(String affliate_no) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+	      List<Map<String, Object>> list2 = receiptDAO.affliateDetail(affliate_no);
+	      resultMap.put("resultMap", list2);  
+	      return resultMap;  
 	}
 
 	

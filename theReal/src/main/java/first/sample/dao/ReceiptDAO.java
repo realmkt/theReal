@@ -15,6 +15,11 @@ public class ReceiptDAO extends AbstractDAO{
 	public Map<String, Object> selectBoardList(Map<String, Object> map) throws Exception{
 		return selectPagingList("sample.selectBoardList", map);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public String getCi(Map<String, Object> map) {
+		return (String) selectOne("sample.getCi", map);
+	}
 
 	public void insertBoard(Map<String, Object> map) throws Exception{
 		insert("sample.insertBoard", map);
@@ -209,6 +214,11 @@ public class ReceiptDAO extends AbstractDAO{
 	public List<Map<String, Object>> lgnChk(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
 		return selectList("sample.lgnChk", map);
+	}
+	
+	public List<Map<String, Object>> lgnChk2(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return selectList("sample.lgnChk2", map);
 	}
 	
 	public List<Map<String, Object>> getId(HashMap<String, String> map) {
@@ -477,6 +487,12 @@ public class ReceiptDAO extends AbstractDAO{
 		update("sample.couponUsing", map);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Integer joinChk(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return (Integer) selectOne("sample.joinChk", map);
+	}
+	
 	//uplus
 	
 	@SuppressWarnings("unchecked")
@@ -524,6 +540,15 @@ public class ReceiptDAO extends AbstractDAO{
 		return (Map<String, Object>) selectOne("sample.smsDetailData", map);
 	}
 	
+	public List<Map<String, Object>> affliate() {
+		// TODO Auto-generated method stub
+		return selectList("sample.affliate");
+	}
+
+	public List<Map<String, Object>> affliateDetail(String affliate_no) {
+		// TODO Auto-generated method stub
+		return selectList("sample.affliateDetail", affliate_no);
+	}
  
 	
 	

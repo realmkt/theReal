@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface ReceiptService {
 
+	String getCi(Map<String, Object> map) throws Exception;
+	
 	Map<String, Object> selectBoardList(Map<String, Object> map) throws Exception;
 
 	void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception;
@@ -73,12 +75,14 @@ public interface ReceiptService {
 	void insertSmsData(HashMap<String, Object> map) throws Exception;
 
 	void appMemberInsert(Map<String, Object> map) throws Exception;
-
+	
 	void telNumInit(Map<String, Object> map) throws Exception;
 
 	void appMemberUpdate(Map<String, Object> map) throws Exception;
 
 	Map<String, Object> lgnChk(HashMap<String, String> map);
+	
+	Map<String, Object> lgnChk2(HashMap<String, String> map);
 
 	Map<String, Object> getId(HashMap<String, String> map);
 
@@ -197,6 +201,8 @@ public interface ReceiptService {
 	
 	void couponUsing(HashMap<String, Object> map);
 	
+	Integer joinChk(HashMap<String, Object> map) throws Exception;
+	
 	
 	/* uplus */
 	
@@ -223,5 +229,9 @@ public interface ReceiptService {
 	void lastEmailUpdate(Map<String, Object> emailMap);
 
 	Map<String, Object> smsDetailData(Map<String, Object> map) throws Exception;
+
+	Map<String, java.lang.Object> affliate();
+
+	Map<String, java.lang.Object> affliateDetail(String affliate_no);
 	
 }

@@ -165,6 +165,10 @@ public class SmsParse {
 						if(smsStr[i].matches(".*[(][0-9][*].*") && !((smsStr[i].contains("승인")) || (smsStr[i].contains("취소")))){
 							
 						}
+						//버려야할 데이터
+						else if(smsStr[i].contains("적립예정")){
+						
+						}
 						else if(smsStr[i].contains("지급가능액")){ }//우리카드 체크카드 "지급가능액" 남은금액이므로 분리할필요 x 
 						//카드 승인&취소 건
 						else if(smsStr[i].contains("승인") && !(smsStr[i].contains("취소"))){
@@ -258,6 +262,12 @@ public class SmsParse {
 					if(smsStr[i].matches(".*[(][0-9][*].*") && !((smsStr[i].contains("승인")) || (smsStr[i].contains("취소"))))
 					{   }
 					
+					//버려야할 데이터
+					else if(smsStr[i].contains("적립예정")){
+						
+					}
+					
+					
 					//카드 승인&취소 건
 					else if(smsStr[i].contains("승인") && !(smsStr[i].contains("취소"))){
 						insertMap.put("CARD_APP_DIV", "승인");
@@ -309,7 +319,7 @@ public class SmsParse {
 					
 					//상호명
 					else{
-						if(i!=0){
+						if(i!=0 && !smsStr[i].equals("체크")){
 							app_co += smsStr[i]+" ";
 							insertMap.put("APP_CO", app_co);
 							}
@@ -680,7 +690,7 @@ public class SmsParse {
 					
 					//상호명
 					else{
-						if(i!=0){
+						if(i!=0 && !smsStr[i].equals("누적")){
 							app_co += smsStr[i]+" ";
 							insertMap.put("APP_CO", app_co);
 							}
@@ -722,7 +732,7 @@ public class SmsParse {
 					
 					if(smsStr[i].matches("^.[롯데][0-9][*][0-9][*]$")){ }
 					//카드 승인&취소 건
-					if(smsStr[i].contains("승인") && !(smsStr[i].contains("취소"))){
+					else if(smsStr[i].contains("승인") && !(smsStr[i].contains("취소"))){
 						insertMap.put("CARD_APP_DIV", "승인");
 					}
 					else if(smsStr[i].contains("취소")){

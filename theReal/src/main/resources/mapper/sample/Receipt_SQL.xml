@@ -3,6 +3,21 @@
 
 <mapper namespace="sample">
 	
+    
+    <select id="getCi" parameterType="hashmap" resultType="String">
+		<![CDATA[
+		SELECT
+			USER_CI
+		FROM
+			TB_USER
+		WHERE
+			TEL_NO = #{telNo}
+		AND
+			EMAIL != 'UPLUS' 
+		]]>
+	</select>
+	
+    
 	<select id="selectBoardList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		SELECT
@@ -619,7 +634,8 @@
 		<![CDATA[
 			INSERT INTO 
 				TB_USER_DATA
-					(
+					(	
+						USER_CI					,
 						USER_KEY				,
 						SALES_BARCODE           ,
 						ETC_MEMO	            ,
@@ -674,6 +690,7 @@
 					)
 					VALUES
 					(
+						#{CI}					,
 						#{userKey}				,
 						#{salesBarCode}			,
 						#{memo}            	 	,
@@ -737,6 +754,7 @@
 			INSERT INTO 
 				TB_USER_DATA_DETAIL
 					(
+					USER_CI				,
 					USER_KEY			,
 					SALES_SEQ_NO		,
 					SALES_BARCODE		,
@@ -759,6 +777,7 @@
 					)
 				VALUES
 					(
+					#{CI}   	        ,
 					#{userKey}          ,
 					#{seqNo}            ,
 					#{salesBarCode}     ,
@@ -790,6 +809,7 @@
 			INSERT INTO 
 				TB_SMS_MASTER
 					(
+					USER_CI 			,
 					REC_TEN_NO			,
 					SEND_TEN_NO			,	
 					APP_DT				,
@@ -807,18 +827,19 @@
 					)
 				VALUES
 					(
-					#{REC_TEN_NO}          ,
-					#{SEND_TEN_NO}            ,
-					#{APP_DT}     ,
-					#{APP_CO}            ,
-					#{CARD_APP_DIV}           ,
-					#{CARD_APP_CO}           ,
-					#{ACC_SUM_AMOUNT}              ,
+					#{CI} 				,
+					#{REC_TEN_NO}     	,
+					#{SEND_TEN_NO}    	,
+					#{APP_DT}     		,
+					#{APP_CO}       	,
+					#{CARD_APP_DIV}   	,
+					#{CARD_APP_CO}    	,
+					#{ACC_SUM_AMOUNT} 	,
 					#{INST_DIV}			,	
-					#{APP_AMOUNT}            ,
-					#{APP_CO_DIV}            ,
+					#{APP_AMOUNT}     	,
+					#{APP_CO_DIV}     	,
 					now()               ,
-					#{REC_TEN_NO}          ,
+					#{REC_TEN_NO}      	,
 					now()				,
 					#{REC_TEN_NO}          
 					)
@@ -831,9 +852,8 @@
 		<![CDATA[
 			INSERT INTO TB_USER
 			(
-				UUID		,
-				PWD		,
-				EMAIL		    ,
+				UUID			,
+				USER_CI			,
 				TEL_NO		    ,
 				USER_NM	        ,
 				USER_RRN	    ,
@@ -843,20 +863,19 @@
 				FRT_CREA_DTM	,
 				FRT_REGN_NM		,
 				FNL_MOF_DTM	    ,
-				FNL_MDF_NM,
-				PUSH_KEY				,
+				FNL_MDF_NM		,
+				PUSH_KEY		,
 				PUSH_YN
 			)
 			VALUES 
 			(
 				#{uuId},
-				#{pwd},
-				#{eMail},
-				#{telNo},
-				#{userNm},
-				#{birthDay},  
-				#{sex},
-				#{tService},
+				#{CI},
+				#{mbphnNo},
+				#{name},
+				#{birthday},  
+				#{gender},
+				#{comCd},
 				#{nation},
 			    now(), 
 			    'Admin',
@@ -903,6 +922,8 @@
 				USER_KEY = #{telNo}
 		]]>
 	</update>
+	
+	
 
 		<update id="latestUpdateData" parameterType="hashmap">
 		<![CDATA[
@@ -925,10 +946,18 @@
 		<![CDATA[
 			UPDATE TB_USER 
 			SET
-				PUSH_KEY 				#{pushKey}
+				UUID 		=	#{uuId},
+				TEL_NO 		=	#{mbphnNo},
+				USER_NM		=	#{name},
+				USER_RRN	=	#{birthday},
+				SEX_DIV_CD 	=	#{gender},
+				TEL_COM_CD 	=	#{comCd},
+				LOCAL_DIV_CD=	#{nation},
+				PUSH_KEY	=	#{pushKey},
+				USER_STATE_CHANGE	=	now()
 			WHERE
-				TEL_NO = #{telNo}
-		]]>
+				USER_CI = #{CI}
+ 			]]>
 	</update>
 	
 	
@@ -944,6 +973,22 @@
 			EMAIL = #{eMail}
 		AND
 			PWD = #{pwd}
+		]]>
+	</select>	
+	
+	<select id="lgnChk2" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			TEL_NO,
+			UUID,
+			USER_CI,
+			USER_STATE
+		FROM
+			TB_USER
+		WHERE 
+			USER_CI = #{CI}
+		AND
+			TEL_NO = #{telNo}
 		]]>
 	</select>		
 	
@@ -987,7 +1032,7 @@
 		FROM
 			TB_USER	
 		WHERE
-			TEL_NO = #{telNo}
+			USER_CI = #{CI}
 		AND
 			EMAIL != 'UPLUS'
 		AND
@@ -1208,7 +1253,7 @@
 		<select id="latestData" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		SELECT
-			x.TEL_NO
+			x.USER_CI
 			,x.FNL_MOF_DTM
 			,x.FRT_CREA_DTM
 			,x.SHOP_NAME
@@ -1241,7 +1286,7 @@
 		FROM
 		(
 			SELECT 
-				A.USER_KEY AS TEL_NO
+				A.USER_CI AS USER_CI
 				,CAST(A.FRT_CREA_DTM AS DATE) AS SALES_PRINT_DATE
 				,A.FNL_MOF_DTM AS FNL_MOF_DTM
 				,A.FRT_CREA_DTM AS FRT_CREA_DTM
@@ -1275,16 +1320,14 @@
 				TB_USER_DATA A 
 				,TB_USER C
 			WHERE
-				A.USER_KEY = #{telNo}
+				A.USER_CI = #{CI}
 			AND 
-				C.TEL_NO = #{telNo}
-			AND 		
-				C.TEL_NO = A.USER_KEY
+				C.USER_CI = #{CI}
 			AND
 				C.EMAIL != 'UPLUS'
 			UNION
 			SELECT 
-				B.REC_TEN_NO AS TEL_NO
+				B.USER_CI AS USER_CI
 				,CAST(B.FRT_CREA_DTM AS DATE) AS SALES_PRINT_DATE
 				,B.FNL_MOF_DTM AS FNL_MOF_DTM
 				,B.FRT_CREA_DTM AS FRT_CREA_DTM
@@ -1319,7 +1362,7 @@
 				TB_SMS_MASTER B
 		)x
 		where
-			x.TEL_NO = #{telNo}
+			x.USER_CI = #{CI}
 		]]>
 		<choose>
              <when test="'Y'.equals(dateSrchCd)">
@@ -1496,7 +1539,7 @@
 		WHERE
 			SMS_NO = #{seq}
 		AND
-			REC_TEN_NO = #{telNo}
+			USER_CI = #{CI}
 		]]>
 	</select>	
 	
@@ -1527,10 +1570,12 @@
 			,x.CARD_ICOM
 			,x.SALES_PRINT_DATE
 			,x.FRT_CREA_DTM
+			,x.USER_CI
 		FROM
 		(
 			SELECT 
 				A.USER_KEY AS TEL_NO
+				,A.USER_CI
 				,A.SHOP_NAME AS SHOP_NAME
 				,A.SALES_SUM_ALL_AMT AS SALES_SUM_ALL_AMT
 				,A.CARD_ICOM AS CARD_ICOM
@@ -1539,10 +1584,11 @@
 			FROM 
 				TB_USER_DATA A 
 			WHERE
-				A.USER_KEY = #{telNo}
+				A.USER_CI = #{CI}
 			UNION
 			SELECT 
 				B.REC_TEN_NO AS TEL_NO
+				,B.USER_CI
 				,B.APP_CO AS SHOP_NAME
 				,B.APP_AMOUNT AS SALES_SUM_ALL_AMT
 				,B.CARD_APP_CO AS CARD_ICOM
@@ -1551,7 +1597,7 @@
 			FROM TB_SMS_MASTER B
 		)x
 		WHERE
-			x.TEL_NO = #{telNo}
+			x.USER_CI = #{CI}
 		ORDER BY x.FRT_CREA_DTM DESC
 		LIMIT 0,3
 		]]>
@@ -1568,7 +1614,7 @@
 		FROM
 			TB_USER	
 		WHERE
-			TEL_NO= #{telNo}
+			USER_CI= #{CI}
 		AND
 			EMAIL != 'UPLUS'
 		]]>
@@ -1582,7 +1628,7 @@
 		FROM
 			TB_USER_DATA
 		WHERE
-			USER_KEY = #{telNo}
+			USER_CI= #{CI}
 		AND
 			EMAIL != 'UPLUS'
 		]]>
@@ -1598,7 +1644,7 @@
 		FROM
 			TB_SMS_MASTER
 		WHERE
-			REC_TEN_NO = #{telNo}
+			USER_CI = #{CI}
 		]]>
 	</select>		
 		
@@ -1608,8 +1654,8 @@
 			A.* ,
 			B.*
 		FROM 
-			(SELECT COUNT(SEQ) AS TOTAL_CNT FROM TB_USER_DATA WHERE USER_KEY = #{telNo} AND substring(SALES_PRINT_DATE, 1, 8) BETWEEN #{endDate} AND #{startDate} AND EMAIL != 'UPLUS')A,
-			(SELECT COUNT(SEQ) AS TOTAL_NO_READ_CNT FROM TB_USER_DATA WHERE REC_VIEW_YN = 'N' AND USER_KEY = #{telNo} AND substring(SALES_PRINT_DATE, 1, 8) BETWEEN #{endDate} AND #{startDate} AND EMAIL != 'UPLUS' )B			
+			(SELECT COUNT(SEQ) AS TOTAL_CNT FROM TB_USER_DATA WHERE USER_CI = #{CI} AND substring(SALES_PRINT_DATE, 1, 8) BETWEEN #{endDate} AND #{startDate} AND EMAIL != 'UPLUS')A,
+			(SELECT COUNT(SEQ) AS TOTAL_NO_READ_CNT FROM TB_USER_DATA WHERE REC_VIEW_YN = 'N' AND USER_CI = #{CI} AND substring(SALES_PRINT_DATE, 1, 8) BETWEEN #{endDate} AND #{startDate} AND EMAIL != 'UPLUS' )B			
 		]]>
 	</select>		
 	
@@ -2430,9 +2476,20 @@
 			AND
 				USER_KEY = #{telNo}
 		]]>
-		    
-		    
 		</update>
+		
+		<select id="joinChk" parameterType="hashmap" resultType="Integer">
+		    <![CDATA[
+		    	SELECT 
+					COUNT(USER_CI)
+		 		FROM 
+		 			TB_USER
+				WHERE 	
+					USER_CI= #{CI}
+		    ]]>
+		</select>
+		    
+		    
 		
 		<update id="couponDounUp" parameterType="hashmap">
 		    <![CDATA[
@@ -2692,6 +2749,7 @@
 		<![CDATA[
 			SELECT 
 				SALES_BARCODE,
+				USER_CI,
 				USER_KEY,
 				SHOP_NAME,
 				SHOP_BIZNO,
@@ -2715,7 +2773,10 @@
 				CARD_ICOM,
 				CARD_NO,
 				EMAIL,
-				POINT_CARD
+				POINT_CARD,
+				POINT_ICOM,
+				POINT_TYPE,
+				POINT_AMT
 			FROM
 				TB_USER_DATA
 			]]>
@@ -2750,6 +2811,7 @@
 				SELECT
 			SALES_BARCODE	,
 			SALES_SEQ_NO	,
+			USER_CI	    	,
 			USER_KEY	    ,
 			SALES_PNAME	    ,
 			SALES_PPRICE	,
@@ -2788,6 +2850,7 @@
 		<select id="getDetailReceipt" parameterType="hashmap" resultType="hashmap">
 			<![CDATA[
 		SELECT
+			USER_CI			,
 			SALES_BARCODE	,
 			SALES_SEQ_NO	,
 			USER_KEY	    ,
@@ -2874,10 +2937,48 @@
 	   		SET 
 	   			LAST_EMAIL = #{email} 
 	   		WHERE 
-	   			TEL_NO = #{telNo} 
+	   			USER_CI = #{CI} 
 	   		AND 
 	   			EMAIL != 'UPLUS' 
 	    ]]>
 	</update>
+	
+	<select id="affliate" resultType="hashmap">
+	    <![CDATA[
+	    	SELECT 
+	    		AFFLIATE_NO, 
+	    		AFFLIATE_NM, 
+	    		FRANCHISEE, 
+	    		M_DIV_CD, 
+	    		SHOP_NAME, 
+	    		ROAD_ADDR, 
+	    		AFFLIATE_EXPLAIN, 
+	    		AFFLIATE_IMAGE, 
+	    		AFFLIATE_STAR
+	    	FROM 
+	    		TB_AFFLIATE_MASTER_A 
+	    ]]>
+	</select>
+	
+	<select id="affliateDetail" parameterType="String" resultType="hashmap">
+	    
+	    <![CDATA[
+	    	SELECT 
+	    		AFFLIATE_NM, 
+	    		M_DIV_NM, 
+	    		D_DIV_NM, 
+	    		ROAD_ADDR, 
+	    		JIBUN_ADDR, 
+	    		SHOP_BRANCH, 
+	    		AFF_DETAIL_TIME, 
+	    		AFF_DETAIL_MENU, 
+	    		AFF_DETAIL_EXPLAIN, 
+	    		AFF_DETAIL_IMAGE
+	    	FROM 
+	    		TB_AFFLIATE_MASTER 
+	    	WHERE 
+	    		AFFLIATE_NO = #{AFFLIATE_NO}
+	    ]]>
+	</select>
 		
 </mapper>

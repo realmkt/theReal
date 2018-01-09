@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,6 +76,20 @@ public class ReceiptController {
 	// private Object reqJsonObj;
 	int i = 0;   
 
+	/*
+	 * 버전 체크
+	 */
+	@RequestMapping(value = "/receipt/versionChk.do")
+	public Object versionChk(CommandMap commandMap) throws Exception {
+		String version = (String)commandMap.get("version");
+		int result = 1;
+		//허용 가능 버전
+		String[] usingVersion = {"v0.0.1","v0.0.2"};
+		
+		return result;
+	}
+	
+	
 	/*
 	 * 샘플 게시판 리스트 화면
 	 */
@@ -837,15 +852,15 @@ public class ReceiptController {
 		JSONObject json = new JSONObject();
 		String date = (String)commandMap.get("date");
 		date = date.substring(0, 4)+"-"+date.substring(4);
-		String telNo = (String)request.getParameter("telNo");
+		String CI = (String)request.getParameter("CI");
 		
 		System.out.println("DATE::::::::::::::"+request.getParameter("telNo")+date);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("date", date);		
-		map.put("telNo", telNo);
-		String eMailChk = receiptService.eMailChk(telNo);
+		map.put("telNo", CI);
+		String eMailChk = receiptService.eMailChk(CI);
 		
 		HashMap<String, Object> resultMap = receiptService.monthAllDate(map);
 		
@@ -1633,11 +1648,20 @@ public class ReceiptController {
 			 * 회원이메일을 가져오기 위한 로직 추가
 			 */
 			log.debug("cancle resultMap :: "+var.toString());
-			
+			telNo = var.find("userKey").toString();
+			Map<String, Object> telMap = new HashMap<>();
+			telMap.put("telNo", telNo);
+			System.out.println("---------------------11----------------------");
+			System.out.println("----------------------11---------------------");
+			String CI = (String) receiptService.getCi(telMap);
+			System.out.println("-------------------------------------------");
+			System.out.println("-------------------------------------------");
 			if( var.find("salesInfo.salesType").toString().equals("RCP02")){
 				log.debug("====================================================");
 				log.debug("■■■■■■■■■■■■■■■■■RCP02 전자영수증 취소건■■■■■■■■■■■■■■■■■■");
-				String eMailChk = receiptService.eMailChk(telNo);
+				
+ 				String eMailChk = receiptService.eMailChk(telNo);
+				
 				HashMap<String,Object> cancleMap = new HashMap<String,Object>();
 				
 				log.debug(var);
@@ -1651,6 +1675,7 @@ public class ReceiptController {
 				uplusUserKey = (String)resultMap.get("UPLUS_USER_KEY");
 				
 				System.out.println("가져왔는가~" + resultMap);
+				resultMap.put("CI", CI);
 				resultMap.put("userKey", telNo);
 				resultMap.put("salesType", "RCP02");
 				resultMap.put("uplusUserKey", uplusUserKey);
@@ -1715,6 +1740,7 @@ public class ReceiptController {
 				for (int i = 0; i < detailList.size(); i++) {
 					HashMap<String, Object> temp = (HashMap<String, Object>) detailList.get(i);
 					
+					temp.put("CI", CI);
 					temp.put("uplusUserKey", uplusUserKey);
 					temp.put("shopBizNo", temp.get("SHOP_BIZNO"));
 					temp.put("salesBarCode", temp.get("SALES_BARCODE")+"P02");
@@ -1740,9 +1766,7 @@ public class ReceiptController {
 				log.debug("====================================================");
 				log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■■■■■■");
 			
-			telNo = var.find("userKey").toString();
 			uplusUserKey= receiptService.uPlusChk(telNo);
-			
 			
 				 
 			if(!(telNo == "" || telNo == null)){
@@ -1807,7 +1831,7 @@ public class ReceiptController {
 			
 			map.put("uplusUserKey", uplusUserKey);
 			map.put("eMail", eMailChk);
-
+			map.put("CI", CI);
 			map.put("salesType", var.find("salesInfo.salesType").toString());
 			map.put("memo", var.find("etcInfo.memo").toString());
 			map.put("event", var.find("etcInfo.event").toString());
@@ -2205,7 +2229,8 @@ public class ReceiptController {
 			log.debug("sendTelNo:" + sendTelNo);
 			log.debug("message:" + var.find("message").toString());
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			
+			map.put("telNo", recTelNo);
+			String CI = receiptService.getCi(map);
 			
 			
 			map.put("REC_TEN_NO", recTelNo);
@@ -2272,6 +2297,19 @@ public class ReceiptController {
 		Map<String, Object> resultMap = receiptService.lgnChk(map);
 		return resultMap;
 	}
+	
+	@RequestMapping(value = "/receipt/lgnChk2.do")
+	@ResponseBody
+	public Object lgnChk2(CommandMap commandMap) throws Exception {
+
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("CI", (String) commandMap.get("CI"));
+		map.put("telNo", (String) commandMap.get("telNo"));
+		// Integer resultInt = receiptService.lgnChk(map);
+		Map<String, Object> resultMap = receiptService.lgnChk2(map);
+		return resultMap;
+	}
+
 
 	@RequestMapping(value = "/receipt/getId.do")
 	@ResponseBody
@@ -2348,6 +2386,7 @@ public class ReceiptController {
 		log.debug("commandMap:" + commandMap);
 		System.out.println("commandMap:" + commandMap);
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		System.out.println("UUID ::: " + (String) commandMap.get("uuId"));
 		map.put("userNm", commandMap.get("userNm"));
 		map.put("eMail", commandMap.get("eMail"));
 		map.put("birthDay", commandMap.get("birthDay"));
@@ -2366,7 +2405,7 @@ public class ReceiptController {
 		} catch (Exception e) {
 			resultInt = 0;
 			// TODO: handle exception
-		}
+		} 
 		return resultInt;
 	}
 
@@ -2393,7 +2432,7 @@ public class ReceiptController {
 	@ResponseBody
 	public Object startCurData(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("telNo", commandMap.get("telNo"));
+		map.put("CI", commandMap.get("CI"));
 
 		Map<String, Object> resultMap = receiptService.startCurData(map);
 		resultMap.put("code", "OK");
@@ -2405,7 +2444,7 @@ public class ReceiptController {
 	@ResponseBody
 	public Object startUserData(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("telNo", commandMap.get("telNo"));
+		map.put("CI", commandMap.get("CI"));
 
 		Map<String, Object> resultMap = receiptService.startUserData(map);
 		resultMap.put("code", "OK");
@@ -2417,7 +2456,7 @@ public class ReceiptController {
 	@ResponseBody
 	public Object startSumData(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("telNo", commandMap.get("telNo"));
+		map.put("CI", commandMap.get("CI"));
 		map.put("startDate", commandMap.get("startDate"));
 		map.put("endDate", commandMap.get("endDate"));
 
@@ -2433,7 +2472,7 @@ public class ReceiptController {
 	@ResponseBody
 	public Object startRecYnData(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("telNo", commandMap.get("telNo"));
+		map.put("CI", commandMap.get("CI"));
 		map.put("startDate", commandMap.get("startDate"));
 		map.put("endDate", commandMap.get("endDate"));
 
@@ -2502,7 +2541,7 @@ public class ReceiptController {
 	@ResponseBody
 	public Object latestData(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("telNo", commandMap.get("telNo"));
+		map.put("CI", commandMap.get("CI"));
 		System.out.println("dateSrchCd" + commandMap.get("dateSrchCd"));
 		System.out.println("startDay" + commandMap.get("startDay"));
 		System.out.println("endDay" + commandMap.get("endDay"));
@@ -2593,15 +2632,12 @@ public class ReceiptController {
 			date = date.substring(0, 4)+"-"+date.substring(4, 6)+"-"+date.substring(6, 8)+" "+date.substring(8, 10)+":"+date.substring(10, 12)+":"+date.substring(12, 14);
 			resultMap.put("salesDate", date);
 			
-			
-			
 		}else{
-			map.put("telNo", (String)commandMap.get("telNo"));
+			map.put("CI", (String)commandMap.get("CI"));
 			map.put("type", (String)commandMap.get("type"));
 			map.put("seq", (String)commandMap.get("seq"));
 			
 			resultMap = receiptService.smsDetailData(map);
-			
 			
 			System.out.println("sms result" + resultMap);
 		}
@@ -2614,15 +2650,6 @@ public class ReceiptController {
 			
 		return resultMap;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 
@@ -2766,17 +2793,20 @@ public class ReceiptController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/receipt/KcbVerification.do")
-	public int KcbVerification(HttpServletRequest request, HttpServletResponse response, CommandMap commandMap)
+	public Object KcbVerification(HttpServletRequest request, HttpServletResponse response, CommandMap commandMap)
 			throws IOException, ParseException {
 
-		String svcTxSeqno = (String) commandMap.get("smsSvcTxSeqno");
-		String mbphnNo = (String) commandMap.get("smsMbphnNo");
+		
+		String encCi ="";
+		
+		String svcTxSeqno = (String) commandMap.get("svcTxSeqno");
+		String mbphnNo = (String) commandMap.get("mbphnNo");
 		String smsCertNo = (String) commandMap.get("smsCertNo");
-		String memId = (String) commandMap.get("smsMemId");
-		String serverIp = (String) commandMap.get("smsServerIp");
-		String endPointUrl = (String) commandMap.get("smsEndPointURL");
-		String logPath = (String) commandMap.get("smsLogPath");
-		String options = (String) commandMap.get("smsOption");
+		String memId = (String) commandMap.get("memId");
+		String serverIp = (String) commandMap.get("serverIp");
+		String endPointUrl = (String) commandMap.get("endPointURL");
+		String logPath = (String) commandMap.get("logPath");
+		String options = (String) commandMap.get("option");
 
 		log.debug("svcTxSeqno==" + svcTxSeqno);
 		log.debug("mbphnNo==" + mbphnNo);
@@ -2801,6 +2831,9 @@ public class ReceiptController {
 		List result = new ArrayList(); // 인증결과
 		log.debug("결과값 리스트==" + result);
 		int ret = -999; // 프로세스 리턴값
+		Integer resCode = 0;
+		Integer joinType =0;
+		String CI = null;
 		try {
 			kcb.jni.Okname okname = new kcb.jni.Okname();
 			ret = okname.exec(cmd, result);
@@ -2815,7 +2848,11 @@ public class ReceiptController {
 				log.debug("결과값 CI값 		==" + (String) result.get(5));
 			} else {
 				java.text.DecimalFormat dcf = new java.text.DecimalFormat("000");
+				retcode = (String) result.get(0);
 				log.debug("결과값 리스트222==" + result);
+				
+				log.debug("dcf ::::"+dcf);
+				log.debug("retcode ::::"+retcode);
 
 				if (ret <= 200) {
 					retcode = "B" + dcf.format(ret);
@@ -2823,23 +2860,72 @@ public class ReceiptController {
 				} else {
 					retcode = "S" + dcf.format(ret);
 				}
+				log.debug("retcode22 ::::"+retcode);
 			}
+			
+			CI = (String) result.get(5);
+			System.out.println("CI :: " + CI);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			
+
+			encCi = URLEncoder.encode(CI, "UTF-8");
+
+			System.out.println("원래 키 	: " + CI);
+			System.out.println("인코딩 키 	: " + encCi);
+			System.out.println("디코딩 키 	: " + URLDecoder.decode(encCi, "UTF-8"));
+			
+			
+			
+			map.put("CI", encCi);
+			
+			int joinChk = (Integer)receiptService.joinChk(map);
+			
+			
+			if(retcode.equals("B000")){
+				resCode = 1;
+				
+				map.put("mbphnNo", mbphnNo);
+				map.put("name", (String) commandMap.get("name"));
+				map.put("birthday", (String) commandMap.get("birthday"));
+				map.put("gender", (String) commandMap.get("gender"));
+				map.put("nation", (String) commandMap.get("nation"));
+				map.put("comCd", (String) commandMap.get("comCd"));
+				map.put("uuId", (String) commandMap.get("uuId"));
+				map.put("pushKey", (String) commandMap.get("pushKey"));
+				if(joinChk < 1 ){
+					System.out.println("신규 가입자 입니다.");
+					joinType = 0;
+					receiptService.appMemberInsert(map);
+					System.out.println("신규 회원 가입이 완료되었습니다.");
+				
+				}else if(joinChk >= 1 ){
+					System.out.println("기존 가입된 회원입니다. 로그인 및 데이터 동기화 실행");
+					joinType = 1;
+					receiptService.appMemberUpdate(map);
+					System.out.println("로그인이 완료되었습니다.");
+				}
+			}else{
+				resCode = 0;
+			}
+			
 			log.debug("retcode값확인==" + retcode);
 		}
 
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		Integer resCode;
 
-		if (retcode.equals("B000")) {
-			resCode = 1;
-		} else {
-			resCode = 0;
-		}
-		log.debug("결과값확인==" + resCode);
+		log.debug("결과값확인==" + resCode); 
 
-		return resCode;
+		Map<String, Object> resultMap = new HashMap<String,Object>();
+		
+		resultMap.put("resCode", resCode);
+		resultMap.put("retcode", retcode);
+		resultMap.put("joinType", joinType);
+		resultMap.put("CI", encCi);
+		System.out.println(resultMap.get("CI") + "인코딩된 CI");
+		return resultMap;
 	}
 
 	/**
@@ -4077,7 +4163,7 @@ public class ReceiptController {
 	@SuppressWarnings("unchecked")
 	   @RequestMapping(value = "/receipt/sendMail.do")
 	   @ResponseBody
-	   public void sendMail(@RequestParam(value="barcode[]", required=false) String[] barcode, HttpServletRequest request, String email, CommandMap commandMap, String subject, String content, String telNo) throws Exception{
+	   public void sendMail(@RequestParam(value="barcode[]", required=false) String[] barcode, HttpServletRequest request, String email, CommandMap commandMap, String subject, String content, String CI) throws Exception{
 		  Map<String, Object> userDataMap = new HashMap<String, Object>();
 	      Map<String, Object> userDataDtailMap = new HashMap<String, Object>();
 	      Map<String, Object> telMap = new HashMap();
@@ -4215,11 +4301,11 @@ public class ReceiptController {
 	            
 	            try {
 	            	//진호수정 메일비교 후 지난 이메일 업데이트 
-	            	String emailResult = receiptService.eMailChk(telNo);
+	            	String emailResult = receiptService.eMailChk(CI);
 	            	if(!emailResult.equals(email)){
 	            		Map<String, Object> emailMap = new HashMap<>();
 	            		emailMap.put("email", email);
-	            		emailMap.put("telNo", telNo);
+	            		emailMap.put("CI", CI);
 	            		receiptService.lastEmailUpdate(emailMap);
 	            	}else{
 	            		return;
@@ -4247,6 +4333,36 @@ public class ReceiptController {
 		 
 	}
 	
+	@ResponseBody
+	@RequestMapping(value= "/receipt/affliate.do")
+	public Map<String, Object> affliate(String affliate_no){
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@");
+		
+		
+		if(affliate_no == null ){
+		
+			try {
+				resultMap = receiptService.affliate();
+			
+			} catch (Exception e) {
+				e.getMessage();
+			}
+		
+		}else{
+			
+			try {
+				resultMap = receiptService.affliateDetail(affliate_no);
+			} catch (Exception e) {
+				e.getMessage();
+			}
+		}
+		
+		return resultMap;
+	}
 
 }
 
