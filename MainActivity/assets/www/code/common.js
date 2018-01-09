@@ -1,3 +1,4 @@
+
 $(function () {
 	var $activate_scrollator4 = $('#activate_scrollator4');
 
@@ -24,47 +25,46 @@ $(function () {
 $(document).ready(function(){
 	
  	$(document).on('click','#leftMenuLatest',function(){
- 		location.href='latest.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='latest.html?telNo='+request.getParameter('telNo');
  	});
 /* 	$(document).on('click','#leftMenuHistory',function(){
  		location.href='latest.html?telNo='+request.getParameter('telNo');
  	});*/
 /* 	$(document).on('click','#leftMenuComHistiry',function(){
- 		location.href='household.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='household.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#leftMenuSmsHistory',function(){
- 		location.href='mobile.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='mobile.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
  	});*/
  	/*$(document).on('click','#leftMenuAffliate',function(){
- 		location.href='affliate.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='affliate.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
  	}); */
  	$(document).on('click','#leftMenuComHistiry',function(){
- 		location.href='mobile.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='mobile.html?telNo='+request.getParameter('telNo');
  	}); 	
  	$(document).on('click','#leftMenuEvent',function(){
- 		location.href='event.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='event.html?telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#leftMenuCoupon',function(){
- 		location.href='coupon.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='coupon.html?telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#leftMenuNotice',function(){
- 		location.href='notice.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='notice.html?telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','.alen_logo',function(){
- 		location.href='index.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='index.html?telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#settingBtn',function(){
- 		location.href='setting.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='setting.html?telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#leftMenuLogOut',function(){
 	  	var storage = window.localStorage;
-	  	localStorage.removeItem("id");
-	  	localStorage.removeItem("pw");		
+	  	localStorage.removeItem("CI");
 		location.href='../login.html';
  	});
  	
  	$(document).on('click','#myCoupon',function(){
- 		location.href='couponMy.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='couponMy.html?telNo='+request.getParameter('telNo');
  	});
 	/*   $("#allCheck").on("click",function(){
 alert();
@@ -327,7 +327,7 @@ function commonUserData(){
         type: "post",
         url : commonIp()+"/theReal/receipt/startUserData.do",
         data: {
-        	telNo  	: request.getParameter('telNo'),  
+        	CI  	: window.localStorage.getItem("CI"),  
         },
         success: fn_commonUserData,
         error: fn_whenError
@@ -417,7 +417,7 @@ function fn_commonUserData(resdata){
 }
 
 function fn_whenError(){
-	alert("실패.");
+	//alert("실패.??");
 }
 
 

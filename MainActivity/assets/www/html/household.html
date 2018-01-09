@@ -418,7 +418,7 @@ window.onpopstate = function(event){
 	var date = now.getDate();
 	var request = new Request();
 	var telNo = request.getParameter('telNo');
-	var uuId = request.getParameter('uuId');
+	var CI = request.getParameter('CI');
 
 	var today = new Date();
 	var dd = today.getDate();
@@ -509,11 +509,11 @@ window.onpopstate = function(event){
 		
 		
 		$("#backBtn").click(function(){
-			location.href='household.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+			location.href='household.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
 		})		
 		
 		$(".divPage").click(function(){
-			location.href='mobile.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+			location.href='mobile.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
 		})
 		
 		commonUserData();

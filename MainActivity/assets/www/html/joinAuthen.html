@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>더리얼마케팅 전자영수증</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" media="all" href="../code/layout.css" />
+    <link rel="stylesheet" media="all" href="../code/common.css" />
+
+    <!-- main -->
+	<script src="../code/jquery.bxslider.min.js"></script>
+    <link href="../code/jquery.bxslider.css" rel="stylesheet" />
+    
+    <!-- tab -->
+	<script type='text/javascript' src='../code/tabs.js'></script>
+    
+    <!-- scroll -->
+	<script src="../code/fm.scrollator.jquery.js"></script>
+	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
+    
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="../css/my-app.css">
+    
+    <!-- cordova.js -->
+    <script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../telephonenumber.js"></script>
+    
+	<script src="../code/common.js"></script>
+    
+</head>
+
+<body>
+
+
+    <div class="views">
+		<div class="view view-main">
+        
+        
+            <div class="navbar">
+                
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용 동의</div>
+                </div>
+                
+                
+                <div data-page="agree02" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">고유식별정보동의</div>
+                </div>
+
+                
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+
+                
+                <div data-page="agree04" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">통신사 이용약관</div>
+                </div>
+
+            </div>
+            
+            
+        
+			<div class="pages navbar-through toolbar-through">
+				<input type="hidden" id="uuId">
+                <div data-page="index" class="page">
+
+                    <div class="page-content">
+                    
+                       <div class="join_bar" onclick="back()">
+                          <div class="left">
+                    <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span class="backfont">휴대폰 본인인증</span></a></div>
+                    </div>
+                           
+                       </div>
+                       
+                       <div class="join_title" style="padding:20px 15px 0px 15px;"> 
+                        	본인인증 약관동의</div>
+                        <div class="list-block list-block2">
+            	
+                           
+                            <ul>
+                              <li class="agree_tab">
+                              	<div class="agree_chbox">
+                                    <label class="label-checkbox item-content" style="width:50px;">
+                                    <input type="checkbox" name="subCheck" value="개인정보 수집이용취급위탁 동의">
+                                    <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+                                    </label>
+                                </div>
+                                
+                                <div class="agree_detail">
+                                    <a href="#agree01" class="item-link">
+                                    <div class="item-content">
+                                        <div class="item-inner"> 
+                                        <div class="item-title">개인정보 수집이용취급위탁 동의</div>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </div>
+                                
+                                <hr>
+                              </li>
+                              
+                              
+                              <li class="agree_tab">
+                              	<div class="agree_chbox">
+                                    <label class="label-checkbox item-content" style="width:50px;">
+                                    <input type="checkbox" name="subCheck" value="고유식별정보동의">
+                                    <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+                                    </label>
+                                </div>
+                                
+                                <div class="agree_detail">
+                                    <a href="#agree02" class="item-link">
+                                    <div class="item-content">
+                                        <div class="item-inner"> 
+                                        <div class="item-title">고유식별정보동의</div>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </div>
+                                
+                                <hr>
+                              </li>
+                              
+                              
+                              <li class="agree_tab">
+                              	<div class="agree_chbox">
+                                    <label class="label-checkbox item-content" style="width:50px;">
+                                    <input type="checkbox" name="subCheck" value="본인확인서비스 이용약관">
+                                    <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+                                    </label>
+                                </div>
+                                
+                                <div class="agree_detail">
+                                    <a href="#agree03" class="item-link">
+                                    <div class="item-content">
+                                        <div class="item-inner"> 
+                                        <div class="item-title">본인확인서비스 이용약관</div>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </div>
+                                
+                                <hr>
+                              </li>
+                              
+                              
+                              <li class="agree_tab">
+                              	<div class="agree_chbox">
+                                    <label class="label-checkbox item-content" style="width:50px;">
+                                    <input type="checkbox" name="subCheck" value="통신사 이용약관">
+                                    <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+                                    </label>
+                                </div>
+                                
+                                <div class="agree_detail">
+                                    <a href="#agree04" class="item-link">
+                                    <div class="item-content">
+                                        <div class="item-inner"> 
+                                        <div class="item-title">통신사 이용약관</div>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </div>
+                                
+                                <hr>
+                              </li>
+
+                            </ul>
+                        </div>
+ 
+                       <div class="alen_allcheck" style="margin:0px 20px;">
+                                <label class="label-checkbox item-content">
+                                  <input type="checkbox" name="ks-checkbox" id="allCheck" value="전체약관에 동의 합니다.">
+                                  <div class="item-media"><i class="icon icon-form-checkbox" style="float:left; "></i></div>
+                                  <div class="item-inner">
+                                    <div class="item-title" style="font-size:16px;padding-left:30px;color:#767676;">전체약관에 동의 합니다.</div>
+                                  </div>
+                                </label>
+                            </div>
+                       
+                       <div class="join_title"> 
+                        본인확인인증</div>
+                       
+                    	<div class="join_box">
+                        	<ul>
+                            	<li class="full_input"><input type="text" placeholder="이름" id="userNm"></li>
+                                
+                                
+                            	<li class="full_input"><input type="text" placeholder="생년월일 (ex: 19990101)" id="birthDay"></li>
+                                
+                            	<li>
+                                <div class="alen_radio_box">
+                                    <div class="alen_table_half">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sex" value="1">
+                                      <div class="item-inner">
+                                        <div class="item-title">남자</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    
+                                    <div class="alen_table_half alen_table_last">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="sex" value="0">
+                                      <div class="item-inner">
+                                        <div class="item-title">여자</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    <hr>
+                                
+                                </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        
+                  
+                        
+                    	<div class="join_box">
+                        	<ul>
+                            	<li class="full_input">
+                                <select  id="selectTelCom">
+                                    <option value="01">SKT</option>
+                                    <option value="02">KT</option>
+                                    <option value="03">LGu+</option>
+                                    <option value="04">알뜰폰 SKT</option>
+                                    <option value="05">알뜰폰 KT</option>
+                                    <option value="06">알뜰폰 LGu+</option>
+                                </select>
+                                </li>
+                                
+                            	<li class="full_input"><input type="text" placeholder="휴대폰 번호 ('-'제외)" id="telNo" ></li>
+                                
+                            	<li style="display:none;">
+                                <div class="alen_radio_box">
+                                    <div class="alen_table_quad">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="tservice" value="01">
+                                      <div class="item-inner">
+                                        <div class="item-title">SKT</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    
+                                    <div class="alen_table_quad">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="tservice" value="02">
+                                      <div class="item-inner">
+                                        <div class="item-title">KT</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    
+                                    <div class="alen_table_quad">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="tservice" value="03">
+                                      <div class="item-inner">
+                                        <div class="item-title">U+</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    
+                                    <div class="alen_table_quad alen_table_last">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="tservice" value="04">
+                                      <div class="item-inner">
+                                        <div class="item-title">알뜰폰</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    <hr>
+                                
+                                </div>
+                                </li>
+                                
+                            	<li>
+                                <div class="alen_radio_box">
+                                    <div class="alen_table_half">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="nation" value="1" checked>
+                                      <div class="item-inner">
+                                        <div class="item-title">내국인</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    
+                                    
+                                    <div class="alen_table_half alen_table_last">
+                                    <label class="label-radio item-content">
+                                      <input type="radio" name="nation" value="2">
+                                      <div class="item-inner">
+                                        <div class="item-title">외국인</div>
+                                      </div>
+                                    </label>
+                                    </div>
+                                    <hr>
+                                
+                                </div>
+                                </li>
+                                
+                            	<li>
+                                <div class="alen_table_title">
+                                <div class="tel_btn" id="recNum">인증번호 받기</div>
+                                </div>
+                                
+                                <div class="alen_table_con">
+                                <input type="text" placeholder="인증번호입력" id="smsCertNo" style="width: 70%">
+                                <input type="text" id="certNumView" style="width: 30%" readonly> 
+                                </div>
+                                
+                                <hr>
+                                </li>
+                                
+                            </ul>
+                            
+                            
+                        </div>
+                        
+                        <div class="agree_btnbox"  id="agreeComple">
+                            <div class="agree_btn" >완료</div>
+                        </div>
+                    </div>
+                </div>
+                
+
+
+
+                <div data-page="agree01" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree01.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div data-page="agree02" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree02.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div data-page="agree03" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div data-page="agree04" class="page cached">
+                    <div class="page-content agree_acon">
+                        <div class="content-block">
+						<iframe src="agree04.html" frameborder="0" width="100%" height="100%"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+			</div>
+
+		</div>
+		
+		<div class="alert_body" id="alert_body">
+			<div class="alert_box" id="alert_box">
+				<div class="alert_txt" id="alert_desc">알러트창</div>
+				<div class="alert_btn"><a href="#">확인</a></div>
+			</div>
+		</div>
+    
+    
+    </div>
+
+
+<script type="text/javascript" src="../js/framework7.js"></script>
+
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+</body>
+
+<script type="text/javascript">
+
+//뒤로가기
+var page = true;
+history.pushState(null,null,location.href);
+window.onpopstate = function(event){
+	if(page){
+		history.back();
+	}else{
+		history.pushState(null,null,location.href);
+		page = true;
+		$("#alert_body").fadeOut(10);
+	}
+}
+//전체동의여부 변수값.
+var agreeDiv = false;
+var reSendYn = false;
+//var smsSvcTxSeqno = "";
+var memId = "V27340000000";           
+var serverIp = "x";      
+var siteUrl = "117.52.97.40:80";      
+var siteDomain = "(주)더리얼마케팅"; 
+var endPointURL = "http://safe.ok-name.co.kr/KcbWebService/OkNameService";    
+//var smsEndPointURL ="http://tsafe.ok-name.co.kr:29080/KcbWebService/OkNameService";    
+var logPath = "/LOGS";
+var a = "";
+var year = "";
+var month = "";
+var date = "";
+var hours = "";
+var minutes = "";
+var seconds = "";
+var toDay = "";
+var svcTxSeqno = "";
+var option = "";
+var smsReSndYn = "";
+
+var userNm		= "";
+var birthDay    = "";
+var sex         = "";
+var nation      = "";
+var tService    = "";
+var certNo     = "";
+var telNo       = "";
+var deviceId	= "";
+var userCi		= "";
+var uuId        = "";
+var pushKey = "";
+var CI = "";
+
+var reSndCnt = 0;
+
+
+
+function back(){
+	history.back();
+}
+
+
+$(document).ready(function(){
+	document.addEventListener("deviceready", onDeviceReady, false);
+	
+	
+	$("#recNum").click(function(){
+		var alertStr = "";
+		$("#alert_box").empty();
+		if(reSndCnt == 3){
+			alertStr += '<div class="alert_txt" >재발급 횟수가 초과하였습니다. <br>다시 시도해주세요.</div>';
+			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(2)">확인</a></div>';
+			$("#alert_box").append(alertStr);
+			$("#alert_body").fadeIn(1000);
+			
+			return false;
+		}
+		console.log("@@@pushKey100001@@@"+pushKey);
+	      var ReSendYn = "";
+	      var rsv1 = "0";
+	      var rsv2 = "0";
+	      var rqstMsrCd ="10";  
+	      var rqstCausCd = "00";
+	      var option = "JU";   
+			
+			
+			
+			
+	      telNo = $("#telNo").val();
+	         a  = new Date();   
+	         year  = a.getFullYear();
+	         month = a.getMonth()+1;
+	         date = a.getDate();
+	         hours = a.getHours();
+	         minutes = a.getMinutes();
+	         seconds = a.getSeconds();	      
+	         toDay = String(year)+String(month)+String(date)+String(hours)+String(minutes)+String(seconds);	         
+	         
+	      if(reSendYn){
+	         //재전송시
+	         smsReSndYn = "Y";   
+	         reSndCnt++;
+			 //svcTxSeqno = toDay+($("#telNo").val());
+	      }else{
+	         //최초전송시
+			 svcTxSeqno = toDay+($("#telNo").val());
+			 smsReSndYn = "N";   
+	      }
+	      
+	    //전체 체크박스 갯수 구하기
+			var totalChkLen = $("input[name*='subCheck']").length ;
+			
+			//선택된 체크박스 갯수 구하기
+			var selChkLen = $("input[name*='subCheck']:checked").length ;
+			if(totalChkLen > selChkLen){
+				alertStr += '<div class="alert_txt" >약관 동의해주시기 바랍니다.</div>';
+				alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
+				$("#alert_box").append(alertStr);
+				page=false;
+				$("#alert_body").fadeIn(800);
+				return false;
+			}
+			//isNull함수가 true이면 빈값; 
+			if(isNull($("#userNm").val())){
+				alertStr += '<div class="alert_txt" >이름을 기입해주시기 바랍니다.</div>';
+				alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
+				$("#alert_box").append(alertStr);
+				page=false;
+				$("#alert_body").fadeIn(800);
+				return false;
+			}
+			if(isNull($("#birthDay").val())){
+				alertStr += '<div class="alert_txt" >생년월일을 기입해 주시기바랍니다.</div>';
+				alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
+				$("#alert_box").append(alertStr);
+				page=false;
+				$("#alert_body").fadeIn(800);
+				return false;
+			}
+			if(isNull($(':radio[name="sex"]:checked').val())){
+				alertStr += '<div class="alert_txt" >성별을 체크해주시기 바랍니다.</div>';
+				alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
+				$("#alert_box").append(alertStr);
+				page=false;
+				$("#alert_body").fadeIn(800);
+				return false;
+			}
+			if(isNull($(':radio[name="nation"]:checked').val())){
+				alertStr += '<div class="alert_txt" >내/외국인 구분을 체크해주시기 바랍니다.</div>';
+				alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
+				$("#alert_box").append(alertStr);
+				page=false;
+				$("#alert_body").fadeIn(800);
+				return false;
+			}
+			if(isNull($("#selectTelCom option:selected").val())){
+				alertStr += '<div class="alert_txt" >이동통신사를 체크해주시기 바랍니다.</div>';
+				alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
+				$("#alert_box").append(alertStr);
+				page=false;
+				$("#alert_body").fadeIn(800);
+				return false;
+			}
+			
+			$("#recNum").empty();
+			$("#recNum").append("재발급 받기");
+			$(".agree_btn").css("background","#272727")
+			if(reSndCnt!= 0 && reSndCnt <4){
+				$("#recNum").append("( "+reSndCnt+" / 3 )");
+			}else if(reSndCnt ==4){
+				$(".tel_btn").css("background","red");
+				
+				$("#recNum").empty();
+				$("#recNum").append("입력횟수 초과");
+			}
+			reSendYn = true;
+//-----------------------------------------
+//KCB 본인확인 번호요청
+//-----------------------------------------
+			var alertStr = "";
+			alertStr += '<div class="alert_txt" >인증번호가 발급되었습니다.</div>';
+		
+			$("#alert_box").empty();
+			$("#alert_box").append(alertStr);
+			page=false;
+			$("#alert_body").fadeIn(800);
+			$("#alert_body").fadeOut(500);
+	        $.ajax({
+	              type: "post",
+	              url : commonIp()+"/theReal/receipt/KcbCertified.do",
+	              data: {
+	                    svcTxSeqno     : svcTxSeqno,
+	                    name           : alltrim($("#userNm").val()),  
+	                    birthday       : alltrim($("#birthDay").val())   ,
+	                    gender         : $(':radio[name="sex"]:checked').val(),
+	                    nation         : $(':radio[name="nation"]:checked').val(),
+	                    comCd          : $("#selectTelCom option:selected").val(),  
+	                    mbphnNo        : alltrim(telNo),
+	                    smsReSndYn     : smsReSndYn ,
+	                    rsv1           : rsv1, 
+	                    rsv2           : rsv2, 
+	                    rqstMsrCd      : rqstMsrCd, 
+	                    rqstCausCd     : rqstCausCd, 
+	                    memId          : memId, 
+	                    serverIp       : serverIp, 
+	                    siteUrl        : siteUrl, 
+	                    siteDomain     : siteDomain, 
+	                    endPointURL    : endPointURL, 
+	                    logPath        : logPath, 
+	                    option         : option 
+	                 },
+	              success: fnKcbCertified,
+	              error: whenError
+	             });  	
+	});
+	
+	///////////////////////////////////////////
+	
+ 	$(".alen_allcheck").click(function(){
+		//만약 전체 선택 체크박스가 체크된상태일경우
+		if($("#allCheck").prop("checked")) {
+			//해당화면에 전체 checkbox들을 체크해준다
+			$("input[name='subCheck']").prop("checked",false);
+		// 전체선택 체크박스가 해제된 경우
+		} else {
+			//해당화면에 모든 checkbox들의 체크를해제시킨다.
+			$("input[name='subCheck']").prop("checked",true);
+		}
+	})
+	
+	
+	$("#agreeComple").click(function(){
+		
+		if(!reSendYn){
+			return false;
+		}
+		
+		var alertStr = "";
+		$("#alert_box").empty();
+		
+		console.log("@@@pushKey11111@@@"+pushKey);
+		
+		userNm 		= alltrim($("#userNm").val());
+		birthDay	= alltrim($("#birthDay").val());
+		sex 		= $(':radio[name="sex"]:checked').val();
+		nation 		= $(':radio[name="nation"]:checked').val();
+		tService 	= $("#selectTelCom option:selected").val();
+		smsCertNo 	= alltrim($("#smsCertNo").val());
+		telNo 		= alltrim(telNo);
+		uuId 		= alltrim($("#uuId").val());	
+    	//전체 체크박스 갯수 구하기
+		var totalChkLen = $("input[name*='subCheck']").length ;
+		
+		//선택된 체크박스 갯수 구하기
+		var selChkLen = $("input[name*='subCheck']:checked").length ;
+		if(totalChkLen > selChkLen){
+			alertStr += '<div class="alert_txt" >약관 동의해주시기 바랍니다.</div>';
+			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
+			$("#alert_box").append(alertStr);
+			page=false;
+			$("#alert_body").fadeIn(800);
+			return false;
+		}    	
+    	
+		
+		if(isNull(smsCertNo)){
+			alertStr += '<div class="alert_txt" >인증번호를 기입해주시기 바랍니다.</div>';
+			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
+			$("#alert_box").append(alertStr);
+			page=false;
+			$("#alert_body").fadeIn(800);
+			return false;
+		}
+		if(isNull($("#certNumView").val())){
+			alertStr += '<div class="alert_txt" >인증번호 입력시간이 초과하였습니다.<br>인증번호를 재발급 받으시기 바랍니다.</div>';
+			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
+			$("#alert_box").append(alertStr);
+			page=false;
+			$("#alert_body").fadeIn(800);
+			return false;
+		}		
+		
+        option = "MU";
+      $.ajax({
+             type: "post",
+             url : commonIp()+"/theReal/receipt/KcbVerification.do",
+             data: {
+                 svcTxSeqno   : svcTxSeqno,
+                 mbphnNo      : alltrim(telNo),
+                 smsCertNo    : smsCertNo,
+                 memId        : memId, 
+                 serverIp     : serverIp, 
+                 endPointURL  : endPointURL, 
+                 logPath      : logPath, 
+                 option       : option,
+                 name         : alltrim($("#userNm").val()),  
+                 birthday     : alltrim($("#birthDay").val())   ,
+                 gender       : $(':radio[name="sex"]:checked').val(),
+                 nation       : $(':radio[name="nation"]:checked').val(),
+                 comCd        : $("#selectTelCom option:selected").val(),
+                 uuId         : uuId,
+                 pushKey      : pushKey,
+                 kcbType	  : "01"		 //본인인증 타입 01 : 회원가입 / 02 : 재인증
+             },
+             success: fnKcbVerification,
+             error: whenError
+         });       
+         
+	})
+	
+});
+
+     function onDeviceReady() {
+    	 onPushSet();
+         var uuid = device.uuid;
+				console.log("device.uuid:"+device.uuid);
+
+                 var telephoneNumber = cordova.require("cordova/plugin/telephonenumber");
+                 
+                 telephoneNumber.get(function(result) {
+                         console.log("result = " + result);
+                         result = result.replace( "+82", "0");
+						$("#telNo").val(result);          
+						$("#uuId").val(uuid);          
+                     }, function() {
+                    	 $("#telNo").val("");     
+                     });
+
+
+     }
+	
+	   var min = 0;
+	   var sec = 0;
+	   var time = 0;
+	   var runCount;
+	   
+	   // 시작 함수 호출 시
+	   function fncCountDown() {
+	   
+	    // 입력 값 셋팅
+	   
+	    if ( time.length > 0 ) {
+	     runCount = setInterval("startCountDown()", 1000);
+	   
+	    } else {
+	     alert("값을 입력 해 주세요");
+	     return;
+	   
+	    }
+	   }
+	   
+	   // 카운트 다운 및 노출하기
+	   function startCountDown() {
+	   
+	    min = parseInt((time%3600)/60);
+	    sec = time%60;
+	    //console.log(min + " : " + sec);
+	    $("#certNumView").val(min + " : " + sec);
+	   
+	    // 시간이 다 됐을 시 timer 정지
+	    if ( parseInt(time) == 0 ) {
+	       $("#certNumView").val("");
+	     stopCountDown();
+	   
+	    } else {
+	     time--;
+	    }
+	   
+	   }
+
+	// 타이머 정지
+	function stopCountDown() {
+	   clearInterval(runCount);
+	}
+
+
+	// KCB 문자인증번호 요청 
+	function fnKcbCertified(resdata){
+	   if(resdata == 1){
+		reSendYn = true;
+		time = "180";
+		clearInterval(runCount);
+		fncCountDown();		
+	   }else{
+			//reSendYn = true;
+		   alert("인증번호받기에 실패했습니다.");
+		   svcTxSeqno = toDay+($("#telNo").val());
+	   }
+	}
+
+
+	//문자인증번호 검증 회원 가입 
+	function fnKcbVerification(resdata){
+		console.log("@@@pushKey2222@@@"+pushKey);
+		var alertStr = "";
+		
+		$("#alert_box").empty();
+		
+		
+	   	if(resdata.resCode == 1){
+		   	if(resdata.joinType==0){
+			   	alertStr += '<div class="alert_txt" >회원 가입 되었습니다.</div>';
+		   	}else{
+				alertStr += '<div class="alert_txt" >본인인증이 확인되었습니다. <br>로그인 성공</div>';
+		   	}
+		   	window.localStorage.setItem("CI", resdata.CI);
+			window.localStorage.setItem("telNo", telNo);
+			window.localStorage.setItem("uuId", uuId);
+			CI = resdata.CI;
+		   	alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(1)">확인</a></div>';
+		   	
+		  	
+		   				   
+	   	}else{
+		   var errCd =  resdata.retcode
+		   if(errCd == "B128"){
+			   alertStr += '<div class="alert_txt" >이미 정상 인증되었습니다. <br> error B128</div>';
+		   }else if(errCd == "B120"){
+			   alertStr += '<div class="alert_txt" >재인증 횟수 초과. <br> error B120</div>';
+		   }else if(errCd == "B100"){
+			   alertStr += '<div class="alert_txt" >본인인증에 실패하였습니다. <br> error B100</div>';
+		   }else if(errCd == "B131"){
+			   alertStr += '<div class="alert_txt" >인증번호가 불일치합니다. <br> error B100</div>';
+		   }else{
+			   alertStr += '<div class="alert_txt" >인증에 실패하였습니다. <br> error '+errCd+'</div>';
+		   }
+		   alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
+	   }
+	   	
+	   	$("#alert_box").append(alertStr);
+	   	page=false;
+	   	$("#alert_body").fadeIn(300);
+	}
+
+	function alertClose(val){
+		$("#alert_body").fadeOut(10);
+		if(val == 1){
+			location.href='index.html?CI='+CI+'&telNo='+telNo;	
+		}else if(val == 2){
+			location.href="./joinTest.html";
+		}
+	}
+
+
+	function whenError(){
+	}
+	
+	
+	function onPushSet(){
+		  console.log(device.platform);
+
+		  if(device.platform.toUpperCase() == 'ANDROID'){
+		    window.plugins.pushNotification.register(successHandler,errorHandler, {
+		      //"senderID" : "912734728084", // Google GCM 서비스에서 생성한 Project Number를 입력한다.
+		      "senderID" : "416114430430", // Google GCM 서비스에서 생성한 Project Number를 입력한다.
+		      "ecb" : "onNotificationGCM" // 디바이스로 푸시가 오면 onNotificationGCM 함수를 실행할 수 있도록 ecb(event callback)에 등록한다.
+		    });
+		  }	
+	}
+
+	// app.initialize();
+
+	/**
+	 * tokenHandler
+	 *
+	 * @param result
+	 *
+	 * 디바이스 토큰핸들러 콜백함수.
+	 * 푸시 서비스를 활성화 하였을 때, window.plugins.pushNotification.register 메소드가 실행되면서 디바이스 토큰을 가져와서 출력한다.
+	 * 만약에 푸시 서버로 디바이스 토큰을 보내야할 경우 이 함수 안에서 서버로 디바이스 토큰을 전송하면 된다.
+	 */
+	function tokenHandler(result){
+	  console.log('deviceToken:' + result);
+	}
+
+	/**
+	 * errorHandler
+	 *
+	 * @param err
+	 *
+	 * 에러 핸들러 콜백 함수.
+	 */
+	function errorHandler(err){
+	  console.log('error:' + err);
+	}
+
+	/**
+	 * successHandler
+	 *
+	 * @param result
+	 *
+	 * 디바이스로 푸시 메세지를 받았을 때 뱃지처리 이후 호출하는 콜백함수
+	 */
+	function successHandler(result){
+	  console.log('result:'+result);
+	}
+
+	/**
+	 * onNotificationGCM
+	 *
+	 * @param e
+	 *
+	 * 안드로이드 디바이스로 푸시 메세지를 받을 때 호출되는 함수, window.plugins.pushNotification.register 옵션에 설정에서 ecb의 이름에 매칭된다.
+	 */
+	function onNotificationGCM (e){
+	  switch (e.event) {
+	  case 'registered': // 안드로이드 디바이스의 registerID를 획득하는 event 중 registerd 일 경우 호출된다.
+	    console.log('registerID:' + e.regid);
+	  	pushKey = e.regid;
+	    console.log('@@@pushKey@@@:' + pushKey);
+	    break;
+	  case 'message': // 안드로이드 디바이스에 푸시 메세지가 오면 호출된다.
+	    {
+	        console.log(':' + e);
+	      if (e.foreground){ // 푸시 메세지가 왔을 때 앱이 실행되고 있을 경우
+	        var soundfile = e.soundname || e.payload.sound;
+	        var my_media = new Media("/android_asset/www/" + soundfile);
+	        my_media.play();
+	      } else { // 푸시 메세지가 왔을 때 앱이 백그라운드로 실행되거나 실행되지 않을 경우
+	        if (e.coldstart) { // 푸시 메세지가 왔을 때 푸시를 선택하여 앱이 열렸을 경우
+	          console.log("알림 왔을 때 앱이 열리고 난 다음에 실행 될때");
+	        } else { // 푸시 메세지가 왔을 때 앱이 백그라운드로 사용되고 있을 경우
+	          console.log("앱이 백그라운드로 실행될 때");
+	        }
+	      }
+
+	      console.log(decodeURI(e.payload.title));
+	      console.log(decodeURI(e.payload.message));
+	      //navigator.notification.alert(decodeURI(e.payload.msg));
+	      
+	      navigator.notification.alert(
+	    		  decodeURI(e.payload.message),  // message
+	    		    '',         // callback
+	    		    decodeURI(e.payload.title),            // title
+	    		    '확인2222'                  // buttonName
+	    		);                  
+	    }
+	    break;
+	  case 'error': // 푸시 메세지 처리에 에러가 발생하면 호출한다.
+	    console.log('error:' + e.msg);
+	    break;
+	  case 'default':
+	    console.log('알수 없는 이벤트');
+	    break;
+	  }
+	}
+
+
+
+
+</script>
+</html>

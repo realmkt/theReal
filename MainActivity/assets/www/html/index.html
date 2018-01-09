@@ -182,10 +182,12 @@
                 
                 <div data-page="index" class="navbar-inner">
                 
+                
+                
                     <div class="left">
                     <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
                     </div>
-                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 27%;"><img style="width: 75%;height: 50%;margin: 0 auto" src="../common/logo_01.png"></div>
+                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 18%; text-align: center"><img src="../common/logo_01.png" width="200px" height="44px"></div>
 
                 </div>                
                 
@@ -415,7 +417,8 @@
 
 var request = new Request();
 var telNo = request.getParameter('telNo');
-var uuId = request.getParameter('uuId');
+var uuId = window.localStorage.getItem("uuId");
+var CI = window.localStorage.getItem("CI");
 var userNm = request.getParameter('USER_NM');
 var joinTelNo = "";
 
@@ -491,11 +494,11 @@ $(document).ready(function(){
 });
   
   $("#curUseData").click(function(){
-	  location.href='latest.html?uuId='+uuId+'&telNo='+telNo;
+	  location.href='latest.html?CI='+CI+'&telNo='+telNo;
   })
   
   $(".main_book").click(function(){
-	  location.href='mobile.html?uuId='+uuId+'&telNo='+telNo;
+	  location.href='mobile.html?CI='+CI+'&telNo='+telNo;
   })
 });
 
@@ -654,6 +657,13 @@ function fnComUuIdSucData(resData){
 		
 		var startDate = date.getFullYear()+""+(date.getMonth() > 9 ? ''+date.getMonth(): '0'+date.getMonth());
 		//var startDate = firstDayOfMonth.getFullYear()+""+(firstDayOfMonth.getMonth() > 9 ? ''+firstDayOfMonth.getMonth(): '0'+firstDayOfMonth.getMonth());
+	 	var startDateYear = Number(startDate.substring(0,4));
+		var startDateMon = startDate.substring(4,6);
+		if(startDateMon=="00"){
+			startDateYear--;
+			startDateMon = "12";
+			startDate = startDateYear+""+startDateMon;
+		}
 		var lastMonth = new Date ( firstDayOfMonth.setDate( firstDayOfMonth.getDate() - 1 ) );
 		//var endDate = firstDayOfMonth.getFullYear()+""+(firstDayOfMonth.getMonth() > 9 ? ''+firstDayOfMonth.getMonth(): '0'+firstDayOfMonth.getMonth());
 		var endDate = date.getFullYear()+""+(date.getMonth()+1 > 9 ? ''+(date.getMonth()+1): '0'+(date.getMonth()+1));
@@ -666,7 +676,7 @@ function fnComUuIdSucData(resData){
 	        type: "post",
 	        url : commonIp()+"/theReal/receipt/startCurData.do",
 	        data: {
-	        	telNo  	: request.getParameter('telNo'),  
+	        	CI  	: CI,  
 	        },
 	        success: fn_startCurData,
 	        error: whenError
@@ -686,7 +696,7 @@ function fnComUuIdSucData(resData){
 	        type: "post",
 	        url : commonIp()+"/theReal/receipt/startSumData.do",
 	        data: {
-	        	telNo  	: request.getParameter('telNo'),  
+	        	CI  	: CI,  
 	        	startDate  	: startDate+"%",  
 	        	endDate  	: endDate+"%",  
 	        },
@@ -698,7 +708,7 @@ function fnComUuIdSucData(resData){
 	        type: "post",
 	        url : commonIp()+"/theReal/receipt/startRecYnData.do",
 	        data: {
-	        	telNo  	: request.getParameter('telNo'),  
+	        	CI  	: CI,  
 	        	startDate  	: startDate+curDate,  
 	        	endDate  	: endDate+curDate,  
 	        },
@@ -765,7 +775,7 @@ function fn_startCurData(resdata){
 		 
 	else{
 		str += '<li>';
-		str += '<div>최근사용내역이 없습니다.</div>';
+		str += '<div class="mal_more">최근사용내역이 없습니다.</div>';
 		str += '</li>';		  	
 	}
 	$("#curMainData").append(str);
@@ -783,7 +793,7 @@ function fn_startCurData(resdata){
 } */
 
 function malMore(){
-	location.href='latest.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+	location.href='latest.html?CI='+CI+'&telNo='+request.getParameter('telNo');
 }
 
 function fn_startUserData(resdata){
@@ -1028,6 +1038,13 @@ function bagroundCallBack(){
 	var firstDayOfMonth = new Date( date.getFullYear(), date.getMonth()+1 , 1 );
 	//var startDate = firstDayOfMonth.getFullYear()+""+(firstDayOfMonth.getMonth() > 9 ? ''+firstDayOfMonth.getMonth(): '0'+firstDayOfMonth.getMonth());
 	var startDate = date.getFullYear()+""+(date.getMonth() > 9 ? ''+date.getMonth(): '0'+date.getMonth());
+	var startDateYear = Number(startDate.substring(0,4));
+	var startDateMon = startDate.substring(4,6);
+	if(startDateMon=="00"){
+		startDateYear--
+		startDateMon = "12";
+		startDate = startDateYear+""+startDateMon;
+	}
 	var lastMonth = new Date ( firstDayOfMonth.setDate( firstDayOfMonth.getDate() - 1 ) );
 	//var endDate = firstDayOfMonth.getFullYear()+""+(firstDayOfMonth.getMonth() > 9 ? ''+firstDayOfMonth.getMonth(): '0'+firstDayOfMonth.getMonth());
 	var endDate = date.getFullYear()+""+(date.getMonth()+1 > 9 ? ''+(date.getMonth()+1): '0'+(date.getMonth()+1));	
@@ -1035,7 +1052,7 @@ function bagroundCallBack(){
         type: "post",
         url : commonIp()+"/theReal/receipt/startCurData.do",
         data: {
-        	telNo  	: request.getParameter('telNo'),  
+        	CI  	: CI
         },
         success: fn_startCurData,
         error: whenError
@@ -1045,7 +1062,7 @@ function bagroundCallBack(){
         type: "post",
         url : commonIp()+"/theReal/receipt/startSumData.do",
         data: {
-        	telNo  	: request.getParameter('telNo'),  
+        	CI  	: CI,  
         	startDate  	: startDate+"%",  
         	endDate  	: endDate+"%",  
         },
@@ -1057,7 +1074,7 @@ function bagroundCallBack(){
         type: "post",
         url : commonIp()+"/theReal/receipt/startRecYnData.do",
         data: {
-        	telNo  	: request.getParameter('telNo'),  
+        	CI  	: CI,  
         	startDate  	: startDate+curDate,  
         	endDate  	: endDate+curDate,  
         },
@@ -1070,15 +1087,15 @@ function bagroundCallBack(){
 
 function hrefPage(val){
 	if(val==1){
-		location.href='latest.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+		location.href='latest.html?CI='+CI+'&telNo='+request.getParameter('telNo');
 	}else if(val==2){
-		location.href='mobile.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+		location.href='mobile.html?CI='+CI+'&telNo='+request.getParameter('telNo');
 	}else if(val==3){
-		location.href='affliate.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+		location.href='affliate.html?CI='+CI+'&telNo='+request.getParameter('telNo');
 	}else if(val==4){
-		location.href='event.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+		location.href='event.html?CI='+CI+'&telNo='+request.getParameter('telNo');
 	}else if(val==5){
-		location.href='coupon.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+		location.href='coupon.html?CI='+CI+'&telNo='+request.getParameter('telNo');
 	}
 }
 

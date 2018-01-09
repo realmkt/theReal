@@ -236,7 +236,7 @@
 <script type="text/javascript">
 var request = new Request();
 var telNo = request.getParameter('telNo');
-var uuId = request.getParameter('uuId');
+var CI = request.getParameter('CI');
 var seq = request.getParameter('seq');
 var affNo="";
 $(document).ready(function(){
@@ -340,7 +340,7 @@ function couponUseBtn(){
 	        	nowDay : dateInput(0,"-"),
 	        	seq : seq,
 	        	telNo : telNo,
-	        	uuId : uuId
+	        	CI : CI
 	        },
 	        success: fn_sucCouponUsing,
 	        error: whenError

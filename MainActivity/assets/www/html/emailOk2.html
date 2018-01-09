@@ -184,7 +184,7 @@
 var request = new Request();
 				
 var telNo = request.getParameter('telNo');
-var uuId =  request.getParameter('uuId');
+var CI = window.localStorage.getItem("CI");
 var pageType = request.getParameter('pageType');
 var endSeq = parseInt(request.getParameter('endSeq'));
 var startDay = request.getParameter('startDay');
@@ -260,7 +260,7 @@ function change(){
 			type : "post",
 			url : commonIp() + "/theReal/receipt/emailOk.do",
 		data : {
-			telNo : telNo
+			CI : CI
 		},
 		success : fn_mailOk,
 		error : whenError
@@ -268,7 +268,6 @@ function change(){
 }  
 			
 function whenError(){
-	alert("에러");
 } 
 
 //이메일 append	
@@ -567,7 +566,7 @@ function emailcheck(){
 	    	data: {
 	    		barcode : barcode,
 	    	 	email : mail,
-	    	 	telNo : telNo,
+	    	 	CI : CI,
 	    	 	subject : subject,
 	    	 	content : content
 	    	 	},
@@ -596,7 +595,7 @@ function emailcheck(){
 	
 	function historyback(){
 		
-		location.href = 'latestEmail.html?telNo='+request.getParameter('telNo')+'&uuid='+request.getParameter('uuid')+'&pageType=ALL&endSeq=10&startDay=2000-01-01&endDay=2000-12-12';
+		location.href = 'latestEmail.html?telNo='+request.getParameter('telNo')+'&CI='+request.getParameter('CI')+'&pageType=ALL&endSeq=10&startDay=2000-01-01&endDay=2000-12-12';
 	}			
 				
 //이메일 정규식 유효성 체크  
@@ -616,7 +615,7 @@ function back(){
 	}
 	
 	
-	location.href = 'latestEmail.html?'+barcodeResult+'&telNo='+request.getParameter('telNo')+'&uuid='+request.getParameter('uuid')+'&pageType='+pageType+'&endSeq='+endSeq+'&startDay='+startDay+'&endDay='+endDay+'';
+	location.href = 'latestEmail.html?'+barcodeResult+'&telNo='+request.getParameter('telNo')+'&CI='+request.getParameter('CI')+'&pageType='+pageType+'&endSeq='+endSeq+'&startDay='+startDay+'&endDay='+endDay+'';
 }
 </script>
 </body>

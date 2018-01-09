@@ -463,7 +463,7 @@ var pageCnt = 0;
 var request = new Request();
 
 var telNo = request.getParameter('telNo');
-var uuId = request.getParameter('uuId');
+var CI = window.localStorage.getItem("CI");
 var selMobTab ="";
 var seq = "";
 var array = new Array();
@@ -472,7 +472,7 @@ $(document).ready(function(){
 	commonUserData();	
 	depth01List("DAY");
 	$(".divPage_house").click(function(){
-		location.href='household.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+		location.href='household.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
 	})	
 	
 	$(document).on('click','.first',function(){	
@@ -537,7 +537,7 @@ $(document).ready(function(){
 	})	 
 	
 	$("#backBtn").click(function(){
-		location.href='mobile.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+		location.href='mobile.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
 	})
 	
 	$(document).on('click','[name="receiptDetail"]',function(){
@@ -798,7 +798,7 @@ function depth01SucList(resdata){
 			    url : commonIp()+"/theReal/receipt/monthAllSendMail.do",
 			    dataType:"json",
 			    data: {
-			    	telNo : telNo,
+			    	CI : CI,
 			    	date : date
 			    },
 			    success: fnMonthAllSendMail,
@@ -811,7 +811,6 @@ function depth01SucList(resdata){
 
 	function fnMonthAllSendMail(data){
 		alert(data);
-		
 	}
 	
 	

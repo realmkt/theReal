@@ -287,12 +287,12 @@
 <script type="text/javascript">
 var request = new Request();
 var telNo = request.getParameter('telNo');
-var uuId = request.getParameter('uuId');
+var CI = request.getParameter('CI');
 var seq ="";
 $(document).ready(function(){
 	
 	$("#coupon").click(function(){
-		location.href='coupon.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+		location.href='coupon.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
 	})
 	
 	$("#couponPro").click(function(){
@@ -385,7 +385,7 @@ function fn_sucCouponList(resdata){
 
 
 function couponRead(seq){
-	location.href='couponRead.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo')+'&seq='+seq;
+	location.href='couponRead.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo')+'&seq='+seq;
 }
 
 function fn_sucCouponRead(resData){

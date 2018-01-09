@@ -459,15 +459,10 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
 
 
 <script type="text/javascript">
-
-
-	
 function numCommas(x) { //3자리수 , 찍어주기
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 } 
 	var appendthis = ("<div class='alen_modal_overlay2 js-modal-close' id='dadadadada'></div>");
-	
-	
 
 
 	//체크여부변수
@@ -479,19 +474,14 @@ function numCommas(x) { //3자리수 , 찍어주기
 	var request = new Request();
 	
 	var telNo = request.getParameter('telNo');
-	
-	var uuId =  request.getParameter('uuId');
-	
+	var CI = window.localStorage.getItem("CI");
 	var pageType =request.getParameter('pageType');
-	
 	var startDay = request.getParameter('startDay');
-	
 	var endDay = request.getParameter('endDay');
 	
 	var flag = 0;	
 			
 	/* var scrollValue = parseInt(request.getParameter('scroll')); */
-	
 	
 	var maxSize = 0;
 	var endSeq = parseInt(request.getParameter('endSeq'));
@@ -507,11 +497,6 @@ function numCommas(x) { //3자리수 , 찍어주기
 	/* var scrollValue = 0 ; */
 	
 	
-
-
-	
-	
-	
 	function allClear(){
 		startDay = "";
 		endDay   = "";
@@ -523,11 +508,6 @@ function numCommas(x) { //3자리수 , 찍어주기
 		endSeq = 10;
 		transMission = "";
 	}
-	
-
-
-
-
 	
 	
 	//메인 영수증 목록
@@ -547,18 +527,13 @@ function numCommas(x) { //3자리수 , 찍어주기
 		 
 		 var param = new Array();
 		
-		
-		 
 		 var barcodeResult = "";
-
 		 var url = decodeURIComponent(location.href);
 
 		 url = decodeURIComponent(url);
 					
 		 var params;
-		 	
 		 params = url.substring( url.indexOf('?')+1, url.length );
-
 		 params = params.split("&");
 
 		 var size = params.length;
@@ -573,43 +548,28 @@ function numCommas(x) { //3자리수 , 찍어주기
 		 }	 
 		
 			if(pageType=="transOk"){
-				
 				flag = 1;
-				
 				$("input:radio[id=latest03]").prop("checked", true);			
-				
 				transok();
 			}
 			
 			else if(pageType=="transNo"){
-				
 				flag = 1;
-				
 				$("input:radio[id=latest02]").prop("checked", true);	
-				
 				transno();
-				
 			}
 				
 			else if(pageType=="ALL"){
-				
 				flag = 1;
-				
 				$("input:radio[id=latest01]").prop("checked", true);
-				
 				maint();
 			}
 			
 			else if(pageType=="SEARCH"){
-				
 				dateSrchCd = 'Y';
-				
 				flag = 1;
-				
 				$("input:radio[id=latest04]").prop("checked", true);
-				
 				latestData();
-				
 			}
 			
 	
@@ -624,7 +584,7 @@ function numCommas(x) { //3자리수 , 찍어주기
 			type : "post",
 			url : commonIp() + "/theReal/receipt/latestData.do",
 			data : {
-				telNo : telNo,
+				CI : CI,
 				startDay : startDay,
 				endDay : endDay,
 				endSeq : endSeq,
@@ -1105,7 +1065,7 @@ function numCommas(x) { //3자리수 , 찍어주기
 			pageType = "SEARCH";
 		}
 				
-		location.href = 'emailOk2.html?'+str+'&telNo='+request.getParameter('telNo')+'&uuid='+request.getParameter('uuid')+'&pageType='+pageType+'&endSeq='+endSeq+'&startDay='+startDay+'&endDay='+endDay+'';
+		location.href = 'emailOk2.html?'+str+'&telNo='+request.getParameter('telNo')+'&CI='+request.getParameter('CI')+'&pageType='+pageType+'&endSeq='+endSeq+'&startDay='+startDay+'&endDay='+endDay+'';
 	}
 			
 	/* 	$.ajax({	

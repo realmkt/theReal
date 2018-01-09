@@ -262,6 +262,8 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                     
                     
                     </div>
+                    
+                    
                 </div>
                 
 
@@ -413,7 +415,7 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
     
 	<footer> 
 		<a href="#" class="cpop_btn cpop_btn_small" id="detailBtn">조회</a> 
-	    <a href="#" class="cpop_btn cpop_btn_small js-modal-close alen_arrow">취소</a> 
+	    <a href="#" class="cpop_btn cpop_btn_small js-modal-close alen_arrow" id="modalClose">취소</a> 
 	</footer>
 </div>
 
@@ -433,6 +435,11 @@ $(function(){
 var appendthis =  ("<div class='alen_modal_overlay js-modal-close'></div>");
 
 	$('[data-modal-id]').click(function(e) {
+		modalVal=true;//모달 뒤로가기 추가 데이터
+		$("#startDate").val(startDay);
+		$("#endDate").val(endDay);
+		
+		
 		e.preventDefault();
     $(".pages").append(appendthis);
     $(".alen_modal_overlay").fadeTo(300, 0.7);
@@ -443,6 +450,7 @@ var appendthis =  ("<div class='alen_modal_overlay js-modal-close'></div>");
   
   
 $(".js-modal-close, .alen_modal_overlay").click(function() {
+	modalVal=false;//모달 뒤로가기 추가 데이터
     $(".modal_box, .alen_modal_overlay").fadeOut(300, function() {
         $(".alen_modal_overlay").remove();
     });
@@ -513,7 +521,12 @@ $(window).resize();
             
 
 		</div>
-
+		<div class="alert_body" id="alert_body">
+			<div class="alert_box" id="alert_box">
+				<div class="alert_txt" id="alert_desc">알러트창</div>
+				<div class="alert_btn"><a href="#">확인</a></div>
+			</div>
+		</div>
     </div>
 
 
@@ -536,7 +549,13 @@ $(window).resize();
 history.pushState(null,null,location.href);
 window.onpopstate = function(event){
 	if(page){
+		if(modalVal){
+			history.pushState(null,null,location.href);
+			modalVal=false;
+			$("#modalClose").trigger("click");
+		}else{
 		history.back();
+		}
 	}else{
 		history.pushState(null,null,location.href);
 		page = true;
@@ -545,16 +564,15 @@ window.onpopstate = function(event){
 	}
 }
 
-function numCommas(x) { //3자리수 , 찍어주기
+//3자리수 , 찍어주기
+function numCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 } 
 
-
-
-
+//초기화 메서드
 function allClear(){
-	startDay = "";
-	endDay   = "";
+	/* startDay = "";
+	endDay   = ""; */
 	payDivCd  = "ALL";
 	orderByCd = "NEW";
 	dateDivCd = "";
@@ -567,10 +585,11 @@ function allClear(){
 	valDate = new Date();
 }
 
+//초기 변수 값 지정
 var request = new Request();
 
 var telNo = request.getParameter('telNo');
-var uuId =  request.getParameter('uuId');
+var CI = window.localStorage.getItem("CI");
 var seq = "";
 var barcode = "";
 var biz = "";
@@ -581,10 +600,10 @@ $("#latest_condate").append("<span>"+(today.getMonth()+1)+"월</span> 사용 내
 
 var month = today.getMonth()+1
 var day = today.getDate()
-if(month.langth < 2){
+if(month < 10){
 	month = "0"+month;
 }
-if(day.langth < 2){
+if(day < 10){
 	day = "0"+day;
 }
 var todayStr = today.getFullYear()+"."+month+"."+day
@@ -611,8 +630,8 @@ var recCnt = 0;
 var smsCnt = 0;
 var smsTotal = 0;
 
+var page = true;
 
-//ajax 통신 로딩바 
 
 $(document).ready(function() {
 	$("#loadingView").hide();
@@ -654,7 +673,7 @@ $(document).ready(function() {
 					data : {
 						type : type,
 						seq : seq,
-						telNo : telNo
+						CI : CI
 					},
 					success : fn_latestSmsData
 				});
@@ -664,6 +683,8 @@ $(document).ready(function() {
 	
 	
 });
+
+//ajax 통신 로딩바 
 	 $(document).ajaxStart(function(){
 	 $('#loadingView').show();
 	})
@@ -673,7 +694,7 @@ $(document).ready(function() {
  
 
 		
-
+//주요 기능 AJAX
 	$("#allBtn").click(function(){
 		smsDivCd = "ALL";
 		$("#onlyRec").removeClass("active");
@@ -782,20 +803,36 @@ $(document).ready(function() {
 		var startDay2 = startDay.substring(0,4) + startDay.substring(5,7) + startDay.substring(8,10); 
 		var endDay2 = endDay.substring(0,4) + endDay.substring(5,7) + endDay.substring(8,10); 
 		
+		var alertStr = "";
+		$("#alert_box").empty();
+		
 		if(startDay == ''){
-			alert("시작날짜를 입력하세요");
+			alertStr += '<div class="alert_txt" >시작날짜를 입력하세요</div>';
+			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose()">확인</a></div>';
+		
+			$("#alert_box").append(alertStr);
+			$("#alert_body").fadeIn(300);
 			return false;
 		}
 		
 		if(endDay == ''){
-			alert("종료날짜를 입력하세요");
+			alertStr += '<div class="alert_txt" >종료날짜를 입력하세요</div>';
+			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose()">확인</a></div>';
+		
+			$("#alert_box").append(alertStr);
+			$("#alert_body").fadeIn(300);
 			return false;
 		}
 		
 		if(startDay2 > endDay2){
-			alert("종료날짜가 시작날짜보다 이전입니다.");
+			alertStr += '<div class="alert_txt" >종료날짜가 시작날짜보다 이전입니다.</div>';
+			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose()">확인</a></div>';
+		
+			$("#alert_box").append(alertStr);
+			$("#alert_body").fadeIn(300);
 			return false;
 		}
+		modalVal=false;
 		DaySrchCd = "SRCHY";
 		//startDay = startDay2;
 		//endDay = endDay2;
@@ -809,12 +846,18 @@ $(document).ready(function() {
 		activeBox(4,"main");
 		latestData();
 	});
-
+	
+//alert 종료 메서드
+	function alertClose(){
+		$("#alert_body").fadeOut(10);
+	}
+//날짜 변경 (01월 사용내역)
 	function changeDate(str){
 		$("#latest_condate").empty();
 		$("#latest_condate").append(str);
 	}
-	
+
+//선택 박스 색깔 지정
 	function activeBox(val, type){
 		
 		if(type=="main"){
@@ -850,13 +893,14 @@ $(document).ready(function() {
 		}
 	}
 
+//주요 리스트 뿌려주기 위한 ajax 서버 통신
 function latestData(){
 	//maxSize = $("#maxSize").val();
 	$.ajax({
 		type : "post",
 		url : commonIp() + "/theReal/receipt/latestData.do",
 		data : {
-			telNo : telNo,
+			CI : CI,
 			startDay : startDay,
 			endDay : endDay,
 			endSeq : endSeq,
@@ -873,7 +917,7 @@ function latestData(){
 	});
 }
 
-
+//리스트 출력 메서드
 function fn_latestData(resdata){
 	var res = resdata.resultMap;
 	var str = "";
@@ -944,7 +988,7 @@ function fn_latestData(resdata){
 	}else if(smsDivCd == "ONLYREC"){
 		conStr +='<div class="latest_allRight">전자영수증 <span>'+resdata.recCnt+""+'</span> 건</div>';
 		conStr +='<hr>';
-	}else if(smsDivCd == "ONLYSMS"){
+	}else if(smsDivCd == "ONLYSMS"){ 
 		conStr +='<div class="latest_allRight">'+resdata.smsCnt+'건 <span>'+numCommas(resdata.smsTotal)+'</span> 원</div>';
 		conStr +='<hr>';
 	}
@@ -954,12 +998,12 @@ function fn_latestData(resdata){
 	
 }
 
-
+//영수증 관리 이동 이벤트
 $("#setting_Btn").click(function(){
-	location.href = 'latestEmail.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo')+'&pageType=ALL&endSeq=10&startDay=2000-01-01&endDay=2000-12-12';
+	location.href = 'latestEmail.html?telNo='+request.getParameter('telNo')+'&pageType=ALL&endSeq=10&startDay=2000-01-01&endDay=2000-12-12';
 });
 
-
+//상세 영수증 메서드
 function fn_latestDetailData(resdata){
 	var res = resdata.resultMap;
 	var shop = resdata.shopInfo;
@@ -1000,7 +1044,16 @@ for(var i=0; i<res.length; i++){
 	str +='		공급가금액<span>'+numCommas(shop.SALES_SUM_FP_AMT)+'</span><br><br>												';
 	str +='		부가세<span>'+numCommas(shop.SALES_SUM_TAX_AMT)+'</span>														';
 	str +='</div>																											';
-	str +='<div class="rt_total">Total<span>'+numCommas(shop.SALES_PAID_AMT)+'</span></div>									';
+
+	if(shop.POINT_TYPE =="사용"){
+			str +='<div class="rt_tax" style="border-top: 0px; padding:0px 10px">																								';
+			str +='		포인트사용<span> -'+numCommas(shop.POINT_AMT)+'</span><br><br>												';
+			str +='</div>';
+			
+			str +='<div class="rt_total">Total<span>'+numCommas(shop.SALES_PAID_AMT - shop.POINT_AMT)+'</span></div>									';
+	}else{
+		str +='<div class="rt_total">Total<span>'+numCommas(shop.SALES_PAID_AMT)+'</span></div>									';
+	}
 	
 if(shop.CARD_ICOM != ''){
 	str +='<div class="rt_card">';
@@ -1021,7 +1074,6 @@ if(shop.CARD_ICOM != ''){
 	}else if(cardNo.length > 16){
 		cardNo = cardNo.substring(0,7)+"**-****"+cardNo.substring(14,19);
 	}
-	
 	str += cardNo+'</span></div>';
 	str +='		<div>승인번호 : <span>'+shop.CARD_APP_NO+'</span></div>';
 	str +='		<div>카드종류 : <span>'+shop.CARD_ICOM+'</span></div>';
@@ -1031,6 +1083,15 @@ if(shop.CARD_ICOM != ''){
 	str +='<div class="rt_card">';
 	str +='		<div>거래종류 : <span>현금거래</span> </div>';
 	str +='		<div>거래일시 : <span>'+resdata.salesDate+'</span></div></div>';
+}
+
+if(shop.POINT_CARD != ''){
+	str +='<div class="rt_card">';
+	str +='		<div>포인트종류 : <span>'+shop.POINT_ICOM+'</span> </div>';
+	var pCardNo = shop.POINT_CARD;
+	pCardNo = pCardNo.substring(0,4)+"-"+pCardNo.substring(4,6)+"**-****-"+pCardNo.substring(12,16);
+	str +='		<div>포인트카드 : <span>'+pCardNo+'</span> </div>';
+	str +='		<div>발생포인트 : <span>'+shop.POINT_AMT+'</span> </div></div>';
 }
 	
 	
@@ -1043,6 +1104,7 @@ if(shop.CARD_ICOM != ''){
 	
 }
 
+//SMS 상세 영수증 출력 메서드
 function fn_latestSmsData(resdata){
 	//var res = resdata.resultMap;
 	
@@ -1077,13 +1139,6 @@ function fn_latestSmsData(resdata){
 	$(".page").css("background","#333");
 }
 
-
-function detailReceipt(seq, barcode, biz){
-	//location.href = 'latestDetail.html?telNo='+request.getParameter('telNo')+'&seq='+seq+'&uuId='+request.getParameter('uuId')+'&barcode='+barcode+'&biz='+biz+'&type=00';
-}
-function detailSmsReceipt(seq){
-	//location.href = 'latestDetail.html?telNo='+request.getParameter('telNo')+'&uuId='+request.getParameter('uuId')+'&seq='+seq+'&type=01';
-}
 
 
 /* jQuery(function($) {

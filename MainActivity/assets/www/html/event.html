@@ -295,20 +295,20 @@ var pageCnt = true;
 
 var request = new Request();
 var telNo = request.getParameter('telNo');
-var uuId = request.getParameter('uuId');
+var CI = request.getParameter('CI');
 var seq ="";
 $(document).ready(function(){
 	
 	$("#event").click(function(){
-		location.href='event.html?telNo='+telNo;
+		location.href='event.html?CI='+CI+'&telNo='+telNo;
 	})
 	
 	$("#eventPro").click(function(){
-		location.href='event_pro.html?telNo='+telNo;
+		location.href='event_pro.html?CI='+CI+'&telNo='+telNo;
 	})
 	
 	$("#eventEnd").click(function(){
-		location.href='event_end.html?telNo='+telNo;
+		location.href='event_end.html?CI='+CI+'&telNo='+telNo;
 	})
 	
 	commonUserData();

@@ -37,8 +37,8 @@
 
 	<div class="container login_box">
     
-    	<div class="login_img"><img src="code/web_point3.png"></div>
-<div style="color: white; font-size: 20px; font-weight: 500; height: 100px; position: relative; left: 5px;  top: 70%; z-index: 1; text-align: center;">
+    	<div class="login_img"><img src="code/web_point4.png"></div>
+<div style="color: black; font-size: 20px; font-weight: 500; height: 100px; position: relative; left: 5px;  top: 70%; z-index: 1; text-align: center;">
 자동 로그인 체크 중입니다...
 </div>
     
@@ -61,13 +61,33 @@
 
 <input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
 <script type="text/javascript">
+function versionChk(){
+	var version = "v0.0.5"
+	$.ajax({
+        type: "post",
+        url : commonIp()+"/theReal/receipt/versionChk.do",
+        data: {
+        	version 	: version
+        },
+        success: fnVersionChk,
+        error: whenError
+    });
+}
 
-//자동로그인 설정된 아이디 값 가져오기
-var id = window.localStorage.getItem("id");
+function fnVersionChk(res){
+	if(res==0){
+		alert("최신버전으로 업그레이드 해주세요.");
+	}
+}
+//자동로그인 설정된 CI 값 가져오기
+var CI = window.localStorage.getItem("CI");
 //자동로그인 설정된 비밀번호 값 가져오기
-var pw = window.localStorage.getItem("pw");	
-document.addEventListener("deviceready", onDeviceReady, true);
-	var permissions = null;
+var telNo = window.localStorage.getItem("telNo");
+var uuId  = window.localStorage.getItem("uuId");
+var result = "";
+
+var permissions = null;
+	
 function onDeviceReady() {
 	//permissions.requestPermission(successCallback, errorCallback, permission);
 	permissions = cordova.plugins.permissions;
@@ -78,7 +98,6 @@ function onDeviceReady() {
 	permissions.hasPermission(permissions.WAKE_LOCK, checkWakeLockPermissionCallback, null);
 	permissions.hasPermission(permissions.ACCESS_COARSE_LOCATION, checkCoarseLocationPermissionCallback, null);
 	permissions.hasPermission(permissions.ACCESS_FINE_LOCATION, checkFineLocationPermissionCallback, null);
-	
 }
 
 
@@ -219,31 +238,37 @@ function checkFineLocationPermissionCallback(status) {
 }); */
 var exit = "";
 $(document).ready(function(){
-	 //var permissions = cordova.require("plugins/cordova-plugin-android-permissions/www/permissions.js");
+	
+	versionChk();
+	
+	
+	
+	//var permissions = cordova.require("plugins/cordova-plugin-android-permissions/www/permissions.js");
 	var telephoneNumber = cordova.require("cordova/plugin/telephonenumber");
 	
 	telephoneNumber.get(function(result) {
         console.log("result = " + result);
+        
         result = result.replace( "+82", "0");
+        telNo = result
         checkLogic()
     }, function() {
-    	alert("등록된 번호가 없습니다.");
-    	exit();
-    	return false;
     });
-	
 
+	
+	
+	
 	/**
 	자동로그인 체크로직
 	**/
 	//return false;
-	if(id != "" || id != null){
+	if(CI != null || telNo != null || uuId != null){
 		$.ajax({
 	        type: "post",
-	        url : commonIp()+"/theReal/receipt/lgnChk.do",
+	        url : commonIp()+"/theReal/receipt/lgnChk2.do",
 	        data: {
-	        	eMail	 	: id,
-	        	pwd 		: pw
+	        	CI	 		: CI,
+	        	telNo 		: telNo
 	        },
 	        success: fnSucData,
 	        error: whenError
@@ -251,14 +276,14 @@ $(document).ready(function(){
 	}else{
 		//자동로그인 설정안되어있을시 1.5초 뒤에 로그인 페이지로 이동
 		setTimeout(function() {
-			location.href='login.html?exit='+exit;
-		}, 1500);
+			location.href='login.html';
+		}, 500); 
 	}
 })
 
-function exit(){
+/* function exit(){
 	navigator.app.exitApp();
-}
+} */
 	
 	/*
 	자동로그인 체크로직 성공함수
@@ -267,26 +292,26 @@ function exit(){
 		
 		var resultData = resdata.resultMap;
 		var uuId = "";
-		var telNo = "";
+		var deviceTelNo = "";
 		resultCnt = resultData.length;
 		if(resultData.length>0){
 			for(var i=0; i<resultData.length; i++){
 				uuId = resultData[i].UUID;
-				telNo = resultData[i].TEL_NO;
+				deviceTelNo = resultData[i].TEL_NO;
 				console.log(resultData[i].UUID);
 				console.log(resultData[i].TEL_NO);
 			}
 			//DB에 저장된 단말기 번호와 핸드폰 번호를 가져와 메인페이지로 이동
 			setTimeout(function() {
-				location.href='./html/index.html?uuId='+uuId+'&telNo='+telNo;
-			}, 1500);		
+				location.href='./html/index.html?CI='+CI+'&telNo='+telNo;
+			}, 0);		
 		}		 
 			 
 		else{
 			//자동로그인 설정안되어있을시 1.5초 뒤에 로그인 페이지로 이동
 			setTimeout(function() {
 				location.href='login.html';
-			}, 1500);		
+			}, 500);		
 		}		
 		
 		
@@ -298,7 +323,7 @@ function exit(){
 	function whenError(){
 		setTimeout(function() {
 			location.href='login.html';
-		}, 1500);		
+		}, 500);
 	}
 
             // app.initialize();
