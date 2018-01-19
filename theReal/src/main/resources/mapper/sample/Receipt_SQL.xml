@@ -989,7 +989,10 @@
 			USER_CI = #{CI}
 		AND
 			TEL_NO = #{telNo}
+		
 		]]>
+		<!-- AND
+			uuId = #{deviceId} -->
 	</select>		
 	
 	<select id="getId" parameterType="hashmap" resultType="hashmap">
@@ -2028,7 +2031,7 @@
 				FROM 
 					TB_SMS_MASTER
 				WHERE 
-					REC_TEN_NO=#{telNo}
+					USER_CI=#{CI}
 				AND
 					FRT_CREA_DTM BETWEEN #{startDate} AND #{endDate}
 			)c
@@ -2073,6 +2076,7 @@
 		<![CDATA[
 		
 		SELECT 
+			A.USER_CI,
 			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
 			A.REC_TEN_NO,
 			A.CARD_APP_CO,
@@ -2082,8 +2086,8 @@
 			TB_SMS_MASTER A,
 			TB_USER B
 		WHERE 
-			A.REC_TEN_NO = #{telNo}
-			AND A.REC_TEN_NO = B.TEL_NO
+			A.USER_CI=#{CI}
+			AND A.USER_CI = B.USER_CI
 			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
 		GROUP BY CARD_APP_CO,DIV_MONTH
 		ORDER BY DIV_MONTH DESC, convert(SUM(A.APP_AMOUNT), decimal)  DESC		
@@ -2094,6 +2098,7 @@
 	<select id="depth03CardList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		SELECT
+			A.USER_CI,
 			DATE_FORMAT(A.FRT_CREA_DTM,'%Y-%m-%d') AS DIV_MONTH,
 			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_WEEK,
 			DATE_FORMAT(A.FRT_CREA_DTM,'%H:%i') AS DIV_SEC,
@@ -2106,8 +2111,8 @@
 			TB_SMS_MASTER A,
 			TB_USER B
 		WHERE
-			A.REC_TEN_NO = #{telNo}
-			AND A.REC_TEN_NO = B.TEL_NO
+			A.USER_CI = #{CI}
+			AND A.USER_CI = B.USER_CI
 			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
 		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) DESC;
 		
@@ -2117,6 +2122,7 @@
 	<select id="depth02DayList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		SELECT 
+			A.USER_CI,
 			DATE_FORMAT(A.FRT_CREA_DTM,'%Y-%m-%d') AS DIV_DAY,
 			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
 			DATE_FORMAT(A.FRT_CREA_DTM,'%m-%d') AS DIV_DATE,			
@@ -2126,8 +2132,8 @@
 			TB_SMS_MASTER A,
 			TB_USER B
 		WHERE 
-			A.REC_TEN_NO = #{telNo}
-			AND A.REC_TEN_NO = B.TEL_NO
+			A.USER_CI = #{CI}
+			AND A.USER_CI = B.USER_CI
 			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
 		GROUP BY DIV_DAY
 		ORDER BY DIV_DAY DESC
@@ -2137,6 +2143,7 @@
 	<select id="depth03DayList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		SELECT
+			A.USER_CI,
 			DATE_FORMAT(A.FRT_CREA_DTM,'%Y-%m-%d') AS DIV_MONTH,
 			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_WEEK,
 			A.APP_AMOUNT,
@@ -2146,8 +2153,8 @@
 			TB_SMS_MASTER A,
 			TB_USER B
 		WHERE
-			A.REC_TEN_NO = #{telNo}
-			AND A.REC_TEN_NO = B.TEL_NO
+			A.USER_CI = #{CI}
+			AND A.USER_CI = B.USER_CI
 			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
 		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) DESC
 		]]>
@@ -2156,6 +2163,7 @@
 	<select id="depth02DivList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		SELECT 
+			A.USER_CI,
 			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
 			A.REC_TEN_NO,
 			A.CARD_APP_CO,
@@ -2166,8 +2174,8 @@
 			TB_SMS_MASTER A,
 			TB_USER B
 		WHERE 
-			A.REC_TEN_NO = #{telNo}
-			AND A.REC_TEN_NO = B.TEL_NO
+			A.USER_CI = #{CI}
+			AND A.USER_CI = B.USER_CI
 			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
 		GROUP BY APP_CO_DIV,DIV_MONTH
 		ORDER BY DIV_MONTH DESC, convert(SUM(A.APP_AMOUNT), decimal)  DESC
@@ -2177,6 +2185,7 @@
 	<select id="depth03DivList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		SELECT
+			A.USER_CI,
 			DATE_FORMAT(A.FRT_CREA_DTM,'%Y-%m-%d') AS DIV_MONTH,
 			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_WEEK,
 			A.APP_AMOUNT,
@@ -2186,8 +2195,8 @@
 			TB_SMS_MASTER A,
 			TB_USER B
 		WHERE
-			A.REC_TEN_NO = #{telNo}
-			AND A.REC_TEN_NO = B.TEL_NO
+			A.USER_CI = #{CI}
+			AND A.USER_CI = B.USER_CI
 			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
 		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) DESC
 		]]>
@@ -2884,12 +2893,11 @@
 	<!-- 진호씨 -->
 
 	<select id="latestDataEmail" parameterType="list" resultType="hashmap">
-
 		SELECT * FROM TB_USER_DATA 
 		<if test="list  != null">
 			WHERE
 			<foreach item="item" index="index" collection="list" separator="or">
-				SALES_BARCODE = "${item}"
+				SEQ = "${item}"
 			</foreach>
 		</if>
 		ORDER BY CARD_DATE DESC
@@ -2910,12 +2918,12 @@
 		
 		
 		<update id="transUp" parameterType="list">
-      
-       UPDATE TB_USER_DATA SET TRANS_MISSION = TRANS_MISSION+1 WHERE 
-      <foreach item="item" index="index" collection="list" separator="or">
-       SALES_BARCODE = "${item}" 
-          </foreach>
-   </update>
+
+		UPDATE TB_USER_DATA SET TRANS_MISSION = TRANS_MISSION+1 WHERE
+		<foreach item="item" index="index" collection="list" separator="or">
+			SEQ = "${item}"
+		</foreach>
+		</update>
    
 	<!-- 현재 메일, 지난이메일 가져오기	 -->
 	<select id="emailList" parameterType="String" resultType="hashmap">
@@ -2924,7 +2932,7 @@
 				EMAIL, 
 				LAST_EMAIL 
 			FROM 
-				TB_USER WHERE TEL_NO = #{telNo} AND EMAIL != 'UPLUS'
+				TB_USER WHERE USER_CI = #{CI} AND EMAIL != 'UPLUS'
  	 
 		]]>
 	</select>
@@ -2943,21 +2951,23 @@
 	    ]]>
 	</update>
 	
-	<select id="affliate" resultType="hashmap">
+	
+<select id="affliate" parameterType="hashmap" resultType="hashmap">
+	  <choose>
+	  
+	  <when test="''.equals(find)">
 	    <![CDATA[
-	    	SELECT 
-	    		AFFLIATE_NO, 
-	    		AFFLIATE_NM, 
-	    		FRANCHISEE, 
-	    		M_DIV_CD, 
-	    		SHOP_NAME, 
-	    		ROAD_ADDR, 
-	    		AFFLIATE_EXPLAIN, 
-	    		AFFLIATE_IMAGE, 
-	    		AFFLIATE_STAR
-	    	FROM 
-	    		TB_AFFLIATE_MASTER_A 
+	    	SELECT AFFLIATE_NO, AFFLIATE_NM, FRANCHISEE, M_DIV_CD, SHOP_NAME, ROAD_ADDR, AFFLIATE_EXPLAIN, AFFLIATE_IMAGE, AFFLIATE_STAR
+	    	FROM TB_AFFLIATE_MASTER_A 
 	    ]]>
+	  </when>
+	  <otherwise>
+	    <![CDATA[
+	        SELECT AFFLIATE_NO, AFFLIATE_NM, FRANCHISEE, M_DIV_CD, SHOP_NAME, ROAD_ADDR, AFFLIATE_EXPLAIN, AFFLIATE_IMAGE, AFFLIATE_STAR
+	    	FROM TB_AFFLIATE_MASTER_A WHERE SHOP_NAME LIKE CONCAT('%', #{find}, '%')
+		]]>     
+	  </otherwise>
+	   </choose>
 	</select>
 	
 	<select id="affliateDetail" parameterType="String" resultType="hashmap">
@@ -2980,5 +2990,95 @@
 	    		AFFLIATE_NO = #{AFFLIATE_NO}
 	    ]]>
 	</select>
+	
+	<select id="payment" parameterType="hashmap" resultType="hashmap">
+	     <![CDATA[
+		SELECT CARD_AMT, CARD_APP_NO, CASH_DATE, CARD_DATE, CARD_ICOM, CARD_PCOM, CARD_NO, FRT_CREA_DTM  
+		FROM TB_USER_DATA WHERE SALES_BARCODE = #{SALES_BARCODE} 
+	    ]]>
+	    
+	</select>
+	
+	<update id="mailPush" parameterType="hashmap">
+	     <![CDATA[
+			UPDATE TB_USER 
+			SET
+				EMAIL = #{mail}
+			WHERE
+				USER_CI = #{CI}	
+		]]>
+	    
+	</update>
 		
+	<select id="reviewList" parameterType="hashmap" resultType="hashmap">
+	     <![CDATA[
+	     	SELECT 
+	     		REVIEW_WRITER,
+	     		REVIEW_WRITER_CI,
+	     		DATE_FORMAT(REVIEW_DATE, '%Y-%m-%d %H:%i:%s') AS REVIEW_DATE,
+	     		REVIEW_CONTENT,
+	     		REVIEW_AFFLIATE_STAR
+	     	FROM
+	     		TB_AFFLIATE_REVIEW
+	     	WHERE
+	     		REVIEW_AFFLIATE_NO = #{affliate_no}
+	     	ORDER BY REVIEW_DATE DESC
+	     ]]>
+	      LIMIT #{startSeq},#{endSeq}	
+	 </select>
+	 
+	<update id="reviewInsert" parameterType="hashmap">
+				    				
+	    <![CDATA[
+	    	INSERT INTO TB_AFFLIATE_REVIEW 
+		    (	
+		    	REVIEW_WRITER,
+		    	REVIEW_WRITER_CI,
+		    	REVIEW_DATE,
+		    	REVIEW_CONTENT,
+		    	REVIEW_AFFLIATE_NO,
+		    	REVIEW_AFFLIATE_STAR
+		    )			
+		    VALUES
+		    (		
+		    	#{REVIEW_WRITER},
+		    	#{REVIEW_WRITER_CI},
+		    	now(),
+		    	#{REVIEW_CONTENT},
+		    	#{REVIEW_AFFLIATE_NO},
+		    	#{REVIEW_AFFLIATE_STAR}	
+	    	)				
+	    ]]>	
+	</update>
+	
+	<select id="reviewStarAvg" resultType="float" parameterType="hashmap">
+	    <![CDATA[
+	    	SELECT ROUND(AVG(REVIEW_AFFLIATE_STAR), 1) FROM TB_AFFLIATE_REVIEW WHERE REVIEW_AFFLIATE_NO = #{REVIEW_AFFLIATE_NO}
+	     ]]>	
+	</select>
+
+	<update id="starUpdate" parameterType="hashmap">
+	     <![CDATA[
+	     	UPDATE
+	     		TB_AFFLIATE_MASTER 
+	     	SET
+	     		AFFLIATE_STAR = #{avg}
+	     	WHERE
+	     		AFFLIATE_NO = #{affliate_no} 
+	     ]]>
+	</update>
+	
+	
+	<update id="starUpdateA" parameterType="hashmap">
+	     <![CDATA[
+	     	UPDATE
+	     		TB_AFFLIATE_MASTER_A
+	     	SET
+	     		AFFLIATE_STAR = #{avg}
+	     	WHERE
+	     		AFFLIATE_NO = #{affliate_no} 
+	  	]]>
+	</update>
+	
+	
 </mapper>

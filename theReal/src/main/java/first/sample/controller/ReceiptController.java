@@ -2239,6 +2239,10 @@ public class ReceiptController {
 			String sms = var.find("message").toString();
 			System.out.println("sms - "+ sms);
 			HashMap<String, Object> insertMap = SmsParse.smsCardParse(sendTelNo, recTelNo, sms);
+			System.out.println(":::::::::::::::::::::::");
+			System.out.println("SMS CI :: " + CI);
+			System.out.println(":::::::::::::::::::::::");
+			insertMap.put("CI", CI);
 			if(!insertMap.get("REC_TEN_NO").equals("") || insertMap.get("REC_TEN_NO")!= null){
 				receiptService.insertSmsData(insertMap);
 			}else{
@@ -2305,8 +2309,11 @@ public class ReceiptController {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("CI", (String) commandMap.get("CI"));
 		map.put("telNo", (String) commandMap.get("telNo"));
+		map.put("deviceId", (String) commandMap.get("deviceId"));
 		// Integer resultInt = receiptService.lgnChk(map);
 		Map<String, Object> resultMap = receiptService.lgnChk2(map);
+		
+		
 		return resultMap;
 	}
 
@@ -2432,8 +2439,11 @@ public class ReceiptController {
 	@ResponseBody
 	public Object startCurData(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("CI", commandMap.get("CI"));
-
+		String CI = (String) commandMap.get("CI");
+		
+		
+		map.put("CI", CI);
+		
 		Map<String, Object> resultMap = receiptService.startCurData(map);
 		resultMap.put("code", "OK");
 
@@ -2444,8 +2454,9 @@ public class ReceiptController {
 	@ResponseBody
 	public Object startUserData(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("CI", commandMap.get("CI"));
-
+		String CI = (String) commandMap.get("CI");
+		
+		map.put("CI", CI);
 		Map<String, Object> resultMap = receiptService.startUserData(map);
 		resultMap.put("code", "OK");
 
@@ -2456,7 +2467,11 @@ public class ReceiptController {
 	@ResponseBody
 	public Object startSumData(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("CI", commandMap.get("CI"));
+		
+		String CI = (String) commandMap.get("CI");
+		
+		
+		map.put("CI", CI);
 		map.put("startDate", commandMap.get("startDate"));
 		map.put("endDate", commandMap.get("endDate"));
 
@@ -2472,7 +2487,10 @@ public class ReceiptController {
 	@ResponseBody
 	public Object startRecYnData(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("CI", commandMap.get("CI"));
+		String CI = (String) commandMap.get("CI");
+		
+		
+		map.put("CI", CI);
 		map.put("startDate", commandMap.get("startDate"));
 		map.put("endDate", commandMap.get("endDate"));
 
@@ -2512,6 +2530,7 @@ public class ReceiptController {
 	@ResponseBody
 	public Object depth01List(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("CI", commandMap.get("CI"));
 		map.put("telNo", commandMap.get("telNo"));
 		map.put("startDate", commandMap.get("startDate"));
 		map.put("endDate", commandMap.get("endDate"));
@@ -2541,7 +2560,11 @@ public class ReceiptController {
 	@ResponseBody
 	public Object latestData(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("CI", commandMap.get("CI"));
+		String CI = (String) commandMap.get("CI");
+		
+		
+		map.put("CI", CI);
+		System.out.println("CI" + CI);
 		System.out.println("dateSrchCd" + commandMap.get("dateSrchCd"));
 		System.out.println("startDay" + commandMap.get("startDay"));
 		System.out.println("endDay" + commandMap.get("endDay"));
@@ -2614,6 +2637,7 @@ public class ReceiptController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int listSize =0;
 		String str;
+		String CI = null;
 		try {
 			
 		String type = (String)commandMap.get("type");
@@ -2633,7 +2657,8 @@ public class ReceiptController {
 			resultMap.put("salesDate", date);
 			
 		}else{
-			map.put("CI", (String)commandMap.get("CI"));
+			CI = (String)commandMap.get("CI");
+			map.put("CI", CI);
 			map.put("type", (String)commandMap.get("type"));
 			map.put("seq", (String)commandMap.get("seq"));
 			
@@ -3470,10 +3495,13 @@ public class ReceiptController {
 	public Object couponList(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		String nowDay = (String) commandMap.getMap().get("nowDay");
 		String procDivCd = (String) commandMap.getMap().get("procDivCd");
+		String webType = (String) commandMap.getMap().get("webType");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("nowDay", nowDay);
 		map.put("procDivCd", procDivCd);
 
+		System.out.println("TTTTTTTTTTTTTTTTTTTT :::: "+webType);
+		
 		Map<String, Object> resultMap = receiptService.couponList(map);
 		resultMap.put("code", "OK");
 
@@ -4161,9 +4189,9 @@ public class ReceiptController {
 	//진호씨 
 	
 	@SuppressWarnings("unchecked")
-	   @RequestMapping(value = "/receipt/sendMail.do")
-	   @ResponseBody
-	   public void sendMail(@RequestParam(value="barcode[]", required=false) String[] barcode, HttpServletRequest request, String email, CommandMap commandMap, String subject, String content, String CI) throws Exception{
+	@RequestMapping(value = "/receipt/sendMail.do")
+	@ResponseBody
+	public void sendMail(String CI, @RequestParam(value="SEQ[]") String[] SEQ, HttpServletRequest request, String email, CommandMap commandMap, String subject, String content, String telNo, @RequestParam(value="barcode[]", required=false) String[] barcode) throws Exception{
 		  Map<String, Object> userDataMap = new HashMap<String, Object>();
 	      Map<String, Object> userDataDtailMap = new HashMap<String, Object>();
 	      Map<String, Object> telMap = new HashMap();
@@ -4174,11 +4202,20 @@ public class ReceiptController {
 	      telMap = (Map<String,Object>) userMap.get("reslutMap");
 	      String userNm = (String)telMap.get("USER_NM");*/
 	      List<String> list = new ArrayList<String>();
-	      
+	      List<String> list2 = new ArrayList<String>();
 	      Map<String, Object> result = new HashMap<>();
 	      Map<String, Object> detailResult = new HashMap<>();
-	      for (int i = 0; i < barcode.length; i++) {
-	         list.add(barcode[i]);
+	      
+	      ArrayList paymentList= (ArrayList) result.get("resultMap");
+	      Map<String, Object> paymentResultMap = new HashMap<String, Object>();
+	      
+	      for (int i = 0; i < SEQ.length; i++) {
+	        list.add(SEQ[i]);
+	        
+	      }
+	      
+	      for (int i=0; i < barcode.length; i++){
+	    	  list2.add(barcode[i]);
 	      }
 	      
 	      //data
@@ -4187,16 +4224,118 @@ public class ReceiptController {
 	      ArrayList resultList= (ArrayList) result.get("resultMap");
 	      
 	     
-	      detailResult = receiptService.latestDataEmailDetail(list);
+	      detailResult = receiptService.latestDataEmailDetail(list2);
 	      ArrayList<HashMap<String, Object>> resultDetailList= (ArrayList<HashMap<String, Object>>) detailResult.get("resultMap");
 	      String[] body = new String[200];
 	      String forResult = "";
-	      for (int i = 0; i < resultList.size(); i++) {
-	         userDataMap = (HashMap<String, Object>) resultList.get(i);
 	      
-	      //data 반복
-	    
-	      body[i]="<html>"
+	      
+	      
+	   for (int i = 0; i < resultList.size(); i++) {
+	         userDataMap = (HashMap<String, Object>) resultList.get(i);
+	         
+	         //복합결제일때
+	         if(userDataMap.get("CARD_COMPOUND").equals("Y")){
+	        	
+	        	 Map<String, Object> paymentMap = new HashMap<String, Object>();
+	        	 Map<String, Object> payImportant = new HashMap<String, Object>();
+	        	 
+	        	 
+	        	 payImportant.put("SALES_BARCODE", userDataMap.get("SALES_BARCODE"));
+	        	 /*payImportant.put("SEQ", userDataMap.get("SEQ"));*/
+	        	 		
+	        	 paymentMap = receiptService.payment(payImportant); 
+	        	
+	        	 
+	        	paymentList = (ArrayList) paymentMap.get("resultMap");
+	        	
+	        
+	        		body[i]="<html>"
+	   	    		  +"<head><meta charset='utf-8'></head>"
+	   	            +"<body><table style='background: #f2f2f2; width: 690px; font-family: Dotum,; font-size:12px; color:#999999;'><tr><td><img src='http://117.52.97.40/theReal/images/top.jpg'></td>"
+	   	              +"<tr><td></td></tr><tr><td align='center'><table style='background: #e5e5e5; width: 410px; border: 1px solid #ddd; margin: 50px;'></tr>"
+	   	            +"<tr><td height='4px' style='background: #e5e5e5;'></td></tr><tr><td align='center'>"
+	   	              +"<table style='background: #fff; width: 400px; border: 1px solid #ddd;'><tr><td><img src='http://117.52.97.40/theReal/images/paper_top.gif'></td></tr>"
+	   	              +"<tr><td align='center' style='padding: 0px 30px 30px 30px;'><p></p><p></p><p style='font-size: 12px; color: gray; clear:both;' align='left'>Mobile Life Service</p>"
+	   	              +"<div class='rt_txt01'style='text-align: left; font-size: 1em; color: #666; clear: both;'></div><div class='affli_div'style='text-align: center; font-size: 20px; padding: 13px 0px; color: #000; font-weight: 700;'>"+userDataMap.get("SHOP_NAME")+"</div><div></div><div></div>"
+	   	              +"<div class='rt_txt01'style='text-align: left; font-size: 12px; color: gray; clear:both; padding: 0px 10px;'><div class='rt_txt01'style='text-align: left; font-size: 1em; color: #666; clear: both;'></div><br><span>대표자명 : "+userDataMap.get("SHOP_CEO")+"</span></div>"
+	   	              +"<div class='rt_txt01'style='text-align: left; font-size: 12px; color: gray; clear:both; padding: 0px 10px;'><span>전화번호 : "+userDataMap.get("SHOP_TEL_NUM")+"</span></div>"
+	   	              +"<div class='rt_txt01'style='text-align: left; font-size: 12px; color: gray; clear:both; padding: 0px 10px;'><span>사업자번호 : "+userDataMap.get("SHOP_BIZNO")+"</span></div>"
+	   	              +"<div class='rt_txt01'style='text-align: left; font-size: 12px; color: gray;  clear:both; padding: 0px 10px;'>주소 : "+userDataMap.get("SHOP_ADDR")+"<span></span></div>"
+	   	              +"<br><br><hr width='100%' style='border:1px dashed #cccccc'>"
+	   	              +"<table width='100%' cellspacing='0' cellpadding='0'><tr style='border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: #CCCCCC;'>"
+	   	              +"<th style='13px gulim; padding:4px; color:#666; font-size: 12px;' align='left'>품명</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='padding: 6px; color:#666; font-size: 12px;'>단가</th>"
+	   	              +"<th style='13px gulim; color:#666;  padding:6px; font-size: 12px;'>수량</th><th style='13px gulim; color:#666;  padding:6px; font-size: 12px;'>금액</th></tr>";
+	   	      					
+	   	          //detail반복   	
+	   	            for (int j = 0; j < resultDetailList.size(); j++) {
+	   	            	
+	   	               userDataDtailMap = (HashMap<String, Object>) resultDetailList.get(j);
+	   	               			
+	   	               if(userDataMap.get("SALES_BARCODE").equals(userDataDtailMap.get("SALES_BARCODE"))) {
+	   	            	   		
+	   	            	 body[i] += "<tr><th style='padding:4px;  color:#666; font-size: 12px;' align='left'>"
+	   	                  + userDataDtailMap.get("SALES_PNAME")
+	   	                  + "</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='padding: 6px; color:#666; font-size: 12px;'>"+replaceComma(Integer.parseInt((String)userDataDtailMap.get("SALES_PPRICE")))+"</th>"
+	   	                  + "<th style='13px gulim;  padding:6px; color:#666; font-size: 12px;'>"+userDataDtailMap.get("SALES_QTY")+"</th><th style='13px gulim;  padding:6px; color:#666; font-size: 12px; font-size: 12px;'>"+replaceComma(Integer.parseInt((String)userDataDtailMap.get("SALES_FP_AMT")))+"</th></tr>";
+	   	               }  
+	   	            } 		
+	   	             	 
+	   	            body[i]+= "<tr>"
+	   	              +"</table>"
+	   	              +"<br><hr width='100%' style='border:1px dashed #cccccc'><table width='100%' cellspacing='0' cellpadding='0'><tr>"
+	   	              +"<th style='color: black; padding: 6px; font-size: 17px' align='left' >과세물품가액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
+	   	              +"<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: black; padding: 6px; font:bold 13px gulim; font-size: 17px'  >"+replaceComma(Integer.parseInt((String)userDataMap.get("SALES_SUM_FP_AMT")))+"</th></tr>"
+	   	              +"<tr><th style='color: black; padding: 6px; font-size: 17px' align='left'>부가세</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
+	   	              +"<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
+	   	              +"<th style='color: black; padding: 6px; font:bold 13px gulim; font-size: 17px'>"+replaceComma(Integer.parseInt((String)userDataMap.get("SALES_SUM_TAX_AMT")))+"</th></tr>"
+	   	              +"<tr><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px' align='left'>합계금액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
+	   	              +"<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
+	   	            +"<th style='color: #5263bd; padding: 6px;'></th><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px'>"+replaceComma(Integer.parseInt((String)userDataMap.get("SALES_PAID_AMT")))+"</th></tr>"
+	   	              +"<tr><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px' align='left'>반환금액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
+	   	            +"<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
+	   	              +"<th style='color: #5263bd; padding: 6px;'></th><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px'>0</th></tr>"
+	   	            +"</table><hr width='100%' style='border:1px dashed #cccccc'>"
+	   	              +"<div class='rt_etc'style='text-align: left; font-size: 8px; font-weight: 700; color: #333; clear: both; padding: 10px; border-bottom: 1px dashed #aaa'><div class='rt_copy'style='text-align: center; font-size: 12px;'>";
+	   	          
+	   	          
+	   	            for(int a=0; a<paymentList.size(); a++){
+	 	        		paymentResultMap = (HashMap<String, Object>) paymentList.get(a);
+	 	        	
+	 	        //복합결제 데이터 넣어볼곳 
+		            body[i] += "<div>승인금액 : "+paymentResultMap.get("CARD_AMT")+"</div>"
+		            		+ "<div>CARD_APP_NO : "+paymentResultMap.get("CARD_APP_NO")+"</div>"
+		            		+ "<div>CASH_DATE : "+paymentResultMap.get("CASH_DATE")+"</div>"
+		            		+ "<div>CARD_DATE : "+paymentResultMap.get("CARD_DATE")+"</div>";
+		            		
+		            	if(paymentResultMap.get("CARD_ICOM").equals("")||paymentResultMap.get("CARD_ICOM").equals(null)){
+		            		
+		            		body[i] += "<div>현금결제</div>";
+		            	}else{
+		            		body[i] += "<div>"+paymentResultMap.get("CARD_PCOM")+"</div>";
+		            	}
+		            		
+		            	body[i]	+= "<div>카드번호 : "+paymentResultMap.get("CARD_NO")+"</div>"
+		            			+ "<div>결제일시 : "+paymentResultMap.get("FRT_CREA_DTM")+"</div>"
+		            			+ "<hr width='100%' style='border:1px dashed #cccccc'>";
+	   	            	}	  
+						
+	   	            	body[i] += "<br>"
+	   	            			+ "***신용승인정보(고객용)***"
+	   	                       	 +"<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both'>거래종류: 복합결제</div>";
+	   	            
+	   	              body[i]+="<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both'>거래일시:: "+userDataMap.get("FRT_CREA_DTM")+"</div></div>"
+	   	            +"</div><div class='rt_copy'style='text-align: center; font-size: 12px;'><br>본 전자영수증은 거래의 참고용으로 사용하시기 바랍니다.</div>"
+	   	              +"</td></tr></table></td></tr></tsable></td>"
+	   	            +"</tr></table></body></html>";
+	   	           forResult += body[i];
+	         }
+	      
+	         
+	   //복합결제아닐때      
+	     else{ 
+	         //data 반복
+	        body[i]="<html>"
 	    		  +"<head><meta charset='utf-8'></head>"
 	            +"<body><table style='background: #f2f2f2; width: 690px; font-family: Dotum,; font-size:12px; color:#999999;'><tr><td><img src='http://117.52.97.40/theReal/images/top.jpg'></td>"
 	              +"<tr><td></td></tr><tr><td align='center'><table style='background: #e5e5e5; width: 410px; border: 1px solid #ddd; margin: 50px;'></tr>"
@@ -4212,21 +4351,19 @@ public class ReceiptController {
 	              +"<table width='100%' cellspacing='0' cellpadding='0'><tr style='border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: #CCCCCC;'>"
 	              +"<th style='13px gulim; padding:4px; color:#666; font-size: 12px;' align='left'>품명</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='padding: 6px; color:#666; font-size: 12px;'>단가</th>"
 	              +"<th style='13px gulim; color:#666;  padding:6px; font-size: 12px;'>수량</th><th style='13px gulim; color:#666;  padding:6px; font-size: 12px;'>금액</th></tr>";
-	          
-	          //detail반복   
+	      					
+	          //detail반복   	
 	            for (int j = 0; j < resultDetailList.size(); j++) {
 	               userDataDtailMap = (HashMap<String, Object>) resultDetailList.get(j);
-	               if (userDataMap.get("SALES_BARCODE").equals(userDataDtailMap.get("SALES_BARCODE"))) {
-	                  
-	               
-	            body[i] += "<tr><th style='padding:4px;  color:#666; font-size: 12px;' align='left'>"
+	               			
+	               if(userDataMap.get("SALES_BARCODE").equals(userDataDtailMap.get("SALES_BARCODE"))) {
+	            	 body[i] += "<tr><th style='padding:4px;  color:#666; font-size: 12px;' align='left'>"
 	                  + userDataDtailMap.get("SALES_PNAME")
 	                  + "</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='padding: 6px; color:#666; font-size: 12px;'>"+replaceComma(Integer.parseInt((String)userDataDtailMap.get("SALES_PPRICE")))+"</th>"
 	                  + "<th style='13px gulim;  padding:6px; color:#666; font-size: 12px;'>"+userDataDtailMap.get("SALES_QTY")+"</th><th style='13px gulim;  padding:6px; color:#666; font-size: 12px; font-size: 12px;'>"+replaceComma(Integer.parseInt((String)userDataDtailMap.get("SALES_FP_AMT")))+"</th></tr>";
-
 	               }  
-	            }	
-	            
+	            } 		
+	             	 
 	            body[i]+= "<tr>"
 	              +"</table>"
 	              +"<br><hr width='100%' style='border:1px dashed #cccccc'><table width='100%' cellspacing='0' cellpadding='0'><tr>"
@@ -4244,23 +4381,28 @@ public class ReceiptController {
 	            +"</table><hr width='100%' style='border:1px dashed #cccccc'>"
 	              +"<div class='rt_etc'style='text-align: left; font-size: 8px; font-weight: 700; color: #333; clear: both; padding: 10px; border-bottom: 1px dashed #aaa'><div class='rt_copy'style='text-align: center; font-size: 12px;'>"
 	            +"***신용승인정보(고객용)***";
+	            
+	          
+	            
 	            String cardIcom = (String) userDataMap.get("CARD_ICOM");
-	            if(cardIcom==null){
-	                 
+	            if(cardIcom.equals("")||cardIcom.equals(null)){
+	                 					
 	               body[i]+=
-	                       "<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both'>거래종류: 현금</div>";
+	                       "<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both'>거래종류: 현금결제</div>";
 	              }else{
-	                    
+	                    		
 	                 body[i]+=
-	                       "<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both'>거래종류: 카드</div>";
+	                       "<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both'>거래종류: "+userDataMap.get("CARD_ICOM")+"</div>";
 	              }
 	              
 	              body[i]+="<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both'>거래일시:: "+userDataMap.get("FRT_CREA_DTM")+"</div></div>"
-	            +"</div><div class='rt_copy'style='text-align: center; font-size: 12px;'>본 전자영수증은 거래의 참고용으로 사용하시기 바랍니다.</div>"
+	            +"</div><div class='rt_copy'style='text-align: center; font-size: 12px;'><br>본 전자영수증은 거래의 참고용으로 사용하시기 바랍니다.</div>"
 	              +"</td></tr></table></td></tr></tsable></td>"
 	            +"</tr></table></body></html>";
-	      forResult += body[i];
-	      }
+	              forResult += body[i];
+	     } 
+	         
+	     }
 	      FileWriter fWriter = null;
 	      BufferedWriter writer = null;
 	      try{
@@ -4333,37 +4475,101 @@ public class ReceiptController {
 		 
 	}
 	
+	@SuppressWarnings("unused")
+	   @ResponseBody
+	   @RequestMapping(value= "/receipt/affliate.do")
+	   public Map<String, Object> affliate(String affliate_no, String find){
+	      
+	      Map<String, Object> resultMap = new HashMap<>();
+	      Map<String, Object> findMap = new HashMap<>();
+	   
+	      
+	      if(affliate_no.equals(null)||affliate_no.equals("")||affliate_no==null){
+
+	         try {
+	            if(find.equals(null)||find.equals("")||find==null){
+	               
+	               findMap.put("find", "");
+	               resultMap = receiptService.affliate(findMap);
+	            
+	            }else{
+	               
+	               findMap.put("find", find);
+	               resultMap = receiptService.affliate(findMap);
+	            }
+	         
+	         } catch (Exception e) {
+	            e.getMessage();
+	         }
+	      
+	      }else{
+	         
+	         try {
+	            resultMap = receiptService.affliateDetail(affliate_no);
+	         } catch (Exception e) {
+	            e.getMessage();
+	         }
+	      }
+	         
+	      return resultMap;
+	   }
+	
+	
 	@ResponseBody
-	@RequestMapping(value= "/receipt/affliate.do")
-	public Map<String, Object> affliate(String affliate_no){
-		Map<String, Object> resultMap = new HashMap<>();
+	   @RequestMapping(value="/receipt/reviewList.do")
+	   public Map<String, Object> reviewList(CommandMap commandMap){
+	      Map<String, Object> resultMap = new HashMap<String, Object>();
+	      
+	      Map<String, Object> reviewMap = new HashMap<String, Object>();
+	      
+	      
+	      reviewMap.put("affliate_no", commandMap.get("affliate_no"));
+	      reviewMap.put("startSeq", 0);
+	      reviewMap.put("endSeq", Integer.parseInt((String) commandMap.get("endSeq")));
+	      
+	      resultMap = receiptService.reviewList(reviewMap);
+	      //1월 17일 수정
+	      
+	      reviewMap.put("affliate_no", commandMap.get("affliate_no"));
+	      reviewMap.put("startSeq", 0);
+	      reviewMap.put("endSeq", 2147483647);
+	      
+	      Map maxMap = receiptService.reviewList(reviewMap);
+	      List<Map<String, Object>> maxList = (ArrayList<Map<String, Object>>)maxMap.get("resultMap");
+	      int maxSize = maxList.size();   
+	      
+	      resultMap.put("maxSize", maxSize);
+	      
+	      return resultMap;
+	      
+	   }
+	
+	//1월 11일 추가
+	@ResponseBody
+	@RequestMapping(value="/receipt/reviewInsert.do")
+	public void reviewInsert(CommandMap commandMap){
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		System.out.println("@@@@@@@@@@@@@@@@@@@@");
-		System.out.println("@@@@@@@@@@@@@@@@@@@@");
-		System.out.println("@@@@@@@@@@@@@@@@@@@@");
+		map.put("REVIEW_WRITER", commandMap.get("REVIEW_WRITER"));
+		map.put("REVIEW_WRITER_CI", commandMap.get("REVIEW_WRITER_CI"));
+		map.put("REVIEW_CONTENT", commandMap.get("REVIEW_CONTENT"));
+		map.put("REVIEW_AFFLIATE_NO", commandMap.get("REVIEW_AFFLIATE_NO"));
+		map.put("REVIEW_AFFLIATE_STAR", commandMap.get("REVIEW_AFFLIATE_STAR"));
 		
+		receiptService.reviewInsert(map);	
+				
+		float avg = receiptService.reviewStarAvg(map);
+	
 		
-		if(affliate_no == null ){
+		Map<String, Object> starMap = new HashMap<String, Object>();
 		
-			try {
-				resultMap = receiptService.affliate();
-			
-			} catch (Exception e) {
-				e.getMessage();
-			}
+		starMap.put("avg", avg);
+		starMap.put("affliate_no", map.get("REVIEW_AFFLIATE_NO"));
 		
-		}else{
-			
-			try {
-				resultMap = receiptService.affliateDetail(affliate_no);
-			} catch (Exception e) {
-				e.getMessage();
-			}
-		}
+		receiptService.starUpdate(starMap);
 		
-		return resultMap;
+		receiptService.starUpdateA(starMap);
 	}
-
+	
+	
 }
-
-

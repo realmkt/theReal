@@ -739,20 +739,63 @@ public class ReceiptServiceImpl implements ReceiptService {
 	}
 	
 	@Override
-	public Map<String, Object> affliate() {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-	      List<Map<String, Object>> list = receiptDAO.affliate();
-	      resultMap.put("resultMap", list);  
-	      return resultMap;  
-	}
-
-	@Override
 	public Map<String, Object> affliateDetail(String affliate_no) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 	      List<Map<String, Object>> list2 = receiptDAO.affliateDetail(affliate_no);
 	      resultMap.put("resultMap", list2);  
 	      return resultMap;  
 	}
+	
+	@Override 
+	public Map<String, Object> payment(Map<String, Object> payImportant) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+	     List<Map<String, Object>> list2 = receiptDAO.payment(payImportant);
+	     resultMap.put("resultMap", list2);  
+	     return resultMap;  
+	}
 
+	@Override
+	public void mailPush(Map<String, Object> mailMap) {
+		receiptDAO.mailPush(mailMap);
+		
+	}
+	
+	@Override
+	public Map<String, Object> affliate(Map<String, Object> findMap) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+	      List<Map<String, Object>> list = receiptDAO.affliate(findMap); 
+	      resultMap.put("resultMap", list);  
+	      return resultMap;  
+	}
+	
+	@Override
+	public Map<String, Object> reviewList(Map<String, Object> reviewMap) {
+		
+		 Map<String, Object> resultMap = new HashMap<String, Object>();
+	     List<Map<String, Object>> list2 = receiptDAO.reviewList(reviewMap);
+	     resultMap.put("resultMap", list2);  
+	     return resultMap; 
+	}
+
+	@Override
+	public void reviewInsert(Map<String, Object> map) {
+		receiptDAO.reviewInsert(map);
+	}
+	
+	@Override
+	public float reviewStarAvg(Map<String, Object> map) {
+		return receiptDAO.reviewStarAvg(map);	
+	}
+			
+	@Override 
+	public void starUpdate(Map<String, Object> starMap){
+		receiptDAO.starUpdate(starMap);
+	}
+
+	@Override
+	public void starUpdateA(Map<String, Object> starMap) {
+		receiptDAO.starUpdateA(starMap);
+			
+	}
 	
 }

@@ -285,9 +285,10 @@
 
 <input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
 <script type="text/javascript">
+
 var request = new Request();
 var telNo = request.getParameter('telNo');
-var CI = request.getParameter('CI');
+var CI = window.localStorage.getItem("CI");
 var seq ="";
 $(document).ready(function(){
 	
@@ -296,11 +297,11 @@ $(document).ready(function(){
 	})
 	
 	$("#couponPro").click(function(){
-		location.href='coupon_pro.html?telNo='+telNo;
+		location.href='coupon_pro.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
 	})
 	
 	$("#couponEnd").click(function(){
-		location.href='coupon_end.html?telNo='+telNo;
+		location.href='coupon_end.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
 	})
 	
 	commonUserData();

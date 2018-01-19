@@ -230,8 +230,22 @@ public interface ReceiptService {
 
 	Map<String, Object> smsDetailData(Map<String, Object> map) throws Exception;
 
-	Map<String, java.lang.Object> affliate();
-
 	Map<String, java.lang.Object> affliateDetail(String affliate_no);
+	
+	Map<String, java.lang.Object> payment(Map<String, Object> payImportant);
+
+	void mailPush(Map<String, Object> mailMap);
+
+	Map<String, Object> affliate(Map<String, Object> findMap);
+	
+	Map<String, java.lang.Object> reviewList(Map<String, java.lang.Object> reviewMap);
+
+	void reviewInsert(Map<String, java.lang.Object> map);
+	
+	float reviewStarAvg(Map<String, java.lang.Object> map);
+
+	void starUpdate(Map<String, Object> starMap);
+
+	void starUpdateA(Map<String, java.lang.Object> starMap);
 	
 }

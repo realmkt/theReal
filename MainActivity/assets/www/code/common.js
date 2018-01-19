@@ -25,7 +25,7 @@ $(function () {
 $(document).ready(function(){
 	
  	$(document).on('click','#leftMenuLatest',function(){
- 		location.href='latest.html?telNo='+request.getParameter('telNo');
+ 		location.href='latest.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
 /* 	$(document).on('click','#leftMenuHistory',function(){
  		location.href='latest.html?telNo='+request.getParameter('telNo');
@@ -40,22 +40,22 @@ $(document).ready(function(){
  		location.href='affliate.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
  	}); */
  	$(document).on('click','#leftMenuComHistiry',function(){
- 		location.href='mobile.html?telNo='+request.getParameter('telNo');
+ 		location.href='mobile.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	}); 	
  	$(document).on('click','#leftMenuEvent',function(){
- 		location.href='event.html?telNo='+request.getParameter('telNo');
+ 		location.href='event.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#leftMenuCoupon',function(){
- 		location.href='coupon.html?telNo='+request.getParameter('telNo');
+ 		location.href='coupon.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#leftMenuNotice',function(){
- 		location.href='notice.html?telNo='+request.getParameter('telNo');
+ 		location.href='notice.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','.alen_logo',function(){
- 		location.href='index.html?telNo='+request.getParameter('telNo');
+ 		location.href='index.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#settingBtn',function(){
- 		location.href='setting.html?telNo='+request.getParameter('telNo');
+ 		location.href='setting.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#leftMenuLogOut',function(){
 	  	var storage = window.localStorage;
@@ -327,7 +327,7 @@ function commonUserData(){
         type: "post",
         url : commonIp()+"/theReal/receipt/startUserData.do",
         data: {
-        	CI  	: window.localStorage.getItem("CI"),  
+        	CI  	: window.localStorage.getItem("CI")
         },
         success: fn_commonUserData,
         error: fn_whenError
@@ -343,7 +343,7 @@ function fn_commonUserData(resdata){
 	$(".left_menu").empty();
 	resultCnt = resultData.length;
 	if(resultData.length>0){
-		for(var i=0; i<resultData.length; i++){
+		for(var i=0; i<1; i++){
 			str += '<table><tr><td><img src="../common/mobile.png"></td> '
 			str += '<td><h2>'+resultData[i].USER_NM+'</h2><br><span>'+resultData[i].EMAIL+'</span></td></tr></table>';
 			if(resultData[i].PUSH_YN == "Y"){

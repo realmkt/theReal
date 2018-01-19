@@ -540,14 +540,49 @@ public class ReceiptDAO extends AbstractDAO{
 		return (Map<String, Object>) selectOne("sample.smsDetailData", map);
 	}
 	
-	public List<Map<String, Object>> affliate() {
+	public List<Map<String, Object>> affliate(Map<String, Object> findMap) {
 		// TODO Auto-generated method stub
-		return selectList("sample.affliate");
+		return selectList("sample.affliate", findMap);
 	}
 
 	public List<Map<String, Object>> affliateDetail(String affliate_no) {
 		// TODO Auto-generated method stub
 		return selectList("sample.affliateDetail", affliate_no);
+	}
+	
+	
+	public List<Map<String, Object>> payment(Map<String, Object> payImportant) {
+		
+		return  selectList("sample.payment", payImportant);
+	}
+
+	public void mailPush(Map<String, Object> mailMap) {
+		
+		insert("sample.mailPush", mailMap);
+		
+	}
+
+	public List<Map<String, Object>> reviewList(Map<String, Object> reviewMap) {
+		
+		return	selectList("sample.reviewList", reviewMap);
+		
+	}
+
+	public void reviewInsert(Map<String, Object> map) {
+		insert("sample.reviewInsert", map);
+	}
+	
+	public float reviewStarAvg(Map<String, Object> map) {
+		return (float) selectOne("sample.reviewStarAvg", map);	
+	}
+	
+	public void starUpdate(Map<String,Object> starMap) {
+		update("sample.starUpdate", starMap);
+		
+	}
+
+	public void starUpdateA(Map<String, Object> starMap) {
+		update("sample.starUpdateA", starMap);
 	}
  
 	

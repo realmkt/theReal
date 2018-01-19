@@ -676,7 +676,7 @@ function fnComUuIdSucData(resData){
 	        type: "post",
 	        url : commonIp()+"/theReal/receipt/startCurData.do",
 	        data: {
-	        	CI  	: CI,  
+	        	CI  	: CI
 	        },
 	        success: fn_startCurData,
 	        error: whenError
@@ -698,7 +698,7 @@ function fnComUuIdSucData(resData){
 	        data: {
 	        	CI  	: CI,  
 	        	startDate  	: startDate+"%",  
-	        	endDate  	: endDate+"%",  
+	        	endDate  	: endDate+"%"
 	        },
 	        success: fn_startSumData,
 	        error: whenError
@@ -710,7 +710,7 @@ function fnComUuIdSucData(resData){
 	        data: {
 	        	CI  	: CI,  
 	        	startDate  	: startDate+curDate,  
-	        	endDate  	: endDate+curDate,  
+	        	endDate  	: endDate+curDate
 	        },
 	        success: fn_startRecYnData,
 	        error: whenError
@@ -774,9 +774,7 @@ function fn_startCurData(resdata){
 	}		 
 		 
 	else{
-		str += '<li>';
 		str += '<div class="mal_more">최근사용내역이 없습니다.</div>';
-		str += '</li>';		  	
 	}
 	$("#curMainData").append(str);
 }
@@ -1064,7 +1062,7 @@ function bagroundCallBack(){
         data: {
         	CI  	: CI,  
         	startDate  	: startDate+"%",  
-        	endDate  	: endDate+"%",  
+        	endDate  	: endDate+"%"
         },
         success: fn_startSumData,
         error: whenError
@@ -1076,7 +1074,7 @@ function bagroundCallBack(){
         data: {
         	CI  	: CI,  
         	startDate  	: startDate+curDate,  
-        	endDate  	: endDate+curDate,  
+        	endDate  	: endDate+curDate
         },
         success: fn_startRecYnData,
         error: whenError

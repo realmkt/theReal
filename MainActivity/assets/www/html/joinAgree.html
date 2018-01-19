@@ -254,17 +254,28 @@
     </div>
 
 <script type="text/javascript">
+var request = new Request();
+var uuid = request.getParameter('uuid');
+
 var page = true;
-history.pushState(null,null,location.href);
+/* history.pushState(null,null,location.href);
 window.onpopstate = function(event){
 	if(page){
+		alert("Back")
 		history.back();
 	}else{
 		history.pushState(null,null,location.href);
 		page = true;
 		$("#alert_body").fadeOut(10);
 	}
-}
+} */
+/* if (navigator.userAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || navigator.userAgent.match(/LG|SAMSUNG|Samsung/) != null) {
+	  alert(navigator.userAgent);
+	}
+	else {
+	 alert("B");
+	} */
+
 
 $("#joinNext").click(function(){
 	var alertStr = "";
@@ -283,7 +294,7 @@ $("#joinNext").click(function(){
 		return false;
 	}
 	
-	location.href = "./joinAuthen.html";
+	location.href = "./joinAuthen.html?uuid="+uuid;
 	
 	
 })

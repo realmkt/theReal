@@ -547,6 +547,7 @@ $(window).resize();
 <script type="text/javascript">
 //안드로이드 디바이스 back 키 누를때 발생하는 이벤트
 history.pushState(null,null,location.href);
+
 window.onpopstate = function(event){
 	if(page){
 		if(modalVal){
@@ -554,7 +555,10 @@ window.onpopstate = function(event){
 			modalVal=false;
 			$("#modalClose").trigger("click");
 		}else{
+			window.lacation
 		history.back();
+		history.back();
+		
 		}
 	}else{
 		history.pushState(null,null,location.href);
@@ -587,7 +591,7 @@ function allClear(){
 
 //초기 변수 값 지정
 var request = new Request();
-
+var modalVal=true;
 var telNo = request.getParameter('telNo');
 var CI = window.localStorage.getItem("CI");
 var seq = "";
@@ -1118,15 +1122,17 @@ function fn_latestSmsData(resdata){
 	str += '<div class="rt_sms"> 내역 <span>'+resdata.APP_CO+'</span></div><hr>';
 	str += '<div class="rt_sms"> 카드 <span>'+resdata.CARD_APP_CO+'</span></div><hr>';
 	str += '<div class="rt_sms"> 금액 <span>'+numCommas(resdata.APP_AMOUNT)+'</span></div><hr>';
+	
+	
 	str += '<div class="rt_sms"> 일시 <span>'+resdata.MOT_DATE+'</span></div><hr>';
 	if(resdata.INST_DIV!="체크"){
 		str += '<div class="rt_sms"> 할부 <span>'+resdata.INST_DIV+'</span></div><hr>';
 	}
 	
 	var sumAmount = resdata.ACC_SUM_AMMOUNT;
-	if(sumAmount != null){
+	/* if(sumAmount != null){
 		str += '<div class="rt_sms"> 누적 <span>'+numCommas(sumAmount)+'</span></div><hr>';
-	}
+	} */
 	
 	str += '<div class="rt_sms"> 항목 <span>'+parseAppCoDiv(resdata.APP_CO_DIV)+'</span></div><hr>';
 	

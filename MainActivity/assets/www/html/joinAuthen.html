@@ -409,7 +409,7 @@
 
 //뒤로가기
 var page = true;
-history.pushState(null,null,location.href);
+/* history.pushState(null,null,location.href);
 window.onpopstate = function(event){
 	if(page){
 		history.back();
@@ -418,7 +418,7 @@ window.onpopstate = function(event){
 		page = true;
 		$("#alert_body").fadeOut(10);
 	}
-}
+} */
 //전체동의여부 변수값.
 var agreeDiv = false;
 var reSendYn = false;
@@ -457,7 +457,8 @@ var CI = "";
 
 var reSndCnt = 0;
 
-
+var request = new Request();
+var uuid = request.getParameter('uuid');
 
 function back(){
 	history.back();
@@ -486,7 +487,6 @@ $(document).ready(function(){
 	      var rqstMsrCd ="10";  
 	      var rqstCausCd = "00";
 	      var option = "JU";   
-			
 			
 			
 			
@@ -651,7 +651,7 @@ $(document).ready(function(){
 		tService 	= $("#selectTelCom option:selected").val();
 		smsCertNo 	= alltrim($("#smsCertNo").val());
 		telNo 		= alltrim(telNo);
-		uuId 		= alltrim($("#uuId").val());	
+		uuId 		= uuid;	
     	//전체 체크박스 갯수 구하기
 		var totalChkLen = $("input[name*='subCheck']").length ;
 		
@@ -702,7 +702,7 @@ $(document).ready(function(){
                  gender       : $(':radio[name="sex"]:checked').val(),
                  nation       : $(':radio[name="nation"]:checked').val(),
                  comCd        : $("#selectTelCom option:selected").val(),
-                 uuId         : uuId,
+                 uuId         : uuid,
                  pushKey      : pushKey,
                  kcbType	  : "01"		 //본인인증 타입 01 : 회원가입 / 02 : 재인증
              },
@@ -716,7 +716,7 @@ $(document).ready(function(){
 
      function onDeviceReady() {
     	 onPushSet();
-         var uuid = device.uuid;
+         var uuid2 = device.uuid;
 				console.log("device.uuid:"+device.uuid);
 
                  var telephoneNumber = cordova.require("cordova/plugin/telephonenumber");
@@ -787,8 +787,10 @@ $(document).ready(function(){
 		fncCountDown();		
 	   }else{
 			//reSendYn = true;
-		   alert("인증번호받기에 실패했습니다.");
-		   svcTxSeqno = toDay+($("#telNo").val());
+			reSendYn = false;
+			svcTxSeqno = (Number(toDay)+1)+($("#telNo").val());
+		   alert("인증번호받기에 실패했습니다..");
+		   
 	   }
 	}
 
@@ -809,7 +811,7 @@ $(document).ready(function(){
 		   	}
 		   	window.localStorage.setItem("CI", resdata.CI);
 			window.localStorage.setItem("telNo", telNo);
-			window.localStorage.setItem("uuId", uuId);
+			window.localStorage.setItem("uuId", uuid);
 			CI = resdata.CI;
 		   	alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(1)">확인</a></div>';
 		   	
@@ -841,7 +843,7 @@ $(document).ready(function(){
 		if(val == 1){
 			location.href='index.html?CI='+CI+'&telNo='+telNo;	
 		}else if(val == 2){
-			location.href="./joinTest.html";
+			location.href="./joinAthen.html?uuid="+uuid;
 		}
 	}
 

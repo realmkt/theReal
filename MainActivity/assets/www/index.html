@@ -32,7 +32,8 @@
 </head>
 
 <body class="login_page">
-
+<input type="hidden" id="deviceId">
+<input type="hidden" id="telNo">
 <div class="wrap">
 
 	<div class="container login_box">
@@ -55,7 +56,12 @@
     
     </div> -->
 
-
+<div class="alert_body" id="alert_body">
+			<div class="alert_box" id="alert_box">
+				<div class="alert_txt" id="alert_desc">알러트창</div>
+				<div class="alert_btn"><a href="#">확인</a></div>
+			</div>
+		</div>
     
 </div>
 
@@ -84,11 +90,28 @@ var CI = window.localStorage.getItem("CI");
 //자동로그인 설정된 비밀번호 값 가져오기
 var telNo = window.localStorage.getItem("telNo");
 var uuId  = window.localStorage.getItem("uuId");
+
 var result = "";
 
 var permissions = null;
 	
 function onDeviceReady() {
+	var deviceId = device.uuid;
+	$("#deviceId").val(deviceId);
+	console.log("device.uuid:"+device.uuid);
+     var telephoneNumber = cordova.require("cordova/plugin/telephonenumber");
+     
+     telephoneNumber.get(function(result) {
+             console.log("result = " + result);
+             result = result.replace( "+82", "0");
+			$("#telNo").val(result);          
+			$("#deviceId").val(deviceId);          
+         }, function() {
+        	 $("#telNo").val("");     
+         });
+     
+     
+     
 	//permissions.requestPermission(successCallback, errorCallback, permission);
 	permissions = cordova.plugins.permissions;
 
@@ -98,6 +121,7 @@ function onDeviceReady() {
 	permissions.hasPermission(permissions.WAKE_LOCK, checkWakeLockPermissionCallback, null);
 	permissions.hasPermission(permissions.ACCESS_COARSE_LOCATION, checkCoarseLocationPermissionCallback, null);
 	permissions.hasPermission(permissions.ACCESS_FINE_LOCATION, checkFineLocationPermissionCallback, null);
+
 }
 
 
@@ -147,7 +171,9 @@ function checkReceiveSmsPermissionCallback(status) {
   if(!status.hasPermission) {
 	console.log("1111");
     var errorCallback = function() {
-      alert('READ_PHONE_STATE permission is not turned on');
+      /* alert('READ_PHONE_STATE permission is not turned on'); */
+      alert("등록된 핸드폰이 아닙니다.");
+      navigator.app.exitApp();
     }
  
 	console.log("222222");
@@ -236,50 +262,43 @@ function checkFineLocationPermissionCallback(status) {
   }
 
 }); */
+
+ 
+ 
 var exit = "";
 $(document).ready(function(){
+	document.addEventListener("deviceready", onDeviceReady, false);
+	//versionChk();
 	
-	versionChk();
-	
-	
-	
-	//var permissions = cordova.require("plugins/cordova-plugin-android-permissions/www/permissions.js");
-	var telephoneNumber = cordova.require("cordova/plugin/telephonenumber");
-	
-	telephoneNumber.get(function(result) {
-        console.log("result = " + result);
-        
-        result = result.replace( "+82", "0");
-        telNo = result
-        checkLogic()
-    }, function() {
-    });
 
-	
-	
-	
+	$(function(){
+		setTimeout(function(){
+			if(CI != null || telNo != null || uuId != null){
+				$.ajax({
+			        type: "post",
+			        url : commonIp()+"/theReal/receipt/lgnChk2.do",
+			        data: {
+			        	CI	 		: CI,
+			        	telNo 		: telNo,
+			        	deviceId 	: $("#deviceId").val()
+			        },
+			        success: fnSucData,
+			        error: whenError
+			    	});		
+			}else{
+				//자동로그인 설정안되어있을시 1.5초 뒤에 로그인 페이지로 이동
+				setTimeout(function() {
+					location.href='login.html?uuid='+$("#deviceId").val();
+				}, 500); 
+			}
+		},3000)
+	});
 	/**
 	자동로그인 체크로직
 	**/
 	//return false;
-	if(CI != null || telNo != null || uuId != null){
-		$.ajax({
-	        type: "post",
-	        url : commonIp()+"/theReal/receipt/lgnChk2.do",
-	        data: {
-	        	CI	 		: CI,
-	        	telNo 		: telNo
-	        },
-	        success: fnSucData,
-	        error: whenError
-	    	});		
-	}else{
-		//자동로그인 설정안되어있을시 1.5초 뒤에 로그인 페이지로 이동
-		setTimeout(function() {
-			location.href='login.html';
-		}, 500); 
-	}
-})
+	
+});
 
 /* function exit(){
 	navigator.app.exitApp();
@@ -301,17 +320,21 @@ $(document).ready(function(){
 				console.log(resultData[i].UUID);
 				console.log(resultData[i].TEL_NO);
 			}
+			
 			//DB에 저장된 단말기 번호와 핸드폰 번호를 가져와 메인페이지로 이동
 			setTimeout(function() {
 				location.href='./html/index.html?CI='+CI+'&telNo='+telNo;
-			}, 0);		
+			},300);		
 		}		 
 			 
 		else{
 			//자동로그인 설정안되어있을시 1.5초 뒤에 로그인 페이지로 이동
-			setTimeout(function() {
-				location.href='login.html';
-			}, 500);		
+			var alertStr = "";
+			$("#alert_box").empty();
+			alertStr += '<div class="alert_txt" >다른 디바이스에서 접속하였거나, 세션이 만료되었습니다 <br>본인인증을 다시해주세요.</div>';
+			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(1)">확인</a></div>';
+			$("#alert_box").append(alertStr);
+			$("#alert_body").fadeIn(1000);	
 		}		
 		
 		
@@ -321,9 +344,22 @@ $(document).ready(function(){
 	자동로그인 체크로직 실패함수
 	*/
 	function whenError(){
-		setTimeout(function() {
+		var alertStr = "";
+		$("#alert_box").empty();
+		alertStr += '<div class="alert_txt" >다른 디바이스에서 접속하였거나, 세션이 만료되었습니다 <br>본인인증을 다시해주세요.</div>';
+		alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(1)">확인</a></div>';
+		$("#alert_box").append(alertStr);
+		$("#alert_body").fadeIn(1000);
+		/* setTimeout(function() {
 			location.href='login.html';
-		}, 500);
+		}, 500); */
+	}
+	
+	function alertClose(val){
+		$("#alert_body").fadeOut(10);
+		if(val == 1){
+			location.href='login.html?uuid='+$("#deviceId").val();
+		}
 	}
 
             // app.initialize();

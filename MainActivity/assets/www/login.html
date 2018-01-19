@@ -43,7 +43,7 @@
     
     </div>
 
-    <div class="login_btnbox" onClick="location.href='./html/joinAgree.html'">
+    <div class="login_btnbox" id="login_btnbox">
 	    <div class="login_btn">전자영수증 시작하기</div>
     </div>
     
@@ -51,4 +51,15 @@
 
 <input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
 </body>
+<script type="text/javascript">
+
+var request = new Request();
+var uuid = request.getParameter('uuid');
+$("#login_btnbox").click(function(){
+	location.href='./html/joinAgree.html?uuid='+uuid;
+})
+
+</script>
 </html>
+
+
