@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <link rel="stylesheet" media="all" href="../uplusCode/code/layout.css" />
@@ -18,6 +19,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <title>Uplus 전자영수증</title>
+
 
    
     

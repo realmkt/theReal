@@ -44,6 +44,13 @@ import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.MulticastResult;
 import com.google.android.gcm.server.Result;
 import com.google.android.gcm.server.Sender;
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
+import com.google.code.geocoder.model.GeocoderResult;
+import com.google.code.geocoder.model.GeocoderStatus;
+import com.google.code.geocoder.model.LatLng;
 import com.google.gson.Gson;
 
 import first.common.common.CommandMap;
@@ -2555,6 +2562,108 @@ public class ReceiptController {
 
 		return resultMap;
 	}
+	
+	@RequestMapping(value = "/receipt/mobileDayList.do")
+	@ResponseBody
+	public Object mobileDayList(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		map.put("CI", commandMap.get("CI"));
+		map.put("telNo", commandMap.get("telNo"));
+		map.put("startDate", commandMap.get("startDate"));
+		map.put("endDate", commandMap.get("endDate"));
+		map.put("startDateMonth", commandMap.get("startDateMonth"));
+		map.put("endDateMonth", commandMap.get("endDateMonth"));
+		
+		
+		
+		Map<String, Object> dayList01Map = receiptService.dayList01(map);
+		
+		Map<String, Object> dayList02Map = receiptService.dayList02(map);
+		
+		Map<String, Object> dayList03Map = receiptService.dayList03(map);
+		
+		
+		
+		System.out.println("=============================================");
+		System.out.println("resultMap01  :::" + dayList01Map);
+		System.out.println("=============================================");
+		System.out.println("resultMap02  :::" + dayList02Map);
+		System.out.println("=============================================");
+		System.out.println("resultMap03  :::" + dayList03Map);
+		
+		resultMap.put("code", "OK");
+		resultMap.put("dayList01Map", dayList01Map );
+		resultMap.put("dayList02Map", dayList02Map);
+		resultMap.put("dayList03Map", dayList03Map);
+
+		return resultMap;
+	}
+	
+	
+	@RequestMapping(value = "/receipt/mobileCardList.do")
+	@ResponseBody
+	public Object mobileCardList(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		map.put("CI", commandMap.get("CI"));
+		map.put("telNo", commandMap.get("telNo"));
+		map.put("startDate", commandMap.get("startDate"));
+		map.put("endDate", commandMap.get("endDate"));
+		map.put("startDateMonth", commandMap.get("startDateMonth"));
+		map.put("endDateMonth", commandMap.get("endDateMonth"));
+		
+		Map<String, Object> cardList02Map = receiptService.cardList02(map);
+		
+		Map<String, Object> cardList03Map = receiptService.cardList03(map);
+		
+		
+		
+		System.out.println("=============================================");
+		System.out.println("resultMap02  :::" + cardList02Map);
+		System.out.println("=============================================");
+		System.out.println("resultMap03  :::" + cardList03Map);
+		
+		resultMap.put("code", "OK");
+		resultMap.put("cardList02Map", cardList02Map);
+		resultMap.put("cardList03Map", cardList03Map);
+
+		return resultMap;
+	}
+	
+	
+	@RequestMapping(value = "/receipt/mobileDayList03.do")
+	@ResponseBody
+	public Object mobileDayList03(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("CI", commandMap.get("CI"));
+		map.put("yearMon", commandMap.get("yearMon"));
+
+		
+		Map<String, Object> resultMap = receiptService.dayList03(map);
+		
+		System.out.println("=============================================");
+		System.out.println("resultMap03  :::" + resultMap);
+		System.out.println("=============================================");
+		resultMap.put("code", "OK");
+		resultMap.put("dayList03Map", resultMap);
+
+		return resultMap;
+	}
+	
+	@RequestMapping(value = "/receipt/userCreaDate.do")
+	@ResponseBody
+	public Object userCreaDate(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("CI", commandMap.get("CI"));
+
+		String userCreaDate = receiptService.getCreaDate(map);
+		
+		
+		return userCreaDate;
+	}
+	
+	
 
 	@RequestMapping(value = "/receipt/latestData.do")
 	@ResponseBody
@@ -4189,9 +4298,9 @@ public class ReceiptController {
 	//진호씨 
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/receipt/sendMail.do")
-	@ResponseBody
-	public void sendMail(String CI, @RequestParam(value="SEQ[]") String[] SEQ, HttpServletRequest request, String email, CommandMap commandMap, String subject, String content, String telNo, @RequestParam(value="barcode[]", required=false) String[] barcode) throws Exception{
+	   @RequestMapping(value = "/receipt/sendMail.do")
+	   @ResponseBody
+	   public void sendMail(String CI, @RequestParam(value="SEQ[]") String[] SEQ, HttpServletRequest request, String email, CommandMap commandMap, String subject, String content, String telNo, @RequestParam(value="barcode[]", required=false) String[] barcode) throws Exception{
 		  Map<String, Object> userDataMap = new HashMap<String, Object>();
 	      Map<String, Object> userDataDtailMap = new HashMap<String, Object>();
 	      Map<String, Object> telMap = new HashMap();
@@ -4301,30 +4410,32 @@ public class ReceiptController {
 	   	          
 	   	            for(int a=0; a<paymentList.size(); a++){
 	 	        		paymentResultMap = (HashMap<String, Object>) paymentList.get(a);
+	 	        
 	 	        	
-	 	        //복합결제 데이터 넣어볼곳 
-		            body[i] += "<div>승인금액 : "+paymentResultMap.get("CARD_AMT")+"</div>"
-		            		+ "<div>CARD_APP_NO : "+paymentResultMap.get("CARD_APP_NO")+"</div>"
-		            		+ "<div>CASH_DATE : "+paymentResultMap.get("CASH_DATE")+"</div>"
-		            		+ "<div>CARD_DATE : "+paymentResultMap.get("CARD_DATE")+"</div>";
+	 	        		if(paymentResultMap.get("CARD_ICOM").equals("")||paymentResultMap.get("CARD_ICOM").equals(null)){
 		            		
-		            	if(paymentResultMap.get("CARD_ICOM").equals("")||paymentResultMap.get("CARD_ICOM").equals(null)){
-		            		
-		            		body[i] += "<div>현금결제</div>";
+		            		body[i] += "<div align='left'>현금결제</div>";
 		            	}else{
-		            		body[i] += "<div>"+paymentResultMap.get("CARD_PCOM")+"</div>";
-		            	}
+		            		body[i] += "<div align='left'>"+paymentResultMap.get("CARD_PCOM")+"</div>";
+		            	} 
+		            
+	 	        	body[i] += "<div align='left'>승인금액 : "+paymentResultMap.get("CARD_AMT")+"</div>"
+		            		+ "<div align='left'>CARD_APP_NO : "+paymentResultMap.get("CARD_APP_NO")+"</div>"
+		            		+ "<div align='left'>CASH_DATE : "+paymentResultMap.get("CASH_DATE")+"</div>"
+		            		+ "<div align='left'>CARD_DATE : "+paymentResultMap.get("CARD_DATE")+"</div>"
+	 	        			+ "<div align='left'>CARD_DATE : "+paymentResultMap.get("CARD_ICOM")+"</div>";
+		            	
 		            		
-		            	body[i]	+= "<div>카드번호 : "+paymentResultMap.get("CARD_NO")+"</div>"
-		            			+ "<div>결제일시 : "+paymentResultMap.get("FRT_CREA_DTM")+"</div>"
+		            	body[i]	+= "<div align='left'>카드번호 : "+paymentResultMap.get("CARD_NO")+"</div>"
+		            			+ "<div align='left'>결제일시 : "+paymentResultMap.get("FRT_CREA_DTM")+"</div>"
 		            			+ "<hr width='100%' style='border:1px dashed #cccccc'>";
 	   	            	}	  
 						
 	   	            	body[i] += "<br>"
 	   	            			+ "***신용승인정보(고객용)***"
-	   	                       	 +"<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both'>거래종류: 복합결제</div>";
+	   	                       	 +"<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both' align='left'>거래종류: 복합결제</div>";
 	   	            
-	   	              body[i]+="<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both'>거래일시:: "+userDataMap.get("FRT_CREA_DTM")+"</div></div>"
+	   	              body[i]+="<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both' >거래일시:: "+userDataMap.get("FRT_CREA_DTM")+"</div></div>"
 	   	            +"</div><div class='rt_copy'style='text-align: center; font-size: 12px;'><br>본 전자영수증은 거래의 참고용으로 사용하시기 바랍니다.</div>"
 	   	              +"</td></tr></table></td></tr></tsable></td>"
 	   	            +"</tr></table></body></html>";
@@ -4444,6 +4555,12 @@ public class ReceiptController {
 	            try {
 	            	//진호수정 메일비교 후 지난 이메일 업데이트 
 	            	String emailResult = receiptService.eMailChk(CI);
+	            	System.out.println(emailResult);
+	            	System.out.println(emailResult);
+	            	System.out.println(emailResult);
+	            	System.out.println(emailResult);
+	            	System.out.println(emailResult);
+	            	
 	            	if(!emailResult.equals(email)){
 	            		Map<String, Object> emailMap = new HashMap<>();
 	            		emailMap.put("email", email);
@@ -4475,45 +4592,126 @@ public class ReceiptController {
 		 
 	}
 	
-	@SuppressWarnings("unused")
-	   @ResponseBody
-	   @RequestMapping(value= "/receipt/affliate.do")
-	   public Map<String, Object> affliate(String affliate_no, String find){
-	      
-	      Map<String, Object> resultMap = new HashMap<>();
-	      Map<String, Object> findMap = new HashMap<>();
-	   
-	      
-	      if(affliate_no.equals(null)||affliate_no.equals("")||affliate_no==null){
 
-	         try {
-	            if(find.equals(null)||find.equals("")||find==null){
-	               
-	               findMap.put("find", "");
-	               resultMap = receiptService.affliate(findMap);
-	            
-	            }else{
-	               
-	               findMap.put("find", find);
-	               resultMap = receiptService.affliate(findMap);
-	            }
-	         
-	         } catch (Exception e) {
-	            e.getMessage();
-	         }
-	      
-	      }else{
-	         
-	         try {
-	            resultMap = receiptService.affliateDetail(affliate_no);
-	         } catch (Exception e) {
-	            e.getMessage();
-	         }
-	      }
-	         
-	      return resultMap;
-	   }
+	@SuppressWarnings({ "unused", "unchecked" })
+	@ResponseBody
+	@RequestMapping(value= "/receipt/affliate.do")
+	public Map<String, Object> affliate(String affliate_no, String find, int affliate_endSeq, float lat1, float lon1){
+		List<Float> kmList = new ArrayList<Float>(); 
+		Map<String, Object> resultMap = new HashMap<>();
+		Map<String, Object> findMap = new HashMap<>();
+		Map<String, Object> AffliateMap = new HashMap<>();
+		Map<String, Object> kmMap = new HashMap<>();
+		int count = 0;
+		Float lat2;
+		Float lon2;
+
+		
+		if(affliate_no.equals(null)||affliate_no.equals("")||affliate_no==null){
+
+			try {
+				if(find.equals(null)||find.equals("")||find==null){
+					
+					findMap.put("find", "");
+					findMap.put("startSeq", 0);
+					findMap.put("endSeq", affliate_endSeq);
+					resultMap = receiptService.affliate(findMap);
+					
+				}else{
+					
+					findMap.put("find", find);
+					findMap.put("endSeq", affliate_endSeq);
+					resultMap = receiptService.affliate(findMap);
+				}
+			
+			} catch (Exception e) {
+				e.getMessage();
+			}
+		
+		}else{
+			
+			try {
+				resultMap = receiptService.affliateDetail(affliate_no);
+				//1월 26일 추가
+				count = receiptService.reviewCount(affliate_no);
+				
+			} catch (Exception e) {
+				e.getMessage();
+			}
+		}
+		Map<String, Object> map = new HashMap<String,Object>();
+		
+		map.put("find", "");
+		map.put("startSeq", 0);
+		map.put("endSeq", 2147483647);
+			
+		Map maxMap = receiptService.affliate(map);
+		
+		List<Map<String, Object>> maxList = (ArrayList<Map<String, Object>>)maxMap.get("resultMap");
+		int maxSize = maxList.size();	
+		resultMap.put("maxSize", maxSize);
+		
+		 ArrayList resultList= (ArrayList) resultMap.get("resultMap");
+		
+		 
+		 	
+		Geocoder geocoder = new Geocoder();
+				
+		
+		for(int i=0; i<resultList.size(); i++){
+			
+			
+			AffliateMap = (Map<String, java.lang.Object>) resultList.get(i);
+			System.out.println("00::::" +i);	
+			GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress((String) AffliateMap.get("ROAD_ADDR")).setLanguage("ko").getGeocoderRequest();
+			System.out.println("11::::" +i);
+			GeocodeResponse geocoderResponse;
+			
+		
+									
+ 			try {
+ 				System.out.println("1 ::::" +i + "// resultList :::  " + resultList.get(i) );
+				geocoderResponse = geocoder.geocode(geocoderRequest);
+				System.out.println("2 ::::" +i);
+				if (geocoderResponse.getStatus() == GeocoderStatus.OK & !geocoderResponse.getResults().isEmpty()) {
+					System.out.println("3 ::::" +i);
+					GeocoderResult geocoderResult = geocoderResponse.getResults().iterator().next();
+					System.out.println("4 ::::" + i);
+					LatLng latitudeLongitude = geocoderResult.getGeometry().getLocation();
+					System.out.println("5 ::::" + i);
+
+					lat2 = latitudeLongitude.getLat().floatValue();
+					System.out.println("6 ::::" + i);
+					lon2 = latitudeLongitude.getLng().floatValue();
+					System.out.println("7 ::::" + i);
+					float R = 6371;
+					System.out.println("8 ::::" + i);
+					float dRat = (float) ((lat2 - lat1) * Math.PI / 180);
+					float dLon = (float) ((lon2 - lon1) * Math.PI / 180);
+					float a = (float) ((float) (Math.sin(dRat / 2) * Math.sin(dRat / 2))
+							+ Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2)
+									* Math.sin(dLon / 2));
+					float c = (float) (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+					float d = R * c;
+					System.out.println("9 ::::" + i);
+
+					kmList.add(i, d);
+				
+				}
 	
+				} catch (IOException ex) {
+				ex.getMessage();
+				ex.printStackTrace();
+	
+				}
+		}
+		
+		resultMap.put("kmList",kmList);
+		//1월 26일 추가
+		resultMap.put("reviewCount", count);
+		
+		return resultMap;
+	}
 	
 	@ResponseBody
 	   @RequestMapping(value="/receipt/reviewList.do")
@@ -4544,7 +4742,8 @@ public class ReceiptController {
 	      
 	   }
 	
-	//1월 11일 추가
+	//1월 11일 추가 
+	//1월 15일 수정
 	@ResponseBody
 	@RequestMapping(value="/receipt/reviewInsert.do")
 	public void reviewInsert(CommandMap commandMap){
@@ -4569,7 +4768,60 @@ public class ReceiptController {
 		receiptService.starUpdate(starMap);
 		
 		receiptService.starUpdateA(starMap);
+		
+		//1월 29일추가
+		receiptService.countUp((String) commandMap.get("REVIEW_AFFLIATE_NO"));
 	}
 	
+	
+	//1월 22일 추가
+		 //1월 23일 수정
+		@ResponseBody
+		@RequestMapping(value="/receipt/reviewDelete.do")
+		public void reviewDelete(CommandMap commandMap){
+			Map<String, Object> map = new HashMap<String, Object>();
+			float avg = 0;
+			receiptService.reviewDelete(Integer.parseInt((String) commandMap.get("review_num")));
+				
+			map.put("review_num", Integer.parseInt((String) commandMap.get("review_num")));
+			map.put("REVIEW_AFFLIATE_NO", commandMap.get("REVIEW_AFFLIATE_NO"));
+			
+			Map<String, Object> starMap = new HashMap<String, Object>();
+			
+			try {
+				 avg = receiptService.reviewStarAvg(map);
+				 	
+			} catch (Exception e) {
+				
+				starMap.put("avg", 0);
+				starMap.put("affliate_no", map.get("REVIEW_AFFLIATE_NO"));
+				
+				receiptService.starUpdate(starMap);
+				
+				receiptService.starUpdateA(starMap);
+				
+				return;
+			}
+			
+			starMap.put("avg", avg);
+			starMap.put("affliate_no", map.get("REVIEW_AFFLIATE_NO"));
+			
+			receiptService.starUpdate(starMap);
+			
+			receiptService.starUpdateA(starMap);
+			
+			//1월 29일 추가
+			receiptService.countDown((String) commandMap.get("REVIEW_AFFLIATE_NO"));
+		}
+
+	
+	@ResponseBody
+	@RequestMapping(value="/receipt/mailPush.do")
+	public void mailPush(String CI, String mail){
+		Map<String , Object> mailMap = new HashMap<String, Object>();
+		mailMap.put("CI", CI);
+		mailMap.put("mail", mail);
+		receiptService.mailPush(mailMap);
+	}
 	
 }

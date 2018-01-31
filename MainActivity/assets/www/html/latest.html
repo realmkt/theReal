@@ -152,7 +152,7 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 
 
 
-.latest_conser { margin:3% 2% 0; background:#fff; text-align:center; }
+.latest_conser { margin:15px 2% 0; background:#fff; text-align:center; }
 .latest_conser input[type=radio] { display:none; margin:10px; }
 .latest_conser input[type=radio] + label { float:left; padding:7px 12px; width:25%; background:#fff; font-size:12px; border-right:1px solid #e5e5e5;}
 .latest_conser input[type=radio] + label:last-child { border-right:0; }
@@ -170,13 +170,13 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 .latest_conlist li.mal_price { width:40%; text-align:right; font-size:0.8em; font-weight:400; color:#555;  position:absolute; top:40%; right:10px; }
 .latest_conlist li.mal_price span { font-size:1.4em; font-weight:700; color:#000; }
 .mal_more { background:#f2f2f2; color:#666; font-size:0.8em; padding:10px 0; }
-.latest_condate{ text-align: center; margin: 3% 2% 1px 2%; font-size: 15px; background: #ffffff; padding: 10px; }
+.latest_condate{ text-align: center; margin: 15px 2% 1px 2%; font-size: 15px; background: #ffffff; padding: 10px; }
 .latest_condate span{color: #539bff}
 
 .moreBtn { height: 41px;  padding: 14px;  background-color: #272727; color: #f2f2f2; position: relative; top: -2%; margin: 2%;text-align: center}
 .dis_none {display: none}
 
-.latest_conser .latestsbox{ float: left;  line-height: 30px; width: 25%;border-right:1px solid #eeeeee }
+.latest_conser .latestsbox{ float: left;  line-height: 35px; width: 25%;border-right:1px solid #eeeeee }
 .latest_conser .latestsbox:last-child{border-right: 1px solid;}
 .activebox{background-color:#539bff; color:#ffffff}
 
@@ -556,9 +556,7 @@ window.onpopstate = function(event){
 			$("#modalClose").trigger("click");
 		}else{
 			window.lacation
-		history.back();
-		history.back();
-		
+	 		history.back();
 		}
 	}else{
 		history.pushState(null,null,location.href);
@@ -690,10 +688,10 @@ $(document).ready(function() {
 
 //ajax 통신 로딩바 
 	 $(document).ajaxStart(function(){
-	 $('#loadingView').show();
+	 	$('#loadingView').show();
 	})
 	.ajaxStop(function(){
-	   $('#loadingView').hide();
+	   	$('#loadingView').hide();
 	});
  
 
@@ -1095,7 +1093,12 @@ if(shop.POINT_CARD != ''){
 	var pCardNo = shop.POINT_CARD;
 	pCardNo = pCardNo.substring(0,4)+"-"+pCardNo.substring(4,6)+"**-****-"+pCardNo.substring(12,16);
 	str +='		<div>포인트카드 : <span>'+pCardNo+'</span> </div>';
-	str +='		<div>발생포인트 : <span>'+shop.POINT_AMT+'</span> </div></div>';
+	if(shop.POINT_ICOM.indexOf('사용') < 0){
+		str +='		<div>적립포인트 : <span>'+shop.GET_POINT+'</span> </div></div>';
+	}else{
+		str +='		<div>사용포인트 : <span>'+shop.POINT_AMT+'</span> </div></div>';	
+	}
+	
 }
 	
 	

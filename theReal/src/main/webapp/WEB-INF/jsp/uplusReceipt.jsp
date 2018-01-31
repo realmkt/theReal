@@ -464,6 +464,8 @@ function fn_latestData(data){
 		}else{
 			$("#moreBtn").addClass("disnone");
 		}
+	}else{
+			str = '<img alt="noFile" src="http://117.52.97.40/theReal/img/emptyList01.jpg">';
 	}
 	
 	$("#latest_conlist").empty();

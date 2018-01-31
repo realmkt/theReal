@@ -155,19 +155,19 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 .mobile_coninfo { padding:8px 15px; color:#bbb; background:#222;  text-align:left; border-bottom:1px solid #333;}
 .mobile_coninfo .mobile_allLeft { width:50%; float:left;  line-height:20px; padding-left:25px; font-size:1.3em;}
 .mobile_coninfo .mobile_allLeft  span { color:#539bff; }
-.mobile_coninfo .mobile_allRight { width:50%; float:right;  line-height:20px; padding-right:25px; font-size:12px; text-align: right; }
+.mobile_coninfo .mobile_allRight { width:100%; float:right;  line-height:20px; padding-right:25px; font-size:12px; text-align: right; }
 .mobile_coninfo .mobile_allRight span {color:#fff; font-size:13px; }
 
 
 
 
-.mobile_conser { margin:3% 2% 0; background:#fff; text-align:center; font-family: arial; font-size:  15px; padding: 8px;}
+.mobile_conser { margin:15px 2% 0; background:#fff; text-align:center; font-family: arial; font-size:  15px; padding: 8px; height: 35px}
 .mobile_conser input[type=radio] { display:none; margin:10px; }
 .mobile_conser input[type=radio] + label { float:left; padding:7px 12px; width:25%; background:#fff; font-size:12px; border-right:1px solid #e5e5e5;}
 .mobile_conser input[type=radio] + label:last-child { border-right:0; }
 .mobile_conser input[type=radio]:checked + label { background:#539bff; color:#fff; }
 
-.mobile_conlist { margin:0 2% 3% 2%; background:#fff; text-align:center; display: none}
+.mobile_conlist { margin:0 2% 1% 2%; background:#fff; text-align:center; display: none}
 .mobile_conlist ul { padding:8px 10px; position:relative; border-bottom:1px solid #e5e5e5;}
 .mobile_conlist li { float:left; width:30%; text-align:left; }
 .mobile_conlist li h2 { font-size:1em; font-weight:400; color:#000; padding-bottom:3px; }
@@ -182,10 +182,10 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 
 
 
-.mobile_condate{ text-align: center; margin: 3% 2% 1px 2%; font-size: 14px; background: #ddd; padding: 5px; height: 25px; font-family:'Droid Sans Fallback', sans-serif; font-weight: bold; di}
+.mobile_condate{ text-align: center; margin: 5px 2% 0 2%; font-size: 14px; background: #ffffff; padding: 5px; height: 35px; font-family:'Droid Sans Fallback', sans-serif; font-weight: bold; border-bottom: 1px solid #b7b8b7; border-right: 1px solid #b7b8b7;  }
 .mobile_condate span{color: #539bff; }
-.mobile_condate_left{padding:1px 0 0 10px; width: 50%; float: left; text-align: left; font-family: arial;}
-.mobile_condate_right{padding:1px 0 0 10px; width: 50%; float: left; text-align: right; font-family: arial;}
+.mobile_condate_left{padding:4px 0 0 10px; width: 50%; float: left; text-align: left; font-family: arial;}
+.mobile_condate_right{padding:4px 0 0 10px; width: 50%; float: left; text-align: right; font-family: arial;}
 
 
 
@@ -205,37 +205,21 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 .mobile_conlist .samsung_logo{height: 9px}
 .mobile_conlist .nh_logo{height: 11px}
 
-.mobile_conser div{float: left; margin: 0; line-height: 20px; font-size: 1.0em}
+.mobile_conser div{ margin: 0; line-height: 20px; font-size: 1.0em}
 .mobile_conname{font-size: 1.2em}
+.slide-prev{color: black; left: 100%}
+.slide-next{color: black; right: 100%}
 
+.button-next{position: absolute; top: 151px ;right: 20px; display: inline-block; width: 60px; height: 35px; padding: 7px}
+.button-prev{position: absolute; top: 151px ;left: 20px; display: inline-block; width: 60px; height: 35px; padding: 7px}
 
-.swiper-container {
-      width: 100%;
-      height: 100%;
-    }
-    .swiper-slide {
-      text-align: center;
-      font-size: 18px;
-      background: #fff;
-      /* Center slide text vertically */
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-box-pack: center;
-      -ms-flex-pack: center;
-      -webkit-justify-content: center;
-      justify-content: center;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      -webkit-align-items: center;
-      align-items: center;
-      float: right;
-    }
-    
     
    .mobile_conname{}
 .swiper-button-self{width: 57px; top: 0px; height: 18px;  }
+
+.slide-month{position: relative;}
+
+
 
 </style>                    
             
@@ -260,76 +244,50 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 						</div>
 
 						<div class="mobile_conser alen_outbox">
-							<div
-								class="swiper-container swiper-container-horizontal swiper-container-wp8-horizontal">
-								<div class="swiper-wrapper">
-									<div class="swiper-slide" id="201701">01</div>
-									<div class="swiper-slide" id="201702">02</div>
-									<div class="swiper-slide" id="201703">03</div>
-									<div class="swiper-slide" id="201704">04</div>
-									<div class="swiper-slide" id="201705">05</div>
-									<div class="swiper-slide" id="201706">06</div>
-									<div class="swiper-slide" id="201707">07</div>
-									<div class="swiper-slide" id="201708">08</div>
-									<div class="swiper-slide" id="201709">09</div>
-									<div class="swiper-slide" id="201710">10</div>
-									<div class="swiper-slide" id="201701">01</div>
-									<div class="swiper-slide" id="201702">02</div>
-									<div class="swiper-slide" id="201703">03</div>
-									<div class="swiper-slide" id="201704">04</div>
-									<div class="swiper-slide" id="201705">05</div>
-									<div class="swiper-slide" id="201706">06</div>
-									<div class="swiper-slide" id="201707">07</div>
-									<div class="swiper-slide" id="201708">08</div>
-									<div class="swiper-slide" id="201709">09</div>
-									<div class="swiper-slide" id="201710">10</div>
-									
-									<div class="swiper-slide" id="201701">01</div>
-									<div class="swiper-slide" id="201702">02</div>
-									<div class="swiper-slide" id="201703">03</div>
-									<div class="swiper-slide" id="201704">04</div>
-									<div class="swiper-slide" id="201705">05</div>
-									<div class="swiper-slide" id="201706">06</div>
-									<div class="swiper-slide" id="201707">07</div>
-									<div class="swiper-slide" id="201708">08</div>
-									<div class="swiper-slide" id="201709">09</div>
-									<div class="swiper-slide" id="201710">10</div>
-									
-									<div class="swiper-slide" id="201701">01</div>
-									<div class="swiper-slide" id="201702">02</div>
-									<div class="swiper-slide" id="201703">03</div>
-									<div class="swiper-slide" id="201704">04</div>
-									<div class="swiper-slide" id="201705">05</div>
-									<div class="swiper-slide" id="201706">06</div>
-									<div class="swiper-slide" id="201707">07</div>
-									<div class="swiper-slide" id="201708">08</div>
-									<div class="swiper-slide" id="201709">09</div>
-									<div class="swiper-slide" id="201710">01월</div>
-									
-									
-
+								<div>
+									<div class="slide-month slide-prev" id="201704" style="top:0px">2017 04</div>
+									<div class="slide-month slide-prev" id="201705"  style="top:-20px">2017 05</div>
+									<div class="slide-month slide-active" id="201706"  style="top:-40px">2017 06</div>
+									<div class="slide-month slide-next" id="201707"  style="top:-60px">2017 07</div>
+									<div class="slide-month slide-next" id="201708"  style="top:-80px">2017 08</div>
+									<div class="slide-month slide-next" id="201709"  style="top:-100px">2017 09</div>
+									<div class="slide-month slide-next" id="201710"  style="top:-120px">2017 10</div>
+									<div class="slide-month slide-next" id="201711"  style="top:-140px">2017 11</div>
+									<div class="slide-month slide-next" id="201712"  style="top:-160px">2017 12</div>
+									<div class="slide-month slide-next" id="201801"  style="top:-180px">2018 01</div>
 								</div>
-								<!-- Add Arrows -->
-								<div class="swiper-button-next swiper-button-self"></div>
-								<div class="swiper-button-prev swiper-button-self"></div>
-							</div>
-
-
-							<!--  <div id="mobile01" class="mobilesbox activebox">날짜</div>
+								
+								<div class="button-next" id="next">▶</div>
+								<div class="button-prev" id="prev">◀</div> 
+							
+                 	  	<hr>
+                    	</div>
                     
-                    <div id="mobile02" class="mobilesbox">카드</div>
                     
-                    <div id="mobile03" class="mobilesbox">항목</div> -->
-                    
-                    <!-- <div id="mobile04" class="mobilesbox" data-modal-id="ser_box" >상세</div> -->
-                    
-                    <hr>
-                    </div>
-                    <div class="mobile_condate" id="mobile_condate">
-                    	<div class="mobile_condate_left"> <img alt="" src="../common/shinhan_card.png" style="height: 14px"> </div>
+                    <div class="mobile_condate" id="mobile_condate" style="margin-top: 15px">
+                    	<div class="mobile_condate_left"> <img alt="" src="../common/woori_card.png" style="height: 14px"> </div>
                     	<div class="mobile_condate_right"> 42,200원</div>
                     </div>
-                    
+                     <div class="mobile_condate" id="mobile_condate" style="margin-top: 15px">
+                    	<div class="mobile_condate_left"> <img alt="" src="../common/bc_card4.png" style="height: 14px"> </div>
+                    	<div class="mobile_condate_right"> 42,200원</div>
+                    </div>
+                     <div class="mobile_condate" id="mobile_condate" style="margin-top: 15px">
+                    	<div class="mobile_condate_left"> <img alt="" src="../common/hyundai_card2.png" style="height: 14px"> </div>
+                    	<div class="mobile_condate_right"> 42,200원</div>
+                    </div>
+                     <div class="mobile_condate" id="mobile_condate" style="margin-top: 15px">
+                    	<div class="mobile_condate_left"> <img alt="" src="../common/hana_card.png" style="height: 14px"> </div>
+                    	<div class="mobile_condate_right"> 42,200원</div>
+                    </div>
+                    <div class="mobile_condate" id="mobile_condate" style="margin-top: 15px">
+                    	<div class="mobile_condate_left"> <img alt="" src="../common/kb_card.png" style="height: 14px"> </div>
+                    	<div class="mobile_condate_right"> 42,200원</div>
+                    </div>
+                    <div class="mobile_condate" id="mobile_condate" style="margin-top: 15px">
+                    	<div class="mobile_condate_left"> <img alt="" src="../common/lotte_card.png" style="height: 14px"> </div>
+                    	<div class="mobile_condate_right"> 42,200원</div>
+                    </div>
                     
                     <div class="mobile_conlist alen_outbox" id="receipt_div">
                     	<ul data-modal-id="receip_box">
@@ -338,10 +296,9 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                             <p>20:10</p>
                             
                             </li>
-                            <li style="width: 50% ">
+                            <li style="width: 50%; padding-top: 5px ">
                             
-                            	<span class="mobile_conname">삼삼떡볶이</span><br>
-                            	<img alt="" src="../common/bc_card.png" >
+                            	<span class="mobile_conname mobile_cardlist">삼삼떡볶이</span><br>
                             
                             </li>
                             
@@ -356,10 +313,9 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                             <p>19:22</p>
                             
                             </li>
-                            <li style="width: 50% ">
+                             <li style="width: 50%; padding-top: 5px ">
                             
                             	<span class="mobile_conname">쿠팡</span><br>
-                            	<img alt="" src="../common/lotte_card.png" class="lotte_logo">
                             
                             </li> 
                             
@@ -369,15 +325,14 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                             <hr>
                         </ul>
                         <ul data-modal-id="receip_box">
-                        	<li style="width:25%">
+                        	 <li style="width: 25%;">
                             
                             <p>12:44</p>
                             
                             </li>
-                            <li style="width: 50% ">
+                            <li style="width: 50%; padding-top: 5px ">
                             
                             	<span class="mobile_conname">딸불백</span><br>
-                            	<img alt="" src="../common/hana_card.png" >
                             
                             </li>
                             
@@ -387,15 +342,14 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                             <hr>
                         </ul>
                         <ul data-modal-id="receip_box">
-                        	<li style="width:25%">
+                        	 <li style="width: 25%;">
                             
                             <p>12:20</p>
                             
                             </li>
-                           <li style="width: 50% ">
+                            <li style="width: 50%; padding-top: 5px ">
                             
                             	<span class="mobile_conname">스타벅스</span><br>
-                            	<img alt="" src="../common/samsung_card.png"  class="samsung_logo">
                             
                             </li>
                             
@@ -410,10 +364,9 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                             <p>08:58</p>
                             
                             </li>
-                           <li style="width: 50% ">
+                            <li style="width: 50%; padding-top: 5px ">
                             
                             	<span class="mobile_conname">카카오택시</span><br>
-                            	<img alt="" src="../common/nh_card.png"  class="nh_logo">
                             
                             </li>
                             
@@ -427,7 +380,7 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                     
                     
                     <div class="mobile_condate" id="mobile_condate2">
-                    	<div class="mobile_condate_left"> <img alt="" src="../common/samsung_card.png"  class="samsung_logo" style="height: 14px"></div>
+                    	<div class="mobile_condate_left"> <img alt="" src="../common/nh_card2.png"  class="samsung_logo" style="height: 14px"></div>
                     	<div class="mobile_condate_right"> 54,000원</div>
                     </div>
                     
@@ -439,10 +392,9 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                             <p>22:52</p>
                             
                             </li>
-                            <li style="width: 50%">
+                             <li style="width: 50%; padding-top: 5px ">
                             
-                            	<span>코다차야</span><br>
-                            	<img alt="" src="../common/bc_card.png" style=" height: 15px">
+                            	<span class="mobile_conname">코다차야</span><br>
                             
                             </li>
                             
@@ -456,10 +408,9 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                             <p>16:20</p>
                             
                             </li>
-                            <li style="width:50%">
+                            <li style="width: 50%; padding-top: 5px ">
                             
                             	<span class="mobile_conname">산쪼메</span><br>
-                            	<img alt="" src="../common/bc_card.png" style=" height: 15px">
                             
                             </li>
                             
@@ -471,33 +422,92 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                         
                     </div>
                     
-                    
-                    <div class="foot_info">
-                    
-                    	<div class="foot_box">
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#agree03">이용약관</a>
-                            </div>
-                            
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#agree01">개인정보 취급방침</a>
-                            </div>
-                            
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#">고객센터</a>
-                            </div>
-                            
-                            
-                            <hr>
-                        </div>
-<p>
-(주)더리얼마케팅   |   대표이사 : 손종희<br>
-사업자등록번호 : 220-88-19101   |   서울시 강남구 압구정로 10길 13 마사빌딩 4F<br>
-이메일 :thereal@realmkt.co.kr<br>
-</p>
-
-<p class="copytxt">Copyrightⓒnoname Co,.All rights reserved</p>
+                    <div class="mobile_condate" id="mobile_condate2">
+                    	<div class="mobile_condate_left"> <img alt="" src="../common/bc_card3.png"  class="samsung_logo" style="height: 14px"></div>
+                    	<div class="mobile_condate_right"> 54,000원</div>
                     </div>
+                    
+                    
+                    <div class="mobile_conlist alen_outbox" id="receipt_div2">
+                    	<ul data-modal-id="receip_box">
+                        	<li style="width:25%">
+                            
+                            <p>22:52</p>
+                            
+                            </li>
+                             <li style="width: 50%; padding-top: 5px ">
+                            
+                            	<span class="mobile_conname">코다차야</span><br>
+                            
+                            </li>
+                            
+                            <li class="mal_price">
+                            <span>45,500</span> 원
+                            </li>
+                            <hr>
+                        </ul><ul data-modal-id="receip_box">
+                        	<li style="width:25%">
+                            
+                            <p>16:20</p>
+                            
+                            </li>
+                            <li style="width: 50%; padding-top: 5px ">
+                            
+                            	<span class="mobile_conname">산쪼메</span><br>
+                            
+                            </li>
+                            
+                            <li class="mal_price">
+                            <span>8,500</span> 원
+                            </li>
+                            <hr>
+                        </ul>
+                        
+                    </div>
+                    
+                    <div class="mobile_condate" id="mobile_condate2">
+                    	<div class="mobile_condate_left"> <img alt="" src="../common/ibk_card2.png"  class="samsung_logo" style="height: 14px"></div>
+                    	<div class="mobile_condate_right"> 54,000원</div>
+                    </div>
+                    
+                    
+                    <div class="mobile_conlist alen_outbox" id="receipt_div2">
+                    	<ul data-modal-id="receip_box">
+                        	<li style="width:25%">
+                            
+                            <p>22:52</p>
+                            
+                            </li>
+                             <li style="width: 50%; padding-top: 5px ">
+                            
+                            	<span class="mobile_conname">코다차야</span><br>
+                            
+                            </li>
+                            
+                            <li class="mal_price">
+                            <span>45,500</span> 원
+                            </li>
+                            <hr>
+                        </ul><ul data-modal-id="receip_box">
+                        	<li style="width:25%">
+                            
+                            <p>16:20</p>
+                            
+                            </li>
+                            <li style="width: 50%; padding-top: 5px ">
+                            
+                            	<span class="mobile_conname">산쪼메</span><br>
+                            
+                            </li>
+                            
+                            <li class="mal_price">
+                            <span>8,500</span> 원
+                            </li>
+                            <hr>
+                        </ul>
+                        
+                    </div>
+                    
                     
                     
                     </div>
@@ -516,7 +526,7 @@ var appendthis =  ("<div class='alen_modal_overlay js-modal-close'></div>");
 		
 		e.preventDefault();
     $(".pages").append(appendthis);
-    $(".alen_modal_overlay").fadeTo(300, 0.7);
+    $(".alen_modal_overlay").fadeTo(300, 0.4);
     //$(".js-modalbox").fadeIn(500);
 		var modalBox = $(this).attr('data-modal-id');
 		$('#'+modalBox).fadeIn($(this).data());
@@ -711,17 +721,37 @@ $(window).resize();
 				</div>
 
 				<script>
+				var page = 4;
+				
+				 $("#next").click(function(){
+					  page++
+				  })
+				  $("#prev").click(function(){
+					  page--
+				  })
 
 var swiper = new Swiper('.swiper-container', {
+	initialSlide: page,
     pagination: {
       el: '.swiper-pagination',
       type: 'fraction',
     },
+    on: {
+    	slideChange: function () {
+            /* alert(page) */
+          },
+        },
+        history: {
+            replaceState: true,
+            key : 'slide1'
+            
+          },
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
     },
   });
+  
   
 $(function(){
 
@@ -730,7 +760,7 @@ var appendthis =  ("<div class='alen_modal_overlay js-modal-close'></div>");
 	$('[data-modal-id]').click(function(e) {
 		e.preventDefault();
     $(".pages").append(appendthis);
-    $(".alen_modal_overlay").fadeTo(300, 0.7);
+    $(".alen_modal_overlay").fadeTo(300, 0.4);
     //$(".js-modalbox").fadeIn(500);
 		var modalBox = $(this).attr('data-modal-id');
 		$('#'+modalBox).fadeIn($(this).data());
@@ -851,9 +881,13 @@ var view = 1
 $("#mobile_condate").click(function(){
 	if(view==1){
 		view = 2;
+		$("#mobile_condate").css("border-bottom","none");
+		$("#mobile_condate").css("border-right","none");
 		$("#receipt_div").slideDown(300);
 	}else{
 		view = 1;
+		$("#mobile_condate").css("border-bottom","1px solid #b7b8b7");
+		$("#mobile_condate").css("border-right","1px solid #b7b8b7");
 		$("#receipt_div").slideUp(300);
 	}
 })
@@ -864,9 +898,13 @@ var view2 = 1
 $("#mobile_condate2").click(function(){
 	if(view2==1){
 		view2 = 2;
+		$("#mobile_condate").css("border-bottom","none");
+		$("#mobile_condate").css("border-right","none");
 		$("#receipt_div2").slideDown(300);
 	}else{
 		view2 = 1;
+		$("#mobile_condate").css("border-bottom","1px solid #b7b8b7");
+		$("#mobile_condate").css("border-right","1px solid #b7b8b7");
 		$("#receipt_div2").slideUp(300);
 	}
 })
@@ -888,9 +926,9 @@ $(document).ready(function(){
 	$("#loadingView").hide();
 	
 	
-	for(i=0;i<50;i++){
+	/* for(i=0;i<50;i++){
 	$(".swiper-button-next").trigger("click");
-	}
+	} */
 })
 
 

@@ -1085,6 +1085,19 @@
 		]]>
 	</select>		
 	
+	<select id="getCreaDate" parameterType="hashmap" resultType="String">
+		<![CDATA[
+		SELECT 
+			DATE_FORMAT(FRT_CREA_DTM,'%Y%m')
+		FROM
+			TB_USER	
+		WHERE
+			USER_CI = #{CI}
+		]]>
+	</select>	
+	
+	
+	
 	<select id="latestDetailData" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		SELECT
@@ -2052,7 +2065,7 @@
 			FROM 
 				TB_SMS_MASTER 
 			WHERE 
-				REC_TEN_NO=#{telNo}
+				USER_CI=#{CI}
 			)b
 			on a.d = DATE_FORMAT(b.FRT_CREA_DTM,'%Y-%m-%d')		
 		group by STANDARD_MONTH
@@ -2138,7 +2151,145 @@
 		GROUP BY DIV_DAY
 		ORDER BY DIV_DAY DESC
 		]]>
+	</select>
+	
+	<!-- 리뉴얼 dayList -->	
+	
+	<select id="dayList01" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			left(a.ds,6) as STANDARD_MONTH,
+			(COUNT(b.SMS_NO))/8 AS MONTH_CNT, 
+			case when FORMAT((SUM(b.APP_AMOUNT))/8,0) is null then 0 else FORMAT((SUM(b.APP_AMOUNT))/8,0) end AS TOTAL_AMT
+		FROM 
+			(
+				SELECT 
+					MIN(FRT_CREA_DTM) AS MIN_DATE
+				FROM 
+					TB_SMS_MASTER
+				WHERE 
+					USER_CI=#{CI}
+				AND
+					FRT_CREA_DTM BETWEEN #{startDate} AND #{endDate}
+			)c
+		 	left outer join 
+			(
+			SELECT 
+				* 
+			FROM 
+				date_t1 
+			where 
+				ds BETWEEN #{startDate} AND #{endDate}
+			)a
+			on a.d >= DATE_FORMAT(c.MIN_DATE,'%Y-%m-%d')		
+			left outer join 
+			(
+			SELECT 
+				* 
+			FROM 
+				TB_SMS_MASTER 
+			WHERE 
+				USER_CI=#{CI}
+			)b
+			on a.d = DATE_FORMAT(b.FRT_CREA_DTM,'%Y-%m-%d')		
+		group by STANDARD_MONTH
+		order by STANDARD_MONTH ASC 
+		]]>
+	</select>	
+	
+	
+	
+	<select id="dayList02" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y-%m-%d') AS DIV_DAY,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%m-%d') AS DIV_DATE,			
+			COUNT(A.SMS_NO) AS MONTH_CNT, 
+			FORMAT(SUM(A.APP_AMOUNT),0) AS TOTAL_AMT 	
+		FROM 
+			TB_SMS_MASTER A,
+			TB_USER B
+		WHERE 
+			A.USER_CI = #{CI}
+			AND A.USER_CI = B.USER_CI
+			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
+		GROUP BY DIV_DAY
+		ORDER BY DIV_DAY DESC
+		]]>
+	</select>	
+	
+	<select id="dayList03" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y-%m-%d') AS DIV_FULL,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%H:%i') AS DIV_TIME,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%m-%d') AS DIV_DATE,
+			A.APP_AMOUNT,
+			A.APP_CO AS APP_CO,
+			A.CARD_APP_CO,
+			case when A.APP_CO_DIV is null then 'etc' else A.APP_CO_DIV end AS APP_CO_DIV,
+			A.INST_DIV
+		FROM
+			TB_SMS_MASTER A,
+			TB_USER B
+		WHERE
+			A.USER_CI = #{CI}
+			AND A.USER_CI = B.USER_CI
+			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
+		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) DESC
+		
+		]]>
+	</select>	
+	
+	
+	<!-- card list 리뉴얼 -->
+	<select id="cardList02" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_DATE,
+			A.REC_TEN_NO,
+			A.CARD_APP_CO,
+			COUNT(A.SMS_NO) AS MONTH_CNT, 
+			FORMAT(SUM(A.APP_AMOUNT),0) AS TOTAL_AMT 
+		FROM 
+			TB_SMS_MASTER A,
+			TB_USER B
+		WHERE 
+			A.USER_CI=#{CI}
+			AND A.USER_CI = B.USER_CI
+			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
+		GROUP BY CARD_APP_CO,DIV_DATE
+		ORDER BY DIV_DATE ASC, convert(SUM(A.APP_AMOUNT), decimal)  ASC
+		
+		]]>
 	</select>		
+	
+	<select id="cardList03" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y-%m-%d') AS DIV_MONTH,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_WEEK,
+			DATE_FORMAT(A.FRT_CREA_DTM,'%H:%i') AS DIV_SEC,
+			A.APP_AMOUNT,
+			A.APP_CO AS APP_CO,
+			A.CARD_APP_CO,
+			case when A.APP_CO_DIV is null then 'etc' else A.APP_CO_DIV end AS APP_CO_DIV,
+			A.INST_DIV
+		FROM
+			TB_SMS_MASTER A,
+			TB_USER B
+		WHERE
+			A.USER_CI = #{CI}
+			AND A.USER_CI = B.USER_CI
+			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
+		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) ASC
+		
+		]]>
+	</select>
+	
+		
 	
 	<select id="depth03DayList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
@@ -2785,7 +2936,8 @@
 				POINT_CARD,
 				POINT_ICOM,
 				POINT_TYPE,
-				POINT_AMT
+				POINT_AMT,
+				GET_POINT
 			FROM
 				TB_USER_DATA
 			]]>
@@ -2957,13 +3109,13 @@
 	  
 	  <when test="''.equals(find)">
 	    <![CDATA[
-	    	SELECT AFFLIATE_NO, AFFLIATE_NM, FRANCHISEE, M_DIV_CD, SHOP_NAME, ROAD_ADDR, AFFLIATE_EXPLAIN, AFFLIATE_IMAGE, AFFLIATE_STAR
+	    	SELECT AFFLIATE_NO, AFFLIATE_NM, FRANCHISEE, M_DIV_CD, SHOP_NAME, ROAD_ADDR, AFFLIATE_EXPLAIN, AFFLIATE_IMAGE, AFFLIATE_STAR, AFFLIATE_STAR_COUNT
 	    	FROM TB_AFFLIATE_MASTER_A 
 	    ]]>
 	  </when>
 	  <otherwise>
 	    <![CDATA[
-	        SELECT AFFLIATE_NO, AFFLIATE_NM, FRANCHISEE, M_DIV_CD, SHOP_NAME, ROAD_ADDR, AFFLIATE_EXPLAIN, AFFLIATE_IMAGE, AFFLIATE_STAR
+	        SELECT AFFLIATE_NO, AFFLIATE_NM, FRANCHISEE, M_DIV_CD, SHOP_NAME, ROAD_ADDR, AFFLIATE_EXPLAIN, AFFLIATE_IMAGE, AFFLIATE_STAR, AFFLIATE_STAR_COUNT
 	    	FROM TB_AFFLIATE_MASTER_A WHERE SHOP_NAME LIKE CONCAT('%', #{find}, '%')
 		]]>     
 	  </otherwise>
@@ -2974,6 +3126,7 @@
 	    
 	    <![CDATA[
 	    	SELECT 
+	    		AFFLIATE_STAR,
 	    		AFFLIATE_NM, 
 	    		M_DIV_NM, 
 	    		D_DIV_NM, 
@@ -3007,12 +3160,12 @@
 			WHERE
 				USER_CI = #{CI}	
 		]]>
-	    
 	</update>
 		
 	<select id="reviewList" parameterType="hashmap" resultType="hashmap">
 	     <![CDATA[
 	     	SELECT 
+	     		REVIEW_NUM,
 	     		REVIEW_WRITER,
 	     		REVIEW_WRITER_CI,
 	     		DATE_FORMAT(REVIEW_DATE, '%Y-%m-%d %H:%i:%s') AS REVIEW_DATE,
@@ -3024,7 +3177,7 @@
 	     		REVIEW_AFFLIATE_NO = #{affliate_no}
 	     	ORDER BY REVIEW_DATE DESC
 	     ]]>
-	      LIMIT #{startSeq},#{endSeq}	
+	      LIMIT #{startSeq},#{endSeq}
 	 </select>
 	 
 	<update id="reviewInsert" parameterType="hashmap">
@@ -3078,6 +3231,51 @@
 	     	WHERE
 	     		AFFLIATE_NO = #{affliate_no} 
 	  	]]>
+	</update>
+	
+	<delete id="reviewDelete" parameterType="Integer">
+	    <![CDATA[
+	    	DELETE 
+	    		
+	    	FROM
+	    		TB_AFFLIATE_REVIEW
+	   		WHERE
+	   			REVIEW_NUM = #{review_num} 		
+	    ]]>
+	</delete>
+	
+	<select id="reviewCount" parameterType="String" resultType="Integer">
+	    <![CDATA[
+	    	SELECT 
+	    		COUNT(*)
+	    	FROM 
+	    		TB_AFFLIATE_REVIEW
+	    	WHERE
+	    		REVIEW_AFFLIATE_NO = #{affliate_no}
+	    ]]>
+	</select>
+	
+	<update id="countUp" parameterType="String">
+	    <![CDATA[
+	    	UPDATE
+	    		TB_AFFLIATE_MASTER_A
+	    	SET 
+	    		AFFLIATE_STAR_COUNT = AFFLIATE_STAR_COUNT +1
+	    	WHERE
+	    		AFFLIATE_NO = #{affliate_no}
+	    ]]>
+	</update>
+	
+	
+	<update id="countDown" parameterType="String">
+	    <![CDATA[
+	    	UPDATE
+	    		TB_AFFLIATE_MASTER_A
+	    	SET 
+	    		AFFLIATE_STAR_COUNT = AFFLIATE_STAR_COUNT -1
+	    	WHERE
+	    		AFFLIATE_NO = #{affliate_no}
+	    ]]>
 	</update>
 	
 	

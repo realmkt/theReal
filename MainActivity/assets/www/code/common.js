@@ -380,7 +380,7 @@ function fn_commonUserData(resdata){
 	str2 += '    </li>';*/
 	str2 += '	<li id="leftMenuComHistiry">';
 	str2 += '    <div class="leftm_box leftm03"></div>';
-	str2 += '    <a href="javascript:void(0)">지출내역</a>';
+	str2 += '    <a href="javascript:void(0)">월별내역</a>';
 	str2 += '    </li>';
 /*	str2 += '	<li id="leftMenuAffliate">';
 	str2 += '    <div class="leftm_box leftm08"></div>';

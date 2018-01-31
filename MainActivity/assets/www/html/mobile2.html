@@ -155,23 +155,23 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 .mobile_coninfo { padding:8px 15px; color:#bbb; background:#222;  text-align:left; border-bottom:1px solid #333;}
 .mobile_coninfo .mobile_allLeft { width:50%; float:left;  line-height:20px; padding-left:25px; font-size:1.3em;}
 .mobile_coninfo .mobile_allLeft  span { color:#539bff; }
-.mobile_coninfo .mobile_allRight { width:50%; float:right;  line-height:20px; padding-right:25px; font-size:12px; text-align: right; }
-.mobile_coninfo .mobile_allRight span {color:#fff; font-size:13px; }
+.mobile_coninfo .mobile_allRight { width:50%; float:right;  line-height:20px; padding-right:25px; text-align: right; }
+.mobile_coninfo .mobile_allRight span {color:#fff;  }
 
 
 
 
-.mobile_conser { margin:3% 2% 0; background:#fff; text-align:center; font-family: arial; font-size:  15px; padding: 8px;}
+.mobile_conser { margin:15px 2% 0; background:#fff; text-align:center; font-family: arial; font-size:  15px; padding: 8px; height: 35px}
 .mobile_conser input[type=radio] { display:none; margin:10px; }
 .mobile_conser input[type=radio] + label { float:left; padding:7px 12px; width:25%; background:#fff; font-size:12px; border-right:1px solid #e5e5e5;}
 .mobile_conser input[type=radio] + label:last-child { border-right:0; }
 .mobile_conser input[type=radio]:checked + label { background:#539bff; color:#fff; }
 
-.mobile_conlist { margin:0 2% 3% 2%; background:#fff; text-align:center; }
+.mobile_conlist { margin:0 2% 15px 2%; background:#fff; text-align:center; }
 .mobile_conlist ul { padding:8px 10px; position:relative; border-bottom:1px solid #e5e5e5;}
 .mobile_conlist li { float:left; width:30%; text-align:left; }
 .mobile_conlist li h2 { font-size:1em; font-weight:400; color:#000; padding-bottom:3px; }
-.mobile_conlist li p { font-size:1.2em; font-weight:400; color:#555; padding:7px 0 3px 10px ; font-family: arial}
+.mobile-time-p { font-size:1.2em; font-weight:400; color:#555; padding:7px 0 3px 10px ; font-family: arial}
 .mobile_conlist li h3 { font-size:0.8em; font-weight:400; color:#555; padding-left:27px; line-height:16px; }
 .mobile_conlist li h3 span { background:#f2f2f2; border:1px solid #ddd; border-radius:3px; padding:2px 5px; font-size:0.85em; color:#539bff; }
 .mobile_conlist li h3.mal_credit { background:url(../common/credit.gif) no-repeat left; }
@@ -182,7 +182,7 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 
 
 
-.mobile_condate{ text-align: center; margin: 3% 2% 1px 2%; font-size: 14px; background: #ddd; padding: 5px; height: 25px; font-family:'Droid Sans Fallback', sans-serif; font-weight: bold;}
+.mobile_condate{ text-align: center; margin: 15px 2% 1px 2%; font-size: 14px; background: #ddd; padding: 5px; height: 25px; font-family:'Droid Sans Fallback', sans-serif; font-weight: bold;}
 .mobile_condate span{color: #539bff; }
 .mobile_condate_left{padding:1px 0 0 10px; width: 50%; float: left; text-align: left; font-family: arial;}
 .mobile_condate_right{padding:1px 0 0 10px; width: 50%; float: left; text-align: right; font-family: arial;}
@@ -205,37 +205,20 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 .mobile_conlist .samsung_logo{height: 9px}
 .mobile_conlist .nh_logo{height: 11px}
 
-.mobile_conser div{float: left; margin: 0; line-height: 20px; font-size: 1.0em}
-.mobile_conname{font-size: 1.2em}
-
-
-.swiper-container {
-      width: 100%;
-      height: 100%;
-    }
-    .swiper-slide {
-      text-align: center;
-      font-size: 18px;
-      background: #fff;
-      /* Center slide text vertically */
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-box-pack: center;
-      -ms-flex-pack: center;
-      -webkit-justify-content: center;
-      justify-content: center;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      -webkit-align-items: center;
-      align-items: center;
-      float: right;
-    }
-    
-    
-   .mobile_conname{}
+.mobile_conser div{margin: 0; line-height: 20px; font-size: 1.0em}
+.mobile_conname{font-size: 1.2em; white-space: nowrap; text-overflow: ellipsis; overflow: hidden}
+.mobile-name-p{ font-size: 13px; padding: 0px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin-bottom: -10px; }    
 .swiper-button-self{width: 57px; top: 0px; height: 18px;  }
+.slide-month{position: relative;}
+
+
+.slide-prev{color: black; left: -100%}
+.slide-next{color: black; left: 100%}
+
+.button-next{position: absolute; top: 151px ;right: 20px; display: inline-block; width: 60px; height: 35px; padding: 7px}
+.button-prev{position: absolute; top: 151px ;left: 20px; display: inline-block; width: 60px; height: 35px; padding: 7px}
+
+.button-disable{color: #ddd}
 
 </style>                    
             
@@ -247,71 +230,28 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 							<img src="../common/loadingBar.gif" id="loading_gif">
 						</div>
                     <div class="mobile_contitle">
-                    	<h2>지출내역
+                    	<h2>월별내역
                     	<span id="cal">달력</span>
                     	<span id="list"  class="active">리스트</span>
                     	</h2>
                     </div>
 						<div class="mobile_coninfo" id="mobileConinfo">
-							<div class="mobile_allRight">
-								 <span>7</span>건 &ensp; <span>96,200</span> 원
+							<div class="mobile_allRight" id="mobile_allRight">
+								 <span>0</span>건 &ensp; <span>0</span> 원
 							</div>
 							<hr>
 						</div>
 
 						<div class="mobile_conser alen_outbox">
-							<div
-								class="swiper-container swiper-container-horizontal swiper-container-wp8-horizontal">
-								<div class="swiper-wrapper">
-									<div class="swiper-slide" id="201701">01</div>
-									<div class="swiper-slide" id="201702">02</div>
-									<div class="swiper-slide" id="201703">03</div>
-									<div class="swiper-slide" id="201704">04</div>
-									<div class="swiper-slide" id="201705">05</div>
-									<div class="swiper-slide" id="201706">06</div>
-									<div class="swiper-slide" id="201707">07</div>
-									<div class="swiper-slide" id="201708">08</div>
-									<div class="swiper-slide" id="201709">09</div>
-									<div class="swiper-slide" id="201710">10</div>
-									<div class="swiper-slide" id="201701">01</div>
-									<div class="swiper-slide" id="201702">02</div>
-									<div class="swiper-slide" id="201703">03</div>
-									<div class="swiper-slide" id="201704">04</div>
-									<div class="swiper-slide" id="201705">05</div>
-									<div class="swiper-slide" id="201706">06</div>
-									<div class="swiper-slide" id="201707">07</div>
-									<div class="swiper-slide" id="201708">08</div>
-									<div class="swiper-slide" id="201709">09</div>
-									<div class="swiper-slide" id="201710">10</div>
-									
-									<div class="swiper-slide" id="201701">01</div>
-									<div class="swiper-slide" id="201702">02</div>
-									<div class="swiper-slide" id="201703">03</div>
-									<div class="swiper-slide" id="201704">04</div>
-									<div class="swiper-slide" id="201705">05</div>
-									<div class="swiper-slide" id="201706">06</div>
-									<div class="swiper-slide" id="201707">07</div>
-									<div class="swiper-slide" id="201708">08</div>
-									<div class="swiper-slide" id="201709">09</div>
-									<div class="swiper-slide" id="201710">10</div>
-									
-									<div class="swiper-slide" id="201701">01</div>
-									<div class="swiper-slide" id="201702">02</div>
-									<div class="swiper-slide" id="201703">03</div>
-									<div class="swiper-slide" id="201704">04</div>
-									<div class="swiper-slide" id="201705">05</div>
-									<div class="swiper-slide" id="201706">06</div>
-									<div class="swiper-slide" id="201707">07</div>
-									<div class="swiper-slide" id="201708">08</div>
-									<div class="swiper-slide" id="201709">09</div>
-									<div class="swiper-slide" id="201710">01월</div>
-									
-									
-
-								</div>
-								<!-- Add Arrows -->
-								<div class="swiper-button-next swiper-button-self"></div>
-								<div class="swiper-button-prev swiper-button-self"></div>
+							<div id="slide-month-div">
+								<div class="slide-month slide-next" id="2018 00"  style="top:0px">2018 00</div>
+							</div>
+								
+								<div class="button-next button-disable" id="next">▶</div>
+								<div class="button-prev button-disable" id="prev">◀</div> 
+							
+                 	  	<hr>
+                    	
 							</div>
 
 
@@ -324,153 +264,13 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                     <!-- <div id="mobile04" class="mobilesbox" data-modal-id="ser_box" >상세</div> -->
                     
                     <hr>
-                    </div>
-                    <div class="mobile_condate" id="mobile_condate">
-                    	<div class="mobile_condate_left"> 1월 2일</div>
-                    	<div class="mobile_condate_right"> 42,200원</div>
-                    </div>
                     
                     
-                    <div class="mobile_conlist alen_outbox" id="receipt_div">
-                    	<ul data-modal-id="receip_box">
-                        	<li style="width:25%">
-                            
-                            <p>20:10</p>
-                            
-                            </li>
-                            <li style="width: 50% ">
-                            
-                            	<span class="mobile_conname">삼삼떡볶이</span><br>
-                            	<img alt="" src="../common/bc_card.png" >
-                            
-                            </li>
-                            
-                            <li class="mal_price">
-                            <span>8,000</span> 원
-                            </li>
-                            <hr>
-                        </ul>
-                        <ul data-modal-id="receip_box">
-                        	<li style="width:25%">
-                            
-                            <p>19:22</p>
-                            
-                            </li>
-                            <li style="width: 50% ">
-                            
-                            	<span class="mobile_conname">쿠팡</span><br>
-                            	<img alt="" src="../common/lotte_card.png" class="lotte_logo">
-                            
-                            </li> 
-                            
-                            <li class="mal_price">
-                            <span>12,500</span> 원
-                            </li>
-                            <hr>
-                        </ul>
-                        <ul data-modal-id="receip_box">
-                        	<li style="width:25%">
-                            
-                            <p>12:44</p>
-                            
-                            </li>
-                            <li style="width: 50% ">
-                            
-                            	<span class="mobile_conname">딸불백</span><br>
-                            	<img alt="" src="../common/hana_card.png" >
-                            
-                            </li>
-                            
-                            <li class="mal_price">
-                            <span>7,000</span> 원
-                            </li>
-                            <hr>
-                        </ul>
-                        <ul data-modal-id="receip_box">
-                        	<li style="width:25%">
-                            
-                            <p>12:20</p>
-                            
-                            </li>
-                           <li style="width: 50% ">
-                            
-                            	<span class="mobile_conname">스타벅스</span><br>
-                            	<img alt="" src="../common/samsung_card.png"  class="samsung_logo">
-                            
-                            </li>
-                            
-                            <li class="mal_price">
-                            <span>5,600</span> 원
-                            </li>
-                            <hr>
-                        </ul>
-                         <ul data-modal-id="receip_box">
-                        	<li style="width:25%">
-                            
-                            <p>08:58</p>
-                            
-                            </li>
-                           <li style="width: 50% ">
-                            
-                            	<span class="mobile_conname">카카오택시</span><br>
-                            	<img alt="" src="../common/nh_card.png"  class="nh_logo">
-                            
-                            </li>
-                            
-                            <li class="mal_price">
-                            <span>9,100</span> 원
-                            </li>
-                            <hr>
-                        </ul>
-                        
-                    </div>
-                    
-                    
-                    <div class="mobile_condate" id="mobile_condate">
-                    	<div class="mobile_condate_left"> 1월 1일</div>
-                    	<div class="mobile_condate_right"> 54,000원</div>
-                    </div>
-                    
-                    
-                    <div class="mobile_conlist alen_outbox" id="receipt_div">
-                    	<ul data-modal-id="receip_box">
-                        	<li style="width:25%">
-                            
-                            <p>22:52</p>
-                            
-                            </li>
-                            <li style="width: 50%">
-                            
-                            	<span>코다차야</span><br>
-                            	<img alt="" src="../common/bc_card.png" style=" height: 15px">
-                            
-                            </li>
-                            
-                            <li class="mal_price">
-                            <span>45,500</span> 원
-                            </li>
-                            <hr>
-                        </ul><ul data-modal-id="receip_box">
-                        	<li style="width:25%">
-                            
-                            <p>16:20</p>
-                            
-                            </li>
-                            <li style="width:50%">
-                            
-                            	<span class="mobile_conname">산쪼메</span><br>
-                            	<img alt="" src="../common/bc_card.png" style=" height: 15px">
-                            
-                            </li>
-                            
-                            <li class="mal_price">
-                            <span>8,500</span> 원
-                            </li>
-                            <hr>
-                        </ul>
-                        
-                    </div>
-                    
+          	 <div id="mobile_list_div">
+          	 
+          	 
+          	 
+        	 </div>
                     
                     <div class="foot_info">
                     
@@ -504,47 +304,45 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                 </div>
                 
 <script>
-$(function(){
+	$(function() {
 
-var appendthis =  ("<div class='alen_modal_overlay js-modal-close'></div>");
+		var appendthis = ("<div class='alen_modal_overlay js-modal-close'></div>");
 
-	$('[data-modal-id]').click(function(e) {
-		//modalVal=true;//모달 뒤로가기 추가 데이터
-		/* $("#startDate").val(startDay);
-		$("#endDate").val(endDay); */
-		
-		
-		e.preventDefault();
-    $(".pages").append(appendthis);
-    $(".alen_modal_overlay").fadeTo(300, 0.7);
-    //$(".js-modalbox").fadeIn(500);
-		var modalBox = $(this).attr('data-modal-id');
-		$('#'+modalBox).fadeIn($(this).data());
-	});  
-  
-  
-$(".js-modal-close, .alen_modal_overlay").click(function() {
-	modalVal=false;//모달 뒤로가기 추가 데이터
-    $(".modal_box, .alen_modal_overlay").fadeOut(300, function() {
-        $(".alen_modal_overlay").remove();
-    });
- 
-});
+		$('[data-modal-id]').click(function(e) {
+			//modalVal=true;//모달 뒤로가기 추가 데이터
+			/* $("#startDate").val(startDay);
+			$("#endDate").val(endDay); */
 
-$(".alen_arrow").click(function() {
-	$('input[name="latestsbox"]:radio[value="detail"]').prop('checked',true);
-});
- 
-$(window).resize(function() {
-    $(".modal_box").css({
-        top: ($(window).height() - $(".modal_box").outerHeight()) / 2,
-        left: ($(window).width() - $(".modal_box").outerWidth()) / 2
-    });
-});
- 
-$(window).resize();
- 
-});
+			e.preventDefault();
+			$(".pages").append(appendthis);
+			$(".alen_modal_overlay").fadeTo(300, 0.7);
+			//$(".js-modalbox").fadeIn(500);
+			var modalBox = $(this).attr('data-modal-id');
+			$('#' + modalBox).fadeIn($(this).data());
+		});
+
+		$(".js-modal-close, .alen_modal_overlay").click(function() {
+			modalVal = false;//모달 뒤로가기 추가 데이터
+			$(".modal_box, .alen_modal_overlay").fadeOut(300, function() {
+				$(".alen_modal_overlay").remove();
+			});
+
+		});
+
+		$(".alen_arrow").click(
+				function() {
+					$('input[name="latestsbox"]:radio[value="detail"]').prop('checked', true);
+				});
+		$(window).resize(function() {
+			$(".modal_box").css({
+				top : ($(window).height() - $(".modal_box").outerHeight()) / 2,
+				left : ($(window).width() - $(".modal_box").outerWidth()) / 2
+			});
+		});
+
+		$(window).resize();
+
+	});
 </script>
 
 <style>
@@ -556,7 +354,7 @@ $(window).resize();
 .modal_box .modal_body { padding: 1em 1em; }
 .modal_mobile { border-top: 1px solid #ddd; background: rgba(0, 0, 0, 0.02); text-align: center; height: 3.5em }
 
-.alen_modal_overlay { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
+.alen_modal_overlay { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 0.7) !important;}
 
 
 .ser_datebox { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
@@ -576,7 +374,8 @@ $(window).resize();
 .ser_1box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
 .ser_topbox{border-top:1px solid #ddd; margin-top:2%;}
 
-.ser_check img{width: 15px; display:"";}
+.ser_check img{width: 15px; display:none;}
+.ser_check_active img{display: inline-block;}
 
 .recdetail { max-width:500px; padding:1%; height:90%; top:5% !important; }
 .recdetail .modal_body { height:100%; padding:0; }
@@ -588,8 +387,11 @@ $(window).resize();
 .serdivbox_mobile{line-height: 30px;float: left;width: 100%; font-size: 1.2em }
 .serdivbox:last-child{border-right: none;}
 .serdivbox_mobile_active{background-color: #f2f2f2 }
-.receipt_a{display: block;}
+.serdivbox_mobile_active img {display: inline-block; }
 
+
+.receipt_a{display: block;}
+.close_condate{border-bottom: 1px solid #b7b8b7; border-right: 1px solid #b7b8b7 }
 
 .receipt_details { background:#333333 !important; overflow:visible !important; }
 /*.page-content { padding-top:0 !important; max-width: 450px; margin: 0 auto;} */
@@ -647,6 +449,8 @@ $(window).resize();
 .rt_textarea{ width:  100%; height: 110px; border-top: none; border-left: 1px solid #ddd; border-bottom:  1px solid #ddd; border-right:  1px solid #ddd;}
 
 .receipt{background-color: #666}
+.mobile_empty_img{width: 96%; margin: 15px 2% 2% 2%}
+
 </style>
 
 
@@ -654,15 +458,12 @@ $(window).resize();
 
 					<div class="modal_body">
 
-						<div class="ser_datebox">
-							<select>
-								<option>2017</option>
+						<div class="ser_datebox" id="ser_datebox"">
+							<select name="year_sel" id="year_sel">
 								<option selected>2018</option>
-								<option>2019</option>
-								<option>2020</option>
-								
+
 							</select>년
-							<select>
+							<select name="month_sel" id="month_sel">
 								<option>01</option>
 								<option>02</option>
 								<option>03</option>
@@ -710,54 +511,44 @@ $(window).resize();
 
 				</div>
 
-				<script>
+<script>
 
-var swiper = new Swiper('.swiper-container', {
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'fraction',
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-  });
-  
-$(function(){
+	$(function() {
 
-var appendthis =  ("<div class='alen_modal_overlay js-modal-close'></div>");
+		var appendthis = ("<div class='alen_modal_overlay js-modal-close'></div>");
 
-	$('[data-modal-id]').click(function(e) {
-		e.preventDefault();
-    $(".pages").append(appendthis);
-    $(".alen_modal_overlay").fadeTo(300, 0.7);
-    //$(".js-modalbox").fadeIn(500);
-		var modalBox = $(this).attr('data-modal-id');
-		$('#'+modalBox).fadeIn($(this).data());
-	});  
-  
-  
-$(".js-modal-close, .alen_modal_overlay").click(function() {
-    $(".modal_box, .alen_modal_overlay").fadeOut(300, function() {
-        $(".alen_modal_overlay").remove();
-    });
- 
-});
+		$('[data-modal-id]').click(function(e) {
+			e.preventDefault();
+			$(".pages").append(appendthis);
+			$(".alen_modal_overlay").fadeTo(300, 0.7);
+			//$(".js-modalbox").fadeIn(500);
+			var modalBox = $(this).attr('data-modal-id');
+			$('#' + modalBox).fadeIn($(this).data());
+		});
 
-$(".alen_arrow").click(function() {
-	$('input[name="mobilesbox"]:radio[value="detail"]').prop('checked',true);
-});
- 
-$(window).resize(function() {
-    $(".modal_box").css({
-        top: ($(window).height() - $(".modal_box").outerHeight()) / 2,
-        left: ($(window).width() - $(".modal_box").outerWidth()) / 2
-    });
-});
- 
-$(window).resize();
- 
-});
+		$(".js-modal-close, .alen_modal_overlay").click(function() {
+			$(".modal_box, .alen_modal_overlay").fadeOut(300, function() {
+				$(".alen_modal_overlay").remove();
+			});
+
+		});
+
+		$(".alen_arrow").click(
+				function() {
+					$('input[name="mobilesbox"]:radio[value="detail"]').prop(
+							'checked', true);
+				});
+
+		$(window).resize(function() {
+			$(".modal_box").css({
+				top : ($(window).height() - $(".modal_box").outerHeight()) / 2,
+				left : ($(window).width() - $(".modal_box").outerWidth()) / 2
+			});
+		});
+
+		$(window).resize();
+
+	});
 </script>
                 
                 
@@ -814,7 +605,7 @@ $(window).resize();
             
             
             
-
+			
 		</div>
     </div>
 
@@ -846,32 +637,623 @@ $('#loadingView').show();
 });
 
 
-
-var pageCnt = 0;
-
 var request = new Request();
 
 var telNo = request.getParameter('telNo');
 var CI = window.localStorage.getItem("CI");
-var selMobTab ="";
-var seq = "";
-var array = new Array();
-commonUserData();	
 
+var page = -1;
+
+var today = new Date();
+
+var todayYear = today.getFullYear();
+var todayMon = today.getMonth()+1;
+if(todayMon < 10){todayMon = "0"+todayMon}
+var selectDays = "";
+
+var days = todayYear+""+todayMon;
+
+var depth01Size = 0;
+
+var dayDepth01Map = null;
+var dayDepth02Map = null;
+var dayDepth03Map = null;
+
+var cardDepth01Map = null;
+var cardDepth02Map = null;
+var cardDepth03Map = null;
+
+userCreaDate();
+var userCreaDate = "";
+function userCreaDate(){
+	$.ajax({
+	    type: "post",
+	    url : commonIp()+"/theReal/receipt/userCreaDate.do",
+	    dataType:"json",
+	    data: {
+			CI : CI
+	    },
+	    success: userGetDate,
+	    error: whenError
+	});
 	
-$(document).ready(function(){
-	$("#loadingView").hide();
+	$("#type01").click(function(){
+		$("#type01").addClass("serdivbox_mobile_active");
+		$("#type02").removeClass("serdivbox_mobile_active");
+		$("#type03").removeClass("serdivbox_mobile_active");
+	})
+	$("#type02").click(function(){
+		$("#type01").removeClass("serdivbox_mobile_active");
+		$("#type02").addClass("serdivbox_mobile_active");
+		$("#type03").removeClass("serdivbox_mobile_active");
+	})
+	$("#type03").click(function(){
+		$("#type01").removeClass("serdivbox_mobile_active");
+		$("#type02").removeClass("serdivbox_mobile_active");
+		$("#type03").addClass("serdivbox_mobile_active");
+	})
+	
+	$("#detailBtn").click(function(){
+		if($("#type01").hasClass("serdivbox_mobile_active")){
+			dayList();
+		}else if($("#type02").hasClass("serdivbox_mobile_active")){
+			cardList();
+		}else if($("#type03").hasClass("serdivbox_mobile_active")){
+			
+		}
+		$('#ser_box').hide();
+		$('#modal_body').hide();
+		$(".modal_box, .alen_modal_overlay").fadeOut(300, function() {
+			$(".alen_modal_overlay").remove();
+		});
+		
+	})
+}
+
+
+
+
+function userGetDate(resdata){
+	userCreaDate = resdata;
+}
+
+
+dayList()
+
+function selectBox(dayDepth01Map){
+	
+	var yearStr = '<select name="year_sel" id="year_sel" onchange="changeYear()">';
+	var monStr = '<select name="month_sel" id="month_sel" onchange="changeMonth()">';
+	
+	for(var i=0; i < dayDepth01Map.length; i++ ){
+		var tY = dayDepth01Map[i].STANDARD_MONTH.substring(0,4);
+		var tM = dayDepth01Map[i].STANDARD_MONTH.substring(4,6);
+		
+		
+		if(selectDays==""){
+			if(yearStr.indexOf(tY) < 0){
+				if(tY == todayYear){
+					yearStr += '<option value="'+tY+'" selected>'+tY+'</option>'
+				}else{
+					yearStr += '<option value="'+tY+'">'+tY+'</option>'
+				}
+			}
+			if(tY == todayYear){
+				monStr += '<option value="'+tM+'">'+tM+'</option>';
+			}
+			
+			
+			
+		}else{
+			if(yearStr.indexOf(tY) < 0){
+				if(selectDays.substring(0,4) == tY){
+					yearStr += '<option value="'+tY+'" selected>'+tY+'</option>'
+				}else{
+				yearStr += '<option value="'+tY+'">'+tY+'</option>'
+				}
+			}
+			
+			if(selectDays.substring(0,4) == tY){
+				monStr += '<option value="'+tM+'">'+tM+'</option>';
+			}
+		}
+		
+	}
+	
+	yearStr += '</select>년';
+	monStr += '</select>월';
+	
+	$("#ser_datebox").empty();
+	$("#ser_datebox").append(yearStr);
+	$("#ser_datebox").append(monStr);
+}
+
+function changeMonth(){
+	selectDays = $("#year_sel").val()+$("#month_sel").val();
+}
+
+
+function changeYear(){
+	var selectY = $("#year_sel").val();
+	var monStr = "";
+	
+	for(var i=0; i < dayDepth01Map.length; i++ ){
+		var tY = dayDepth01Map[i].STANDARD_MONTH.substring(0,4);
+		var tM = dayDepth01Map[i].STANDARD_MONTH.substring(4,6);
+
+		if(selectY == tY){
+			monStr += '<option value="'+tM+'">'+tM+'</option>';
+		}
+	}
+	
+	$("#month_sel").empty();
+	$("#month_sel").append(monStr);
+	
+	selectDays = selectY+""+$("#month_sel").val();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////날짜별 리스트
+function dayList(){
+	$.ajax({
+	    type: "post",
+	    url : commonIp()+"/theReal/receipt/mobileDayList.do",
+	    dataType:"json",
+	    data: {
+			CI : CI,	    	
+	    	startDate : userCreaDate+"01",
+	    	endDate : dateInput(0,""),
+	    	startDateMonth : userCreaDate,
+	    	endDateMonth : dateInputMonth(0,""),
+	    	telNo : telNo
+	    },
+	    success: dayListSuc,
+	    error: whenError
+	});
+}
+
+var str01 = "";
+var mon01 = "";
+var str02 = "";
+var str03 = "";
+
+var firstDays ="";
+var lastDays = "";
+
+//날짜별 로딩
+function dayListSuc(resData){
+	dayDepth01Map = resData.dayList01Map.resultMap;
+	depth01Size = dayDepth01Map.length;
+	dayDepth02Map = resData.dayList02Map.resultMap;
+	dayDepth03Map = resData.dayList03Map.resultMap;
+	page = dayDepth01Map.length;
+	
+	selectBox(dayDepth01Map)
+	
+	str01 = "";
+	mon01 = "";
 	
 	
-	for(i=0;i<50;i++){
-	$(".swiper-button-next").trigger("click");
+	if(depth01Size > 1){
+		if(selectDays != ""){
+			for(var i=0; i < depth01Size; i++){
+				if(dayDepth01Map[i].STANDARD_MONTH < selectDays){
+					mon01 += '<div class="slide-month slide-prev" id="'+dayDepth01Map[i].STANDARD_MONTH+'" style="top:'+(i*-20)+'px" >'+dayDepth01Map[i].STANDARD_MONTH.substring(0,4)+'년 '+dayDepth01Map[i].STANDARD_MONTH.substring(4,6)+'월</div>';
+				}else if(dayDepth01Map[i].STANDARD_MONTH == selectDays){
+					mon01 += '<div class="slide-month" id="'+dayDepth01Map[i].STANDARD_MONTH+'" style="top:'+(i*-20)+'px" >'+dayDepth01Map[i].STANDARD_MONTH.substring(0,4)+'년 '+dayDepth01Map[i].STANDARD_MONTH.substring(4,6)+'월</div>';
+					if(i==0){
+						$("#next").removeClass("button-disable");
+						$("#prev").addClass("button-disable");
+					}else if(i==(depth01Size-1)){
+						$("#next").addClass("button-disable");
+						$("#prev").removeClass("button-disable");
+					}else{
+						$("#next").removeClass("button-disable");
+						$("#prev").removeClass("button-disable");
+					}
+					str01 += '<span>'+dayDepth01Map[i].MONTH_CNT+'</span>건 &ensp; <span>'+dayDepth01Map[i].TOTAL_AMT+'</span> 원';
+					
+					$("#year_sel > option[value="+dayDepth01Map[i].STANDARD_MONTH.substring(0,4)+"]").attr("selected", "true");
+					$("#month_sel > option[value="+dayDepth01Map[i].STANDARD_MONTH.substring(4,6)+"]").attr("selected", "true");
+					
+					days = dayDepth01Map[i].STANDARD_MONTH;
+				}else if(dayDepth01Map[i].STANDARD_MONTH > selectDays){
+						mon01 += '<div class="slide-month slide-next" id="'+dayDepth01Map[i].STANDARD_MONTH+'" style="top:'+(i*-20)+'px" >'+dayDepth01Map[i].STANDARD_MONTH.substring(0,4)+'년 '+dayDepth01Map[i].STANDARD_MONTH.substring(4,6)+'월</div>';
+				}else{
+					if(i==0){
+						firstDays = dayDepth01Map[i].STANDARD_MONTH;
+					}
+					mon01 += '<div class="slide-month slide-prev" id="'+dayDepth01Map[i].STANDARD_MONTH+'" style="top:'+(i*-20)+'px" >'+dayDepth01Map[i].STANDARD_MONTH.substring(0,4)+'년 '+dayDepth01Map[i].STANDARD_MONTH.substring(4,6)+'월</div>';
+				}
+			}
+		}else{
+			for(var i=0; i < depth01Size; i++){
+				if(i==(dayDepth01Map.length-1)){
+					mon01 += '<div class="slide-month" id="'+dayDepth01Map[i].STANDARD_MONTH+'" style="top:'+(i*-20)+'px" >'+dayDepth01Map[i].STANDARD_MONTH.substring(0,4)+'년 '+dayDepth01Map[i].STANDARD_MONTH.substring(4,6)+'월</div>';
+					days = dayDepth01Map[i].STANDARD_MONTH;
+					lastDays = dayDepth01Map[i].STANDARD_MONTH;
+					$("#prev").removeClass("button-disable");
+					str01 += '<span>'+dayDepth01Map[i].MONTH_CNT+'</span>건 &ensp; <span>'+dayDepth01Map[i].TOTAL_AMT+'</span> 원';
+				}else{
+					if(i==0){
+						firstDays = dayDepth01Map[i].STANDARD_MONTH;
+					}
+					mon01 += '<div class="slide-month slide-prev" id="'+dayDepth01Map[i].STANDARD_MONTH+'" style="top:'+(i*-20)+'px" >'+dayDepth01Map[i].STANDARD_MONTH.substring(0,4)+'년 '+dayDepth01Map[i].STANDARD_MONTH.substring(4,6)+'월</div>';
+				}
+			}
+		
+		}
+		
+		$("#mobile_allRight").empty();
+		$("#mobile_allRight").append(str01);
+		
+		
+		
+	}else if(dayDepth01Map.length <1  ){
+		mon01 += '<div class="slide-month" id="'+dayDepth01Map[i].STANDARD_MONTH+'" style="top:'+(i*-20)+'px" >'+toDay+'</div>';
+	}
+	
+	$("#slide-month-div").empty();
+	$("#slide-month-div").append(mon01);
+	
+	
+	mobileDayList()
+	
+}
+
+function mobileDayList(){
+	$("#loadingView").show();
+	//dayDepth03Map
+	var depth02Size = dayDepth02Map.length;
+	var depth03Size = dayDepth03Map.length;
+	
+	var listStr = "";
+		for(var i=0 ; i < depth02Size; i++){
+			if(dayDepth02Map[i].DIV_MONTH == days){
+				var tempM = (dayDepth02Map[i].DIV_DATE).substring(0,2);
+				var tempD = (dayDepth02Map[i].DIV_DATE).substring(3,5);
+				listStr += '<div class="mobile_condate" id="mobile_condate" style=" margin: 15px 2% 1px 2%; background: #ddd; height: 25px;  ">';
+				listStr += '	<div class="mobile_condate_left">'+tempM+'월'+tempD+'일</div>';
+				listStr += '	<div class="mobile_condate_right">'+dayDepth02Map[i].MONTH_CNT+'건 '+dayDepth02Map[i].TOTAL_AMT+'원</div>';
+				listStr += '</div>';
+				
+				listStr += '<div class="mobile_conlist alen_outbox" id="receipt_div" style="margin:0 2% 15px 2%;">';
+				
+				for(var j=0; j < depth03Size; j++){
+					if(dayDepth03Map[j].DIV_MONTH == days && dayDepth02Map[i].DIV_DATE == dayDepth03Map[j].DIV_DATE){ 
+						listStr += '	<ul data-modal-id="receip_box">';
+						listStr += '		<li style="width:25%">';
+						listStr += '			<p class="mobile-time-p">'+dayDepth03Map[j].DIV_TIME+'</p>';
+						listStr += '		</li>';
+						listStr += '		<li style="width: 50% ">';
+						listStr += '		<span class="mobile_conname"><p class="mobile-name-p">'+dayDepth03Map[j].APP_CO+'</p></span><br>';
+						listStr += 			cardLogo(dayDepth03Map[j].CARD_APP_CO);
+						listStr += '		</li>';
+						listStr += '		<li class="mal_price">';
+						listStr += '			<span>'+numCommas(dayDepth03Map[j].APP_AMOUNT)+'</span> 원';
+						listStr += '		</li><hr>';
+						listStr += '	</ul>';
+					}
+				}
+				listStr += '</div>';
+			}
+		}
+		
+		if(listStr==""){
+			listStr += '<div id="mobile_list_div">';
+			listStr += '	<img src="../common/emptyList01.jpg" class="mobile_empty_img">';
+			listStr += '</div>';
+		}
+		
+	$("#mobile_list_div").empty();
+	$("#mobile_list_div").append(listStr);
+	setTimeout(function(){
+		$("#loadingView").hide();	
+	},100)
+	
+	
+}
+
+
+
+
+
+
+var year = "";
+var month = "";
+
+$("#next").click(function() {
+	if($("#next").hasClass("button-disable")){
+		return false;
+	}else{
+		if($("#prev").hasClass("button-disable")){
+			$("#prev").removeClass("button-disable")
+		}
+	
+		$("#"+days).addClass("slide-prev")
+		
+		subDate(days)
+		
+		if(month == 12){
+			month = "0"+1;
+			year++;
+		}else{
+			month++;
+		}
+			
+		days = year+""+month;
+		if(lastDays == days){
+			$("#next").addClass("button-disable");
+		}
+		$("#"+days).removeClass("slide-next");
+	}
+	change02Depth()
+	
+	
+	if($("#type01").hasClass("serdivbox_mobile_active")){
+		mobileDayList();	
+	}else if($("#type02").hasClass("serdivbox_mobile_active")){
+		mobileCardList();
+	}else if($("#type03").hasClass("serdivbox_mobile_active")){
+		
+	}
+	
+})
+
+$("#prev").click(function() {
+	
+	if($("#prev").hasClass("button-disable")){
+		return false;
+	}else{
+		if($("#next").hasClass("button-disable")){
+			$("#next").removeClass("button-disable")
+		}
+		
+		$("#"+days).addClass("slide-next")
+		subDate(days)
+		
+		if(month-1 == 00){
+			month = 12;
+			year--;
+		}else{
+			month--;
+		}
+			
+		
+		days = year+""+month;
+		
+		if(firstDays == days){
+			$("#prev").addClass("button-disable");
+		}
+		$("#"+days).removeClass("slide-prev");
+		
+		//alert(year+"//"+month)
+		//page--
+		change02Depth()
+		if($("#type01").hasClass("serdivbox_mobile_active")){
+			mobileDayList();	
+		}else if($("#type02").hasClass("serdivbox_mobile_active")){
+			mobileCardList();
+		}else if($("#type03").hasClass("serdivbox_mobile_active")){
+			
+		}
 	}
 })
+
+
+function change02Depth(){
+	var totalStr = "";
+	for(var i=0; i < dayDepth01Map.length; i++ ){
+		if(dayDepth01Map[i].STANDARD_MONTH == days){
+			totalStr += '<span>'+dayDepth01Map[i].MONTH_CNT+'</span>건 &ensp; <span>'+dayDepth01Map[i].TOTAL_AMT+'</span> 원';
+			
+		}
+	}
+	$("#mobile_allRight").empty();
+	$("#mobile_allRight").append(totalStr);
+}
+
+function subDate(date){
+	year = date.substring(0,4);
+	month = date.substring(4,6);
+}
+	
+///////////////////////////////////////////////////////////////////////////////카드별 리스트
+
+function cardList(){
+	$.ajax({
+	    type: "post",
+	    url : commonIp()+"/theReal/receipt/mobileCardList.do",
+	    dataType:"json",
+	    data: {
+			CI : CI,	    	
+	    	startDate : userCreaDate+"01",
+	    	endDate : dateInput(0,""),
+	    	startDateMonth : userCreaDate,
+	    	endDateMonth : dateInputMonth(0,""),
+	    	telNo : telNo
+	    },
+	    success: cardListSuc,
+	    error: whenError
+	});
+}
+
+
+
+function cardListSuc(resData){
+	cardDepth02Map = resData.cardList02Map.resultMap;
+	cardDepth03Map = resData.cardList03Map.resultMap;
+	
+	
+	mobileCardList()
+}
+
+
+function mobileCardList(){
+	$("#loadingView").show();
+	
+	var depth02Size = cardDepth02Map.length;
+	var depth03Size = cardDepth03Map.length;
+	
+	var listStr = "";
+	
+	for(var i=0 ; i < depth02Size; i++){
+		if(dayDepth02Map[i].DIV_MONTH == days){
+			var tempM = (cardDepth02Map[i].DIV_DATE).substring(0,2);
+			var tempD = (cardDepth02Map[i].DIV_DATE).substring(3,5);
+			listStr += '<div class="mobile_condate close_condate" id="mobile_condate" onclick="view_condate('+cardDepth02Map[i].DIV_DATE+')" style="margin: 5px 2% 0 2%; background: #ffffff; height: 35px; border-bottom: 1px solid #b7b8b7; border-right: 1px solid #b7b8b7;">';
+			listStr += '	<div class="mobile_condate_left">'+(cardLogo2(cardDepth02Map[i].REC_TEN_NO))+'</div>';
+			listStr += '	<div class="mobile_condate_right">'+cardDepth02Map[i].MONTH_CNT+'건 '+cardDepth02Map[i].TOTAL_AMT+'원</div>';
+			listStr += '</div>';
+			
+			listStr += '<div class="mobile_conlist alen_outbox" id="receipt_div" style="margin:0 2% 1% 2%; display: none">';
+			
+			for(var j=0; j < depth03Size; j++){
+				if(dayDepth03Map[j].DIV_MONTH == days && dayDepth02Map[i].DIV_DATE == dayDepth03Map[j].DIV_DATE){ 
+					listStr += '		<ul data-modal-id="receip_box">';
+					listStr += '			<li style="width:25%">';
+					listStr += '				<p>20:10</p>';
+					listStr += '			</li>';
+					listStr += '			<li style="width: 50%; padding-top: 5px ">';
+					listStr += '				<span class="mobile_conname mobile_cardlist">삼삼떡볶이</span><br>';
+					listStr += '			</li>';
+					listStr += '			<li class="mal_price">';
+					listStr += '			<span>8,000</span> 원';
+					listStr += '		</li><hr>';
+					listStr += '	</ul>';
+				}
+			}
+			listStr += '</div>';
+		}
+	}
+	$("#mobile_list_div").empty();
+	$("#mobile_list_div").append(listStr);
+	setTimeout(function(){
+		$("#loadingView").hide();	
+	},100)
+}
+
+
+function view_condate(id_date){
+	alert(id_date)
+	var id = "#"+id_date
+	$(id).hasClass("close_condate"){
+		$(id).slideDown(300);
+		$(id).removeClass("close_condate");
+	}else{
+		$(id).slideUp(300);
+		$(id).addClass("close_condate");
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function cardLogo(coName){
+	var tstr = "";
+	
+	if(coName.indexOf("BC") > -1){
+		tstr = '<img alt="" src="../common/bc_card.png" >';
+	}else if(coName.indexOf("신한")> -1){
+		tstr = '<img alt="" src="../common/shinhan.png" >';
+	}else if(coName.indexOf("삼성")> -1){
+		tstr = '<img alt="" src="../common/samsung_card.png"  class="samsung_logo">';
+	}else if(coName.indexOf("우리")> -1){
+		tstr = '<img alt="" src="../common/woori_card.png" >';
+	}else if(coName.indexOf("롯데")> -1){
+		tstr = '<img alt="" src="../common/lotte_card.png" class="lotte_logo">';
+	}else if(coName.indexOf("현대")> -1){
+		tstr = '<img alt="" src="../common/hyundai_card.png" >';
+	}else if(coName.indexOf("하나")> -1){
+		tstr = '<img alt="" src="../common/hana_card.png" >';
+	}else if(coName.indexOf("농협")> -1){
+		tstr = '<img alt="" src="../common/nh_card.png"  class="nh_logo">';
+	}else if(coName.indexOf("국민")> -1){
+		tstr = '<img alt="" src="../common/kb_card.png" >';
+	}
+	
+	return tstr;
+	
+}
+
+function cardLogo2(coName){
+	var tstr = "";
+	
+	if(coName.indexOf("신한") > -1){
+		tstr = '<div class="mobile_condate_left"> <img alt="" src="../common/shinhan_card.png" style="height: 17px"> </div>';
+	}else if(coName.indexOf("BC")> -1){
+		tstr = '<div class="mobile_condate_left"> <img alt="" src="../common/nh_card4.png" style="height: 17px"> </div>';
+	}else if(coName.indexOf("삼성")> -1){
+		tstr = '<div class="mobile_condate_left"> <img alt="" src="../common/samsung_card.png"  class="samsung_logo" style="height: 14px"></div>';
+	}else if(coName.indexOf("우리")> -1){
+		tstr = '<div class="mobile_condate_left"> <img alt="" src="../common/woori_card.png" style="height: 14px"></div>';
+	}else if(coName.indexOf("롯데")> -1){
+		tstr = '<div class="mobile_condate_left"> <img alt="" src="../common/lotte_card.png" style="height: 13px"></div>';
+	}else if(coName.indexOf("현대")> -1){
+		tstr = '<div class="mobile_condate_left"> <img alt="" src="../common/hyumdai_card2.png"  style="height: 21px; position: relative; top: -2px"></div>';
+	}else if(coName.indexOf("하나")> -1){
+		tstr = '<div class="mobile_condate_left"> <img alt="" src="../common/hana_card2.png" style="height: 20px; position: relative; top: -2px"></div>';
+	}else if(coName.indexOf("농협")> -1){
+		tstr = '<div class="mobile_condate_left"> <img alt="" src="../common/nh_card2.png" style="height: 16px; position: relative; top: -2px"></div>';
+	}else if(coName.indexOf("국민")> -1){
+		tstr = '<div class="mobile_condate_left"> <img alt="" src="../common/kb_card.png" style="height: 17px;"></div>';
+	}
+	
+	return tstr;
+	
+} 
+
+function dateInput(targetday,sep){
+	  var date = new Date();
+	  var start = new Date(Date.parse(date) - targetday * 1000 * 60 * 60 * 24);
+	  
+	  var yyyy = start.getFullYear();
+	  var mm = start.getMonth()+1;
+	  var dd = start.getDate();
+	  if(mm<10){
+	   mm = "0" + mm;
+	  }if(dd<10){
+	   dd = "0" + dd;
+	  }
+	  return yyyy + sep + mm + sep + dd; 
+}	
+
+function dateInputMonth(targetday,sep){
+	  var date = new Date();
+	  var start = new Date(Date.parse(date) - targetday * 1000 * 60 * 60 * 24);
+	  
+	  var yyyy = start.getFullYear();
+	  var mm = start.getMonth()+1;
+	  
+	  if(mm<10){
+	   mm = "0" + mm;
+	  }
+	  return yyyy+""+mm; 
+}
+
+
 
 
 function whenError(request,status,error){
 	//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 };	
+
+//3자리수 , 찍어주기
+function numCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+} 
+
+
 
 </script>
 

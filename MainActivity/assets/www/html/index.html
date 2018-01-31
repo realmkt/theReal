@@ -49,7 +49,7 @@
 .main_info { width:100%; background:#222; }
 .alatest_box { padding:25px 0; margin:0 15px; border-bottom:1px solid #333; }
 .alatest_month { float:left; width:35%; color:#539bff; font-weight:800; font-size:2.6em; line-height:1em; text-align:left; }
-.alatest_month span { color:#747474; font-weight:300; }
+.alatest_month .year { color:#747474; font-weight:300; }
 .alatest_price { float:left; width:65%; color:#539bff; font-weight:700; font-size:2.6em; line-height:1em; text-align:right; }
 .alatest_price span { color:#747474; font-size:0.7em; font-weight:400; }
 
@@ -107,6 +107,8 @@
 	.alast_month, .alast_price { font-size:0.9em !important; }
 	.top_nav ul li { font-size:0.6em !important; }
 }
+
+.alatest_font{font-size: 13px; color: #eeeeee; font-weight: 300}
 </style>
 <body>
 
@@ -200,7 +202,7 @@
        				<div class="top_nav">
                     	<ul>
                         	<li class="top_n01" onClick="javascript:hrefPage(1)">최근사용내역</li>
-                        	<li class="top_n02" onClick="javascript:hrefPage(2)">지출내역</li>
+                        	<li class="top_n02" onClick="javascript:hrefPage(2)">월별내역</li>
                         	<!-- <li class="top_n03" onClick="javascript:hrefPage(3)">가맹점</li> -->
                         	<li class="top_n04" onClick="javascript:hrefPage(4)">이벤트</li>
                         	<li class="top_n05" onClick="javascript:hrefPage(5)">쿠폰</li>
@@ -845,7 +847,7 @@ function fn_startSumData(resdata){
 			}
 			str += '<div class="alatest_box">';
 			str += '	<div class="alatest_month">';
-			str += '		<span>'+resdata.endDate.substring(0,4)+' </span>'+resdata.endDate.substring(4,6);
+			str += '		<span class="year">'+resdata.endDate.substring(0,4)+'</span><span class="alatest_font">년 </span>'+resdata.endDate.substring(4,6)+'<span class="alatest_font">월</span>';
 			str += '	</div>';
 			str += '	<div class="alatest_price">';
 			str += '		<span>'+totalCnt2+'건  </span>'+numberWithCommas(totalAm2)+'<span>원</span>';
@@ -1087,7 +1089,7 @@ function hrefPage(val){
 	if(val==1){
 		location.href='latest.html?CI='+CI+'&telNo='+request.getParameter('telNo');
 	}else if(val==2){
-		location.href='mobile.html?CI='+CI+'&telNo='+request.getParameter('telNo');
+		location.href='mobile.html2?CI='+CI+'&telNo='+request.getParameter('telNo');
 	}else if(val==3){
 		location.href='affliate.html?CI='+CI+'&telNo='+request.getParameter('telNo');
 	}else if(val==4){

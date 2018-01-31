@@ -117,6 +117,18 @@ public interface ReceiptService {
 	Map<String, Object> startRecYnData(Map<String, Object> map) throws Exception;
 	
 	Map<String, Object> affliateData(Map<String, Object> map) throws Exception;
+	
+	//리뉴얼 mobile
+	
+	Map<String, Object> dayList01(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> dayList02(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> dayList03(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> cardList02(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> cardList03(Map<String, Object> map) throws Exception;
 
 	String eMailChk(String telNo);
 
@@ -203,6 +215,8 @@ public interface ReceiptService {
 	
 	Integer joinChk(HashMap<String, Object> map) throws Exception;
 	
+	String getCreaDate(Map<String, Object> map);
+	
 	
 	/* uplus */
 	
@@ -247,5 +261,16 @@ public interface ReceiptService {
 	void starUpdate(Map<String, Object> starMap);
 
 	void starUpdateA(Map<String, java.lang.Object> starMap);
+	
+	void reviewDelete(int review_num);
+	
+	int reviewCount(String affliate_no);
+	
+	void countUp(String affliate_no);
+	
+	void countDown(String affliate_no);
+	
+	
+	
 	
 }
