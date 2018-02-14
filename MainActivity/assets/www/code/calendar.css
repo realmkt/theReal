@@ -5,7 +5,7 @@
   src: url("../icon/icomoon.eot?#iefix") format("embedded-opentype"), url("../icon/icomoon.woff") format("woff"), url("../icon/icomoon.ttf") format("truetype"), url("../icon/icomoon.svg#icomoon") format("svg");
 }
 
-#calendar { padding-top:20px; background:#fff; }
+#calendar { padding-top:10px; background:#fff; border-bottom: 1px solid #bdbdbd}
 
 .calendar-modal {
     display: none;
@@ -107,7 +107,7 @@
 
 .calendar-arrow,
 .calendar-display {
-    color: #ddd;
+    color: #222;
 }
 
 .calendar li[disabled] {
@@ -123,14 +123,18 @@
 .calendar-alen_sees .week,
 .calendar-display:hover,
 .calendar-arrow i:hover {
-    color: #888;
+    color: #539bff;
 }
 
 .calendar-alen_sees .days .old,
 .calendar-alen_sees .days .new {
-    color: #ccc
+    color: #ccc; 
 }
 
+.calendar-alen_sees .days .old a,
+.calendar-alen_sees .days .new a{
+    color: #ccc; 
+}
 .calendar-arrow i,
 .calendar-alen_sees .days li[data-calendar-day],
 .calendar-alen_sees .alen_see-month li[data-calendar-month] {

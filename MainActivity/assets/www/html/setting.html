@@ -1,6 +1,126 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+
+
+<style type="text/css">
+
+.loadingView{text-align: center; background-color: #272727; opacity : 0.6;   width:  100%; height:  100%; position: absolute; z-index:  9999; }
+.loadingView img{width: 90px ; position: relative; top: 40%}
+.emailan{margin-left: 15px;
+    padding: 5px;
+    margin-top: 95px;
+    font-size: 1.1em;}
+.inputsubject{  padding: 16px 8px;
+    display: block;
+    font-size: 15px;
+    margin-bottom: 36px;
+    font-weight: 400;
+    background-color: black;
+    color: white;
+    text-align: center;
+    }
+
+.sun{visibility: visible;
+    border: 0.5px solid #E6E6E6;
+    margin-right: 5px;
+    width: 100%;
+    margin-bottom: 5px;}   
+
+.email_adr3 {padding:6px 5px;margin:5px 0 15px 3px;max-width:27%;border-bottom:1px solid black;border-top:0; border-left:0;border-right:0; margin-bottom: 50px;}
+
+.email_adr4 {padding:6px 5px;margin:5px 0 15px 3px;max-width:27%;border-bottom:1px solid black;border-top:0; border-left:0;border-right:0; margin-left: 16px;}
+
+.selectha{padding:6px 0px;margin:5px 0 50px 3px;vertical-align: bottom;max-width:30%;border-top:0; border-left:0;border-right:0;border-bottom:1px solid #ddd;}
+
+.setting_list{}
+
+div {
+   -ms-user-select: none; 
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   user-select: none;
+ }
+.subject{text-align: center; font-size: 1.5em; color: #1C1C1C; margin-top: 10px;}
+.content{margin: 7%; color: #539bff; font-size: 1.1em;}
+.content2{margin: 7%; color: #585858; font-size: 1.1em;}
+.leave_btn{    margin: 0 20px;
+    padding: 0 5px 0 5px;
+    color: #fff;
+    font-size: 1.4em;
+    font-weight: 400;
+    text-align: center;
+    line-height: 55px;
+    cursor: pointer;
+    background: #151515;
+    margin-top: 250px;
+    }
+    
+ .agreeOk{
+	 margin-left: 25px;
+     font-weight: 500;
+     margin-top: 100px;
+     font-size: 1.1em;
+ }
+ 
+ .agreeOk2{
+	 margin-left: 25px;
+     font-weight: 500;
+     margin-top: 50px;
+     font-size: 1.2em;
+     
+ }
+ .checkI{
+ 	margin-left: 30px;
+ 	position: fixed;
+ 	font-weight: 550;
+ 	bottom: 56%;
+ }   
+ input[type=checkbox] {  
+  	display: none; 
+ }
+ 	
+ input[type=checkbox] + label{
+  	    display: inline;
+    cursor: pointer;
+    float: left;
+    position: absolute;
+    padding-left: 4px;
+    font-size: 13px;
+    /* padding-bottom: 120px; */
+    margin-left: 22px;
+    margin-top: 20px;
+ }
+
+  input[type=checkbox]+ label:before {     
+    content: "";  
+    display: inline; 
+    width: 25px;  
+    height: 25px;  
+   	margin-right: 15px;  
+    position: absolute;  
+    left: 200;  
+    bottom: 2px;  
+   	background-color: #F2F2F2;  
+    border-radius: 2px; 
+    box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8); 
+    top: -2px
+    
+ } 
+
+ input[type=checkbox]:checked + label:before { 
+    content: "\2713";  /* 체크모양 */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);  
+    font-size: 27px; 
+    font-weight:800; 
+    color: #fff;   	  
+    background:#58ACFA;
+    text-align: center;  
+    line-height: 18px;  
+ }   
+ 
+</style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
@@ -99,10 +219,11 @@
                     <div class="left">
                     <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
                     </div>
-                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 27%;"><img style="width: 75%;height: 50%;margin: 0 auto" src="../common/logo_01.png"></div>
+                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 18%; text-align: center"><img src="../common/mobile_loge.png" width="180px" height="40px" style="margin-top: 3px"></div>
 
                 </div>
-
+				
+				
                 
                 <div data-page="agree01" class="navbar-inner cached">
                 <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
@@ -127,40 +248,42 @@
                 <div class="center sliding">이용약관</div>
                 </div>
                 
+                
+                <div data-page="mail" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backS">Back</span></a></div>
+                <div class="center sliding">이메일 등록(변경)</div>
+                </div>
+                
+                
+                 <div data-page="leave" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backS">Back</span></a></div>
+                <div class="center sliding">회원탈퇴</div>
+                </div>
+                
             </div>
             
 			<div class="pages navbar-through toolbar-through">
                 <div data-page="index" class="page">
-
-                    
-                    
-                    
-                    <div class="page-content">
+					<div class="page-content" style="background: white;">
                   
-						
-                    <div class="alen_list_title">
-                    기본정보
-                    </div>
+		
+                    <div class="list-block alen_list_box alen_list_setting setting_list">
                     
-                    <div class="list-block alen_list_box alen_list_setting">
                         <ul>
-<!--                             <li>
-                            <div class="item-content">
-                                <div class="alen_item_title">아이디</div>
-                                <div class="alen_item_con">alenjoe@nate.com</div>
-                            </div>
-                            </li> -->
-                            
+	                        <li>
+	                            <div class="item-content">
+	                                <div class="alen_item_title" style="font-size:1.0em;"><p>버전정보</p></div>
+	                                <div class="alen_item_con">Ver 1.0</div>
+	                            </div>
+	                           </li>
+	                    	</ul>
+                    	<hr class="sun">
+                    	
+                    	
+                    	<ul>
                             <li>
                             <div class="item-content">
-                                <div class="alen_item_title">버전정보</div>
-                                <div class="alen_item_con">Ver 1.0</div>
-                            </div>
-                            </li>
-                            
-                            <li>
-                            <div class="item-content">
-                                <div class="alen_item_title">알림정보</div>
+                                <div class="alen_item_title" style="font-size:1.0em;">알림정보</div>
                                 <div class="alen_item_con">
                                     <label class="label-switch">
                                     <input type="checkbox" id="alarmBtn">
@@ -169,106 +292,67 @@
                                 </div>
                             </div>
                             </li>
-                            
-
+						</ul>
+						
+						<hr class="sun">
+						
+						<ul>
+                            <li>
+                              <div class="item-content alen_itme_link">
+                                <div class="alen_item_linkname" onclick="pagechange();" style="font-size:1.0em;"><a href="#set_info">이용약관</a></div>
+                            </div>
+                            </li>
                         </ul>
-                    </div>
-                    
-                    <div class="alen_list_title">
-                    회원설정
-                    </div>
-                    
-                    <div class="list-block alen_list_box alen_list_setting">
-                        <ul>
+                        
+                        <hr class="sun">
+                        
+                        <ul>  
                             <li>
-                            <div class="item-content alen_itme_link">
-                                <div class="alen_item_linkname"><a href="#set_pass">비밀번호 변경</a></div>
+                              <div class="item-content alen_itme_link">
+                                <div class="alen_item_linkname" onclick="mailList();" style="font-size:1.0em;"><a href="#mail">이메일등록</a></div>
                             </div>
                             </li>
-                            
-<!--                             <li>
-                            <div class="item-content alen_itme_link">
-                                <div class="alen_item_linkname"><a href="#set_info">상세정보 등록</a></div>
-                            </div>
-                            </li>
-                            
-                            
-                            <li>
-                            <div class="item-content alen_itme_link">
-                                <div class="alen_item_linkname"><a href="#">외부 계정 로그인 변경</a></div>
-                            </div>
-                            </li> -->
-                            
-                            
-                            <li>
-                            <div class="item-content alen_itme_link">
-                                <div class="alen_item_linkname"><a href="javascript:void(0);" id="loginBtn">로그아웃</a></div>
-                            </div>
-                            </li>
-
                         </ul>
-                    </div>
-                    
-                    <div class="alen_list_title">
-                    고객센터
-                    </div>
-                    
-                    <div class="list-block alen_list_box alen_list_setting">
-                        <ul>
+                        
+                        <hr class="sun">
+                         
+                         <ul>   
+							 <li>
+                            <div class="item-content alen_itme_link">
+                                <div class="alen_item_linkname" style="font-size:1.0em;"><a href="javascript:void(0);" id="loginBtn">로그아웃</a></div>
+                            </div>
+                            </li>
+                         </ul>
+                        
+                        <hr class="sun">
+                        
+                         <ul>     
                             <li>
                             <div class="item-content" onClick="location.href='mailto:theREAL@naver.com'">
-                                <div class="alen_item_title">문의메일</div>
-                                <div class="alen_item_con" style="font-size: x-small;">theReal@realmkt.co.kr</div>
+                                <div class="alen_item_title" style="font-size:1.0em;">문의메일</div>
+                                <div class="alen_item_con" style="font-size: 12px; margin-top: 5px ">theReal@realmkt.co.kr</div>
                             </div>
                             </li>
+                        </ul>
+                        
+                        <hr class="sun">
+                        
+                        <ul>    
                             <li>
                             <div class="item-content alen_itme_link">
-                                <div class="alen_item_linkname"><a href="#set_info">이용약관</a></div>
+                                <div class="alen_item_linkname" onclick="pagechange();" style="font-size:1.0em;"><a href="#leave">회원탈퇴</a></div>
                             </div>
                             </li>
-                            
-<!--                             <li>
-                            <div class="item-content alen_itme_link" onClick="location.href='#'">
-                                <div class="alen_item_linkname">회원탈퇴</div>
-                            </div>
-                            </li> -->
-
                         </ul>
-                    </div>
-                        
-                    <div class="foot_info">
                     
-<!--                     	<div class="foot_box">
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#agree03">이용약관</a>
-                            </div>
-                            
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#agree01">개인정보 취급방침</a>
-                            </div>
-                            
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#">고객센터</a>
-                            </div>
-                            
-                            
-                            <hr>
-                        </div> -->
-<p>
-(주)더리얼마케팅 | 대표이사:손종희<br>
-사업자등록번호:220-88-19101   |   통신판매업신고 강남 04134호<br>
-서울시 강남구 압구정로10길 13, 401호(신사동, 마사빌딩)<br>
-이메일 : theReal@realmkt.co.kr<br>
-고객센터 : 02-518-5112 | 마케팅:02-540-3111<br>
-</p>
-
-<p class="copytxt">CopyrightⓒThe REAL Co.All rights reserved</p>
-                    </div>
-                    
+                  <hr class="sun">
                     
                     </div>
-                </div>
+        
+          
+                    </div>
                 
+            
                 
                 
                 
@@ -303,13 +387,45 @@
                 
                 
                 
+                
+                
+                
+                <div data-page="leave" class="page cached">
+                   <div class="left sliding"><a href="#" class="back link" onclick="backS();"> <i class="icon icon-back"></i><span id="backS">Back</span></a></div>
+               <div class="page-content agree_acon" style="background: white;">
+                   			<div class="leaveBlock">
+                    	<div class="subject">탈퇴 안내</div>
+							
+							<div class="content">서비스 탈퇴 전에 꼭 확인해 주세요.</div>
+						<div class="content2">사용하고 계신 모바일영수증 서비스를 탈퇴할 경우 영수증 데이터는 재사용 및 복구가 불가능하오니
+						 신중하게 선택하시기 바랍니다.
+						</div> 
+						
+						
+						<div class="agreeOk">모바일영수증 서비스 이용해지에 동의하시겠습니까?<br>
+						
+							<input type="checkbox" id="b" name="agreeCheck">
+  							<label for="b">&nbsp;<span class="agreeOk2">위 내용에 동의합니다.</span></label>
+						
+						</div>	
+					
+						<div class="agree_btnbox">
+                            <div class="leave_btn" id="breakAway">탈퇴</div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div data-page="set_info" class="page cached">
-                    <div class="page-content agree_acon">
+                    <div class="page-content agree_acon" style="background: white;">
+                        	<div id="loadingView" class="loadingView">
+					<img src="../common/loadingBar.gif" id="loading_gif">
+				</div>
                         <div class="content-block log_block">
                         <div class="list-block alen_list_setting">
             	
                             <ul>
-                              <li><a href="#agree01" class="item-link">
+                              <li><a href="#real_agree01" class="item-link">
                                   <div class="item-content">
                                     <div class="item-inner"> 
                                       <div class="item-title">전자영수증 이용약관</div>
@@ -318,7 +434,7 @@
                               </li>
                               
                               
-                              <li><a href="#agree02" class="item-link">
+                              <li><a href="#real_agree02" class="item-link">
                                   <div class="item-content"> 
                                     <div class="item-inner">
                                       <div class="item-title">개인정보활용동의</div>
@@ -327,7 +443,7 @@
                               </li>
                               
                               
-                              <li><a href="#agree03" class="item-link">
+                              <li><a href="#real_agree03" class="item-link">
                                   <div class="item-content"> 
                                     <div class="item-inner">
                                       <div class="item-title">위치정보 활용약관</div>
@@ -336,7 +452,7 @@
                               </li>
                               
                               
-                              <li><a href="#agree04" class="item-link">
+                              <li><a href="#real_agree04" class="item-link">
                                   <div class="item-content"> 
                                     <div class="item-inner">
                                       <div class="item-title">푸시메시지동의</div>
@@ -368,39 +484,103 @@
                         </div>
                     </div>
                 </div>
+	   	            
+                
+                <!-- 이메일 등록 -->
+ 	<div data-page="mail" class="page cached">               
+   	
+   	 <div class="page-content agree_acon" style="background: white;">
+   	 	
+   	 													
+		<div class="emailan">등록 또는 변경하실 이메일을 입력해주세요.</div>
+		
+		<span class="close_icon" onclick="close2();"></span>												
+		
+		<div class="mailAppend" style="margin-top: 10px;">																								
+		
+		<input type="text" class="email_adr4" id="firstEmailValue5">									
+		
+		<span class="golbang" style="color: black;">@</span>											
+		
+		<input type="text" class="email_adr3" id="lastEmailValue5" >										
+		
+				<select id="email_select" class="selectha">						
+			
+						<option value="" selected>::선택하기::</option>										
+		 
+	 					<option value="naver.com">naver.com</option>									
+		
+						<option value="nate.com">nate.com</option>										
+		
+						<option value="daum.net">daum.net</option>										
+		
+					<option value="gmail.com">gmail.com</option>										
+		 
+					<option value="hotmail.com">hotmail.com</option>									
+		
+						<option value="bondingedu.com">bondingedu.com</option>								
+		
+	   				<option value="hanmir.com">hanmir.com</option>									
+			
+						<option value="empas.com">empas.com</option>									
+		
+						<option value="dreamwiz.com">dreamwiz.com</option>								
+		
+						<option value="korea.com">korea.com</option>										
+		
+						<option value="lycos.co.kr">lycos.co.kr</option>									
+		
+						<option value="freechal.com">freechal.com</option>								
+		
+						<option value="1">::직접입력::</option>												
+		
+					</select>																			
+		</div>
+						<button onclick="email();" style="background-color: #222;height: 8%;position: fixed;color: white;width:  100%;bottom: 0;border: none;">등록하기</button> 
+   	 </div>
+   	
+   
+   
+   </div> 
                 
                 
                 
                 
-                <div data-page="agree01" class="page cached">
+                
+         </div>       
+                
+                		
+                
+                
+                <div data-page="real_agree01" class="page cached">
                     <div class="page-content agree_acon">
                         <div class="content-block">
-						<iframe src="agree01.html" frameborder="0" width="100%" height="100%"></iframe>
+						<iframe src="real_agree01.html" frameborder="0" width="100%" height="100%"></iframe>
                         </div>
                     </div>
                 </div>
                 
-                <div data-page="agree02" class="page cached">
+                <div data-page="real_agree02" class="page cached">
                     <div class="page-content agree_acon">
                         <div class="content-block">
-						<iframe src="agree02.html" frameborder="0" width="100%" height="100%"></iframe>
+						<iframe src="real_agree02.html" frameborder="0" width="100%" height="100%"></iframe>
                         </div>
                     </div>
                 </div>
                 
                 
-                <div data-page="agree03" class="page cached">
+                <div data-page="real_agree03" class="page cached">
                     <div class="page-content agree_acon">
                         <div class="content-block">
-						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
+						<iframe src="real_agree03.html" frameborder="0" width="100%" height="100%"></iframe>
                         </div>
                     </div>
                 </div>
                 
-                <div data-page="agree04" class="page cached">
+                <div data-page="real_agree04" class="page cached">
                     <div class="page-content agree_acon">
                         <div class="content-block">
-						<iframe src="agree04.html" frameborder="0" width="100%" height="100%"></iframe>
+						<iframe src="real_agree04.html" frameborder="0" width="100%" height="100%"></iframe>
                         </div>
                     </div>
                 </div>
@@ -413,15 +593,53 @@
 
 		</div>
     </div>
-
+		<div class="alert_body" id="alert_body">
+			<div class="alert_box" id="alert_box">
+				<div class="alert_txt" id="alert_desc">알러트창</div>
+				<div class="alert_btn"><a href="#">확인</a></div>
+			</div>
+		</div>	
 
 <script>
-/* $(document).ready(function(){
+/*  $(document).ready(function(){
 	history.pushState(null,null,location.href);
 	window.onpopstate = function(event){
 		location.reload();
 	}
-	}); */
+	});  */
+	
+	history.pushState(null,null,location.href);
+	window.onpopstate = function(event){
+		location.reload();
+	}
+		
+	
+	$(document).change($('#email_select2'), function() {
+			
+		
+		if ($('#email_select').val() == "1") {
+
+			$("#lastEmailValue5").val("");
+
+			$("#lastEmailValue5").prop("readonly", false);
+
+		} else if ($('#email_select').val() == "") {
+
+			$("#lastEmailValue5").val("");
+
+			$("#lastEmailValue5").prop("readonly", true);
+		} else {
+	
+			$("#lastEmailValue5").val($('#email_select').val());
+
+			$("#lastEmailValue5").prop("readonly", true);
+		}
+	}); 
+	
+var request = new Request();
+var telNo = request.getParameter('telNo');
+var uuId = window.localStorage.getItem("uuId");
+var CI = window.localStorage.getItem("CI");	
 var pageCnt = 0;
 
 var request = new Request();
@@ -429,9 +647,9 @@ var telNo = request.getParameter('telNo');
 var uuId = request.getParameter('uuId');
 // coupon_slider
 
-function updatePushYnSuc(resData){
+/* function updatePushYnSuc(resData){
 	alert("알림설정이 변경 되었습니다.");
-}
+} */
 
 function fn_sucsettingChkPw(resData){
 	alert("비밀번호가 변경 되었습니다.");
@@ -440,7 +658,7 @@ function fn_sucsettingChkPw(resData){
 }
 
 function whenError(){
-	alert("실패하였습니다. \n문제가 계속 발생시 문의하기를 통해 문제를 해결하세요.");
+	/* alert("실패하였습니다. \n문제가 계속 발생시 문의하기를 통해 문제를 해결하세요."); */
 }
 
 function fn_pushUpdate(pushYn){
@@ -501,7 +719,18 @@ $(document).ready(function(){
         }else{
         	fn_pushUpdate("N");
         }
-    })	
+    })
+    
+    
+    
+    //ajax 통신 로딩바 
+	 $(document).ajaxStart(function(){
+	 	$('#loadingView').show();
+	})
+	.ajaxStop(function(){
+	   	$('#loadingView').hide();
+	});
+    
 /* 	//알람정보체크여부
 	var alarmChk = $("#alarmBtn").prop("checked");
 	if(alarmChk){
@@ -514,16 +743,23 @@ $(document).ready(function(){
 		fn_settingChkPw();
 	})
 	
+	
+	
 	$("#loginBtn").click(function(){
-		if (confirm("로그아웃 하시겠습니까??") == true){
-			alert("로그아웃");
-		  	var storage = window.localStorage;
-		  	localStorage.removeItem("id");
-		  	localStorage.removeItem("pw");		
-			location.href='../login.html';			
-		}else{
-		    return;
-		}
+		
+		modalVal = true;
+		
+		var str = "";
+		
+		str += '<div class="alert_txt" id="alert_desc">로그아웃 하시겠습니까?</div>';
+		str += '<div class="alert_btnR"><a href="#" onclick="logout();">확인</a></div>';
+	    str += '<div class="alert_btnL"><a href="#" onclick="yes();">취소</a></div>';
+	   
+		$('#alert_box').empty();
+		$("#alert_box").append(str);
+		$('#alert_body').fadeIn(300);
+			
+		
 	})
 	
   $('.history_cate').bxSlider({
@@ -539,6 +775,301 @@ $(document).ready(function(){
   });
 });
 
+$("#breakAway").click(function(){
+	leave();
+})
+
+//서비스 해지 확인
+function leave(){
+		if($("#b").prop("checked")){
+			modalVal = true;
+			
+			var str = "";
+			
+			str += '<div class="alert_txt" id="alert_desc">정말 탈퇴하시겠습니까?</div>';
+			str += '<div class="alert_btnR"><a href="#" onclick="leaveSelect();">확인</a></div>';
+		    str += '<div class="alert_btnL"><a href="#" onclick="yes();">취소</a></div>';
+			
+			$('#alert_box').empty();
+			$("#alert_box").append(str);
+			$('#alert_body').fadeIn(300);
+	 	}else{
+	 		modalVal = true;
+			
+	 		var str = "";
+			
+			str+=	'<div class="alert_txt" id="alert_desc">위 내용에 동의해주세요.</div>';
+			str+=	'<div class="alert_btn"><a href="#" onclick="yes();">확인</a></div>';
+			
+			$('#alert_box').empty();
+			$("#alert_box").append(str);
+			$('#alert_body').fadeIn(300);
+				
+		}
+	
+	
+}
+
+//alert창끄기
+
+function yes(){
+	modalVal = false;
+	$("#alert_body").fadeOut(10);
+}
+
+//로그인창으로 돌아가기 
+
+function reroad(){
+	$("#alert_body").fadeOut(10);
+	location.href="login.html";
+}
+
+
+//서비스 해지
+
+function leaveSelect(){
+	
+	$("#alert_body").fadeOut(10);
+	
+	$.ajax({
+        type: "post",
+        url : commonIp()+"/theReal/receipt/leave.do",
+        data: {
+        	CI  	: window.localStorage.getItem("CI"),
+        	
+        },
+        success : function(data) {
+			
+        	var str = "";
+			
+			str+=	'<div class="alert_txt" id="alert_desc">탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.</div>';
+			str+=	'<div class="alert_btn"><a href="#" onclick="reroad();">확인</a></div>';
+			
+			$('#alert_box').empty();
+			$("#alert_box").append(str);
+			$('#alert_body').fadeIn(300);
+        	
+			
+        },
+        error: function(){
+        	alert("탈퇴에러");
+        }
+	});	
+	
+}
+
+
+//이메일 등록창 열기전 메일이 있으면 가져오기
+
+function mailList(){
+	page = false;
+	
+	$.ajax({
+		type : "post",
+		url : commonIp() + "/theReal/receipt/emailOk.do",
+	data : {
+		telNo : window.localStorage.getItem("CI")
+	},
+	success : function(data) {
+		var res = data.resultMap;
+		
+		if(res==''){
+			
+		}else{
+			
+			var i = res[0].EMAIL.indexOf("@");
+			var first = res[0].EMAIL.substring(0,i);
+			var last = res[0].EMAIL.substring(i+1);
+			
+			var str = ""
+							
+					
+							
+					str+='		<input type="text" class="email_adr4" id="firstEmailValue5" value='+first+'>  		';									
+							
+					str+='			<span class="golbang" style="color: black;">@</span>							';							
+						
+					str+='		<input type="text" class="email_adr3" id="lastEmailValue5"  value='+last+'>			';							
+							
+					str+='				<select id="email_select" class="selectha">									';	
+								
+					str+='						<option value="" selected>::선택하기::</option>						';							
+							 
+					str+='	 					<option value="naver.com">naver.com</option>						';						
+							
+					str+='						<option value="nate.com">nate.com</option>							';							
+							
+					str+='						<option value="daum.net">daum.net</option>							';							
+							
+					str+='					<option value="gmail.com">gmail.com</option>							';							
+							 
+					str+='					<option value="hotmail.com">hotmail.com</option>						';							
+							
+					str+='						<option value="bondingedu.com">bondingedu.com</option> 				';								
+							
+					str+='	   				<option value="hanmir.com">hanmir.com</option>							';					
+								
+					str+='						<option value="empas.com">empas.com</option>						';						
+							
+					str+='						<option value="dreamwiz.com">dreamwiz.com</option>					';						
+							
+					str+='						<option value="korea.com">korea.com</option>						';							
+							
+					str+='						<option value="lycos.co.kr">lycos.co.kr</option>					';							
+							
+					str+='					<option value="freechal.com">freechal.com</option>						';					
+							
+					str+='						<option value="1">::직접입력::</option>								';							
+							
+					str+='					</select>																';	
+				
+				$(".mailAppend").empty();
+				$(".mailAppend").append(str);
+		}	
+		
+	},
+	error : function(request,status,error){
+	    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	}
+}); 
+}
+
+
+//로그아웃
+function logout(){
+	
+	var str = "";
+	
+	str +=	'<div class="alert_txt" id="alert_desc">로그아웃 되었습니다.</div>';
+	
+	$("#alert_box").empty();
+	$("#alert_box").append(str);
+	$("#alert_body").fadeIn();
+	
+	var storage = window.localStorage;
+  	localStorage.removeItem("id");
+  	localStorage.removeItem("pw");		
+	location.href='../login.html';
+	
+	$("#alert_body").fadeOut(800);
+}
+
+//페이지 들어갈때 변수변경
+
+function pagechange(){
+	page = false;
+}
+
+
+//이메일등록
+function email(){
+	 var first = $("#firstEmailValue5").val();
+	 var last = $("#lastEmailValue5").val();
+
+	 mail = first += "@";
+	 mail += last;
+		
+	 //이메일 체크
+		if(email_check(mail)==false){
+			modalVal = true;
+			
+			var str = "";
+			
+			str += '<div class="alert_txt" id="alert_desc">잘못된 이메일 형식입니다.</div>';
+			str += '<div class="alert_btn"><a href="#" onclick="yes();">확인</a></div>';
+		   	
+			$("#alert_box").empty();
+		    $("#alert_box").append(str).trigger("create");
+		    
+			$("#alert_body").fadeIn(300);
+			
+			return false; 
+		
+		}else{
+			modalVal = true;
+			
+			var str = "";
+			
+			str += '<div class="alert_txt" id="alert_desc">이메일을 등록하시겠습니까?</div>';
+			str += '<div class="alert_btnR"><a href="#" onclick="mailOk();">확인</a></div>';
+		    str += '<div class="alert_btnL"><a href="#" onclick="yes();">취소</a></div>';
+		   
+			$('#alert_box').empty();
+			$("#alert_box").append(str);
+			$('#alert_body').fadeIn(300);
+	   }
+	}
+
+	function mailOk(){
+		$('#alert_body').fadeOut(10);
+		
+		$.ajax({
+			type : "post",
+			url : commonIp() + "/theReal/receipt/mailPush.do",
+		data : {
+			CI  	: window.localStorage.getItem("CI"),
+			mail: mail
+		},
+		 
+		success : function(data) {
+				page = false;
+			
+	        	var str = "";
+				
+				str+=	'<div class="alert_txt" id="alert_desc">이메일이 등록되었습니다.</div>';
+				str+=	'<div class="alert_btn"><a href="#" onclick="yes();">확인</a></div>';
+				
+				$('#alert_box').empty();
+				$("#alert_box").append(str);
+				$('#alert_body').fadeIn(300);
+	        	
+				
+	        },
+		
+	        error : function(request,status,error){
+		    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	}); 
+}
+
+//이메일 정규식 유효성 체크  
+function email_check(mail) {
+		
+	var regex = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+
+	return (mail != '' && mail != 'undefined' && regex.test(mail));
+}
+
+
+
+//백키 이벤트 
+
+var page = true;
+var modalVal = false;
+
+history.pushState(null,null,location.href);  
+window.onpopstate = function(event){
+	if(page){
+	 	if(modalVal){
+			history.pushState(null,null,location.href);
+			modalVal=false;
+			$("#alert_body").fadeOut(10);
+			return false;
+		}
+	 	history.back();
+	}else{
+		if(modalVal){
+			history.pushState(null,null,location.href);
+			modalVal=false;
+			$("#alert_body").fadeOut(10);
+			return false;
+		}
+		history.pushState(null,null,location.href);
+		page = true;
+		$("#backS").trigger("click");
+	}
+}
+	
 </script>
 
 

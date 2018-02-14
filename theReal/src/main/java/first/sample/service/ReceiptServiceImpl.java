@@ -308,10 +308,18 @@ public class ReceiptServiceImpl implements ReceiptService {
 	
 	//리뉴얼 모바일
 	
+	
 	@Override
-	public Map<String, Object> dayList01(Map<String, Object> map) throws Exception {
+	public String userMinDate(Map<String, Object> map) throws Exception {
+		String result = receiptDAO.userMinDate(map);
+		return result;
+	}
+	
+	
+	@Override
+	public Map<String, Object> list01(Map<String, Object> map) throws Exception {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		List<Map<String, Object>> list = receiptDAO.dayList01(map);
+		List<Map<String, Object>> list = receiptDAO.list01(map);
 		resultMap.put("resultMap", list);
 		return resultMap;
 	}
@@ -347,6 +355,33 @@ public class ReceiptServiceImpl implements ReceiptService {
 		resultMap.put("resultMap", list);
 		return resultMap;
 	}
+	
+	@Override
+	public Map<String, Object> divList02(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.divList02(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> divList03(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.divList03(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+	
+	@Override
+	public void cateChange(Map<String, Object> map) throws Exception {
+		receiptDAO.cateChange(map);
+	}
+	
+	@Override
+	public void cateChangeBack(Map<String, Object> map) throws Exception {
+		receiptDAO.cateChangeBack(map);
+	}
+
 
 	@Override
 	public Map<String, Object> depth02CardList(Map<String, Object> map) throws Exception {
@@ -884,6 +919,10 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public void countDown(String affliate_no) {
 		receiptDAO.countDown(affliate_no);
 	}
-
+	
+	@Override
+	public void leave(String CI) {
+		receiptDAO.leave(CI);
+	}
 	
 }

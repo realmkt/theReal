@@ -2067,11 +2067,18 @@
         
             // Set pages classess for animationEnd
             animatePages: function (leftPage, rightPage, direction, view) {
-                // Loading new page
+                // Loading new page 어디/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 var removeClasses = 'page-on-center page-on-right page-on-left';
                 if (direction === 'to-left') {
-                    leftPage.removeClass(removeClasses).addClass('page-from-center-to-left');
-                    rightPage.removeClass(removeClasses).addClass('page-from-right-to-center');
+                	 if(affliateFlag){
+                         setTimeout(function(){
+                            leftPage.removeClass(removeClasses).addClass('page-from-center-to-left');
+                              rightPage.removeClass(removeClasses).addClass('page-from-right-to-center');
+                        },100);
+                         }else{
+                            leftPage.removeClass(removeClasses).addClass('page-from-center-to-left');
+                              rightPage.removeClass(removeClasses).addClass('page-from-right-to-center');
+                         }
                 }
                 // Go back
                 if (direction === 'to-right') {

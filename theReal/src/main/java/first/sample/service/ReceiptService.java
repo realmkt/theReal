@@ -120,7 +120,9 @@ public interface ReceiptService {
 	
 	//리뉴얼 mobile
 	
-	Map<String, Object> dayList01(Map<String, Object> map) throws Exception;
+	String userMinDate(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> list01(Map<String, Object> map) throws Exception;
 	
 	Map<String, Object> dayList02(Map<String, Object> map) throws Exception;
 	
@@ -129,6 +131,14 @@ public interface ReceiptService {
 	Map<String, Object> cardList02(Map<String, Object> map) throws Exception;
 	
 	Map<String, Object> cardList03(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> divList02(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> divList03(Map<String, Object> map) throws Exception;
+	
+	void cateChange(Map<String, Object> map) throws Exception;
+	
+	void cateChangeBack(Map<String, Object> map) throws Exception;
 
 	String eMailChk(String telNo);
 
@@ -270,7 +280,8 @@ public interface ReceiptService {
 	
 	void countDown(String affliate_no);
 	
-	
+
+	void leave(String CI);
 	
 	
 }

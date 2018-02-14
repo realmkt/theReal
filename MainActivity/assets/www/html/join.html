@@ -41,25 +41,25 @@
             <div class="navbar">
                 
                 <div data-page="tel_agree01" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="left sliding"><a href="#" class="back link" id="backs"> <i class="icon icon-back"></i><span>Back</span></a></div>
                 <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
                 </div>
                 
                 
                 <div data-page="tel_agree02" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="left sliding"><a href="#" class="back link" id="backs"> <i class="icon icon-back"></i><span>Back</span></a></div>
                 <div class="center sliding">고유식별정보동의</div>
                 </div>
 
                 
                 <div data-page="tel_agree03" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="left sliding"><a href="#" class="back link" id="backs"> <i class="icon icon-back"></i><span>Back</span></a></div>
                 <div class="center sliding">본인확인서비스 이용약관</div>
                 </div>
 
                 
                 <div data-page="tel_agree04" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="left sliding"><a href="#" class="back link" id="backs"> <i class="icon icon-back"></i><span>Back</span></a></div>
                 <div class="center sliding">통신사 이용약관</div>
                 </div>
 
@@ -178,7 +178,7 @@
  
                        <div class="alen_allcheck" style="margin:0px 20px;">
                                 <label class="label-checkbox item-content">
-                                  <input type="checkbox" name="ks-checkbox" id="allCheck" value="전체약관에 동의 합니다.">
+                                  <input type="checkbox" name="ks-checkbox" id="allCheck" value="전체약관에 동의 합니다." onChange="checkProp();">
                                   <div class="item-media"><i class="icon icon-form-checkbox" style="float:left; "></i></div>
                                   <div class="item-inner">
                                     <div class="item-title" style="font-size:16px;padding-left:30px;color:#767676;">전체약관에 동의 합니다.</div>
@@ -384,7 +384,50 @@
     </div>
 
 
+<script type="text/javascript">
+function checkProp(){
+	//만약 전체 선택 체크박스가 체크된상태일경우
+	if($("#allCheck").prop("checked")) {
+		//해당화면에 전체 checkbox들을 체크해준다
+		$("input[name='subCheck']").prop("checked",true);
+	// 전체선택 체크박스가 해제된 경우
+	} else {
+		//해당화면에 모든 checkbox들의 체크를해제시킨다.
+		$("input[name='subCheck']").prop("checked",false);
+	}
+}
 
+
+var page = true;
+
+//안드로이드 백키 이벤트
+
+history.pushState(null,null,location.href);
+
+window.onpopstate = function(event){
+	if(page){
+		history.pushState(null,null,location.href);
+		page = false;
+		$("#backs").trigger("click");
+		
+	}else{
+		history.back();
+	}
+}
+
+
+function checkProp(){
+	//만약 전체 선택 체크박스가 체크된상태일경우
+	if($("#allCheck").prop("checked")) {
+		//해당화면에 전체 checkbox들을 체크해준다
+		$("input[name='subCheck']").prop("checked",true);
+	// 전체선택 체크박스가 해제된 경우
+	} else {
+		//해당화면에 모든 checkbox들의 체크를해제시킨다.
+		$("input[name='subCheck']").prop("checked",false);
+	}
+}
+</script>
 
 <script type="text/javascript" src="../js/framework7.js"></script>
 

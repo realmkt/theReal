@@ -1,6 +1,33 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+
+<style type="text/css">
+	/* 드래그막기 */
+div {
+   -ms-user-select: none; 
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   user-select: none;
+ }
+ 
+#agreePage{
+	padding-top: 45px;
+}
+
+#backFont{
+	display: inline-block;
+	top: 0;
+    padding: 15px 15px;
+    background: #272727;
+    width: 100%; 
+}
+
+.loadingView{text-align: center; background-color: #272727; opacity : 0.6;   width:100%; height:100%; position: fixed; z-index:  9999; top : 0px}
+.loadingView img{width: 90px ; position: relative; top: 40%}
+.loading-disable{display: none;}
+</style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
@@ -42,54 +69,52 @@
 		<div class="view view-main">
         
         
-            <div class="navbar">
-                
-                <div data-page="agree01" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+         
+                <div data-page="tel_agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back" id="iconFont"></i><span>Back</span></a></div>
                 <div class="center sliding">개인정보 수집이용 동의</div>
                 </div>
                 
                 
-                <div data-page="agree02" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div data-page="tel_agree02" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backs">Back</span></a></div>
                 <div class="center sliding">고유식별정보동의</div>
                 </div>
 
                 
-                <div data-page="agree03" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div data-page="tel_agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backs">Back</span></a></div>
                 <div class="center sliding">본인확인서비스 이용약관</div>
                 </div>
 
                 
-                <div data-page="agree04" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div data-page="tel_agree04" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backs">Back</span></a></div>
                 <div class="center sliding">통신사 이용약관</div>
                 </div>
 
-            </div>
+       
             
-            
-        
-			<div class="pages navbar-through toolbar-through">
+            <div class="pages navbar-through toolbar-through">
+				
 				<input type="hidden" id="uuId">
                 <div data-page="index" class="page">
 
                     <div class="page-content">
-                    
-                       <div class="join_bar" onclick="back()">
+                    <div id="loadingView" class="loadingView">
+					<img src="../common/loadingBar.gif" id="loading_gif">
+					</div>	   
+                      <div class="join_bar" onclick="back()">
                           <div class="left">
                     <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span class="backfont">휴대폰 본인인증</span></a></div>
                     </div>
-                           
                        </div>
                        
                        <div class="join_title" style="padding:20px 15px 0px 15px;"> 
                         	본인인증 약관동의</div>
                         <div class="list-block list-block2">
             	
-                           
-                            <ul>
+                           <ul>
                               <li class="agree_tab">
                               	<div class="agree_chbox">
                                     <label class="label-checkbox item-content" style="width:50px;">
@@ -99,7 +124,7 @@
                                 </div>
                                 
                                 <div class="agree_detail">
-                                    <a href="#agree01" class="item-link">
+                                    <a href="#tel_agree01" class="item-link" onclick="pageFlag();">
                                     <div class="item-content">
                                         <div class="item-inner"> 
                                         <div class="item-title">개인정보 수집이용취급위탁 동의</div>
@@ -121,7 +146,7 @@
                                 </div>
                                 
                                 <div class="agree_detail">
-                                    <a href="#agree02" class="item-link">
+                                    <a href="#tel_agree02" class="item-link" onclick="pageFlag();">
                                     <div class="item-content">
                                         <div class="item-inner"> 
                                         <div class="item-title">고유식별정보동의</div>
@@ -143,7 +168,7 @@
                                 </div>
                                 
                                 <div class="agree_detail">
-                                    <a href="#agree03" class="item-link">
+                                    <a href="#tel_agree03" class="item-link" onclick="pageFlag();">
                                     <div class="item-content">
                                         <div class="item-inner"> 
                                         <div class="item-title">본인확인서비스 이용약관</div>
@@ -165,7 +190,7 @@
                                 </div>
                                 
                                 <div class="agree_detail">
-                                    <a href="#agree04" class="item-link">
+                                    <a href="#tel_agree04" class="item-link" onclick="pageFlag();">
                                     <div class="item-content">
                                         <div class="item-inner"> 
                                         <div class="item-title">통신사 이용약관</div>
@@ -182,8 +207,8 @@
  
                        <div class="alen_allcheck" style="margin:0px 20px;">
                                 <label class="label-checkbox item-content">
-                                  <input type="checkbox" name="ks-checkbox" id="allCheck" value="전체약관에 동의 합니다.">
-                                  <div class="item-media"><i class="icon icon-form-checkbox" style="float:left; "></i></div>
+                                  <input type="checkbox" name="ks-checkbox" id="allCheck" value="전체약관에 동의 합니다." onChange="checkProp();">
+                                  <div class="item-media"><i class="icon icon-form-checkbox" style="float:left;"></i></div>
                                   <div class="item-inner">
                                     <div class="item-title" style="font-size:16px;padding-left:30px;color:#767676;">전체약관에 동의 합니다.</div>
                                   </div>
@@ -198,7 +223,7 @@
                             	<li class="full_input"><input type="text" placeholder="이름" id="userNm"></li>
                                 
                                 
-                            	<li class="full_input"><input type="text" placeholder="생년월일 (ex: 19990101)" id="birthDay"></li>
+                            	<li class="full_input"><input type="text" placeholder="생년월일 (ex: 19990101)" id="birthDay" maxlength="8"></li>
                                 
                             	<li>
                                 <div class="alen_radio_box">
@@ -341,27 +366,30 @@
                 
 
 
-
-                <div data-page="agree01" class="page cached">
-                    <div class="page-content agree_acon">
+			
+                <div data-page="tel_agree01" class="page cached">
+                  <div class="left sliding" id="backFont"><a href="#" class="back link"><span style="color: #272727;">숨</span><i class="icon icon-back"></i><span style="color: #272727;">숨겨놓았지롱ㅉㅉ</span></a></div>
+                   <div class="page-content agree_acon" id="agreePage">
                         <div class="content-block">
-						<iframe src="agree01.html" frameborder="0" width="100%" height="100%"></iframe>
+						<iframe src="tel_agree01.html" frameborder="0" width="100%" height="100%"></iframe>
                         </div>
                     </div>
                 </div>
 
 
-                <div data-page="agree02" class="page cached">
-                    <div class="page-content agree_acon">
+                <div data-page="tel_agree02" class="page cached">
+                  <div class="left sliding" id="backFont"><a href="#" class="back link"><span style="color: #272727;">숨</span><i class="icon icon-back"></i><span style="color: #272727;">숨겨놓았지롱ㅉㅉ</span></a></div>
+                    <div class="page-content agree_acon" id="agreePage">
                         <div class="content-block">
-						<iframe src="agree02.html" frameborder="0" width="100%" height="100%"></iframe>
+						<iframe src="tel_agree02.html" frameborder="0" width="100%" height="100%"></iframe>
                         </div>
                     </div>
                 </div>
 
 
-                <div data-page="agree03" class="page cached">
-                    <div class="page-content agree_acon">
+                <div data-page="tel_agree03" class="page cached">
+                <div class="left sliding" id="backFont"><a href="#" class="back link"><span style="color: #272727;">숨</span><i class="icon icon-back"></i><span style="color: #272727;">숨겨놓았지롱ㅉㅉ</span></a></div>
+                    <div class="page-content agree_acon" id="agreePage">
                         <div class="content-block">
 						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
                         </div>
@@ -369,13 +397,13 @@
                 </div>
 
 
-                <div data-page="agree04" class="page cached">
-                    <div class="page-content agree_acon">
+                <div data-page="tel_agree04" class="page cached">
+                <div class="left sliding" id="backFont"><a href="#" class="back link"><span style="color: #272727;">숨</span><i class="icon icon-back"></i><span style="color: #272727;">숨겨놓았지롱ㅉㅉ</span></a></div>
+                    <div class="page-content agree_acon" id="agreePage">
                         <div class="content-block">
 						<iframe src="agree04.html" frameborder="0" width="100%" height="100%"></iframe>
                         </div>
                     </div>
-                </div>
 
 
 
@@ -389,8 +417,8 @@
 		
 		<div class="alert_body" id="alert_body">
 			<div class="alert_box" id="alert_box">
-				<div class="alert_txt" id="alert_desc">알러트창</div>
-				<div class="alert_btn"><a href="#">확인</a></div>
+				<div class="alert_txt" id="alert_desc"></div>
+				<div class="alert_btn"><a href="#"></a></div>
 			</div>
 		</div>
     
@@ -406,19 +434,32 @@
 </body>
 
 <script type="text/javascript">
-
-//뒤로가기
+$('#loadingView').hide();
 var page = true;
-/* history.pushState(null,null,location.href);
-window.onpopstate = function(event){
+var alertpage = true;
+//뒤로가기
+
+ history.pushState(null,null,location.href);
+ window.onpopstate = function(event){
+	
 	if(page){
 		history.back();
 	}else{
-		history.pushState(null,null,location.href);
-		page = true;
-		$("#alert_body").fadeOut(10);
+		if(!alertpage){
+			history.pushState(null,null,location.href);
+			$("#alert_body").fadeOut(10);
+			alertpage = true;
+		}else{
+			history.pushState(null,null,location.href);
+			page = true;
+			$("#backs").trigger("click"); 	
+		}
 	}
-} */
+}
+ 
+ function pageFlag(){
+	 page = false;
+ }
 //전체동의여부 변수값.
 var agreeDiv = false;
 var reSendYn = false;
@@ -461,18 +502,40 @@ var request = new Request();
 var uuid = request.getParameter('uuid');
 
 function back(){
+
 	history.back();
 }
 
+function checkProp(){
+	//만약 전체 선택 체크박스가 체크된상태일경우
+	if($("#allCheck").prop("checked")) {
+		//해당화면에 전체 checkbox들을 체크해준다
+		$("input[name='subCheck']").prop("checked",true);
+	// 전체선택 체크박스가 해제된 경우
+	} else {
+		//해당화면에 모든 checkbox들의 체크를해제시킨다.
+		$("input[name='subCheck']").prop("checked",false);
+	}
+}
 
+
+$(document).ajaxStart(function(){
+	 $('#loadingView').show();
+	})
+	.ajaxStop(function(){
+	   $('#loadingView').hide();
+	});
 $(document).ready(function(){
 	document.addEventListener("deviceready", onDeviceReady, false);
+	
+	
+	
 	
 	
 	$("#recNum").click(function(){
 		var alertStr = "";
 		$("#alert_box").empty();
-		if(reSndCnt == 3){
+		if(reSndCnt == 2){
 			alertStr += '<div class="alert_txt" >재발급 횟수가 초과하였습니다. <br>다시 시도해주세요.</div>';
 			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(2)">확인</a></div>';
 			$("#alert_box").append(alertStr);
@@ -516,11 +579,14 @@ $(document).ready(function(){
 			
 			//선택된 체크박스 갯수 구하기
 			var selChkLen = $("input[name*='subCheck']:checked").length ;
+			var alertStr = "";
 			if(totalChkLen > selChkLen){
+				
 				alertStr += '<div class="alert_txt" >약관 동의해주시기 바랍니다.</div>';
 				alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
 				$("#alert_box").append(alertStr);
 				page=false;
+				alertpage = false;
 				$("#alert_body").fadeIn(800);
 				return false;
 			}
@@ -530,6 +596,7 @@ $(document).ready(function(){
 				alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
 				$("#alert_box").append(alertStr);
 				page=false;
+				alertpage = false;
 				$("#alert_body").fadeIn(800);
 				return false;
 			}
@@ -538,6 +605,7 @@ $(document).ready(function(){
 				alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
 				$("#alert_box").append(alertStr);
 				page=false;
+				alertpage = false;
 				$("#alert_body").fadeIn(800);
 				return false;
 			}
@@ -546,6 +614,7 @@ $(document).ready(function(){
 				alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
 				$("#alert_box").append(alertStr);
 				page=false;
+				alertpage = false;
 				$("#alert_body").fadeIn(800);
 				return false;
 			}
@@ -554,6 +623,7 @@ $(document).ready(function(){
 				alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
 				$("#alert_box").append(alertStr);
 				page=false;
+				alertpage = false;
 				$("#alert_body").fadeIn(800);
 				return false;
 			}
@@ -562,33 +632,29 @@ $(document).ready(function(){
 				alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
 				$("#alert_box").append(alertStr);
 				page=false;
+				alertpage = false;
 				$("#alert_body").fadeIn(800);
 				return false;
 			}
 			
-			$("#recNum").empty();
-			$("#recNum").append("재발급 받기");
-			$(".agree_btn").css("background","#272727")
-			if(reSndCnt!= 0 && reSndCnt <4){
-				$("#recNum").append("( "+reSndCnt+" / 3 )");
-			}else if(reSndCnt ==4){
+				$("#recNum").empty();
+				$("#recNum").append("재발급 받기");
+				$(".agree_btn").css("background","#272727")
+			if(reSndCnt !=0 && reSndCnt <=2){
+				$("#recNum").empty();
+				$("#recNum").append("재발급 받기( "+reSndCnt+" / 2 )");
+			}else if(reSndCnt ==2){
 				$(".tel_btn").css("background","red");
 				
 				$("#recNum").empty();
 				$("#recNum").append("입력횟수 초과");
 			}
-			reSendYn = true;
+		
 //-----------------------------------------
 //KCB 본인확인 번호요청
 //-----------------------------------------
-			var alertStr = "";
-			alertStr += '<div class="alert_txt" >인증번호가 발급되었습니다.</div>';
-		
-			$("#alert_box").empty();
-			$("#alert_box").append(alertStr);
-			page=false;
-			$("#alert_body").fadeIn(800);
-			$("#alert_body").fadeOut(500);
+				 		
+						
 	        $.ajax({
 	              type: "post",
 	              url : commonIp()+"/theReal/receipt/KcbCertified.do",
@@ -620,7 +686,7 @@ $(document).ready(function(){
 	
 	///////////////////////////////////////////
 	
- 	$(".alen_allcheck").click(function(){
+ 	/* $(".alen_allcheck").click(function(){
 		//만약 전체 선택 체크박스가 체크된상태일경우
 		if($("#allCheck").prop("checked")) {
 			//해당화면에 전체 checkbox들을 체크해준다
@@ -630,7 +696,7 @@ $(document).ready(function(){
 			//해당화면에 모든 checkbox들의 체크를해제시킨다.
 			$("input[name='subCheck']").prop("checked",true);
 		}
-	})
+	}) */
 	
 	
 	$("#agreeComple").click(function(){
@@ -662,6 +728,7 @@ $(document).ready(function(){
 			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
 			$("#alert_box").append(alertStr);
 			page=false;
+			alertpage = false;
 			$("#alert_body").fadeIn(800);
 			return false;
 		}    	
@@ -672,6 +739,7 @@ $(document).ready(function(){
 			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
 			$("#alert_box").append(alertStr);
 			page=false;
+			alertpage = false;
 			$("#alert_body").fadeIn(800);
 			return false;
 		}
@@ -680,6 +748,7 @@ $(document).ready(function(){
 			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
 			$("#alert_box").append(alertStr);
 			page=false;
+			alertpage = false;
 			$("#alert_body").fadeIn(800);
 			return false;
 		}		
@@ -755,7 +824,7 @@ $(document).ready(function(){
 	   
 	   // 카운트 다운 및 노출하기
 	   function startCountDown() {
-	   
+	  
 	    min = parseInt((time%3600)/60);
 	    sec = time%60;
 	    //console.log(min + " : " + sec);
@@ -763,8 +832,10 @@ $(document).ready(function(){
 	   
 	    // 시간이 다 됐을 시 timer 정지
 	    if ( parseInt(time) == 0 ) {
+	       
 	       $("#certNumView").val("");
-	     stopCountDown();
+	     	
+	       stopCountDown();
 	   
 	    } else {
 	     time--;
@@ -775,12 +846,25 @@ $(document).ready(function(){
 	// 타이머 정지
 	function stopCountDown() {
 	   clearInterval(runCount);
+	
 	}
 
 
 	// KCB 문자인증번호 요청 
 	function fnKcbCertified(resdata){
 	   if(resdata == 1){
+		
+		var alertStr = "";
+		alertStr += '<div class="alert_txt" >인증번호가 발급되었습니다.</div>';
+		
+		$("#alert_box").empty();
+		$("#alert_box").append(alertStr);
+		page=false;
+		alertpage = false;
+		$("#alert_body").fadeIn(800);
+		$("#alert_body").fadeOut(500);
+		   
+		   
 		reSendYn = true;
 		time = "180";
 		clearInterval(runCount);
@@ -788,9 +872,12 @@ $(document).ready(function(){
 	   }else{
 			//reSendYn = true;
 			reSendYn = false;
+			var alertStr = "";
 			svcTxSeqno = (Number(toDay)+1)+($("#telNo").val());
-		   alert("인증번호받기에 실패했습니다..");
-		   
+			alertStr += '<div class="alert_txt" >인증번호 발급에 실패하였습니다.<br>입력정보를 확인해주세요.</div>';
+			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(0)">확인</a></div>';
+			$("#alert_box").append(alertStr);
+		    $("#alert_body").fadeIn(300);
 	   }
 	}
 
@@ -835,6 +922,8 @@ $(document).ready(function(){
 	   	
 	   	$("#alert_box").append(alertStr);
 	   	page=false;
+	   	alertpage = false;
+	 
 	   	$("#alert_body").fadeIn(300);
 	}
 
@@ -843,7 +932,7 @@ $(document).ready(function(){
 		if(val == 1){
 			location.href='index.html?CI='+CI+'&telNo='+telNo;	
 		}else if(val == 2){
-			location.href="./joinAthen.html?uuid="+uuid;
+			location.href="joinAuthen.html";
 		}
 	}
 
@@ -900,6 +989,32 @@ $(document).ready(function(){
 	function successHandler(result){
 	  console.log('result:'+result);
 	}
+	
+	
+/* 	var page = true;
+	
+	//안드로이드 백키 이벤트
+	
+	history.pushState(null,null,location.href);
+
+	window.onpopstate = function(event){
+		if(page){
+		
+			history.pushState(null,null,location.href);
+			page = false;
+			$("#backs").trigger("click");
+			
+		}else{
+			history.back();
+		}
+		
+		
+	} */
+	
+	
+	
+	
+	
 
 	/**
 	 * onNotificationGCM
@@ -951,7 +1066,8 @@ $(document).ready(function(){
 	  }
 	}
 
-
+	
+	
 
 
 </script>

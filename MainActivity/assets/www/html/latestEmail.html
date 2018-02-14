@@ -44,18 +44,37 @@
 <style type="text/css">
 
 @font-face {font-family: barcode-font; src:url("../barcode-font/barcode-font.ttf")}
-
+.dis_none {display: none;}
 /* .on { color: blue; border: 1px solid blue; } */
 .on { background-color:#DDF4FE;}
 .list-block {display: none; }
 .item-title.small-fonts{font-size: small;}
 
+
+.loadingView{text-align: center; background-color: #272727; opacity : 0.6;   width:100%; height:100%; position: fixed; z-index:  9999; }
+.loadingView img{width: 90px ; position: relative; top: 40%}
+.loading-disable{display: none;}
+div {
+   -ms-user-select: none; 
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   user-select: none;
+ }
 .alen_list_box2 {margin:0px 0px; background:#fff; border:0; }
 .alen_list_box2 li { background-color:#fff; }
 .alen_list_combtnbox { height:42px; background-color: #fff/*margin-bottom:5px;*/ }
 .alen_list_combtn { margin:0 5px; padding:0 5px 0 5px; border:1px solid #539bff; color:#fff; /* font-size:1.5em; */ font-weight:400; text-align:center; line-height:50px; cursor:pointer; background:#539bff; -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
 .albpad { padding:0px 0 0px 0; }
-
+.inputsubject{  padding: 16px 8px;
+    display: block;
+    font-size: 15px;
+    margin-bottom: 36px;
+    font-weight: 400;
+    background-color: black;
+    color: white;
+    text-align: center;
+    }
 .alen_list_btn2 {background-color:#fff;padding:5px 5px;border-top:1px solid #ddd;}
 /* .alen_list_btn2 { margin:10px 10px 10px 10px; padding:0; border-radius:10px; background:#333; } */
 .alen_list_btn2item { width:20%;float:left; text-align:center; /* color:#a99f9f;  */}
@@ -73,7 +92,7 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 .divPage{background: url(../common/divPage.png) no-repeat 0 0;background-position: 0% 0%; height: 30px;"}
 .alen_radio_box2 { margin:10px; border:1px solid #e5e5e5; }
 
-
+.page-content{background: white;}
 .alen_table_in { border-radius:5px; margin:0 5px;}
 .ddassasa{position: fixed;}
 
@@ -122,13 +141,13 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
                     		
                     </div>	
                    
-                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 18%; text-align: center"><img src="../common/logo_01.png" width="200px" height="44px"></div> 
+                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 18%; text-align: center"><img src="../common/mobile_loge.png" width="180px" height="40px" style="margin-top: 3px"></div> 
 						<a class="back link"><span class="backfont" onclick="backfont();">닫기&nbsp;&nbsp;</span></a> 
                 </div>
                 
                 <div data-page="receipt_details" class="navbar-inner cached" >
                 <div class="left sliding"><a href="#" class="back link"onclick="backs();"> <i class="icon icon-back" ></i><span id="backS">Back</span></a></div>
-                <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 18%; text-align: center"><img src="../common/logo_01.png" width="200px" height="44px"></div> 
+                <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 18%; text-align: center"><img src="../common/mobile_loge.png" width="180px" height="40px" style="margin-top: 3px"></div> 
                 </div>
                 
                 
@@ -186,7 +205,7 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 .latest_coninfo > div span { color:#e5e5e5; }
 .latest_conser {margin: 3% 2% 0; background: #fff; text-align: center; margin-top: 102px; }
 .latest_conser input[type=radio] { display:none; margin:10px; }
-.latest_conser input[type=radio] + label { float:left; padding:7px 12px; width:25%; background:#fff; font-size:12px; border-right:1px solid #e5e5e5;}
+.latest_conser input[type=radio] + label { float:left; padding:7px 12px; width:25%; background:#fff; font-size:12px; border-right:1px solid #e5e5e5; line-height: 20px}
 .latest_conser input[type=radio] + label:last-child { border-right:0; }
 .latest_conser input[type=radio]:checked + label { background:#539bff; color:#fff; }
 
@@ -206,7 +225,7 @@ padding: 1px 1px 1px 1px;
  
 text-shadow: 0px 0px 0px 0px #e7e7e7;  
 } 
-.latest_conlist { margin:3% 2%; background:#fff; text-align:center; }
+.latest_conlist { margin:3% 2%; background:#fff; text-align:center;}
 .latest_conlist ul { padding:15px 10px; position:relative; border-bottom:1px solid #e5e5e5;}
 .latest_conlist li { float:left; width:60%; text-align:left; }
 .latest_conlist li h2 { font-size:1em; font-weight:400; color:#000; padding-bottom:3px; }
@@ -219,17 +238,17 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
 .latest_conlist li.mal_price { width:40%; text-align:right; font-size:0.8em; font-weight:400; color:#555;  position:absolute; top:68%; right:10px; }
 .latest_conlist li.mal_price span { font-size:1.4em; font-weight:700; color:#000; }
 .mal_more { background:#f2f2f2; color:#666; font-size:0.8em; padding:10px 0; }
-
+.golbang{}
 .latest_conlist searchstyle {margin: 0 0; text-align:right;}
-.latest_coninfo {  padding: 8px 15px; color: #bbb; background: #222; font-size: 0.7em; text-align: left; border-bottom: 1px solid #333; width: 100%}
-.latest_coninfo .latest_allLeft { width:50%; float:left;background:url(../common/receipt.png) no-repeat left; line-height:20px; padding-left:25px;}
-.latest_coninfo .latest_allRight {width:50%; float:right; line-height:20px; padding-left:25px;}
+.latest_coninfo {  padding: 8px 15px; color: #bbb; background: #222; font-size: 0.7em;  text-align: left;  border-bottom: 1px solid #333; width: 100%}
+.latest_coninfo .latest_allLeft { width:65%; float:left;background:url(../common/receipt.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo .latest_allRight {width:35%; float:right; line-height:20px; }
 .latest_coninfo > div span { color:#e5e5e5; }
   
 .cpop_btn { font-size:3vmin; padding:0.3em 1.5em; background-color:#222; color:#e5e5e5; text-decoration:none; display:inline; border-radius:4px; -webkit-transition: background-color 1s ease; -moz-transition: background-color 1s ease; transition: background-color 1s ease; }
 .cpop_btn:hover { background-color: #ddd; -webkit-transition:background-color 1s ease; -moz-transition:background-color 1s ease; transition:background-color 1s ease; }
 .cpop_btn_small { padding:.5em 1.5em; font-size:0.8em; }
-.modal_box { display: none; position:fixed; z-index: 9999; background: white; width:90%; border-bottom: 1px solid #aaa; border-radius: 4px; box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1); background-clip: padding-box; }
+.modal_box { display: none; position:fixed; background: white;  z-index: 1000; width:90%; border-bottom: 1px solid #aaa; border-radius: 4px; box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1); background-clip: padding-box; }
 .modal_box .modal_body { padding: 1em 1em; }
 .modal_box footer, .modal_box .modal-footer { padding: 1em; border-top: 1px solid #ddd; background: rgba(0, 0, 0, 0.02); text-align: center; }
 .maildiv{ height: 30%;}
@@ -249,7 +268,7 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
 .ser_4box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
 .recdetail { max-width:500px; padding:1%; height:50;  position:absolute;}
 .recdetail .modal_body { height:100%; padding:0; }
-.close_icon { position:absolute; background-image:url(../common/close.png); background-color: #2E2E2E; background-repeat:no-repeat; background-size:cover; width:20px; height:20px; left:90%; top:1%; margin-left:-15px; }
+.close_icon { position:absolute; background-image:url(../common/close.png); background-color: #2E2E2E; background-repeat:no-repeat; background-size:cover; width:20px; height:20px; left:90%; top:1%; margin-left:10px; }
 .abcd { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
  input[type=checkbox] {  
   	display: none; 
@@ -295,10 +314,7 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
  }   
 
 
-.alert_box { position: fixed; top:40%; left:50%; margin-left:-30%;box-shadow:1px 1px 10px #aaa; background: #fff; width:60%; z-index:999; }
-.alert_box .alert_txt { text-align:center; padding:20px 10px 20px; color:#666; font-size:1.2em; }
-.alert_box .alert_btn { text-align:center; padding:10px;  text-shadow: 1px 1px 3px #666666; background: #0d0d0d; padding:12px; border-top:1px solid #e5e5e5; }
-.alert_box .alert_btn a { text-shadow: 1px 1px 3px #999; color: #ffffff; font-size: 1.2em;  width:100%;display:block; text-decoration: none; }
+
 .search{text-align:center; padding:10px;  text-shadow: 1px 1px 3px #666666; background: #ffff;  width:50%;float:left;}
 .serarchR{ text-shadow: 1px 1px 3px #999; color: #ffffff; font-size: 1.2em;  display:inline-block; text-decoration: none;width:100%;
    padding:10px 20px;background-color: #272727;}	
@@ -308,7 +324,7 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
 .search a { text-shadow: 1px 1px 3px #999; color: #ffffff; font-size: 1.1em;  display:inline-block; text-decoration: none;width:100%;
    padding:10px 20px;background-color: #272727;}
 .alert_btnL a { text-shadow: 1px 1px 3px #999; color: #fff; font-size: 1.1em; display:inline-block; text-decoration: none;padding:10px 20px; background-color: #272727;width:100%;}
-.backfont{padding: 11px 1px 2px 3px;
+.backfont{padding: 5px 1px 2px 3px;
     
     font-size: 13px;
     font-weight: 500;
@@ -332,7 +348,12 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
 
 /*-------------------------------------------------------------------------------------------*/
 
-
+.mail_box{z-index: 1000; position: fixed; top: 10%; background-color: white; height: 38%;
+	margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 2px 2px 15px blanchedalmond;
+}
+  
 .etitle {position: absolute;top:43px;left:0;width:100%;padding:7px 15px; background-color:#222;color:#ddd;font-size:12px;line-height: 20px;}
     
     .mail {padding:96px 10px 0px 10px;}
@@ -345,9 +366,10 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
     
     .email .email_box .email_adr {padding:6px 5px;margin:5px 0 20px 0px;max-width:30%;border-bottom:1px solid #ddd;border-top:0; border-left:0;border-right:0;}
     .email .email_box .email_adr2 {padding:6px 5px;margin:5px 0 20px 0;max-width:31%;border-bottom:1px solid #ddd;border-top:0; border-left:0;border-right:0;}
-    
+    .email_adr3 {padding:6px 5px;margin:5px 0 15px 3px;max-width:27%;border-bottom:1px solid #ddd;border-top:0; border-left:0;border-right:0; margin-bottom: 50px;}
+    .email_adr4 {padding:6px 5px;margin:5px 0 15px 3px;max-width:27%;border-bottom:1px solid #ddd;border-top:0; border-left:0;border-right:0; margin-left: 16px;}
     .email .email_box select {padding:6px 0px;margin:5px 0 20px 5px;vertical-align: bottom;max-width:30%;border-top:0; border-left:0;border-right:0;border-bottom:1px solid #ddd;}
-    
+    .selectha{padding:6px 0px;margin:5px 0 50px 3px;vertical-align: bottom;max-width:30%;border-top:0; border-left:0;border-right:0;border-bottom:1px solid #ddd;}
     .email .email_title {padding:8px 5px;display:block; width:100%; margin:5px 0 20px 0;border:0 0 1px 0;border:1px solid #ddd;}
     
     .email textarea {width:100%; display:block;margin:5px 0 20px 0;padding:10px 5px;font-family: inherit;border:1px solid #ddd;}
@@ -360,13 +382,12 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
      button{width:100%;display:block; padding:11px 5px;border:0;background-color:#0d0d0d;color:#fff;font-size:15px;}
     
   	.couponR{background-color: #0d0d0d;}
-    .navbar span.backfont {color: black; font-weight: 200;}
+    .navbar span.backfont {color: black; font-weight: 400;}
 	.sub{padding: 10px 5px; background: #222; color: #fff; }
-	label.label-checkbox i.icon-form-checkbox { background-color:#D8D8D8; width: 22px; height: 22px; position: relative; border-radius: 22px; border: 1px solid #D8D8D8; box-sizing: border-box; 
-		right: 18px;}
+	label.label-checkbox i.icon-form-checkbox { background-color:#D8D8D8; width: 22px; height: 22px; position: relative; border-radius: 22px; border: 1px solid #D8D8D8; box-sizing: border-box; right: 18px;}
 	.item-title{left: 30px;}
-	.alen_modal_overlay2 { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:9000; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
-	.alert_box { position:fixed; top:40%; left:50%; margin-left:-30%;box-shadow:1px 1px 10px #aaa; background: #fff; width:60%; z-index:9990;}
+	.alen_modal_overlay2 { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
+	
 .alert_box:after {clear:both; display:block; content:'';}
 .alert_box .alert_txt { text-align:center; padding:20px 10px 20px; color:#666; font-size:1.2em; }
 .alert_box .alert_btnR { text-align:center; padding:10px 10px 10px 5px;  text-shadow: 1px 1px 3px #666666; width:50%; float:right; }
@@ -374,26 +395,35 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
 .alert_box .alert_btnR a { text-shadow: 1px 1px 3px #999; color: #ffffff; font-size: 1.2em;  display:inline-block; text-decoration: none;width:100%;
    padding:10px 20px;background-color: #272727;}
 .alert_box .alert_btnL a { text-shadow: 1px 1px 3px #999; color: #fff; font-size: 1.2em; display:inline-block; text-decoration: none;padding:10px 20px; background-color: #272727;width:100%;}
-.alert_box .alert_btn { text-align:center; padding:10px;  text-shadow: 1px 1px 3px #666666; background: #0d0d0d; padding:12px; border-top:1px solid #e5e5e5; }
+
 .alert_box .alert_btn a { text-shadow: 1px 1px 3px #999; color: #ffffff; font-size: 1.2em;  width:100%;display:block; text-decoration: none; }
 
+#indexpage{background: white;}
 </style>  
  
    		            <!-- //alert 대체	 -->
-         <div class="alert_box" style="display: none;" id="boxre">
-		<div class="alert_txt" id="alert_desc">영수증을 선택해주세요.</div>
-		<div class="alert_btn" onclick="out();"><a href="#">확인</a></div>
-		</div>		
+   		<div class="alert_body" id="alert_body">
+			<div class="alert_box" id="alert_box">
+				<div class="alert_txt" id="alert_desc">알러트창</div>
+				<div class="alert_btn"><a href="#">확인</a></div>
+			</div>
+		</div>
    		 
-   	
+   		 <div class="mail_box">
+   		 
+   		 
+   		 </div>
+   		
    		<div class="pages navbar-through toolbar-through" id="abcd">
                 <div data-page="index" class="page">
                     <div class="page-content">
-		
+			<div id="loadingView" class="loadingView">
+					<img src="../common/loadingBar.gif" id="loading_gif">
+					</div>	 
                      <div class="latest_contitle">
                     
-                    	<h2 onclick="testtest();">영수증 관리<span id="serbtn"  >
-                    		</span></h2>
+                    	<h2>영수증 보내기
+                    		</h2>
                     </div>	
                     <div class="latest_coninfo" style="z-index: 1;" id="coninfofo">
                     	<div class="latest_allLeft" id="count">선택된 영수증 0건 / <span>금액 : 0원</span></div>
@@ -404,7 +434,7 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
                     	
                     <div class="latest_conser alen_outbox" id="bbt">
                   <input type="radio" id="latest01" name="latestsbox" value="latest" checked> 
-                    <label for="latest01" onclick="maint();">전체영수증</label>
+                    <label for="latest01" onclick="maint();">전체</label>
                     			
                    <input type="radio" name="latestsbox" id="latest02" value="week"> 
                     <label for="latest02" onclick="transno();">미발행</label>
@@ -421,6 +451,9 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
                </div> 
            
         <div data-page="receipt_details" class="page cached" id="receipt_details">
+        	<div id="loadingView2" class="loadingView loading-disable">
+					<img src="../common/loadingBar.gif" id="loading_gif">
+					</div>
                     <div class="page-content">
                         <div class="content-block">
 
@@ -452,38 +485,7 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
 					 <div class="moreBtn dis_none" id="moreBtn">더보기</div>
 
    		
-                  
-                    	
-                    <div class="foot_info">
-                    
-                    	<div class="foot_box">
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#agree03">이용약관</a>
-                            </div>
-                            
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#agree01">개인정보 취급방침</a>
-                            </div>
-                            
-                        	<div class="foot_btn alen_outbox">
-                            <a href="">고객센터</a>
-                            </div>
-                            
-                        <hr>
-                        </div>
-<p>	
-(주)이베이 코리아   |   대표이사 : 변광윤<br>
-사업자등록번호 : 220-81-83676   |   통신판매업신고 강남 10630호<br>
-서울시 강남구 테헤란로 152 (역삼동 강남파이낸스센터)<br>
-이메일 :information@corp.auction.co.kr<br>
-고객센터 :1588-0184(오전9시~오후6시,토요일/공휴일휴무<br>
-</p>
-
-<p class="copytxt">Copyrightⓒnoname Co,.All rights reserved</p>
-                    </div>
-                    
-                    
-                    </div>
+              		</div>
                 </div>
                 
 
@@ -503,7 +505,7 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
       
   
 	
-   
+ 
 	<footer> 
 		<div class="search"><a href="#">조회</a></div>
    		<div class="alert_btnL"><a href="#" onclick="searchNo();">취소</a></div>
@@ -526,40 +528,65 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
 
 
 
-
-
-
-
 <script type="text/javascript">
-
+$(document).ajaxStart(function(){
+	 $('#loadingView').show();
+	})
+	.ajaxStop(function(){
+	   $('#loadingView').hide();
+	});
 var page = true;
 
 //백키 이벤트
 
-function testtest(){
-			location.href="affliateTest.html?CI="+CI;
-			
-		}
 history.pushState(null,null,location.href);  
 window.onpopstate = function(event){
-
-	if(pagestate=='check'){
-		
+	
+	 if(pagestate=='check'&&mailboxstate == 'check'){
+	
 		history.pushState(null,null,location.href); 
-		$(".alert_box").fadeOut(300, function() {
-			$(".alen_modal_overlay2").remove()
 		
-		$("#ser_box").fadeOut(300);
-	});
-		pagestate='';
+		$("#alert_body").fadeOut(10);
+	
+		pagestate="";
+		
+		return false;
+	} 
+	
+	if(mailboxstate == 'check'){
+	
+		history.pushState(null,null,location.href); 
+		$(".mail_box").fadeOut(300, function() {
+			$(".alen_modal_overlay2").remove();
+		});
+		
+		mailboxstate="";
 		
 		return false;
 	}
 	
+	if(modalOfmodalVal){
+		history.pushState(null,null,location.href); 
+		outS();
+		return false;
+	}
+	
+	if(pagestate=='check'){
+			
+			history.pushState(null,null,location.href); 
+				
+			$("#alert_body").fadeOut(300, function() {
+				$(".alen_modal_overlay2").remove();
+			});
+				$("#ser_box").fadeOut(300);
+				pagestate='';
+		return false;
+	}
 	
 	if(page){
 		history.back();
 	}else{
+	
 		history.pushState(null,null,location.href);  
 		$(".backfont").css('display','block');
 		page = true; 
@@ -591,7 +618,7 @@ function numCommas(x) { //3자리수 , 찍어주기
 	var uuId =  request.getParameter('uuId');
 	
 	var pagestate = "";
-			
+	var mailboxstate = "";		
 	/* var scrollValue = parseInt(request.getParameter('scroll')); */
 	var barcodeSend = new Array();
 	var Seq = new Array();
@@ -606,6 +633,7 @@ function numCommas(x) { //3자리수 , 찍어주기
 	var dateSrchCd = "N";	
 	var transMission = "";
 	var salestype = "yes";
+	var modalOfmodalVal=false;
 	/* var scrollValue = 0 ; */
 	
 	function allClear(){
@@ -642,7 +670,16 @@ function numCommas(x) { //3자리수 , 찍어주기
 		var CI = window.localStorage.getItem("CI");
 		
 		 maint();
+		   
 		
+		
+		 $(document).ajaxStart(function(){
+			 $('#loadingView').show();
+			})
+			.ajaxStop(function(){
+			   $('#loadingView').hide();
+			});
+		 
 		
 		$(document).on('click', '[name="receiptDetail"]', function() {
 			
@@ -726,10 +763,6 @@ function numCommas(x) { //3자리수 , 찍어주기
 		     	barcode[i] = value;
 		     }
 		 }	 
-		
-			
-			
-	
 	});
 	
 		function fn_mailOk(resdata){
@@ -739,24 +772,22 @@ function numCommas(x) { //3자리수 , 찍어주기
 		 
 			
 		if(res[0].EMAIL==""||res[0].EMAIL==null){
-			
-			$(".pages").append(appendthis); 
+				
+		
 			var str = "";
-			
-			str += '<div class="alert_txt" id="alert_desc">등록된 이메일이 없습니다 등록하시겠습니까?</div>';
+				
+			str += '<div class="alert_txt" id="alert_desc">등록된 이메일이 없습니다. <br>등록하시겠습니까?</div>';
 			str += '<div class="alert_btnR"><a href="#" onclick="yesMail();">확인</a></div>';
 		    str += '<div class="alert_btnL"><a href="#" onclick="no();">취소</a></div>';
 			
-		    $(".alert_box").empty();
-		    $(".alert_box").append(str).trigger("create");
-		    	
-			$(".alert_box").fadeIn(300);
-			$(".alen_modal_overlay2").fadeTo(300, 0.7); 
+		    $("#alert_box").empty();
+		    $("#alert_box").append(str).trigger("create");
+		    $("#alert_body").fadeIn(300);
 			
-			pagestate = 'check';
+		    pagestate = 'check';
 		}	
 		
-	
+			
 		now_email = res[0].EMAIL;
 		last_email = res[0].LAST_EMAIL;
 			
@@ -816,14 +847,14 @@ function numCommas(x) { //3자리수 , 찍어주기
 		
 		str += '<div id="test">'
 		
-		str += '<input type="text" class="email_adr" value="'+first+'" id="firstEmailValue">';
+		str += '<input type="text" class="email_adr" value="'+first+'" id="firstEmailValue">						';
 		
 		str += '<span>@</span>';
 		
-		str += '<input type="text" class="email_adr2" value="'+last+'" id="lastEmailValue" >';
+		str += '<input type="text" class="email_adr2" value="'+last+'" id="lastEmailValue">							';
 		
-		str += '			<select id="email_select" onchange="change();">																';
-			
+		str += '			<select id="email_select2" onchange="change();">																';
+					
 		str += '				<option value="" selected>::선택하기::</option>										';
 		 
 		str += '				<option value="naver.com">naver.com</option>										';
@@ -836,21 +867,21 @@ function numCommas(x) { //3자리수 , 찍어주기
 		
 		str += '				<option value="hotmail.com">hotmail.com</option>									';
 		
-		str +=	'				<option value="bondingedu.com">bondingedu.com</option>								';
+		str += '				<option value="bondingedu.com">bondingedu.com</option>								';
 		
-		str +=	'				<option value="hanmir.com">hanmir.com</option>										';
+		str += '				<option value="hanmir.com">hanmir.com</option>										';
 			
-		 str +=	'				<option value="empas.com">empas.com</option>										';
+		str += '				<option value="empas.com">empas.com</option>										';
 		
-		str +=	'				<option value="dreamwiz.com">dreamwiz.com</option>									';
+		str += '				<option value="dreamwiz.com">dreamwiz.com</option>									';
 		
-		str +=	'				<option value="korea.com">korea.com</option>										';
+		str += '				<option value="korea.com">korea.com</option>										';
 		
-		str+=	'				<option value="lycos.co.kr">lycos.co.kr</option>									';
+		str += '				<option value="lycos.co.kr">lycos.co.kr</option>									';
 		
-		str +=	'				<option value="freechal.com">freechal.com</option>									';
+		str += '				<option value="freechal.com">freechal.com</option>									';
 		
-		str +=	'				<option value="1">::직접입력::</option>												';
+		str += '				<option value="1">::직접입력::</option>												';
 		
 		str += '			</select>																				';
 		
@@ -862,40 +893,45 @@ function numCommas(x) { //3자리수 , 찍어주기
 
 		str += '</label>';
 
-		str += '<input type="text" placeholder="THEREAL# 이메일 영수증" class="email_title" id="subject" >';
+		str += '<input type="text" placeholder="THEREAL# 이메일 영수증" class="email_title" id="subject" >				';
 
-		str += '<label class="sub">';
+		str += '<label class="sub">																					';
 
-		str += '<b>내용</b>';
+		str += '<b>내용</b>																							';
 		
-		str += '</label>';
+		str += '</label>																							';
 
 		str += '<textarea name="" id="content" cols="30" rows="10" placeholder="THEREAL# 이메일영수증 입니다."></textarea>';
 		
-		str += '</div>';
+		str += '</div>																								';
 		
-		str += '<button onclick="emailcheck();">보내기</button>';
+		str += '<button onclick="emailcheck();">보내기</button>														';
 			 $("#detailRecData").empty();
 		     $("#detailRecData").addClass("email"); 
 			 $("#detailRecData").append(str);
-		
-			
-		
-};
+		};
 
 	
 	function yesMail(){
-		$(".alert_box").fadeOut(300);
 		
+		$("#alert_body").fadeOut(10);
+		pagestate = "";
 		var str = "";
+		str += '<div>';
 		
-		str += '<input type="text" class="email_adr" id="firstEmailValue">';
+		str += '<label class="inputsubject">내 이메일 등록	</label>													';
 		
-		str += '<span>@</span>';
+		str += '<span class="close_icon" onclick="close2();"></span>												';
 		
-		str += '<input type="text" class="email_adr2" id="lastEmailValue" >';
+		str += '</div>																								';
 		
-		str += '			<select id="email_select" onchange="change();">																';
+		str += '<input type="text" class="email_adr4" id="firstEmailValue5">										';
+		
+		str += '<span calss="golbang" style="color: black;">@</span>												';
+		
+		str += '<input type="text" class="email_adr3" id="lastEmailValue5" >										';
+		
+		str += '			<select id="email_select" class="selectha" onchange="change2();">						';
 			
 		str += '				<option value="" selected>::선택하기::</option>										';
 		 
@@ -906,67 +942,69 @@ function numCommas(x) { //3자리수 , 찍어주기
 		str += '				<option value="daum.net">daum.net</option>											';
 		
 		str += '				<option value="gmail.com">gmail.com</option>										';
-		
+		 
 		str += '				<option value="hotmail.com">hotmail.com</option>									';
 		
-		str +=	'				<option value="bondingedu.com">bondingedu.com</option>								';
+		str += '				<option value="bondingedu.com">bondingedu.com</option>								';
 		
-	    str +=	'				<option value="hanmir.com">hanmir.com</option>										';
+	    str += '				<option value="hanmir.com">hanmir.com</option>										';
 			
-		str +=	'				<option value="empas.com">empas.com</option>										';
+		str += '				<option value="empas.com">empas.com</option>										';
 		
-		str +=	'				<option value="dreamwiz.com">dreamwiz.com</option>									';
+		str += '				<option value="dreamwiz.com">dreamwiz.com</option>									';
 		
-		str +=	'				<option value="korea.com">korea.com</option>										';
+		str += '				<option value="korea.com">korea.com</option>										';
 		
-		str+=	'				<option value="lycos.co.kr">lycos.co.kr</option>									';
+		str += '				<option value="lycos.co.kr">lycos.co.kr</option>									';
 		
-		str +=	'				<option value="freechal.com">freechal.com</option>									';
+		str += '				<option value="freechal.com">freechal.com</option>									';
 		
-		str +=	'				<option value="1">::직접입력::</option>												';
+		str += '				<option value="1">::직접입력::</option>												';
 		
 		str += '			</select>																				';
 		
-		str += '				<button onclick="emailcheck2();">등록</button>										'; 
+		str += '				<button onclick="emailcheck2();" style="background-color: #539bff; width: 92%; margin-left: 15px;">등록하기</button>'; 
 		
-		
-			$(".pages").append(appendthis); 
-		    $(".alert_box").empty();
-		    $(".alert_box").append(str).trigger("create");
-			$(".alert_box").fadeIn(300);
-				
+			mailboxstate = 'check';
 			
+			$(".pages").append(appendthis);  
+			$(".alen_modal_overlay2").fadeTo(300, 0.7);  
+		    
+			$(".mail_box").empty();
+		    $(".mail_box").append(str).trigger("create");
+			$(".mail_box").fadeIn(300);
 	}
 	
 	
 	function no2(){
-		yesMail();
+		mailboxstate = "";
+		$("#alert_body").fadeOut(10);
 	}
 	
 	function emailcheck2(){
 		
 	
-		 var first = $("#firstEmailValue").val();
-		 var last = $("#lastEmailValue").val();
+		 var first = $("#firstEmailValue5").val();
+		 var last = $("#lastEmailValue5").val();
 		 
 		 mail = first += "@";
 		 mail += last;
-		
+				
 		 //이메일 체크
 			if(email_check(mail)==false){
 				
-				$(".pages").append(appendthis);  
+				
 				var str = "";
 				
 				str += '<div class="alert_txt" id="alert_desc">잘못된 이메일 형식입니다.</div>';
 				str += '<div class="alert_btn"><a href="#" onclick="no2();">확인</a></div>';
-			   
-				$(".alert_box").empty();
-			    $(".alert_box").append(str).trigger("create");
-			    
-				$(".alert_box").fadeIn(300);
+			   		
+				$("#alert_box").empty();
 				
+				$("#alert_box").append(str);
+				$("#alert_body").fadeIn(300);
 				
+				pagestate='check'
 				
 			
 			}else{
@@ -994,23 +1032,23 @@ function numCommas(x) { //3자리수 , 찍어주기
 		
 		 var first = $("#firstEmailValue").val();
 		 var last = $("#lastEmailValue").val();
+	
 		 mail = first += "@";
 		 mail += last;
 		
 		 //이메일 체크
 			if(email_check(mail)==false){
 				
-				$(".pages").append(appendthis);  
-				var str = "";
 				
+				var str = "";
+				pagestate = "check";
 				str += '<div class="alert_txt" id="alert_desc">잘못된 이메일 형식입니다.</div>';
 				str += '<div class="alert_btn"><a href="#" onclick="no();">확인</a></div>';
-			   
-				$(".alert_box").empty();
-			    $(".alert_box").append(str).trigger("create");
+			   	
+				$("#alert_box").empty();
+			    $("#alert_box").append(str).trigger("create");
 			    
-				$(".alert_box").fadeIn(300);
-				$(".alen_modal_overlay2").fadeTo(300, 0.7);  
+				$("#alert_body").fadeIn(300);
 				
 				return; 
 			
@@ -1021,28 +1059,31 @@ function numCommas(x) { //3자리수 , 찍어주기
 	
 	//발송확인
 	function mailcheck(){
-		$(".pages").append(appendthis); 
+		
+		
 		var str = "";
 		pagestate = "check";
+		
 		str += '<div class="alert_txt" id="alert_desc">발송하시겠습니까?</div>';
 		str += '<div class="alert_btnR"><a href="#" onclick="yes();">확인</a></div>';
 	    str += '<div class="alert_btnL"><a href="#" onclick="no();">취소</a></div>';
 		
-	    $(".alert_box").empty();
-	    $(".alert_box").append(str).trigger("create");
+	    $("#alert_box").empty();
+	    $("#alert_box").append(str).trigger("create");
 	    
-		$(".alert_box").fadeIn(300);
-		$(".alen_modal_overlay2").fadeTo(300, 0.7); 
-	 	
+		$("#alert_body").fadeIn(300);
+	
 	}
 	
 	//발송
 	function yes(){
 		
-		mailsend();
+		$("#alert_body").fadeOut(10);
+		$("#loadingView2").removeClass("loading-disable");
+		setTimeout(function(){
+			mailsend();	
+		},1000)
 	}
-	
-	
 	
 	function mailsend(){
 		
@@ -1063,8 +1104,6 @@ function numCommas(x) { //3자리수 , 찍어주기
 			content = $("#content").val();
 		}
 			
-	
-		
 			$.ajax({  
 		    	type : 'post',
 		    	url :	commonIp() + "/theReal/receipt/sendMail.do", 
@@ -1084,29 +1123,27 @@ function numCommas(x) { //3자리수 , 찍어주기
 		    	},	 		   			
 		    	success : function(data) {
 		    		
-		    		sendBarcode = new Array();
-		    		Seq = new Array();
+		    	/* 	sendBarcode = new Array();
+		    		Seq = new Array(); */
 		    		
-		    		$(".pages").append(appendthis);  
-					var str = "";
+		    		var str = "";
 					
 					str += '<div class="alert_txt" id="alert_desc">전송완료</div>';
 					str += '<div class="alert_btn"><a href="#" onclick="historyback();">확인</a></div>';
-				   
+				   								
 					page = false;
 					
-					$(".alert_box").empty();
-				    $(".alert_box").append(str).trigger("create");
-				    		
-					$(".alert_box").fadeIn(300);
-					
+					$("#alert_box").empty();
+				    $("#alert_box").append(str).trigger("create");
+				  	$("#alert_body").fadeIn(300);
+					$("#loadingView2").addClass("loading-disable");
 		    	}
 		   }); 	  
 		};
 	 
 									
-	function latestData(){
-		
+	function latestData(){		
+			
 			
 	/* 	maxSize = $("#maxSize").val(); */
 		$.ajax({
@@ -1133,7 +1170,7 @@ function numCommas(x) { //3자리수 , 찍어주기
 			}
 		});
 	}
-		
+			
 	//현재 내 이메일  버튼
 	function nowEmail(a){
 		
@@ -1179,7 +1216,7 @@ function numCommas(x) { //3자리수 , 찍어주기
 	    	var i = last_email.indexOf("@");
 			var first = last_email.substring(0,i);
 			var last = last_email.substring(i+1); 
-			
+									
 			
 			$("#firstEmailValue").val(first);  
 			$("#lastEmailValue").val(last); 
@@ -1216,10 +1253,10 @@ function numCommas(x) { //3자리수 , 찍어주기
 		 dateSrchCd = "N";
 		transMission = "Y02";
 		checkV = new Array(); 
-		choice = 0;
-	
+		choice = 0;	
+			
 		/* endSeq = 10; */
-		
+			
 		var str = "";
 				
 		str += '<div class="latest_allLeft" id="count">선택된 영수증 0건 / <span>0원</span></div>';
@@ -1288,6 +1325,8 @@ function numCommas(x) { //3자리수 , 찍어주기
 	}); */
 
 	$(".search").click(function(){
+		
+		$("#alert_box").empty();
 		transMission = "SEARCH";
 		dateSrchCd = "Y";
 		startDay = $(".first").val(); 
@@ -1302,16 +1341,18 @@ function numCommas(x) { //3자리수 , 찍어주기
  		if((startDay == '' || startDay == null) && (endDay == '' || endDay == null)){
 		   	
 			var str = "";
+			
 			pagestate = 'check';
-			str +=  '<div class="alert_txt" id="alert_desc">시작날짜와 종료날짜를 입력해주세요.</div>';
+			
+			str +=  '<div class="alert_txt" id="alert_desc">시작날짜와 종료날짜를 입력하세요.</div>';
 		   	str +=  '<div class="alert_btn" onclick="outS();"><a href="#">확인</a></div>';
 		  	
-		   	$(".modal_box").fadeOut(0);
-		  	$(".alert_box").empty();
-		  	$(".alert_box").append(str).trigger("create");
-		  	
-			
-		 	$(".alert_box").fadeIn(300);
+		   	modalOfmodalVal=true;
+		   	
+		 	
+		  	$("#alert_box").append(str).trigger("create");
+		
+		  	$("#alert_body").fadeIn(300);
 		   	 		
 		   	return false;
 	   }
@@ -1319,15 +1360,18 @@ function numCommas(x) { //3자리수 , 찍어주기
  	   else if(startDay==''||startDay==null){
 		    
  			var str = "";
+ 			
  			pagestate = 'check';
-			str +=  '<div class="alert_txt" id="alert_desc">시작날짜를 입력해주세요.</div>';
+			
+ 			str +=  '<div class="alert_txt" id="alert_desc">시작날짜를 입력하세요.</div>';
 		   	str +=  '<div class="alert_btn" onclick="outS();"><a href="#">확인</a></div>';
 		  	
-		   	$(".modal_box").fadeOut(0);
-		  	$(".alert_box").empty();
-		  	$(".alert_box").append(str).trigger("create");
+		   	modalOfmodalVal=true
+		   
+		  
+		  	$("#alert_box").append(str).trigger("create");
 		  	
-			$(".alert_box").fadeIn(300)();
+			$("#alert_body").fadeIn(300)();
 		   	 		
 		   	return false;
 	   }
@@ -1335,16 +1379,18 @@ function numCommas(x) { //3자리수 , 찍어주기
  	   else if(endDay==''||endDay==null){
 		    
  			var str = "";
-		   	pagestate = 'check';
-			str +=  '<div class="alert_txt" id="alert_desc">종료날짜를 입력해주세요.</div>';
+		   	
+ 			pagestate = 'check';
+ 			
+ 			str +=  '<div class="alert_txt" id="alert_desc">종료날짜를 입력하세요.</div>';
 		   	str +=  '<div class="alert_btn" onclick="outS();"><a href="#">확인</a></div>';
 		  	
-		   	$(".modal_box").fadeOut(0);
-		  	$(".alert_box").empty();
-		  	$(".alert_box").append(str).trigger("create");
-		  	
-			
-		 	$(".alert_box").fadeIn(300)();
+		   	modalOfmodalVal=true
+		  
+		  
+		  	$("#alert_box").append(str).trigger("create");
+		 
+			$("#alert_body").fadeIn(300);
 		   	 				
 		   	return false;
 	   }
@@ -1353,21 +1399,23 @@ function numCommas(x) { //3자리수 , 찍어주기
 	if(firstCompare.getTime() > secondCompare.getTime()) {
 								          		
 			var str = "";
-			pagestate = 'check';	
-			str +=  '<div class="alert_txt" id="alert_desc">종료날짜가 시작날짜보다 빠릅니다. 다시 입력해주세요.</div>';
+			
+			pagestate = 'check';
+	
+			str +=  '<div class="alert_txt" id="alert_desc">종료날짜가 시작날짜보다 이전입니다.</div>';
 		   	str +=  '<div class="alert_btn" onclick="outS();"><a href="#">확인</a></div>';
 		  	
-		   	$(".modal_box").fadeOut(0);
-		  	$(".alert_box").empty();
-		  	$(".alert_box").append(str).trigger("create");
+		   	modalOfmodalVal=true;
+		   
 		  	
-			
-		 	$(".alert_box").fadeIn(300);
+		  	$("#alert_box").append(str).trigger("create");
+		  	
+			$("#alert_body").fadeIn(300);
 			
 		 	
             return false;
 	   }	
-	   						
+	   										
 	   		$('#ser_box').hide();  	
 			$('#modal_body').hide();
 			$(".modal_box, .alen_modal_overlay2").fadeOut(300, function() {
@@ -1404,7 +1452,7 @@ function numCommas(x) { //3자리수 , 찍어주기
 	 														
 	 		}else{
 	             $('input[id="'+data+'"]').prop('checked',true);
-	             $('.'+data+'').css({"background":"#eeeeee"});
+	             $('.'+data+'').css({"background":"#cccccc"});
 	            
 	           
 	             totalmoney += money;
@@ -1444,20 +1492,21 @@ function numCommas(x) { //3자리수 , 찍어주기
 		
 		var res = resdata.resultMap;	
 		var str = "";
-	   console.log(res);
+	 
 		maxSize = resdata.maxSize	
 		
 	
 	if(maxSize==0){
 		if(transMission=="ALL"){
-			str =	"전체";
-			str += '<img alt="noFile" src="../common/emptyList01.jpg">';
+			
+			str = '<img alt="noFile" src="../common/emptyList01.jpg">';
+			$("#moreBtn").addClass("dis_none");
 		}else if(transMission=="Y01"){
-			str =	"발행된";
-			str += '<img alt="noFile" src="../common/emptyList01.jpg">';
+			str = '<img alt="noFile" src="../common/emptyList01.jpg">';
+			$("#moreBtn").addClass("dis_none");
 		}else{
-			str =	"미발행";
-			str += '<img alt="noFile" src="../common/emptyList01.jpg">';
+			str = '<img alt="noFile" src="../common/emptyList01.jpg">';
+			$("#moreBtn").addClass("dis_none");
 		}
 	}
 	else{
@@ -1504,18 +1553,16 @@ function numCommas(x) { //3자리수 , 찍어주기
 				str += '<li class="mal_price">';
 				str += '<span id="price"'+i+'">'+numCommas(res[i].TOTAL_AM)+'</span> 원';
 				str += '</li>';
-				str += '<input type="checkbox" name="haha" id="'+res[i].SEQ+'" class="checkSelect" value='+res[i].SEQ+'><label for="receipt_div"></label>'
-				str += '<input type="checkbox" name="hahab" id="'+res[i].SEQ+'" class="checkSelect" value='+res[i].SALES_BARCODE+' style="display:none;"><label for="receipt_div"></label>'
+				str += '<input type="checkbox" name="haha" id="'+res[i].SEQ+'" class="checkSelect" value='+res[i].SEQ+'><label for="receipt_div"></label>';
+				str += '<input type="checkbox" name="hahab" id="'+res[i].SEQ+'" class="checkSelect" value='+res[i].SALES_BARCODE+' style="display:none;"><label for="receipt_div"></label>';
 				str +=	'<hr></ul>';
 				str += '</div>';
 		}	
 											
 	 	if(res.length % 10 == 0 && maxSize != res.length){
-			
 	 		$("#moreBtn").removeClass("dis_none");
 			
 		}else{
-			
 			$("#moreBtn").addClass("dis_none");
 		}
 	}	
@@ -1691,10 +1738,8 @@ function numCommas(x) { //3자리수 , 찍어주기
 	}
 	
 	function outS(){
-		
-		$(".alert_box").fadeOut(0);
-		$(".modal_box").fadeIn(300);
-		
+		$("#alert_body").fadeOut(10);
+		modalOfmodalVal=false;
 	}
 	
 	function outZ(){
@@ -1708,9 +1753,7 @@ function numCommas(x) { //3자리수 , 찍어주기
 	//발송창 취소
 	function no(){
 			
-		$(".alert_box").fadeOut(300, function() {
-			$(".alen_modal_overlay2").remove()
-		});	
+		$("#alert_body").fadeOut(10);
 		
 		pagestate = "";
 	}
@@ -1722,28 +1765,38 @@ function numCommas(x) { //3자리수 , 찍어주기
 		});	
 		
 	}
+	
+	function close2(){
+		 $(".mail_box").fadeOut(300, function() {
+				$(".alen_modal_overlay2").remove()
+			});	
+		
+		 mailboxstate = ""; 
+	}
 			
-	//이메일 확인 화면 append 	
+ 	//이메일 확인 화면 append 	
 	function fn_mailOk2(mail) {
 		
 		$(".pages").append(appendthis); 
-		 $(".alert_box").fadeOut(300, function() {
+		 $(".mail_box").fadeOut(300, function() {
 			$(".alen_modal_overlay2").remove()
 		});	
 		 
+		mailboxstate = ""; 
+		
 		var i = mail.indexOf("@");
 		var first = mail.substring(0,i);
 		var last = mail.substring(i+1); 
-								
+		
 		var testStr = "";		
 		
-		testStr += '<input type="text" class="email_adr" value="'+first+'" id="firstEmailValue">';
+		testStr += '<input type="text" class="email_adr" id="firstEmailValue" value="'+first+'">						';
 		
-		testStr += '<span>@</span>';
+		testStr += '<span>@</span>																						';
 		
-		testStr += '<input type="text" class="email_adr2" value="'+last+'" id="lastEmailValue" >';
+		testStr += '<input type="text" class="email_adr2" id="lastEmailValue" value="'+last+'" >						';
 		
-		testStr += '			<select id="email_select" onchange="change();">																';
+		testStr += '			<select id="email_select" onchange="change();">											';
 			
 		testStr += '				<option value="" selected>::선택하기::</option>										';
 		 
@@ -1780,7 +1833,7 @@ function numCommas(x) { //3자리수 , 찍어주기
 												
 		return;	
 			
-	}	
+	}	 
 		
 	
 	//이메일 영수증 발송 모달 끄는 fun
@@ -1822,7 +1875,8 @@ function numCommas(x) { //3자리수 , 찍어주기
 		var mail = first += "@"; 
 
 		mail += last;
-					
+		
+		
 		//이메일 체크
 		if (email_check(mail) == false) {
 			alert("잘못된 이메일 형식입니다");
@@ -1860,28 +1914,29 @@ function numCommas(x) { //3자리수 , 찍어주기
 		return (mail != '' && mail != 'undefined' && regex.test(mail));
 	}
 
-	//이메일 셀렉트
-	$(document).change($('#email_select'), function() {
+	/*   //이메일 셀렉트
+	$(document).change($('#email_select2'), function() {
+			
+		
+		if ($('#email_select2').val() == "1") {
 
-		if ($('#email_select').val() == "1") {
+			$("#lastEmailValue").val("");
 
-			$("#last_email").val("");
+			$("#lastEmailValue").prop("readonly", false);
 
-			$("#last_email").prop("readonly", false);
+		} else if ($('#email_select2').val() == "") {
 
-		} else if ($('#email_select').val() == "") {
+			$("#lastEmailValue").val("");
 
-			$("#last_email").val("");
-
-			$("#last_email").prop("readonly", true);
+			$("#lastEmailValue").prop("readonly", true);
 		} else {
 	
-			$("#last_email").val($('#email_select').val());
+			$("#lastEmailValue").val($('#email_select').val());
 
-			$("#last_email").prop("readonly", true);
+			$("#lastEmailValue").prop("readonly", true);
 		}
-	});
-				
+	});  
+				 */
 	/* $(".js-modal-close").click(function() {
 		$(".modal_box").fadeOut(300, function() {
 			
@@ -1910,7 +1965,7 @@ function numCommas(x) { //3자리수 , 찍어주기
 	}
 				
 	function backback(){
-		alert();
+		
 	}
 
 	
@@ -1918,45 +1973,67 @@ function numCommas(x) { //3자리수 , 찍어주기
 	//전송완료 확인창
 	
 	function historyback(){
-		$(".alert_box").fadeOut(300, function() {
-			$(".alen_modal_overlay2").remove();
-		});
+		  $("#alert_body").fadeOut(10);
 			$('#receiptData').hide();
 		
 	}
 	
-	//이메일 셀렉트
+ 	//이메일 셀렉트
 	function change(){
-	   	
-		if($('#email_select').val() == "1"){
-	   	 	
+			
+		if($('#email_select2').val() == "1"){
+	   	 							
 			$("#lastEmailValue").val("");  
-		    
+		    	
 			$("#lastEmailValue").prop("readonly",false); 
-		   
-		}else if($('#email_select').val() == ""){
+		   		
+		}else if($('#email_select2').val() == ""){
 		    
 			$("#lastEmailValue").val("");  
 		    
 			$("#lastEmailValue").prop("readonly",true); 
+		
 		}else{
 		    		
-			$("#lastEmailValue").val($('#email_select').val()); 
+			$("#lastEmailValue").val($('#email_select2').val()); 
 		    
 			$("#lastEmailValue").prop("readonly",true); 
 		}	
-	};
+	}; 
 
+function change2(){
+	   	
+		if($('#email_select').val() == "1"){
+	   	 	
+			$("#lastEmailValue5").val("");  
+		    
+			$("#lastEmailValue5").prop("readonly",false); 
+		   
+		}else if($('#email_select').val() == ""){
+		    
+			$("#lastEmailValue5").val("");  
+		    
+			$("#lastEmailValue5").prop("readonly",true); 
+		}else{
+		    		
+			$("#lastEmailValue5").val($('#email_select').val()); 
+		    
+			$("#lastEmailValue5").prop("readonly",true); 
+		}	
+	};
+	
+	
 	
 	function backs(){
 		page = true;
 		$(".backfont").css('display','block');
-		
 	}
 	
 	function backfont(){
 		location.href ="latest.html?telNo="+telNo;
 	}
+	
+
 </script>
                 		 
            										     	 	  			

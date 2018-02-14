@@ -1,3 +1,4 @@
+var affliateFlag = false;
 
 $(function () {
 	var $activate_scrollator4 = $('#activate_scrollator4');
@@ -36,9 +37,9 @@ $(document).ready(function(){
  	$(document).on('click','#leftMenuSmsHistory',function(){
  		location.href='mobile.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
  	});*/
- 	/*$(document).on('click','#leftMenuAffliate',function(){
- 		location.href='affliate.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
- 	}); */
+ 	$(document).on('click','#leftMenuAffliate',function(){
+ 		location.href='affliate.html?CI='+CI+'&telNo='+request.getParameter('telNo');
+ 	});
  	$(document).on('click','#leftMenuComHistiry',function(){
  		location.href='mobile.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	}); 	
@@ -188,7 +189,7 @@ function commonIp(){
 		commonIp = "http://182.162.84.177:80";
 		//commonIp = "117.52.97.40";
 	}else{
-		commonIp = "http://117.52.97.40:80";
+		commonIp = "http://110.45.190.114:80";
 	}
 	return commonIp; 
 }
@@ -241,7 +242,7 @@ function numberWithCommas(x) {
 function parseAppCoDiv(appCoCd) {
 	var appCoCdNm ="";
 	switch (appCoCd) {
-	case "000": appCoCdNm = "미확인"; break;
+	/*case "000": appCoCdNm = "미확인"; break;*/
 	case "001": appCoCdNm = "외식/식사" ;break;
 	case "002": appCoCdNm = "카페/베이커리" ;break;
 	case "003": appCoCdNm = "술/유흥" ;break;
@@ -317,7 +318,7 @@ function phoneFomatter(num,type){
         }
     }
     return formatNum;
-    
+   
 }
 
 
@@ -344,7 +345,7 @@ function fn_commonUserData(resdata){
 	resultCnt = resultData.length;
 	if(resultData.length>0){
 		for(var i=0; i<1; i++){
-			str += '<table><tr><td><img src="../common/mobile.png"></td> '
+			str += '<table><tr><td><img src="../common/mobile.png" onclick="mainLoca()"></td> '
 			str += '<td><h2>'+resultData[i].USER_NM+'</h2><br><span>'+resultData[i].EMAIL+'</span></td></tr></table>';
 			if(resultData[i].PUSH_YN == "Y"){
 				$("#alarmBtn").prop('checked', true) ;
@@ -382,10 +383,10 @@ function fn_commonUserData(resdata){
 	str2 += '    <div class="leftm_box leftm03"></div>';
 	str2 += '    <a href="javascript:void(0)">월별내역</a>';
 	str2 += '    </li>';
-/*	str2 += '	<li id="leftMenuAffliate">';
-	str2 += '    <div class="leftm_box leftm08"></div>';
+	str2 += '	<li id="leftMenuAffliate">';
+	str2 += '    <div class="leftm_box leftm08" style="left:5px; top:3px"></div>';
 	str2 += '    <a href="javascript:void(0)">가맹점</a>';
-	str2 += '    </li>';*/
+	str2 += '    </li>';
 /*	str2 += '	<li id="leftMenuSmsHistory">';
 	str2 += '    <div class="leftm_box leftm07"></div>';
 	str2 += '    <a href="javascript:void(0)">모바일영수증</a>';
@@ -420,6 +421,9 @@ function fn_whenError(){
 	//alert("실패.??");
 }
 
+function mainLoca(){
+	location.href='index.html?CI='+CI+'&telNo='+request.getParameter('telNo');
+}
 
 var Request = function()
 {

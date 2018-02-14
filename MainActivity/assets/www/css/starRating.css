@@ -1,0 +1,4 @@
+.starRating,
+.starRating span{ display:inline-block; height:14px; background:transparent url(../common/starstar.png) no-repeat; overflow:hidden;}
+.starRating{ width:79px; vertical-align:middle; margin-bottom: 8px;}
+.starRating span{ font-size:0; line-height:0; vertical-align:top; text-indent:-100px; *text-indent:0; background-position:0 -14px;}

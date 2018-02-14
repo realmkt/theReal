@@ -1,6 +1,31 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+
+<style type="text/css">
+
+/* 드래그막기 */
+div {
+   -ms-user-select: none; 
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   user-select: none;
+ }
+
+#agreePage{
+	padding-top: 45px;
+}
+
+#backFont{
+	display: inline-block;
+	top: 0;
+    padding: 15px 15px;
+    background: #272727;
+    width: 100%; 
+}
+
+</style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
@@ -38,32 +63,32 @@
 		<div class="view view-main">
         
         
-            <div class="navbar">
+           
                 
                 <div data-page="real_agree01" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
-                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backs">Back</span></a></div>
+                <div class="center sliding">전자영수증 이용약관</div>
                 </div>
                 
                 
                 <div data-page="real_agree02" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
-                <div class="center sliding">고유식별정보동의</div>
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backs">Back</span></a></div>
+                <div class="center sliding">개인정보 활용동의</div>
                 </div>
 
                 
                 <div data-page="real_agree03" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
-                <div class="center sliding">본인확인서비스 이용약관</div>
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backs">Back</span></a></div>
+                <div class="center sliding">위치정보 활용약관</div>
                 </div>
 
                 
                 <div data-page="real_agree04" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
-                <div class="center sliding">통신사 이용약관</div>
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backs">Back</span></a></div>
+                <div class="center sliding">푸시메세지 동의</div>
                 </div>
 
-            </div>
+          
             
             
         
@@ -73,9 +98,9 @@
 
                     <div class="page-content">
                     
-                       <div class="join_bar">
+                       <div class="join_bar" onclick="back();">
                           <div class="left">
-                    <div class="left sliding"><a href="javascript:back()" class="back link"> <i class="icon icon-back"></i><span class="backfont">회원가입</span></a></div>
+                    <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span class="backfont">회원가입</span></a></div>
                     </div>
                            
                        </div>
@@ -83,7 +108,7 @@
                        <div class="join_title" style="padding:20px 15px 0px 15px;"> 
                         더리얼 마케팅 전자영수증 약관동의</div>
                         <div class="list-block list-block2">
-            	
+            									
                            
                             <ul>
                               <li class="agree_tab">
@@ -95,7 +120,7 @@
                                 </div>
                                 
                                 <div class="agree_detail">
-                                    <a href="#real_agree01" class="item-link">
+                                    <a href="#real_agree01" class="item-link" onClick="checkFlag();">
                                     <div class="item-content">
                                         <div class="item-inner"> 
                                         <div class="item-title">전자영수증 이용약관</div>
@@ -117,7 +142,7 @@
                                 </div>
                                 
                                 <div class="agree_detail">
-                                    <a href="#real_agree02" class="item-link">
+                                    <a href="#real_agree02" class="item-link" onClick="checkFlag();">
                                     <div class="item-content">
                                         <div class="item-inner"> 
                                         <div class="item-title">개인정보 활용동의</div>
@@ -139,7 +164,7 @@
                                 </div>
                                 
                                 <div class="agree_detail">
-                                    <a href="#real_agree03" class="item-link">
+                                    <a href="#real_agree03" class="item-link" onClick="checkFlag();">
                                     <div class="item-content">
                                         <div class="item-inner"> 
                                         <div class="item-title">위치정보 활용약관</div>
@@ -161,7 +186,7 @@
                                 </div>
                                 
                                 <div class="agree_detail">
-                                    <a href="#real_agree04" class="item-link">
+                                    <a href="#real_agree04" class="item-link" onClick="checkFlag();">
                                     <div class="item-content">
                                         <div class="item-inner"> 
                                         <div class="item-title">푸시 메시지 동의</div>
@@ -178,7 +203,7 @@
  
                        <div class="alen_allcheck" style="margin:0px 20px;">
                                 <label class="label-checkbox item-content">
-                                  <input type="checkbox" name="ks-checkbox" id="allCheck" value="전체약관에 동의 합니다.">
+                                  <input type="checkbox" name="ks-checkbox" id="allCheck" value="전체약관에 동의 합니다." onChange="checkProp();">
                                   <div class="item-media"><i class="icon icon-form-checkbox" style="float:left; "></i></div>
                                   <div class="item-inner">
                                     <div class="item-title" style="font-size:16px;padding-left:30px;color:#767676;">전체약관에 동의 합니다.</div>
@@ -200,15 +225,17 @@
 
 
                 <div data-page="real_agree01" class="page cached">
+                     <div class="left sliding" id="backFont"><a href="#" class="back link"><span style="color: #272727;">숨</span><i class="icon icon-back"></i><span style="color: #272727;">숨겨놓았지롱ㅉㅉ</span></a></div>
                     <div class="page-content agree_acon">
                         <div class="content-block">
 						<iframe src="real_agree01.html" frameborder="0" width="100%" height="100%"></iframe>
                         </div>
                     </div>
                 </div>
-
+		
 
                 <div data-page="real_agree02" class="page cached">
+                     <div class="left sliding" id="backFont"><a href="#" class="back link"><span style="color: #272727;">숨</span><i class="icon icon-back"></i><span style="color: #272727;">숨겨놓았지롱ㅉㅉ</span></a></div>
                     <div class="page-content agree_acon">
                         <div class="content-block">
 						<iframe src="real_agree02.html" frameborder="0" width="100%" height="100%"></iframe>
@@ -216,8 +243,10 @@
                     </div>
                 </div>
 
-
+		
                 <div data-page="real_agree03" class="page cached">
+                	 <div class="left sliding" id="backFont"><a href="#" class="back link"><span style="color: #272727;">숨</span><i class="icon icon-back"></i><span style="color: #272727;">숨겨놓았지롱ㅉㅉ</span></a></div>
+              
                     <div class="page-content agree_acon">
                         <div class="content-block">
 						<iframe src="real_agree03.html" frameborder="0" width="100%" height="100%"></iframe>
@@ -227,7 +256,7 @@
 
 
                 <div data-page="real_agree04" class="page cached">
-                    <div class="page-content agree_acon">
+                      <div class="left sliding" id="backFont"><a href="#" class="back link"><span style="color: #272727;">숨</span><i class="icon icon-back"></i><span style="color: #272727;">숨겨놓았지롱ㅉㅉ</span></a></div>
                         <div class="content-block">
 						<iframe src="real_agree04.html" frameborder="0" width="100%" height="100%"></iframe>
                         </div>
@@ -258,17 +287,22 @@ var request = new Request();
 var uuid = request.getParameter('uuid');
 
 var page = true;
-/* history.pushState(null,null,location.href);
+ history.pushState(null,null,location.href);
 window.onpopstate = function(event){
 	if(page){
-		alert("Back")
+		
 		history.back();
 	}else{
 		history.pushState(null,null,location.href);
 		page = true;
 		$("#alert_body").fadeOut(10);
 	}
-} */
+}
+
+function back(){
+
+	history.back();
+}
 /* if (navigator.userAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || navigator.userAgent.match(/LG|SAMSUNG|Samsung/) != null) {
 	  alert(navigator.userAgent);
 	}
@@ -303,7 +337,7 @@ function alertClose(val){
 		$("#alert_body").fadeOut(10);
 	}
 	
-$(".alen_allcheck").click(function(){
+/* $(".alen_allcheck").click(function(){
 		//만약 전체 선택 체크박스가 체크된상태일경우
 		if($("#allCheck").prop("checked")) {
 			//해당화면에 전체 checkbox들을 체크해준다
@@ -313,8 +347,42 @@ $(".alen_allcheck").click(function(){
 			$("input[name='subCheck']").prop("checked",true);
 			$(".agree_btn").css("background","#272727");
 		}
-	})
+	}) */
 
+	
+	
+var page = true;
+//뒤로가기
+
+history.pushState(null,null,location.href);
+window.onpopstate = function(event){
+	
+	if(page){
+		history.back();
+	}else{
+		history.pushState(null,null,location.href);
+		page = true;
+		$("#backs").trigger("click");
+	}
+}
+
+function checkFlag(){
+	 page = false;
+}
+
+function checkProp(){
+	//만약 전체 선택 체크박스가 체크된상태일경우
+	if($("#allCheck").prop("checked")) {
+		//해당화면에 전체 checkbox들을 체크해준다
+		$("input[name='subCheck']").prop("checked",true);
+	// 전체선택 체크박스가 해제된 경우
+	} else {
+		//해당화면에 모든 checkbox들의 체크를해제시킨다.
+		$("input[name='subCheck']").prop("checked",false);
+	}
+}	
+	
+	
 </script>
 
 

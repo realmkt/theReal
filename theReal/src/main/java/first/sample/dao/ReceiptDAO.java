@@ -254,14 +254,27 @@ public class ReceiptDAO extends AbstractDAO {
 	public List<Map<String, Object>> depth03DivList(Map<String, Object> map) {
 		return selectList("sample.depth03DivList", map);
 	}
+	
+	public void cateChange(Map<String, Object> map) {
+		update("sample.cateChange", map);
+	}
+	
+	public void cateChangeBack(Map<String, Object> map) {
+		update("sample.cateChangeBack", map);
+	}
 
 	public List<Map<String, Object>> depth01List(Map<String, Object> map) {
 		return selectList("sample.depth01List", map);
 	}
 
 	// 리뉴얼 모바일
-	public List<Map<String, Object>> dayList01(Map<String, Object> map) {
-		return selectList("sample.dayList01", map);
+	public String userMinDate(Map<String, Object> map) {
+		return (String)selectOne("sample.userMinDate", map);
+	}
+	
+	
+	public List<Map<String, Object>> list01(Map<String, Object> map) {
+		return selectList("sample.list01", map);
 	}
 
 	public List<Map<String, Object>> dayList02(Map<String, Object> map) {
@@ -278,6 +291,14 @@ public class ReceiptDAO extends AbstractDAO {
 
 	public List<Map<String, Object>> cardList03(Map<String, Object> map) {
 		return selectList("sample.cardList03", map);
+	}
+	
+	public List<Map<String, Object>> divList02(Map<String, Object> map) {
+		return selectList("sample.divList02", map);
+	}
+
+	public List<Map<String, Object>> divList03(Map<String, Object> map) {
+		return selectList("sample.divList03", map);
 	}
 
 	public List<Map<String, Object>> latestData(Map<String, Object> map) {
@@ -502,7 +523,7 @@ public class ReceiptDAO extends AbstractDAO {
 	public Map<String, Object> cancleReceipt(Map<String, Object> map) {
 		return (Map<String, Object>) selectOne("sample.cancleReceipt", map);
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> couponMyList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -627,4 +648,7 @@ public class ReceiptDAO extends AbstractDAO {
 		update("sample.countDown", affliate_no);
 	}
 
+	public void leave(String CI) {
+		update("sample.leave", CI);
+	}
 }
