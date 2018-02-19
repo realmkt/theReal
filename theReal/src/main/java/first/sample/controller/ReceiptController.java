@@ -839,7 +839,7 @@ public class ReceiptController {
 	}*/
 	
 	
-	/**
+	/**  
 	 * 총 사용 내역 메일전송 
 	 * 
 	 * @param commandMap
