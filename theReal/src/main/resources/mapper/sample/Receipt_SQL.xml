@@ -14,6 +14,8 @@
 			TEL_NO = #{telNo}
 		AND
 			EMAIL != 'UPLUS' 
+		AND
+			USER_CI != 'leave'
 		]]>
 	</select>
 	
@@ -1099,6 +1101,21 @@
 			USER_CI = #{CI}
 		]]>
 	</select>	
+	
+	
+	<select id="getKakaoApi" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			KAKAO_KEY,
+			SHOP_CEO_NUM,
+			TEM_NO
+		FROM
+			TB_AFF_KAKAO
+		WHERE
+			SHOP_BIZNO = #{bizNo}
+		]]>
+	</select>
+	
 	
 	
 	

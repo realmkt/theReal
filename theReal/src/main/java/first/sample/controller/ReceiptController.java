@@ -31,6 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONObject;
@@ -81,13 +83,18 @@ public class ReceiptController {
 	/*
 	 * 버전 체크
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/receipt/versionChk.do")
 	public Object versionChk(CommandMap commandMap) throws Exception {
 		String version = (String)commandMap.get("version");
+		
 		int result = 1;
 		//허용 가능 버전
-		String[] usingVersion = {"v0.0.1","v0.0.2"};
+		String usingVersion = "v1.0.5";
 		
+		if(!usingVersion.equals(version)){
+			result = 0;
+		}
 		return result;
 	}
 	
@@ -149,7 +156,7 @@ public class ReceiptController {
 		return flag;
 	}
 
-	/*
+	/*d
 	 * 샘플 게시판 작성 화면
 	 */
 	@RequestMapping(value = "/receipt/openBoardWrite.do")
@@ -1671,10 +1678,21 @@ public class ReceiptController {
 			}
 			
 			
+			///////////////////////////////알림톡///////////////////////////////////////
+			
+			HttpClient client = new HttpClient();
+			PostMethod method = new PostMethod("http://110.45.190.114/theReal/test.jsp");
+		
+			
+			method.setParameter("telNo", telNo);
+			
+			Map<String, Object> kakaoMap = new HashMap<String, Object>();
+			kakaoMap.put("bizNo", var.find("shopInfo.bizNo").toString().replace("-", ""));
+			
+			Map<String, Object> resultKakao = receiptService.getKakaoApi(kakaoMap);
 			
 			
-			
-			
+			///////////////////////////////알림톡///////////////////////////////////////
 			
 			
 			

@@ -178,6 +178,8 @@ public class LPointController {
 				System.out.println("★★★★★★★★★★★devop"); 
 				lpointUrl = "https://devop.lpoint.com:8903/op";
 			} else {
+				
+				//P005100006 가맹점 번호
 				System.out.println("★★★★★★★★★★★op");
 				lpointUrl = "https://op.lpoint.com/op";
 			}

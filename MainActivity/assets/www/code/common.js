@@ -184,7 +184,7 @@ return true;
 //개발IP셋팅
 function commonIp(){
 	var commonIp = "";
-	var dev = true;
+	var dev = false;
 	if(dev){
 		commonIp = "http://182.162.84.177:80";
 		//commonIp = "117.52.97.40";
@@ -352,7 +352,7 @@ function fn_commonUserData(resdata){
 			}else{
 				$("#alarmBtn").prop('checked', false) ;
 			}
-			str += '<a class="myCoupon" id="myCoupon" href="#"><img src="../common/myCoupon.png"><p> 내 쿠폰함</p></a>';
+			/*str += '<a class="myCoupon" id="myCoupon" href="#"><img src="../common/myCoupon.png"><p> 내 쿠폰함</p></a>';*/
 			
 			$("#barcodeName").empty();
 			$("#barcodeName").append(resultData[i].USER_NM);
@@ -395,10 +395,10 @@ function fn_commonUserData(resdata){
 	str2 += '    <div class="leftm_box leftm04"></div>';
 	str2 += '    <a href="javascript:void(0)">이벤트</a>';
 	str2 += '    </li>';
-	str2 += '	<li id="leftMenuCoupon">';
+/*	str2 += '	<li id="leftMenuCoupon">';
 	str2 += '    <div class="leftm_box leftm09"></div>';
 	str2 += '    <a href="javascript:void(0)">더리얼 쿠폰</a>';
-	str2 += '    </li>';
+	str2 += '    </li>';*/
 	str2 += '	<li id="leftMenuNotice">';
 	str2 += '    <div class="leftm_box leftm05"></div>';
 	str2 += '    <a href="javascript:void(0)">공지사항</a>';

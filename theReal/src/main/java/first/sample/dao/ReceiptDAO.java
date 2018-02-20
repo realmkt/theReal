@@ -353,6 +353,11 @@ public class ReceiptDAO extends AbstractDAO {
 		String userCreaDate = (String) selectOne("sample.getCreaDate", map);
 		return userCreaDate;
 	}
+	
+	public Map<String, Object> getKakaoApi(Map<String, Object> map) {
+		Map<String, Object> userCreaDate = (Map<String, Object>) selectOne("sample.getKakaoApi", map);
+		return userCreaDate;
+	}
 
 	////// uplus
 

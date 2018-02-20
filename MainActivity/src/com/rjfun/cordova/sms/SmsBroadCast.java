@@ -90,8 +90,8 @@ public class SmsBroadCast extends BroadcastReceiver {
 	            
 	            HttpURLConnection conn = null;
 	            try {
-	            	//URL url = new URL("http://110.45.190.114/theReal/receipt/smsCardInfo.do");
-	            	URL url = new URL("http://182.162.84.177/theReal/receipt/smsCardInfo.do");
+	            	URL url = new URL("http://110.45.190.114/theReal/receipt/smsCardInfo.do");
+	            	//URL url = new URL("http://182.162.84.177/theReal/receipt/smsCardInfo.do");
 	                //URL url = new URL("requestURL"); //요청 URL을 입력
 	                conn = (HttpURLConnection) url.openConnection();
 	                conn.setRequestMethod("POST"); //요청 방식을 설정 (default : GET)

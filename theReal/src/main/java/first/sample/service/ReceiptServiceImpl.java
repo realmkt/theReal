@@ -525,7 +525,12 @@ public class ReceiptServiceImpl implements ReceiptService {
 		return userCreaDate;
 	}
 	
-	
+	@Override
+	public Map<String, Object> getKakaoApi(Map<String, Object> map) {
+		Map<String, Object> resultMap = receiptDAO.getKakaoApi(map);
+		return resultMap;
+
+	}
 	
 	
 	

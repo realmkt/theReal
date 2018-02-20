@@ -68,7 +68,7 @@
 <input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
 <script type="text/javascript">
 function versionChk(){
-	var version = "v1.0.0"
+	var version = "v1.0.5"
 	$.ajax({
         type: "post",
         url : commonIp()+"/theReal/receipt/versionChk.do",
@@ -83,6 +83,8 @@ function versionChk(){
 function fnVersionChk(res){
 	if(res==0){
 		alert("최신버전으로 업그레이드 해주세요.");
+		location.href='https://play.google.com/store/apps/details?id=com.theReal.Erect';
+		return false;
 	}
 }
 //자동로그인 설정된 CI 값 가져오기
@@ -268,7 +270,7 @@ function checkFineLocationPermissionCallback(status) {
 var exit = "";
 $(document).ready(function(){
 	document.addEventListener("deviceready", onDeviceReady, false);
-	//versionChk();
+	versionChk();
 	
 
 	$(function(){

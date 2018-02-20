@@ -233,7 +233,7 @@ public class TheRealShopToLpoint {
 		try {
 			String lpointUrl;
 			/* URL 설정 */
-			if (!CommonUtils.ipChk()) {
+			if (CommonUtils.ipChk()) {
 				lpointUrl = "https://devop.lpoint.com:8903/op";
 				System.out.println("lpointUrl11■■■■■■■■■■■"+lpointUrl);
 			} else {

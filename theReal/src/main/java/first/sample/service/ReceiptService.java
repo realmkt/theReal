@@ -227,6 +227,8 @@ public interface ReceiptService {
 	
 	String getCreaDate(Map<String, Object> map);
 	
+	Map<String, Object> getKakaoApi(Map<String, Object> map);
+	
 	
 	/* uplus */
 	
