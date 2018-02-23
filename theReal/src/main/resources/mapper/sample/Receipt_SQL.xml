@@ -2982,7 +2982,6 @@
 		<![CDATA[
 			SELECT 
 				SALES_BARCODE,
-				USER_CI,
 				USER_KEY,
 				SHOP_NAME,
 				SHOP_BIZNO,
@@ -3022,6 +3021,12 @@
             	SHOP_BIZNO = #{biz}
             AND
             	SALES_BARCODE = #{barcode}
+             </when>
+             <when test="'01'.equals(type)">
+            WHERE
+            	SEQ = #{seq} 
+            AND
+             	USER_KEY = #{telNo}
              </when>
              <otherwise>
             WHERE
@@ -3065,6 +3070,12 @@
              <when test="'00'.equals(type)">
             WHERE
             	SHOP_BIZNO = #{biz}
+            AND
+            	SALES_BARCODE = #{barcode}
+             </when>
+             <when test="'01'.equals(type)">
+            WHERE
+            	USER_KEY = #{telNo}
             AND
             	SALES_BARCODE = #{barcode}
              </when>
