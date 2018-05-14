@@ -1614,6 +1614,8 @@ public class ReceiptController {
 	// public ModelAndView insertReceiptData(CommandMap commandMap,
 	// HttpServletRequest request) throws Exception{
 	public JSONObject insertReceiptData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String telNo = "";
+		Var var = null;
 		String uplusUserKey =  "";
 		String str;
 		String jsonResData = "";
@@ -1658,8 +1660,8 @@ public class ReceiptController {
 		}
 		try {
 
-			Var var = JsonParser.object(new CharTokenizer(paramData.toString()));
-			String telNo = "";
+			var = JsonParser.object(new CharTokenizer(paramData.toString()));
+			
 			
 			HashMap<String, Object> detailMap = new HashMap<String, Object>();
 			//System.out.println("@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#");
@@ -2043,6 +2045,8 @@ public class ReceiptController {
 				
 				  resStr = resStr + "{";
 			      resStr = resStr + "\"userKey\": \"" + uplusUserKey + "\",";
+			      resStr = resStr + "\"CTN\": \"" + telNo + "\",";
+			      resStr = resStr + "\"erecNo\": \"" +  var.find("shopInfo.bizNo")+"_"+var.find("salesInfo.salesBarCode")  + "\",";
 			      resStr = resStr + "\"etcInfo\": [ ";
 			      resStr = resStr + "{";
 			      resStr = resStr + "\"memo\": \"" + var.find("etcInfo.memo") + "\",";
@@ -2165,7 +2169,13 @@ public class ReceiptController {
 				uplusRes = resStr;
 				try {
 					
-					AES256 aes = new AES256("LGU+DEV258010247"); 
+					AES256 aes = null;
+				      
+				      if(CommonUtils.ipChk()){
+				         aes = new AES256("LGU+DEV258010247");
+				      }else{
+				         aes = new AES256("LGU+210987654321");
+				      }
 					
 					resStrEnc = aes.encryptStringToBase64(resStr);
 				} catch (Exception e) {
@@ -2192,11 +2202,12 @@ public class ReceiptController {
 				
 				
 				
-				String url = "http://dev-wallet-partner.uplus.co.kr:19090/etc/ReceiptPush";
+				String url = "https://wallet-partners.uplus.co.kr:19092/etc/ReceiptPush";
+				//String url = "http://dev-wallet-partner.uplus.co.kr:19090/etc/ReceiptPush";
 				int timeout = 10;
 				
 				HttpPost httpost = new HttpPost(new URI(url));
-				RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000).setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+				RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 5000).setConnectionRequestTimeout(timeout * 5000).setSocketTimeout(timeout * 5000).build();
 				CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
 				
 				RequestConfig.Builder requestBuilder = RequestConfig.custom();
@@ -2204,7 +2215,7 @@ public class ReceiptController {
 				builder.setDefaultRequestConfig(requestBuilder.build());
 				org.apache.http.client.HttpClient client = builder.build();
 				
-				StringEntity stringEntity = new StringEntity(uplusRes, ContentType.create("application/json", "UTF-8"));
+				StringEntity stringEntity = new StringEntity(resStrEnc, ContentType.create("application/json", "UTF-8"));
 				httpost.setEntity(stringEntity);
 				
 				HttpResponse response0 = httpClient.execute(httpost);	
@@ -2385,9 +2396,8 @@ public class ReceiptController {
 		paramData3 += "	}                                                                           ";
 		paramData3 += "}                                                                            ";
 
-		/*
 		
-		
+		 
 		///////////////////////////////알림톡///////////////////////////////////////
 		
 		try {
@@ -2395,35 +2405,58 @@ public class ReceiptController {
 			String url = "http://www.apiorange.com/api/send/notice.do";
 			int timeout = 10;
 
-			JSONObject json = new JSONObject(); 
 			
-			json.put("tmp_number", "1842");
-			json.put("kakao_sender", "02-540-3111");
-			json.put("kakao_phone", "01074505585");
-			json.put("kakao_name", "강진우");
-			json.put("kakao_080", "Y");
-			json.put("TRAN_REPLACE_TYPE", "S");
-			json.put("kakao_add1", "더리얼");
-			json.put("kakao_add2", "2018.02.21 12:45:55");
-			json.put("kakao_add3", "더리얼마케팅");
-			json.put("kakao_add4", "44,000");
-			json.put("kakao_add5", "http://test22.com");
+			//Map<String, Object> kakaoMap = receiptService.getKakao(map)
+			
+			
+			
+			AES256 aes = null;
+		      
+		      if(CommonUtils.ipChk()){
+		         aes = new AES256("LGU+DEV258010247");
+		      }else{
+		         aes = new AES256("LGU+210987654321");
+		      }
+			
+			 
+			JSONObject json = new JSONObject(); 
+
+			json.put("tmp_number", "2456");
+	        json.put("kakao_sender", "02-540-3111");
+	        json.put("kakao_phone", telNo.toString());
+	        json.put("kakao_name",  telNo.substring(telNo.length()-4));
+	        json.put("kakao_080", "Y");
+	        json.put("TRAN_REPLACE_TYPE", "S");
+	        json.put("kakao_add1", var.find("shopInfo.name").toString());
+	        String td = var.find("salesInfo.salesDate").toString();
+	        System.out.println(td);
+	        if(td.length() < 17){
+	        	td = td.substring(0,4 ) + "." + td.substring(4,6 ) + "." + td.substring(6,8 ) + " " +  td.substring(8,10 ) + ":" + td.substring(10,12 ) + ":" + td.substring(12,14 );
+	        }
+			json.put("kakao_add2", td);
+			json.put("kakao_add3", var.find("shopInfo.name").toString());
+			json.put("kakao_add4", replaceComma(Integer.parseInt(var.find("salesInfo.paidAmt").toString())) + "원");
+			
+					
+			
+			String kakaoBarcode = var.find("salesInfo.salesBarCode").toString();
+			
+			
+			json.put("kakao_url1_1", "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="+URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode),"UTF-8")+"&t="+URLEncoder.encode(aes.encryptStringToBase64(telNo),"UTF-8")) ;                     
+			//json.put("kakao_add5", "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="+URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode),"UTF-8")+"&t="+URLEncoder.encode(aes.encryptStringToBase64(telNo),"UTF-8"));
 			
 			
 			System.out.println(json.toString());
 			
 			HttpPost httpost = new HttpPost(new URI(url));
 			
-			
 			httpost.addHeader("Authorization"  , "NvMMEL2bEB1aeSeUK0Mgd5ymKwfQGUv6LNUo/vuY2f0=");
-			
-			
 			
 			RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000).setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
 			CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
 			
 			RequestConfig.Builder requestBuilder = RequestConfig.custom();
-			HttpClientBuilder builder = HttpClientBuilder.create();
+			HttpClientBuilder builder = HttpClientBuilder.create(); 
 			builder.setDefaultRequestConfig(requestBuilder.build());
 			org.apache.http.client.HttpClient client = builder.build();
 			
@@ -2444,11 +2477,10 @@ public class ReceiptController {
 			
 			System.out.println("///////////////////////////////알림톡end///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
 			//////////////////////////////알림톡///////////////////////////////////////
+			
 		} catch (Exception e) {
 				// 	TODO: handle exception
-		}*/
-		
-		
+		}
 		// 	log.debug("paramData2:"+paramData2);
 		// String eRecResData = TheRealShopToERec.theRealToEReceipt2(request,
 		// response, paramData.toString());
@@ -4165,8 +4197,13 @@ public class ReceiptController {
 		String jsonResData = "";
 		StringBuffer paramData = new StringBuffer();
 		
-		AES256 aes = new AES256("LGU+210987654321");
-		
+		AES256 aes = null;
+	      
+	      if(CommonUtils.ipChk()){
+	         aes = new AES256("LGU+DEV258010247");
+	      }else{
+	         aes = new AES256("LGU+210987654321");
+	      }
 		System.out.println("ipChk"+CommonUtils.ipChk()); 
 		
 		System.out.println("@@paramDataparamData@@:" + paramData);
@@ -4228,20 +4265,20 @@ public class ReceiptController {
 		
 		Var var2 = JsonParser.object(new CharTokenizer(dec));
 		String telNo = var2.find("telNo").toString();
-		String userNm = URLDecoder.decode(var2.find("userNm").toString() , "UTF-8"); 
-		String userBirth = var2.find("userBirth").toString();  
-		String sexDivCd = var2.find("sexDivCd").toString();
-		String localDivCd = var2.find("localDivCd").toString();
+		//String userNm = URLDecoder.decode(var2.find("userNm").toString() , "UTF-8"); 
+		String userBirth = var2.find("userBirth").toString().substring(0,5);  
+		String sexDivCd = var2.find("userBirth").toString().substring(5);
+		//String localDivCd = var2.find("localDivCd").toString();
 		transactionId = var2.find("transactionId").toString();
 		String userState = "01";
 		
 		System.out.println(telNo +"//" + userBirth);
 		
 		map.put("telNo", telNo);
-		map.put("userNm", userNm);
+		//map.put("userNm", userNm);
 		map.put("userBirth", userBirth);
 		map.put("sexDivCd", sexDivCd);
-		map.put("localDivCd", localDivCd);
+		//map.put("localDivCd", localDivCd);
 		map.put("userState", userState);
 		Integer upluJoinChk = receiptService.selectUplusJoinChk(map);
 		Integer usedTelChk = receiptService.selectUsedTelChk(map);
@@ -4306,7 +4343,7 @@ public class ReceiptController {
 			resStr += "{";
 			resStr += "	\"result\": \"UJ001\",";
 			resStr += "	\"message\": \"회원 가입이 완료되었습니다.(더리얼 미 가입 회원)\",";
-			resStr += "	\"userKey\": \"" + randomSetValue + "\"";
+			resStr += "	\"userKey\": \"" + randomSetValue + "\",";
 			resStr += "	\"transactionId\": \"" + transactionId + "\"";
 			resStr += "}";
 			System.out.println("resStr:" + resStr);
@@ -4377,7 +4414,19 @@ public class ReceiptController {
 		System.out.println("@@1111paramData22@@: " + paramData);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		AES256 aes = new AES256("LGU+210987654321");
+		
+		
+		
+		
+		
+		
+		AES256 aes = null;
+	      
+	      if(CommonUtils.ipChk()){
+	         aes = new AES256("LGU+DEV258010247");
+	      }else{
+	         aes = new AES256("LGU+210987654321");
+	      }
 		
 		String value = paramData.toString();
 		String dec = "";
@@ -4472,8 +4521,13 @@ public class ReceiptController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		AES256 aes = new AES256("LGU+210987654321");
-
+		AES256 aes = null;
+	      
+	      if(CommonUtils.ipChk()){
+	         aes = new AES256("LGU+DEV258010247");
+	      }else{
+	         aes = new AES256("LGU+210987654321");
+	      }
 		System.out.println("ipChk"+CommonUtils.ipChk()); 
 		
 		System.out.println("@@paramDataparamData@@:" + paramData);
@@ -4577,7 +4631,14 @@ public class ReceiptController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int listSize =0;
 		String str;
-		AES256 aes = new AES256("LGU+210987654321");
+		
+		AES256 aes = null;
+		
+		if(CommonUtils.ipChk()){
+			aes = new AES256("LGU+DEV258010247");
+		}else{
+			aes = new AES256("LGU+210987654321");
+		}
 		
 		JSONObject json = null;
 		try {
@@ -4727,17 +4788,27 @@ public class ReceiptController {
 			JSONObject json = null;
 			try {
 				
-			String seq = (String)commandMap.get("seq");
-			String telNo = (String)commandMap.get("telNo");
-			seq = aes.encryptStringToBase64(seq);
-			telNo = aes.encryptStringToBase64(telNo);
-			System.out.println("SEQ 복호화전 seq   ::: " + seq);
-			System.out.println("SEQ 복호화전 telNo ::: " + telNo);
-			seq = aes.decryptBase64String(seq);
+			String barcode = (String)commandMap.get("No");
+			String telNo = (String)commandMap.get("t");
+			
+			if(telNo.length() < 12){
+				barcode = aes.encryptStringToBase64(barcode);
+				telNo = aes.encryptStringToBase64(telNo);
+			}
+			System.out.println(" 복호화전 seq   ::: " + barcode);
+			System.out.println(" 복호화전 telNo ::: " + telNo);
+			
+			/*barcode  = URLDecoder.decode(barcode);
+			telNo  = URLDecoder.decode(telNo);
+			
+			System.out.println(" URL복호화전 seq   ::: " + barcode);
+			System.out.println(" URL복호화전 telNo ::: " + telNo); */
+			
+			barcode = aes.decryptBase64String(barcode);
 			telNo = aes.decryptBase64String(telNo);
-			System.out.println("SEQ 복호화후 seq   ::: " + seq);
-			System.out.println("SEQ 복호화후 telNo ::: " + telNo);
-			map.put("seq", seq);
+			System.out.println(" 복호화후 seq   ::: " + barcode);
+			System.out.println(" 복호화후 telNo ::: " + telNo);
+			map.put("barcode", barcode);
 			map.put("telNo", telNo);
 			map.put("type", "01");
 			
@@ -5343,6 +5414,54 @@ public class ReceiptController {
 		}
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/receipt/decrypt.do")
+	public Object decryptDev(CommandMap commandMap){
+		String st = (String) commandMap.get("st");
+		String dev = (String) commandMap.get("dev");
+		
+		AES256 aes = null;
+		
+		try {
+			if(dev.equals("Y")){
+				aes = new AES256("LGU+DEV258010247");
+			}else{
+				aes = new AES256("LGU+210987654321");
+			}
+			
+			System.out.println("복호화 전 :::" + st);
+			st = aes.decryptBase64String(st);
+			System.out.println("복호화 후 :::" + st);
+		} catch (Exception e) {
+			e.getMessage();		
+		}
+		
+		return st;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/receipt/encrypt.do")
+	public Object encrypt(CommandMap commandMap){
+		String st = (String) commandMap.get("st");
+		String dev = (String) commandMap.get("dev");
+		
+		AES256 aes = null;
+		try {
+			if(dev.equals("Y")){
+				aes = new AES256("LGU+DEV258010247");
+			}else{
+				aes = new AES256("LGU+210987654321");
+			}
+			System.out.println("암호화 전 :::" + st);
+			st = aes.encryptStringToBase64(st);
+			System.out.println("암호화 후 :::" + st);
+			
+		} catch (Exception e) {
+			e.getMessage();		
+		}
+		
+		return st;
+	}
 	
 	
 	

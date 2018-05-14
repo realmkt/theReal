@@ -1922,6 +1922,8 @@
 			COUNT(EMAIL) AS CNT
 		FROM
 			TB_USER
+		USE INDEX (IDX_USER)
+		
 		WHERE 
 			TEL_NO = #{telNo}
 		AND
@@ -1935,6 +1937,7 @@
 			COUNT(*) AS CNT
 		FROM
 			TB_USER
+			USE INDEX (IDX_USER)
 		WHERE 
 			TEL_NO = #{telNo}
 		AND
@@ -2015,9 +2018,7 @@
 		    	(
 		    		EMAIL,
 		    		TEL_NO,
-		    		USER_NM,
 		    		USER_RRN,
-		    		LOCAL_DIV_CD,
 		    		SEX_DIV_CD,
 		    		UPLUS_USER_KEY,
 		    		FRT_CREA_DTM,
@@ -2029,9 +2030,7 @@
 		    	(	
 		    		'UPLUS',  
 		    		#{telNo},
-		    		#{userNm},
 		    		#{userBirth},
-		    		#{localDivCd},
 		    		#{sexDivCd},
 		    		#{uplusUserKey},
 		    		now(),
@@ -3024,7 +3023,7 @@
              </when>
              <when test="'01'.equals(type)">
             WHERE
-            	SEQ = #{seq} 
+            	SALES_BARCODE = #{barcode} 
             AND
              	USER_KEY = #{telNo}
              </when>
