@@ -240,7 +240,16 @@ public interface ReceiptService {
 	
 	Map<String, Object> getDetailReceipt(Map<String, Object> map) throws Exception;
 
-	
+
+	String userState(String userKey);
+
+	Map<String, Object> uplusUserData(Map<String, Object> userMap);
+
+	Map<String, Object> uplusReceipeDataDetail(Map<String, Object> userMap2);
+
+	Map<String, java.lang.Object> allPaid(Map<String, Object> userMap);
+
+	Map<String, Object> uplusReceiptData2(Map<String, Object> userMap);
 	
 	
 	

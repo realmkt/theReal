@@ -52,6 +52,9 @@ $(document).ready(function(){
  	$(document).on('click','#leftMenuNotice',function(){
  		location.href='notice.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
+ 	$(document).on('click','.left-setting-icon',function(){
+ 		location.href='setting.html?CI='+CI+'&telNo='+request.getParameter('telNo');
+ 	});
  	$(document).on('click','.alen_logo',function(){
  		location.href='index.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
@@ -345,8 +348,15 @@ function fn_commonUserData(resdata){
 	resultCnt = resultData.length;
 	if(resultData.length>0){
 		for(var i=0; i<1; i++){
-			str += '<table><tr><td><img src="../common/mobile.png" onclick="mainLoca()"></td> '
-			str += '<td><h2>'+resultData[i].USER_NM+'</h2><br><span>'+resultData[i].EMAIL+'</span></td></tr></table>';
+			str += '<table><tr><td><img src="../common/mobile.png" onclick="mainLoca()" style="width:30px"></td> ';
+			/*str += '<td><h2>'+resultData[i].USER_NM+'</h2><br><span>'+resultData[i].EMAIL+'</span></td></tr></table>';*/
+			str += '<td><h2>'+resultData[i].USER_NM+'님</h2></td>';
+			str += '<td><img src="../common/setting_white.png" class="left-setting-icon"><img src="../common/x_white.png" class="left-close-icon" id="left-close-icon" onclick="javascript:close_left()"></td>';
+			
+			
+			
+			
+			str += '</tr></table>';
 			if(resultData[i].PUSH_YN == "Y"){
 				$("#alarmBtn").prop('checked', true) ;
 			}else{
@@ -358,7 +368,7 @@ function fn_commonUserData(resdata){
 			$("#barcodeName").append(resultData[i].USER_NM);
 		}
 	}		 
-		 
+	
 	else{
 		str += '<h2></h2>';
 		str += '<h1></h1>';
@@ -371,14 +381,52 @@ function fn_commonUserData(resdata){
 	$(".pf_txt").append(str);
 	
 	str2 += '<ul>';
+	str2 += '	<li>';
+	str2 += '<a><img src="../common/mobile.png"></a>';
+	str2 += '';
+	str2 += '	</li>';
+	str2 += '</ul>';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*str2 += '<ul>';
 	str2 += '	<li id="leftMenuLatest">';
 	str2 += '    <div class="leftm_box leftm01"></div>';
 	str2 += '    <a href="javascript:void(0)">최근사용내역</a>';
 	str2 += '    </li>';
-/*	str2 += '	<li id="leftMenuHistory">';
+	str2 += '	<li id="leftMenuHistory">';
 	str2 += '    <div class="leftm_box leftm02"></div>';
 	str2 += '    <a href="javascript:void(0)">영수증확인</a>';
-	str2 += '    </li>';*/
+	str2 += '    </li>';  제거
 	str2 += '	<li id="leftMenuComHistiry">';
 	str2 += '    <div class="leftm_box leftm03"></div>';
 	str2 += '    <a href="javascript:void(0)">월별내역</a>';
@@ -387,32 +435,47 @@ function fn_commonUserData(resdata){
 	str2 += '    <div class="leftm_box leftm08" style="left:5px; top:3px"></div>';
 	str2 += '    <a href="javascript:void(0)">가맹점</a>';
 	str2 += '    </li>';
-/*	str2 += '	<li id="leftMenuSmsHistory">';
+	str2 += '	<li id="leftMenuSmsHistory">';
 	str2 += '    <div class="leftm_box leftm07"></div>';
 	str2 += '    <a href="javascript:void(0)">모바일영수증</a>';
-	str2 += '    </li>';*/
+	str2 += '    </li>'; 제거  
 	str2 += '	<li id="leftMenuEvent">';
 	str2 += '    <div class="leftm_box leftm04"></div>';
 	str2 += '    <a href="javascript:void(0)">이벤트</a>';
 	str2 += '    </li>';
-/*	str2 += '	<li id="leftMenuCoupon">';
+	str2 += '	<li id="leftMenuCoupon">';
 	str2 += '    <div class="leftm_box leftm09"></div>';
 	str2 += '    <a href="javascript:void(0)">더리얼 쿠폰</a>';
-	str2 += '    </li>';*/
+	str2 += '    </li>'; 제거 
 	str2 += '	<li id="leftMenuNotice">';
 	str2 += '    <div class="leftm_box leftm05"></div>';
 	str2 += '    <a href="javascript:void(0)">공지사항</a>';
 	str2 += '    </li>';
 	str2 += '    </li>';
-/*	str2 += '	<li id="leftMenuLogOut">';
+	str2 += '	<li id="leftMenuLogOut">';
 	str2 += '    <div class="leftm_box leftm05"></div>';
 	str2 += '    <a href="javascript:void(0)">로그아웃</a>';
-	str2 += '    </li>';*/
+	str2 += '    </li>'; 제거 
 	str2 += '	<li id="settingBtn">';
 	str2 += '    <div class="leftm_box leftm06"></div>';
 	str2 += '    <a href="javascript:void(0)">설정</a>';
 	str2 += '    </li>';
-	str2 += '</ul>';	
+	str2 += '</ul>';	*/
+	
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	
+	
+	
+	
+	
+	
+	
 	$(".left_menu").append(str2);
 	
 }
@@ -480,3 +543,12 @@ function category(divCd){
 	
 	
 }
+
+
+function close_left(){
+	$(".panel-overlay").trigger("click"); 	
+	$(".panel-overlay").trigger("click"); 	
+}
+
+
+

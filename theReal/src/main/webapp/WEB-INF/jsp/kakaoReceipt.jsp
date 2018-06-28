@@ -130,9 +130,9 @@
                                     <div></div>
                                     <hr>
                                 </div> -->
-                                <a class="exit_a" href="javascript:exit()">
+                                <!-- <a class="exit_a" href="javascript:exit()">
                                 	<img alt="exit" src="../uplusCode/lg_img/exit.png" style="width: 15px"> 
-                                </a>
+                                </a> -->
                                 
                                 
                                 <div class="rt_title">

@@ -3972,9 +3972,11 @@
             
             // Transition End;
             var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : panel;
+            
             var openedTriggered = false;
             
             function panelTransitionEnd() {
+            	
                 transitionEndTarget.transitionEnd(function (e) {
                     if ($(e.target).is(transitionEndTarget)) {
                         if (panel.hasClass('active')) {
@@ -3984,13 +3986,13 @@
                             panel.trigger('closed');
                         }
                         if (app.params.material) $('.panel-overlay').css({display: ''});
-                        app.allowPanelOpen = true;
+                        	app.allowPanelOpen = true;
                     }
                     else panelTransitionEnd();
                 });
             }
             panelTransitionEnd();
-        
+            
             $('body').addClass('with-panel-' + panelPosition + '-' + effect);
             return true;
         };
@@ -4141,7 +4143,6 @@
                 e.preventDefault();
                 var threshold = opened ? 0 : -app.params.swipePanelThreshold;
                 if (side === 'right') threshold = -threshold;
-                
                 touchesDiff = pageX - touchesStart.x + threshold;
         
                 if (side === 'right') {
@@ -4167,6 +4168,7 @@
                 else {
                     panel.transform('translate3d(' + translate + 'px,0,0)').transition(0);
                     if (app.params.material) {
+                    	
                         panelOverlay.transition(0);
                         overlayOpacity = Math.abs(translate/panelWidth);
                         panelOverlay.css({opacity: overlayOpacity});
@@ -4258,7 +4260,8 @@
                     views.transform('');
                 }
                 panel.transition('').transform('');
-                panelOverlay.css({display: ''}).transform('').transition('').css('opacity', '');
+                /*panelOverlay.css({display: ''}).transform('').transition('').css('opacity', '');*/
+                
             }
             $(document).on(app.touchEvents.start, handleTouchStart);
             $(document).on(app.touchEvents.move, handleTouchMove);
@@ -16743,5 +16746,10 @@
     };
 
 })();
+
+$(document).on('click','#left-close-icon',function(){
+	app.closePanel();	
+	});
+
 
 //# sourceMappingURL=framework7.js.map

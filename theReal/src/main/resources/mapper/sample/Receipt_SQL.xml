@@ -2017,8 +2017,10 @@
 		    	INSERT INTO TB_USER
 		    	(
 		    		EMAIL,
+		    		USER_NM,
 		    		TEL_NO,
 		    		USER_RRN,
+		    		LOCAL_DIV_CD,
 		    		SEX_DIV_CD,
 		    		UPLUS_USER_KEY,
 		    		FRT_CREA_DTM,
@@ -2029,8 +2031,10 @@
 		    	VALUES
 		    	(	
 		    		'UPLUS',  
+		    		#{userNm},
 		    		#{telNo},
 		    		#{userBirth},
+		    		#{localDivCd},
 		    		#{sexDivCd},
 		    		#{uplusUserKey},
 		    		now(),
@@ -3367,5 +3371,200 @@
 	     	CALL multiUpdate(#{CI})
 	     ]]>
 	</update>
+	
+	
+	
+<select id="userState" parameterType="String" resultType="String">
+	  
+	  <![CDATA[
+	 	SELECT 
+	 		USER_STATE
+	 	FROM 
+	 		TB_USER
+	 	WHERE
+	 		UPLUS_USER_KEY = #{userKey}  
+	  ]]>
+	
+</select>
+
+
+
+
+<select id="uplusUserData" parameterType="hashMap" resultType="hashmap" >
+	  
+	<![CDATA[
+	    
+		SELECT 
+			*
+		 FROM 
+			TB_USER_DATA 
+	    	WHERE  
+	    		SALES_BARCODE = #{barcode}
+	    	AND 
+			SHOP_BIZNO = #{bizno}
+	    ]]>
+
+</select>
+
+
+
+
+<select id="uplusReceipeDataDetail" parameterType="String" resultType="hashmap">
+	    
+	<![CDATA[
+	    	
+		SELECT 
+			*
+		 FROM 
+			TB_USER_DATA_DETAIL
+	    		
+		WHERE 
+			SALES_BARCODE = #{barcode}
+	    		
+		AND 
+			SHOP_BIZNO = #{bizno}
+	    ]]>	
+	    
+</select>
+
+
+
+
+
+<select id="allPaid" parameterType="String" resultType="hashmap">
+	    
+		<![CDATA[
+	    		SELECT * , (SELECT COUNT(*) FROM TB_USER_DATA WHERE UPLUS_USER_KEY = #{userKey} AND DATE_FORMAT(FRT_CREA_DTM, '%Y%m%d%H%i') BETWEEN #{selectStartDate} AND  #{selectEndDate} ) AS USER_TOTAL_CNT
+					FROM 
+						TB_USER_DATA
+ 					WHERE 	
+ 						UPLUS_USER_KEY = #{userKey}
+  					AND 
+  						DATE_FORMAT(FRT_CREA_DTM, '%Y%m%d%H%i') BETWEEN #{selectStartDate} AND  #{selectEndDate}
+  			 	]]>			
+  				<choose>
+  				    <when test="'04'.equals(pmInfoType)">
+  				        <![CDATA[
+  				        AND CARD_AMT != '' AND CASH_AMT != ''
+  				        ]]>
+  				    </when>	 
+  				    
+  				   <when test="'01'.equals(pmInfoType)">
+  				      <![CDATA[
+  				       AND CARD_NO LIKE CONCAT('01','%')
+  				      ]]>  
+  				   </when>	
+  				   
+  				   <when test="'02'.equals(pmInfoType)">
+  				       <![CDATA[ 
+  				       AND CARD_ICOM != ''
+  				      ]]>  				
+  				   </when>	
+  				   
+  				    <when test="'03'.equals(pmInfoType)">
+  				        <![CDATA[
+  				        AND CARD_ICOM = ''
+  				        ]]>
+  				    </when>	
+  				    
+  				   
+  						
+	    		 <otherwise>
+	    		 </otherwise>
+	    	</choose>	
+	    	<![CDATA[
+	    		ORDER BY FRT_CREA_DTM DESC 
+  		]]>
+	    
+</select>
+
+
+
+
+
+
+
+<select id="uplusReceiptData2" parameterType="hashmap" resultType="hashmap">
+	    <![CDATA[
+	    		SELECT * , (SELECT COUNT(*) FROM TB_USER_DATA WHERE UPLUS_USER_KEY = #{userKey} AND DATE_FORMAT(SALES_DATE, '%Y%m%d%H%i') BETWEEN #{selectStartDate} AND  #{selectEndDate} 
+	    	 ]]>	
+	    		<choose>
+	    		    
+	    		   <when test="'04'.equals(pmInfoType)">
+  				        <![CDATA[
+  				       AND CARD_AMT != '' AND CASH_AMT != ''
+  				        ]]>
+  				   </when>	
+  				   
+  				   <when test="'01'.equals(pmInfoType)">
+  				      <![CDATA[
+  				       AND CARD_NO LIKE CONCAT('01','%')
+  				      ]]>  
+  				   </when>	
+  				   
+  				   <when test="'02'.equals(pmInfoType)">
+  				       <![CDATA[ 
+  				       AND CARD_ICOM != ''
+  				      ]]>  				
+  				   </when>	
+  				   
+  				    <when test="'03'.equals(pmInfoType)">
+  				        <![CDATA[
+  				        AND CARD_ICOM = ''
+  				        ]]>
+  				    </when>	
+  				    
+  				   
+  						
+	    		 <otherwise>
+	    		 </otherwise>
+	    	</choose>	
+	    		 <![CDATA[
+	    		
+	    		) AS USER_TOTAL_CNT
+					FROM 
+						TB_USER_DATA
+ 					WHERE 	
+ 						UPLUS_USER_KEY = #{userKey}
+  					AND 
+  						DATE_FORMAT(SALES_DATE, '%Y%m%d%H%i') BETWEEN #{selectStartDate} AND  #{selectEndDate}
+  			 	]]>			
+  				<choose>
+  				    <when test="'04'.equals(pmInfoType)">
+  				        <![CDATA[
+  				       AND CARD_AMT != '' AND CASH_AMT != ''
+  				        ]]>
+  				   </when>
+  				   
+  				   <when test="'01'.equals(pmInfoType)">
+  				      <![CDATA[
+  				       AND CARD_NO LIKE CONCAT('01','%')
+  				      ]]>  
+  				   </when>	
+  				   
+  				   <when test="'02'.equals(pmInfoType)">
+  				       <![CDATA[ 
+  				       AND CARD_ICOM != ''
+  				      ]]>  				
+  				   </when>	
+  				   
+  				    <when test="'03'.equals(pmInfoType)">
+  				        <![CDATA[
+  				        AND CARD_ICOM = ''
+  				        ]]>
+  				    </when>	
+  				   
+  						
+	    		 <otherwise>
+	    		 </otherwise>
+	    	</choose>	
+	    	<![CDATA[
+	    		ORDER BY SALES_DATE DESC 
+  				LIMIT #{startCount}, #{endCount}
+  		]]>
+	    	
+</select>
+
+
 	
 </mapper>

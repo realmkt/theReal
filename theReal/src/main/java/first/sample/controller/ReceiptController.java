@@ -124,7 +124,73 @@ public class ReceiptController {
 		return mv;
 	}
 	
-	
+	// -----------------------------------------------------------------------
+	// 한글 인코딩 
+	// -----------------------------------------------------------------------
+	static public StringBuffer convertStringType(HttpServletRequest request, StringBuffer paramData) throws Exception{
+		BufferedReader br = null;
+		String [] charsets = {"UTF-8","EUC-KR","ISO-8859-1", "CP1251", "KSC5601"};
+		String returnStr = null;
+		
+		String hangle = "/^[가-힣]*$";
+		String test = "asdasd";
+		if(hangle.contains(test)){
+			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			System.out.println("■■■■■■■■■■■■YES■■■■■■■■■■■■");
+			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		}
+		
+		br = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
+		String str1 = null;
+		
+		while ((str1 = br.readLine()) != null) {
+			System.out.println("str :::: "+ str1 );
+			paramData.append(str1);
+			
+		}
+		
+		
+		br = new BufferedReader(new InputStreamReader(request.getInputStream(), "EUC-KR"));
+		
+		String str2 = null;
+		
+		while ((str2 = br.readLine()) != null) {
+			System.out.println("str :::: "+ str2 );
+			paramData.append(str2);
+			
+		}
+		
+		System.out.println("STR1 :::::::::::: "+ str1);
+		System.out.println("STR2 :::::::::::: "+ str2);
+		
+		
+		/*for (int i = 0; i < charsets.length; i++) {
+			br = new BufferedReader(new InputStreamReader(request.getInputStream(), charsets[i]));
+			String str = null;
+			String tos = null;
+			
+			System.out.println("// type : " + charsets[i]);
+			
+			//System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" + br.readLine());
+				while ((str = br.readLine()) != null) {
+					System.out.println("str :::: "+ str );
+					paramData.append(str);
+					
+				}
+				System.out.println("TTTTTTTTTTTTTTT"+ paramData.toString());
+				tos = paramData.toString();
+				System.out.println(tos);
+				
+				if(hangle.contains(tos)){
+					returnStr = tos;
+				}
+				
+		}*/
+			
+		System.out.println("return message :: "+ returnStr );
+
+		return paramData;
+	}
 	// -----------------------------------------------------------------------
 	// 금액 3자리 단위로 ,찍어주는 메서드
 	// -----------------------------------------------------------------------
@@ -142,6 +208,35 @@ public class ReceiptController {
 		val = new StringBuffer(result).reverse().toString();
 
 		return val;
+	}
+	// -----------------------------------------------------------------------
+	// 코드 바꿔주는 메서드
+	// -----------------------------------------------------------------------
+	static public String switchPayType(String paymentType) {
+		String payType = "";
+		switch (paymentType) {
+		case "01":
+			payType = "현금";
+			break;
+		case "02":
+			payType = "카드";
+			break;
+		case "03":
+			payType = "모바일";
+			break;
+		case "04":
+			payType = "쿠폰";
+			break;
+		case "05":
+			payType = "";
+			break;
+
+		default:
+			break;
+		}
+		
+		
+		return payType;
 	}
 	// -----------------------------------------------------------------------
 	// SMS 금액인지 아닌지 구분
@@ -1604,7 +1699,7 @@ public class ReceiptController {
 		return json;
 
 	}
-
+	
 	/*
 	 * 전송받은 전자영수증 데이터 저장
 	 */
@@ -1614,6 +1709,7 @@ public class ReceiptController {
 	// public ModelAndView insertReceiptData(CommandMap commandMap,
 	// HttpServletRequest request) throws Exception{
 	public JSONObject insertReceiptData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		String telNo = "";
 		Var var = null;
 		String uplusUserKey =  "";
@@ -1623,26 +1719,35 @@ public class ReceiptController {
 		String resStrEnc = "";
 		System.out.println("@@paramDataparamData@@:" + paramData);
 		BufferedReader br = null;
-
+		System.out.println("TEST");
 		try {
+			//br = new BufferedReader(new InputStreamReader(request.getInputStream(), "EUC-KR"));
 			br = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
-			System.out.println("@@br@@:" + br);
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw e;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw e;
-		}
-
-		try {
+			
+			
+			
+			System.out.println("@@br@@:" );
+		
+			//paramData = convertStringType(request, paramData);
+			
 			while ((str = br.readLine()) != null) {
 				paramData.append(str);
 				// System.out.println("@@str@@:"+str);
-				System.out.println("@@paramData22@@:" + paramData);
+				
 			}
+			
+			
+			
+			
+			
+			
+			
+			System.out.println("@@paramData22@@:" + paramData);
+			
+			String test = paramData.toString();
+			System.out.println("*********************************test :: " + test );
+			
+			
 			// 성공시
 			jsonResData = "{";
 			jsonResData += "    \"result\":\"PI000\",";
@@ -1657,7 +1762,7 @@ public class ReceiptController {
 			jsonResData += "}";
 			e.printStackTrace();
 			throw e;
-		}
+		} 
 		try {
 
 			var = JsonParser.object(new CharTokenizer(paramData.toString()));
@@ -2176,6 +2281,9 @@ public class ReceiptController {
 				      }else{
 				         aes = new AES256("LGU+210987654321");
 				      }
+				      
+				      aes = new AES256("LGU+DEV258010247");
+				      
 					
 					resStrEnc = aes.encryptStringToBase64(resStr);
 				} catch (Exception e) {
@@ -2200,10 +2308,10 @@ public class ReceiptController {
 		//URL 전송	
 			try {
 				
+				String url = "";
+					url = "http://dev-wallet-partner.uplus.co.kr:19090/etc/ReceiptPush";
+					//url = "https://wallet-partners.uplus.co.kr:19092/etc/ReceiptPush";
 				
-				
-				String url = "https://wallet-partners.uplus.co.kr:19092/etc/ReceiptPush";
-				//String url = "http://dev-wallet-partner.uplus.co.kr:19090/etc/ReceiptPush";
 				int timeout = 10;
 				
 				HttpPost httpost = new HttpPost(new URI(url));
@@ -2491,6 +2599,197 @@ public class ReceiptController {
 		jsonObject = (JSONObject) jsonParser.parse(jsonResData);
 
 		return jsonObject;
+	}
+	
+	
+	
+	
+
+	/*
+	 * 전자영수증 통합 플랫폼
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/receipt/receiptData.do")
+	@ResponseBody
+	// public ModelAndView insertReceiptData(CommandMap commandMap,
+	// HttpServletRequest request) throws Exception{
+	public JSONObject receiptData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String 	CI = "";
+		Var 	var = null;
+		String uplusUserKey =  "";
+		String jsonResData = "";
+		String str = null;
+		String resStrEnc = "";
+		String paymentType = "";
+		String paymentTypeCode = "";
+		
+		StringBuffer paramData = new StringBuffer();
+		BufferedReader br = null;
+		//System.out.println("전달 받은 데이터 :" + paramData);
+		
+		try {
+			br = new BufferedReader(new InputStreamReader(request.getInputStream(), "EUC-KR"));
+			
+			while ((str = br.readLine()) != null) {
+				paramData.append(str);
+				// System.out.println("@@str@@:"+str);
+				
+			}
+			
+			
+			System.out.println("Request Data ::::  " + paramData.toString());
+			
+			
+			// 성공시
+			jsonResData = "{";
+			jsonResData += "    \"result\":\"PI000\",";
+			jsonResData += "    \"message\":\"전송성공\"";
+			jsonResData += "}";
+			System.out.println("jsonResData:" + jsonResData);
+			
+		} catch (Exception e) {
+			// 실패시
+			jsonResData = "{";
+			jsonResData += "    \"result\":\"PI101\",";
+			jsonResData += "    \"message\":\"수신된 데이터 빈값 입니다.\"";
+			jsonResData += "}";
+			e.printStackTrace();
+			throw e;
+		}
+		
+		var = JsonParser.object(new CharTokenizer(paramData.toString()));
+		HashMap<String, Object> insertMap = new HashMap<String, Object>();
+		
+		if( var.find("salesInfo.salesType").toString().equals("RCP01")){
+			log.debug("====================================================");
+			log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■■■■■■");
+			
+			System.out.println(var.find("paymentList").size());
+			if(var.find("compoundYN").toString().equals("Y")){
+				for (int i = 0; i < var.find("paymentList").size(); i++) {
+					paymentType += switchPayType(var.find("paymentList[i].paymentType").toString());
+					paymentTypeCode += var.find("paymentList[i].paymentType").toString();
+				}
+			}else{
+				paymentType = switchPayType(var.find("paymentList[0].paymentType").toString());
+				paymentTypeCode = var.find("paymentList[i].paymentType").toString();
+			}
+			
+			System.out.println(paymentType);
+			
+			insertMap.put("userKey", var.find("userKey").toString());
+			
+			CI = (String) receiptService.getCi(insertMap);
+			
+			//etcInfo
+			insertMap.put("connectionCom", var.find("etcInfo.connectionCom").toString());
+			insertMap.put("memo", var.find("etcInfo.memo").toString());
+			insertMap.put("event", var.find("etcInfo.event").toString());
+			//shopInfo
+			insertMap.put("shopName", var.find("shopInfo.shopName").toString());
+			insertMap.put("ercpRegNo", var.find("shopInfo.ercpRegNo").toString());
+			insertMap.put("bizNo", var.find("shopInfo.bizNo").toString());
+			insertMap.put("addr", var.find("shopInfo.addr").toString());
+			insertMap.put("ceo", var.find("shopInfo.ceo").toString());
+			insertMap.put("phone", var.find("shopInfo.phone").toString());
+			insertMap.put("cashier", var.find("shopInfo.cashier").toString());
+			//salesInfo
+			insertMap.put("salesInfo", var.find("salesInfo.salesBarcode").toString());
+			insertMap.put("salesDate", var.find("salesInfo.salesDate").toString());
+			insertMap.put("printDate", var.find("salesInfo.printDate").toString());
+			insertMap.put("salesType", var.find("salesInfo.salesType").toString());
+			insertMap.put("totAmt", var.find("salesInfo.totAmt").toString());
+			insertMap.put("discountAmt", var.find("salesInfo.discountAmt").toString());
+			insertMap.put("chgAmt", var.find("salesInfo.chgAmt").toString());
+			insertMap.put("paidAmt", var.find("salesInfo.paidAmt").toString());
+			insertMap.put("surtaxAmt", var.find("salesInfo.surtaxAmt").toString());
+			insertMap.put("paidAmt", var.find("salesInfo.paidAmt").toString());
+			insertMap.put("dfAmt", var.find("salesInfo.dfAmt").toString());
+			insertMap.put("taxAmt", var.find("salesInfo.taxAmt").toString());
+			insertMap.put("rePrint", var.find("salesInfo.rePrint").toString());
+			insertMap.put("detailCnt", var.find("salesInfo.detailCnt").toString());
+			//paymentType
+			insertMap.put("paymentType", var.find("salesInfo.paymentType").toString());
+			insertMap.put("compoundYN", var.find("compoundYN").toString());
+			
+			if(paymentType.contains("현금")){
+				insertMap.put("cashAmt", var.find("cashInfo.cashAmt").toString());
+				insertMap.put("cashType", var.find("cashInfo.cashType").toString());
+				insertMap.put("cashNo", var.find("cashInfo.cashNo").toString());
+				insertMap.put("cashAppNo", var.find("cashInfo.cashAppNo").toString());
+				insertMap.put("cashDate", var.find("cashInfo.cashDate").toString());
+			}
+			
+			if(paymentType.contains("카드")){
+				insertMap.put("cardAmt", var.find("cardInfo.cardAmt").toString());
+				insertMap.put("cardInstallment", var.find("cardInfo.cardInstallment").toString());
+				insertMap.put("cardAppNo", var.find("cardInfo.cardAppNo").toString());
+				insertMap.put("cardDate", var.find("cardInfo.cardDate").toString());
+				insertMap.put("cardIcom", var.find("cardInfo.cardIcom").toString());
+				insertMap.put("cardPcom", var.find("cardInfo.cardPcom").toString());
+				insertMap.put("cardNo", var.find("cardInfo.cardNo").toString());
+			}
+			
+			if(paymentType.contains("모바일")){
+				insertMap.put("payAmt", var.find("payInfo.payAmt").toString());
+				insertMap.put("payAppNo", var.find("payInfo.payAppNo").toString());
+				insertMap.put("payDate", var.find("payInfo.payDate").toString());
+				insertMap.put("payIcom", var.find("payInfo.payIcom").toString());
+			}
+			
+			if(paymentType.contains("쿠폰")){
+				insertMap.put("couponNo", var.find("couponInfo.payAmt").toString());
+				insertMap.put("couponType", var.find("couponInfo.payAppNo").toString());
+				insertMap.put("couponAmt", var.find("couponInfo.couponAmt").toString());
+				insertMap.put("couponCashYN", var.find("couponInfo.couponCashYN").toString());
+			}
+			
+			
+			
+			insertMap.put("pointType", var.find("pointType").toString());
+			
+			if(!insertMap.get("pointType").equals("00")){
+				insertMap.put("payAmt", var.find("payInfo.payAmt").toString());
+				insertMap.put("payAppNo", var.find("payInfo.payAppNo").toString());
+				insertMap.put("payDate", var.find("payInfo.payDate").toString());
+				insertMap.put("payIcom", var.find("payInfo.payIcom").toString());
+			}else{
+				insertMap.put("payAmt", "");
+				insertMap.put("payAppNo", "");
+				insertMap.put("payDate", "");
+				insertMap.put("payIcom", "");
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		}else{
+			System.out.println("취소");
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return null;
 	}
 
 	/*
@@ -4275,10 +4574,10 @@ public class ReceiptController {
 		System.out.println(telNo +"//" + userBirth);
 		
 		map.put("telNo", telNo);
-		//map.put("userNm", userNm);
+		map.put("userNm", "");
 		map.put("userBirth", userBirth);
 		map.put("sexDivCd", sexDivCd);
-		//map.put("localDivCd", localDivCd);
+		map.put("localDivCd", "");
 		map.put("userState", userState);
 		Integer upluJoinChk = receiptService.selectUplusJoinChk(map);
 		Integer usedTelChk = receiptService.selectUsedTelChk(map);
@@ -4500,7 +4799,17 @@ public class ReceiptController {
 		
 		System.out.println("resStrRESULT:" + resStr);
 		jsonObject2 = (JSONObject) jsonParser2.parse(resStr);
-		String enc = AES256.encrypt("LGU+210987654321", jsonObject2.toString());
+		
+		AES256 aes = null;
+	      
+	      if(CommonUtils.ipChk()){
+	         aes = new AES256("LGU+DEV258010247");
+	      }else{
+	         aes = new AES256("LGU+210987654321");
+	      }
+	      
+	      String enc = aes.encryptStringToBase64(jsonObject2.toString());
+	    		  
 		System.out.println("enc = " + enc);
 		return enc;
 			
@@ -4710,7 +5019,13 @@ public class ReceiptController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int listSize =0;
 		String str;
-		AES256 aes = new AES256("LGU+210987654321");
+		AES256 aes = null;
+	      
+	      if(CommonUtils.ipChk()){
+	           aes = new AES256("LGU+DEV258010247");
+	      }else{
+	           aes = new AES256("LGU+210987654321");
+	      }
 		JSONObject json = null;
 		try {
 			
@@ -4784,7 +5099,13 @@ public class ReceiptController {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			int listSize =0;
 			String str;
-			AES256 aes = new AES256("LGU+210987654321");
+			AES256 aes = null;
+		      
+		      if(CommonUtils.ipChk()){
+		           aes = new AES256("LGU+DEV258010247");
+		      }else{
+		           aes = new AES256("LGU+210987654321");
+		      }
 			JSONObject json = null;
 			try {
 				
@@ -5414,6 +5735,585 @@ public class ReceiptController {
 		}
 	}
 	
+	
+	
+	@ResponseBody
+    @RequestMapping({"/receipt/uplusReceiptData.do"})
+    public String uplusRecipeData(HttpServletRequest request, HttpServletResponse response)
+      throws Exception
+    {
+      
+     String resStr = "";
+      String str = "";
+      String jsonResData = "";
+      StringBuffer paramData = new StringBuffer();
+      int totalPaidAmt = 0;
+            
+      AES256 aes = null;
+      
+      if(CommonUtils.ipChk()){
+           aes = new AES256("LGU+DEV258010247");
+      }else{
+           aes = new AES256("LGU+210987654321");
+      }
+      
+      BufferedReader br = null;
+      
+      JSONParser jsonParser = new JSONParser();
+      JSONObject jsonObject = null;
+      try
+      {
+        br = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
+      }
+      catch (UnsupportedEncodingException e)
+      {
+        e.printStackTrace();
+        throw e;
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+        throw e;
+      }
+      try   
+      {
+       
+        do
+        {
+         
+          paramData.append(str);
+        }
+        while ((str = br.readLine()) != null);
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+        throw e;
+      }
+      try
+      {      
+         
+        System.out.println("@@1111paramData22@@:" + paramData);
+           
+        HashMap map = new HashMap();
+              
+        String value = paramData.toString();
+           
+        String dec = "";
+       /*
+        String enc = aes.encryptStringToBase64(value);
+        
+        System.out.println("암호화 *************"+enc);*/
+        
+        dec = aes.decryptBase64String(value);
+
+        System.out.println("복호화*********" + dec);
+     
+        
+        Var var2 = JsonParser.object(new CharTokenizer(dec));
+        
+        String userKey = var2.find("userKey").toString();
+        String nowPage = var2.find("nowPage").toString();
+        String numPage = var2.find("numPage").toString();
+        String selectStartDate = var2.find("selectStartDate").toString();
+        String selectEndDate = var2.find("selectEndDate").toString();
+        String pmInfoType = var2.find("pmInfoType").toString();
+        
+        String state = receiptService.userState(userKey);
+       
+       
+        
+        
+       if(state==null||state.equals("")){
+          
+          resStr += "{";
+          resStr += "\"result\": \"UR001\",";
+          resStr += "\"message\": \"리스트 조회 실패 - 없는 userKey입니다.\"";
+          resStr += "}";
+          String resStrenc = aes.encryptStringToBase64(resStr);
+          
+          System.out.println("응답 데이터::::::::::"+resStr);
+          return resStrenc;
+       }
+       
+       if(state.equals("02")){
+          
+          resStr += "{";
+          resStr += "\"result\": \"UR002\",";
+          resStr += "\"message\": \"리스트 조회 실패 - 탈퇴된 고객의 userKey입니다.\"";
+          resStr += "}";
+          String resStrenc = aes.encryptStringToBase64(resStr);
+          
+          System.out.println("응답 데이터::::::::::"+resStr);
+          return resStrenc;
+       }
+       
+       if(state.equals("05")){
+          
+          resStr += "{";
+          resStr += "\"result\": \"UR003\",";
+          resStr += "\"message\": \"리스트 조회 실패 - 재가입된 유저의 userKey입니다.\"";
+          resStr += "}";
+          String resStrenc = aes.encryptStringToBase64(resStr);
+             
+          System.out.println("응답 데이터::::::::::"+resStr);
+          return resStrenc;
+       }
+          
+       System.out.println("응답밖데이터 :::::::::");
+             
+           
+        
+        
+        
+        
+        
+        
+        
+        
+        Map userMap = new HashMap();
+        Map resultMap = new HashMap();
+           
+        int startCount = (Integer.parseInt(nowPage)-1) * Integer.parseInt(numPage);
+                                            
+        userMap.put("userKey", userKey);
+        userMap.put("startCount", Integer.valueOf(startCount));
+        userMap.put("endCount", Integer.valueOf(numPage));
+        userMap.put("selectStartDate", selectStartDate);
+        userMap.put("selectEndDate", selectEndDate);
+        userMap.put("pmInfoType", pmInfoType);
+        
+                                      
+        System.err.println("@@@@@@@@userMap:::::::::::::"+userMap);
+        
+        resultMap = this.receiptService.uplusReceiptData2(userMap);
+                                
+                             
+                                         
+                             
+                                      
+       
+        ArrayList list = (ArrayList)resultMap.get("resultMap");
+        
+        Map selectMap = new HashMap();
+
+        resStr = resStr + "{";
+        resStr = resStr + "\t\"userKey\": \"" + userKey + "\",";
+        resStr += "\"result\": \"UR000\",";
+        resStr += "\"message\": \"리스트가 정상적으로 조회되었습니다.\",";
+        resStr = resStr + "\t\"salesInfo\": [ ";
+        
+        List shopInfo = new ArrayList();
+        
+        Long userTotalCnt = null;
+   
+        Map<String, Object> allMap = new HashMap<String, Object>();
+           
+        allMap = receiptService.allPaid(userMap);
+       
+        ArrayList list2 = (ArrayList)allMap.get("resultMap");
+        
+        for (int i = 0; i < list2.size(); i++) {
+           
+           HashMap listMap2 = (HashMap)list2.get(i);
+           totalPaidAmt += Integer.parseInt((String)listMap2.get("SALES_PAID_AMT"));
+       }
+        
+        System.out.println("@@@@@@@@listSize@@@@@@@@"+ list.size());
+      
+        for (int i = 0; i < list.size(); i++) {
+          
+         HashMap listMap = (HashMap)list.get(i);
+         
+         if (i == 0)
+          {
+            System.out.println("cnt111111 ::::  " + i);
+            userTotalCnt = (Long)listMap.get("USER_TOTAL_CNT");
+            System.out.println("cnt ::::  " + userTotalCnt);
+          }
+                                                                      
+          String bizno = listMap.get("SHOP_BIZNO").toString();
+                                                                
+          String erecNo = bizno;                           
+
+          erecNo = erecNo + "_";
+          erecNo = erecNo + listMap.get("SALES_BARCODE").toString();
+          
+          resStr = resStr + "{";
+          resStr = resStr + "\t\"erecNo\": \"" + erecNo + "\",";
+          resStr = resStr + "\t\"name\": \"" + listMap.get("SHOP_NAME") + "\",";
+          resStr = resStr + "\t\"salesType\": \"" + listMap.get("SALES_TYPE") + "\",";
+
+          if (((String)listMap.get("CARD_NO")).length() < 12)
+            resStr = resStr + "\t\"uplusUseCd\": \"1\",";
+          else {
+            resStr = resStr + "\t\"uplusUseCd\": \"0\",";
+          }
+          resStr = resStr + "\t\"salesDate\": \"" + listMap.get("SALES_DATE") + "\",";
+
+          if (listMap.get("CARD_COMPOUND") == "Y")
+            resStr = resStr + "\t\"cardIcom\": \"\",";
+          else {
+            resStr = resStr + "\t\"cardIcom\": \"" + listMap.get("CARD_ICOM") + "\",";
+          }
+          resStr = resStr + "\t\"paidAmt\": \"" + listMap.get("SALES_PAID_AMT") + "\"";
+
+          if (i == list.size() - 1)
+            resStr = resStr + "}  ";
+          else {
+            resStr = resStr + "},  ";
+          }
+        }
+           
+        System.out.println("@@@@@@@@@@@@@@@@@@@userTotalCnt@@@@@@@@@@@"+userTotalCnt);
+        System.out.println("@@@@@@@@@@@@@@@@@@@@현재페이지@@@@@@@@@@"+ nowPage);
+        System.out.println("@@@@@@@@@@@@@@@@@@@@페이지당 개수@@@@@@@@@@@"+numPage);
+        System.out.println();
+        System.out.println();
+        System.out.println("@@@@@@@@@@@@@@@@@@@시작카운트@@@@@@@@@@@@@@@@@@@@"+ Integer.valueOf(startCount));
+        System.out.println("@@@@@@@@@@@@@@@@@@@@끝나는카운트@@@@@@@@@@@@@@@@@@@"+Integer.valueOf(numPage));
+                    
+        int maxPage = 0;
+                          
+        if (list.size() > 0) {
+          float maxPageTemp = Float.parseFloat(userTotalCnt.toString()) / Float.parseFloat(numPage);
+          maxPage = (int)Math.ceil(maxPageTemp);
+        } else {
+          userTotalCnt = Long.valueOf(0L);
+        }
+           
+        resStr = resStr + " ], ";
+        resStr = resStr + "\t\"totalPaidAmt\": \"" + totalPaidAmt + "\",";
+        resStr = resStr + "\t\"totalCount\": \"" + userTotalCnt + "\",";
+        resStr = resStr + "\t\"pmInfoType\": \"" + pmInfoType + "\",";
+        resStr = resStr + "\t\"nowPage\": \"" + nowPage + "\",";
+        resStr = resStr + "\t\"maxPage\": \"" + maxPage + "\"";
+        resStr = resStr + "\t}";
+      }         
+      catch (Exception e)
+      {
+        e.getMessage();
+        e.printStackTrace();
+      }
+            
+      System.out.println("json result :: " + resStr);
+      
+      String resStrenc = aes.encryptStringToBase64(resStr);
+      System.out.println("------------------------");
+      System.out.println(resStrenc);
+      System.out.println("------------------------");
+      
+      return resStrenc;
+     
+
+  }
+   
+      
+    @ResponseBody
+    @RequestMapping({"/receipt/uplusReceiptDataDetail.do"})
+    public String uplusReceipeDataDetail(HttpServletRequest request, HttpServletResponse response)
+      throws Exception
+    {
+     String str = "";
+      String resStr = "";
+      Map userMap = new HashMap();
+      Map userMap2 = new HashMap();
+      Map dataMap = new HashMap();
+      Map detailMap = new HashMap();
+
+      String jsonResData = "";
+      StringBuffer paramData = new StringBuffer();
+      int totalPaidAmt = 0;
+      
+      AES256 aes = null;
+        
+      if(CommonUtils.ipChk()){
+           aes = new AES256("LGU+DEV258010247");
+      }else{
+           aes = new AES256("LGU+210987654321");
+      }
+      
+      BufferedReader br = null;
+      
+      JSONParser jsonParser = new JSONParser();
+      JSONObject jsonObject = null;
+      try
+      {
+        br = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
+      }
+      catch (UnsupportedEncodingException e)
+      {
+        e.printStackTrace();
+        throw e;
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+        throw e;
+      }
+      
+      
+      
+      try
+      {
+        
+        do
+        {
+         paramData.append(str);
+        }
+        while ((str = br.readLine()) != null);
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+        throw e;
+      }
+      try
+      {
+       
+        System.out.println("@@1111paramData22@@:" + paramData);
+
+        HashMap map = new HashMap();
+
+        String value = paramData.toString();
+           
+       /*String enc = "";
+        
+        enc = aes.encryptStringToBase64(value);
+        
+        System.out.println("암호화******************"+enc);*/
+              
+        String dec = "";
+                                   
+        System.out.println("************벨류***************" + value);
+                                            
+        dec = aes.decryptBase64String(value);
+           
+        System.out.println("*****************복호화***************" + dec);
+        
+        Var var2 = JsonParser.object(new CharTokenizer(dec));
+           
+        System.out.println("-----------------------------------");
+        System.out.println();
+        System.out.println(":: " + var2.toString());
+        System.out.println();
+        System.out.println("-----------------------------------");
+
+        String userKey = var2.find("userKey").toString();
+        String erecNo = var2.find("erecNo").toString();
+        String[] erecB = erecNo.split("_");
+        String barcode = erecNo.substring(erecNo.indexOf("_") + 1, erecNo.length());
+        
+        String state = receiptService.userState(userKey);
+          
+           if(state==null||state.equals("")){
+             
+             resStr += "{";
+             resStr += "\"result\": \"UR101\",";
+             resStr += "\"message\": \"상세영수증 조회 실패 - 없는 userKey입니다.\"";
+             resStr += "}";
+             String resStrenc = aes.encryptStringToBase64(resStr);
+             
+             System.out.println("응답 데이터::::::::::"+resStr);
+             return resStrenc;
+          }
+          
+          if(state.equals("02")){
+             
+             resStr += "{";
+             resStr += "\"result\": \"UR102\",";
+             resStr += "\"message\": \"상세영수증 조회 실패 - 탈퇴된 고객의 userKey입니다.\"";
+             resStr += "}";
+             String resStrenc = aes.encryptStringToBase64(resStr);
+             
+             System.out.println("응답 데이터::::::::::"+resStr);
+             return resStrenc;
+          }
+          
+          if(state.equals("05")){
+             
+             resStr += "{";
+             resStr += "\"result\": \"UR103\",";
+             resStr += "\"message\": \"상세영수증 조회 실패 - 재가입된 유저의 userKey입니다.\"";
+             resStr += "}";
+             String resStrenc = aes.encryptStringToBase64(resStr);
+                
+             System.out.println("응답 데이터::::::::::"+resStr);
+             return resStrenc;
+          }
+        
+        
+        userMap.put("bizno", erecB[0]);
+        userMap.put("barcode", erecB[1]);
+                 
+        userMap2.put("bizno", erecB[0]);
+        userMap2.put("barcode", erecB[1]);
+           
+        dataMap = this.receiptService.uplusUserData(userMap);
+        
+        detailMap = this.receiptService.uplusReceipeDataDetail(userMap2);
+        
+       
+       
+        ArrayList dataList = (ArrayList)dataMap.get("resultMap");
+        
+        if(dataList.size()==0){
+           resStr += "{";
+           resStr += "\"result\": \"UR104\",";
+            resStr += "\"message\": \"상세 영수증 조회 실패 - 영수증 번호가 존재하지 않습니다.\"";
+            resStr += "}";
+            
+           String resStrenc = aes.encryptStringToBase64(resStr);
+             
+          System.out.println("응답 데이터::::::::::"+resStr);
+          return resStrenc;
+        }
+        
+        
+        ArrayList detailList = (ArrayList)detailMap.get("resultMap");
+        
+        if(detailList.size()==0){
+           resStr += "{";
+           resStr += "\"result\": \"UR104\",";
+            resStr += "\"message\": \"상세 영수증 조회 실패 - 영수증 번호가 존재하지 않습니다.\"";
+            resStr += "}";
+            
+           String resStrenc = aes.encryptStringToBase64(resStr);
+             
+          System.out.println("응답 데이터::::::::::"+resStr);
+          return resStrenc;
+        }
+        
+        HashMap dataListMap = (HashMap)dataList.get(0);
+           
+        resStr = resStr + "{";
+        resStr = resStr + "\t\"userKey\": \"" + userKey + "\",";
+        resStr += "\"result\": \"UR100\",";
+        resStr += "\"message\": \"상세 영수증이 정상적으로 조회되었습니다.\",";
+        resStr = resStr + "\t\"etcInfo\": [ ";
+        resStr = resStr + "{";
+        resStr = resStr + "\t\"memo\": \"" + dataListMap.get("ETC_MEMO") + "\",";
+        resStr = resStr + "\t\"event\": \"" + dataListMap.get("ETC_EVENT") + "\"";
+        resStr = resStr + "}  ";
+        resStr = resStr + " ], ";
+        resStr = resStr + "\t\"shopInfo\": [ ";
+        resStr = resStr + "{";
+        resStr = resStr + "\t\"name\": \"" + dataListMap.get("SHOP_NAME") + "\",";
+        resStr = resStr + "\t\"bizNo\": \"" + dataListMap.get("SHOP_BIZNO") + "\",";
+        resStr = resStr + "\t\"addr\": \"" + dataListMap.get("SHOP_ADDR") + "\",";
+        resStr = resStr + "\t\"ceo\": \"" + dataListMap.get("SHOP_CEO") + "\",";
+        resStr = resStr + "\t\"phone\": \"" + dataListMap.get("SHOP_TEL_NUM") + "\",";
+        resStr = resStr + "\t\"cashier\": \"" + dataListMap.get("SHOP_CASHIER") + "\"";
+        resStr = resStr + "}  ";
+        resStr = resStr + " ], ";
+        resStr = resStr + "\t\"salesInfo\": [ ";
+        resStr = resStr + "{";
+        resStr = resStr + "\t\"salesBarcode\": \"" + dataListMap.get("SALES_BARCODE") + "\",";
+        resStr = resStr + "\t\"salesDate\": \"" + dataListMap.get("SALES_DATE") + "\",";
+        resStr = resStr + "\t\"printDate\": \"" + dataListMap.get("SALES_PRINT_DATE") + "\",";
+        resStr = resStr + "\t\"salesType\": \"" + dataListMap.get("SALES_TYPE") + "\",";
+        resStr = resStr + "\t\"sumDfAmt\": \"" + dataListMap.get("SALES_SUM_DF_AMT") + "\",";
+        resStr = resStr + "\t\"sumFpAmt\": \"" + dataListMap.get("SALES_SUM_FP_AMT") + "\",";
+        resStr = resStr + "\t\"sumTaxAmt\": \"" + dataListMap.get("SALES_SUM_TAX_AMT") + "\",";
+        resStr = resStr + "\t\"sumAllAmt\": \"" + dataListMap.get("SALES_SUM_ALL_AMT") + "\",";
+        resStr = resStr + "\t\"sumOpAmt\": \"" + dataListMap.get("SALES_SUM_OP_AMT") + "\",";
+        resStr = resStr + "\t\"chgAmt\": \"" + dataListMap.get("SALES_CHG_AMT") + "\",";
+        resStr = resStr + "\t\"paidAmt\": \"" + dataListMap.get("SALES_PAID_AMT") + "\",";
+        resStr = resStr + "\t\"dtCnt\": \"" + dataListMap.get("SALES_DT_CNT") + "\"";
+        resStr = resStr + "}  ";
+        resStr = resStr + " ], ";
+                 
+        resStr = resStr + "\t\"salesList\": [ ";
+                    
+        for (int i = 0; i < detailList.size(); i++)
+        {      
+          HashMap detailListMap = (HashMap)detailList.get(i);
+                      
+          resStr = resStr + "{";
+          resStr = resStr + "\t\"seqNo\": \"" + i + "\",";
+          resStr = resStr + "\t\"pName\": \"" + detailListMap.get("SALES_PNAME") + "\",";
+          resStr = resStr + "\t\"pPrice\": \"" + detailListMap.get("SALES_PPRICE") + "\",";
+          resStr = resStr + "\t\"oPrice\": \"" + detailListMap.get("SALES_OPRICE") + "\",";
+          resStr = resStr + "\t\"qty\": \"" + detailListMap.get("SALES_QTY") + "\",";
+          resStr = resStr + "\t\"dfAmt\": \"" + detailListMap.get("SALES_DF_AMT") + "\",";
+          resStr = resStr + "\t\"fpAmt\": \"" + detailListMap.get("SALES_FP_AMT") + "\",";
+          resStr = resStr + "\t\"taxAmt\": \"" + detailListMap.get("SALES_TAX_AMT") + "\",";
+          resStr = resStr + "\t\"slAmt\": \"" + detailListMap.get("SALES_SL_AMT") + "\",";
+          resStr = resStr + "\t\"opAmt\": \"" + detailListMap.get("SALES_OP_AMT") + "\"";
+                            
+          if (i == detailList.size() - 1)
+            resStr = resStr + "}  ";
+          else {
+            resStr = resStr + "} , ";
+          }
+
+        }
+        
+        resStr = resStr + " ], ";
+
+        resStr = resStr + "\t\"paidList\": [ ";
+
+        for (int i = 0; i < dataList.size(); i++)
+        {
+          HashMap dataListMap2 = (HashMap)dataList.get(i);
+
+          String card_no = (String)dataListMap.get("CARD_NO");
+          String card_icom = (String)dataListMap.get("CARD_ICOM");
+          String point_icom = (String)dataListMap.get("POINT_ICOM");
+          
+          resStr = resStr + "{";
+
+          if (card_no.startsWith("01") && card_no.length() <= 12) {
+            resStr = resStr + "\t\"pmType\": \"01 \",";
+          }
+          else if (!point_icom.equals("")) {
+            resStr = resStr + "\t\"pmType\": \"04 \",";
+          }
+          else if (!card_icom.equals("")) {
+            resStr = resStr + "\t\"pmType\": \"02 \",";
+          }
+          else {
+            resStr = resStr + "\t\"pmType\": \"03 \",";
+          }   
+             
+          resStr = resStr + "\t\"cardIcom\": \"" + dataListMap2.get("CARD_ICOM") + "\",";
+          resStr = resStr + "\t\"cardNo\": \"" + dataListMap2.get("CARD_NO") + "\",";
+          resStr = resStr + "\t\"cardInstallment\": \"" + dataListMap2.get("CARD_INSTALLMENT") + "\",";
+          resStr = resStr + "\t\"pointAmt\": \"" + dataListMap2.get("POINT_AMT") + "\"";
+          
+          if (i == dataList.size() - 1)
+            resStr = resStr + "}  ";
+          else {
+            resStr = resStr + "} , ";
+          }
+
+        }
+              
+        resStr = resStr + " ] ";
+        resStr = resStr + "}  ";
+     
+      }
+      catch (Exception e) {
+        e.getMessage();
+        e.printStackTrace();
+      }   
+      System.out.println("***********조합***********");
+      System.out.println(resStr);
+      System.out.println("***********조합***********");
+
+      Var var2 = JsonParser.object(new CharTokenizer(resStr));
+         
+      System.out.println("****************************");
+      System.out.println(var2.toString());
+      System.out.println("****************************");
+         
+      String resStrenc = aes.encryptStringToBase64(resStr);
+      
+      return resStrenc;
+    }
+    
+    
+    
+    
+	
 	@ResponseBody
 	@RequestMapping(value="/receipt/decrypt.do")
 	public Object decryptDev(CommandMap commandMap){
@@ -5425,8 +6325,10 @@ public class ReceiptController {
 		try {
 			if(dev.equals("Y")){
 				aes = new AES256("LGU+DEV258010247");
+				System.out.println("개발 복호화");
 			}else{
 				aes = new AES256("LGU+210987654321");
+				System.out.println("운영 복호화");
 			}
 			
 			System.out.println("복호화 전 :::" + st);

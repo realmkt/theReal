@@ -130,12 +130,18 @@ public class CommonUtils {
 			String IP = Address.getHostAddress();
 			
 			System.out.println("#################################");
-			System.out.println("##access IP is : " + IP + "##");
+			System.out.println("## access IP is : " + IP + " ##");
 			System.out.println("#################################");
 			
 			if(serverIp.equals(IP) || serverIp2.equals(IP)){
+				System.out.println("## 운영 아이피 입니다             ##");
+				System.out.println("#################################");
+				
 				isDev = false;
 			}else if(serverIp3.equals(IP)){
+				System.out.println("## 개발 아이피 입니다             ##");
+				System.out.println("#################################");
+				
 				isDev = true;
 			}
 			

@@ -656,4 +656,26 @@ public class ReceiptDAO extends AbstractDAO {
 	public void leave(String CI) {
 		update("sample.leave", CI);
 	}
+	
+	public String userState(String userKey) {
+
+		return (String) selectOne("sample.userState", userKey);
+	}
+
+	public List<Map<String, Object>> uplusUserData(Map<String, Object> userMap) {
+		return selectList("sample.uplusUserData", userMap);
+	}
+
+	public List<Map<String, Object>> uplusReceipeDataDetail(Map<String, Object> userMap2) {
+		return selectList("sample.uplusReceipeDataDetail", userMap2);
+	}
+
+	public List<Map<String, Object>> allPaid(Map<String, Object> userMap) {
+		return selectList("sample.allPaid", userMap);
+	}
+
+	public List<Map<String, Object>> uplusReceiptData2(Map<String, Object> userMap) {
+
+		return selectList("sample.uplusReceiptData2", userMap);
+	}
 }

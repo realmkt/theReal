@@ -504,6 +504,48 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public String uPlusChk(String telNo) {
 		return receiptDAO.uPlusChk(telNo);
 	}
+	
+	@Override
+	public String userState(String userKey) {
+
+		return receiptDAO.userState(userKey);
+	}
+
+	@Override
+	public Map<String, Object> uplusUserData(Map<String, Object> userMap) {
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list2 = receiptDAO.uplusUserData(userMap);
+		resultMap.put("resultMap", list2);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> uplusReceipeDataDetail(Map<String, Object> userMap2) {
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list2 = receiptDAO.uplusReceipeDataDetail(userMap2);
+		resultMap.put("resultMap", list2);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> allPaid(Map<String, Object> userMap) {
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list2 = receiptDAO.allPaid(userMap);
+		resultMap.put("resultMap", list2);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> uplusReceiptData2(Map<String, Object> userMap) {
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list2 = receiptDAO.uplusReceiptData2(userMap);
+		resultMap.put("resultMap", list2);
+		return resultMap;
+	}
 
 	@Override
 	public String pushChk(String eMailChk) {
