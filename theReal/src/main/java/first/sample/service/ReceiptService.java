@@ -61,8 +61,14 @@ public interface ReceiptService {
 	Map<String, Object> appChartTest2(Map<String, Object> map) throws Exception;
 
 	void insertReceiptData(HashMap<String, Object> map) throws Exception;
+	
+	void insertReceiptDataRenew(HashMap<String, Object> map) throws Exception;
+	
+	void insertCancleReceiptData(Map<String, Object> map) throws Exception;
 
 	void insertReceiptDeatailData(HashMap<String, Object> map) throws Exception;
+	
+	void insertReceiptDeatailDataRenew(HashMap<String, Object> map) throws Exception;
 
 	/**
 	 * 설유진 추가
@@ -220,6 +226,8 @@ public interface ReceiptService {
 	Map<String, Object> couponDetail(HashMap<String, Object> map) throws Exception;
 	
 	Map<String, Object> cancleReceipt(HashMap<String, Object> map) throws Exception;
+	
+	HashMap<String, Object> cancleGetReceipt(HashMap<String, Object> map) throws Exception;
 	
 	void couponUsing(HashMap<String, Object> map);
 	

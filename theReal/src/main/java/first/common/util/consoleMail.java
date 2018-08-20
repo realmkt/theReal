@@ -20,8 +20,8 @@ import javax.mail.internet.MimeUtility;
 public class consoleMail
 {
   private static final String SMTP_HOST_NAME = "smtp.gmail.com";
-  private static final String SMTP_AUTH_USER = "rhkdhlgkrtod@gmail.com";
-  private static final String SMTP_AUTH_PWD = "Wkdtk9769";
+  private static final String SMTP_AUTH_USER = "RealMKTShop@gmail.com";
+  private static final String SMTP_AUTH_PWD = "real7404!";
 
   public void postMail(String[] recipients, String subject, String content, String from, String userNm)
     throws Exception
@@ -80,8 +80,8 @@ public class consoleMail
     }
 
     public PasswordAuthentication getPasswordAuthentication() {
-      String username = "rhkdhlgkrtod@gmail.com";
-      String password = "Wkdtk9769";
+      String username = "RealMKTShop@gmail.com";
+      String password = "real7404!";
       return new PasswordAuthentication(username, password);
     }
   }

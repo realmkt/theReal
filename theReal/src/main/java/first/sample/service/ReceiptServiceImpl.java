@@ -237,10 +237,29 @@ public class ReceiptServiceImpl implements ReceiptService {
 		receiptDAO.insertReceiptData(map);
 		System.out.println("impl@@@" + map);
 	}
+	
+	@Override
+	public void insertReceiptDataRenew(HashMap<String, Object> map) throws Exception {
+		receiptDAO.insertReceiptDataRenew(map);
+		System.out.println("impl@@@" + map);
+	}
+	
+	@Override
+	public void insertCancleReceiptData(Map<String, Object> map) throws Exception {
+		receiptDAO.insertCancleReceiptData(map);
+		System.out.println("impl@@@" + map);
+	}
+
 
 	@Override
 	public void insertReceiptDeatailData(HashMap<String, Object> map) throws Exception {
 		receiptDAO.insertReceiptDeatailData(map);
+		System.out.println("impl@@@" + map);
+	}
+	
+	@Override
+	public void insertReceiptDeatailDataRenew(HashMap<String, Object> map) throws Exception {
+		receiptDAO.insertReceiptDeatailDataRenew(map); 
 		System.out.println("impl@@@" + map);
 	}
 
@@ -799,6 +818,13 @@ public class ReceiptServiceImpl implements ReceiptService {
 	@Override
 	public Map<String, Object> cancleReceipt(HashMap<String, Object> map) throws Exception {
 		Map<String, Object> resultMap = receiptDAO.cancleReceipt(map); 
+		return resultMap;
+	}
+	
+	@Override
+	public HashMap<String, Object> cancleGetReceipt(HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = receiptDAO.cancleGetReceipt(map); 
+		System.out.println("TESTSTSTT");
 		return resultMap;
 	}
 	

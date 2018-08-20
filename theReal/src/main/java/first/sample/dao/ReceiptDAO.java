@@ -181,11 +181,29 @@ public class ReceiptDAO extends AbstractDAO {
 		System.out.println("dao@@@@" + map);
 		insert("sample.insertReceiptData", map);
 	}
+	
+	public void insertReceiptDataRenew(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		System.out.println("dao@@@@" + map);
+		insert("sample.insertReceiptDataRenew", map);
+	}
+	
+	public void insertCancleReceiptData(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		System.out.println("dao@@@@" + map);
+		insert("sample.insertCancleReceiptData", map);
+	}
 
 	public void insertReceiptDeatailData(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		System.out.println("dao@@@@" + map);
-		insert("sample.insertReceiptDeatailData", map);
+		insert("sample.insertReceiptDeatailDataRenew", map);
+	}
+	
+	public void insertReceiptDeatailDataRenew(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		System.out.println("dao@@@@" + map);
+		insert("sample.insertReceiptDeatailDataRenew", map);
 	}
 
 	public void insertSmsData(HashMap<String, Object> map) {
@@ -527,6 +545,10 @@ public class ReceiptDAO extends AbstractDAO {
 
 	public Map<String, Object> cancleReceipt(Map<String, Object> map) {
 		return (Map<String, Object>) selectOne("sample.cancleReceipt", map);
+	}
+	
+	public HashMap<String, Object> cancleGetReceipt(HashMap<String, Object> map) {
+		return (HashMap<String, Object>) selectOne("sample.cancleGetReceipt", map);
 	}
 	
 	@SuppressWarnings("unchecked")
