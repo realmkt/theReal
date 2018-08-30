@@ -272,7 +272,7 @@ public class ReceiptController {
 	 * 포스 위젯 업데이트 모듈
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/update/currentUpdateVer.do")
+	@RequestMapping(value = "/update/currentUpdateVer.do")  
 	public Object currentUpdateVer(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		BufferedReader br = null;
 		br = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
@@ -2908,7 +2908,7 @@ public class ReceiptController {
 
 				JSONObject json = new JSONObject();
 				String telNo = var.find("userKey").toString();
-				json.put("tmp_number", "2456");
+				json.put("tmp_number", "5580");
 				json.put("kakao_sender", "02-540-3111");
 				json.put("kakao_phone", telNo.toString());
 				json.put("kakao_name", telNo.substring(telNo.length() - 4));
@@ -2922,13 +2922,13 @@ public class ReceiptController {
 				}else if(td.length()==8){
 					td = td.substring(0, 4) + "." + td.substring(4, 6) + "." + td.substring(6, 8);
 				}
-				json.put("kakao_add2", td);
-				json.put("kakao_add3", var.find("shopInfo.branchName").toString());
+				json.put("kakao_add2", var.find("shopInfo.branchName").toString());
+				json.put("kakao_add3", td);
 				json.put("kakao_add4", replaceComma(Integer.parseInt(var.find("salesInfo.paidAmt").toString())) + "원");
 
 				String kakaoBarcode = var.find("salesInfo.salesBarCode").toString();
 
-				json.put("kakao_url1_1", "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(telNo), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8"));
+				json.put("kakao_url1_1", "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(telNo), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8"));
 				// json.put("kakao_add5",
 				// "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="+URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode),"UTF-8")+"&t="+URLEncoder.encode(aes.encryptStringToBase64(telNo),"UTF-8"));
 
@@ -3066,7 +3066,7 @@ public class ReceiptController {
 
 				JSONObject json = new JSONObject();
 				String telNo = var.find("userKey").toString();
-				json.put("tmp_number", "2456");
+				json.put("tmp_number", "5581");
 				json.put("kakao_sender", "02-540-3111");
 				json.put("kakao_phone",resultMap.get("USER_KEY").toString());
 				json.put("kakao_name", resultMap.get("USER_KEY").toString().substring(resultMap.get("USER_KEY").toString().length() - 4));
@@ -3080,18 +3080,18 @@ public class ReceiptController {
 				} else if (td.length() == 8) {
 					td = td.substring(0, 4) + "." + td.substring(4, 6) + "." + td.substring(6, 8);
 				}
-				json.put("kakao_add2", td);
-				json.put("kakao_add3", resultMap.get("SHOP_BRANCH").toString());
+				json.put("kakao_add2", resultMap.get("SHOP_BRANCH").toString());
+				json.put("kakao_add3", td);
 				json.put("kakao_add4", replaceComma(Integer.parseInt(resultMap.get("SALES_PAID_AMT").toString())) + "원");
 
 				String kakaoBarcode = resultMap.get("SALES_BARCODE").toString();
-
-				json.put("kakao_url1_1", "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(telNo), "UTF-8"));
+				
+				json.put("kakao_url1_1", "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(telNo), "UTF-8"));
 				// json.put("kakao_add5",
 				// "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="+URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode),"UTF-8")+"&t="+URLEncoder.encode(aes.encryptStringToBase64(telNo),"UTF-8"));
-
+				
 				System.out.println(json.toString());
-
+				
 				HttpPost httpost = new HttpPost(new URI(url));
 
 				httpost.addHeader("Authorization", "NvMMEL2bEB1aeSeUK0Mgd5ymKwfQGUv6LNUo/vuY2f0=");
@@ -3105,8 +3105,7 @@ public class ReceiptController {
 				builder.setDefaultRequestConfig(requestBuilder.build());
 				org.apache.http.client.HttpClient client = builder.build();
 
-				StringEntity stringEntity = new StringEntity(json.toJSONString(),
-						ContentType.create("application/json", "UTF-8"));
+				StringEntity stringEntity = new StringEntity(json.toJSONString(),ContentType.create("application/json", "UTF-8"));
 				httpost.setEntity(stringEntity);
 
 				HttpResponse response0 = httpClient.execute(httpost);
@@ -5398,6 +5397,82 @@ public class ReceiptController {
 
 		return mv;
 	}
+	
+	// -----------------------------------------------------------------------
+		// 전자영수증 uplus 상세페이지
+		// -----------------------------------------------------------------------
+
+		@RequestMapping(value = "/receipt/kakaoReceiptRenew.do")
+		@ResponseBody
+		public Object kakaoReceiptDetailRenew(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
+			Map<String, Object> shopMap = null;
+			Map<String, Object> resultMap = null;
+			ModelAndView mv = new ModelAndView();
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			int listSize = 0;
+			String str;
+			AES256 aes = null;
+
+			//if (CommonUtils.ipChk()) {
+				aes = new AES256("LGU+DEV258010247");
+			/*} else {
+				aes = new AES256("LGU+210987654321");
+			}*/
+			JSONObject json = null;
+			try {
+
+				String barcode = (String) commandMap.get("No");
+				String telNo = (String) commandMap.get("t");
+
+				if (telNo.length() < 12) {
+					barcode = aes.encryptStringToBase64(barcode);
+					telNo = aes.encryptStringToBase64(telNo);
+				}
+				System.out.println(" 복호화전 seq   ::: " + barcode);
+				System.out.println(" 복호화전 telNo ::: " + telNo);
+
+				/*
+				 * barcode = URLDecoder.decode(barcode); telNo =
+				 * URLDecoder.decode(telNo);
+				 * 
+				 * System.out.println(" URL복호화전 seq   ::: " + barcode);
+				 * System.out.println(" URL복호화전 telNo ::: " + telNo);
+				 */
+
+				barcode = aes.decryptBase64String(barcode);
+				telNo = aes.decryptBase64String(telNo);
+				System.out.println(" 복호화후 seq   ::: " + barcode);
+				System.out.println(" 복호화후 telNo ::: " + telNo);
+				map.put("barcode", barcode);
+				map.put("telNo", telNo);
+				map.put("type", "01");
+
+				shopMap = receiptService.getShopInfo(map);
+
+				map.put("barcode", shopMap.get("SALES_BARCODE"));
+
+				System.out.println(shopMap);
+				map.put("salesType", shopMap.get("SALES_TYPE"));
+
+				String date = (String) shopMap.get("SALES_DATE");
+				date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8) + " " + date.substring(8, 10) + ":" + date.substring(10, 12) + ":" + date.substring(12, 14);
+				mv.addObject("salesDate", date);
+				mv.addObject("shopInfo", shopMap);
+
+				resultMap = receiptService.ReceiptDetail(map);
+				resultMap.put("shopInfo", shopMap);
+				receiptService.latestUpdateData(map);
+
+				mv.addObject("detailMap", resultMap);
+				mv.setViewName("/kakaoReceipt");
+				System.out.println(resultMap);
+
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+			return mv;
+		}
 
 	// 진호씨
 
