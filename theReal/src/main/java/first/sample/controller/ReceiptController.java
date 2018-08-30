@@ -3786,7 +3786,7 @@ public class ReceiptController {
 
 		resultMap.put("maxSize", maxSize);
 		resultMap.put("code", "OK");
-		System.out.println("프로그램이 끝났습니다@@@@@@@@@@@@@@@@@@@");
+		System.out.println("프로그램이 끝났습니다@@@@@@@@@@@@@@@@@@");
 		return resultMap;
 	}
 
