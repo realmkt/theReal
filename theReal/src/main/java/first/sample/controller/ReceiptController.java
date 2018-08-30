@@ -63,7 +63,7 @@ import first.sample.theRealShop.TheRealShopToUplus;
 public class ReceiptController {
 	private static final int Object = 0;
 	Logger log = Logger.getLogger(this.getClass());
-	/*
+	/*TEST
 	 * @Value("#{code['code.response.str1']}") private String str1;
 	 *  
 	 * @Value("#{code['code.response.str2']}") private String str2;
