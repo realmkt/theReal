@@ -136,7 +136,7 @@ public class ReceiptController {
 		String test = "asdasd";
 		if (hangle.contains(test)) {
 			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-			System.out.println("■■■■■■■■■■■■YES■■■■■■■■■■■■");
+			System.out.println("■■■■■■■■■■■■YES OKEYDOKEYYO■■■■■■■■■■■■");
 			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		}
 
@@ -272,7 +272,7 @@ public class ReceiptController {
 	 * 포스 위젯 업데이트 모듈
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/update/currentUpdateVer.do")
+	@RequestMapping(value = "/update/currentUpdateVer.do")  
 	public Object currentUpdateVer(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		BufferedReader br = null;
 		br = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
@@ -2763,6 +2763,7 @@ public class ReceiptController {
 					insertMap.put("cashAppNo", "");
 					insertMap.put("cashDate", "");
 				}
+<<<<<<< HEAD
 				// 카드는 복합이 가능하여 For문으로 반복
 				if (paymentType.contains("카드")) {
 					String cardAmt = "";
@@ -2789,6 +2790,163 @@ public class ReceiptController {
 					insertMap.put("cardIcom", cardIcom.substring(0, cardIcom.length() - 1));
 					insertMap.put("cardPcom", cardPcom.substring(0, cardPcom.length() - 1));
 					insertMap.put("cardNo", cardNo.substring(0, cardNo.length() - 1));
+=======
+
+				JSONObject json = new JSONObject();
+				String telNo = var.find("userKey").toString();
+				json.put("tmp_number", "5580");
+				json.put("kakao_sender", "02-540-3111");
+				json.put("kakao_phone", telNo.toString());
+				json.put("kakao_name", telNo.substring(telNo.length() - 4));
+				json.put("kakao_080", "Y");
+				json.put("TRAN_REPLACE_TYPE", "S");
+				json.put("kakao_add1", var.find("shopInfo.shopName").toString());
+				String td = var.find("salesInfo.salesDate").toString();
+				System.out.println(td);
+				if (td.length() > 10 && td.length() < 17  ) {
+					td = td.substring(0, 4) + "." + td.substring(4, 6) + "." + td.substring(6, 8) + " " + td.substring(8, 10) + ":" + td.substring(10, 12) + ":" + td.substring(12, 14);
+				}else if(td.length()==8){
+					td = td.substring(0, 4) + "." + td.substring(4, 6) + "." + td.substring(6, 8);
+				}
+				json.put("kakao_add2", var.find("shopInfo.branchName").toString());
+				json.put("kakao_add3", td);
+				json.put("kakao_add4", replaceComma(Integer.parseInt(var.find("salesInfo.paidAmt").toString())) + "원");
+
+				String kakaoBarcode = var.find("salesInfo.salesBarCode").toString();
+
+				json.put("kakao_url1_1", "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(telNo), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8"));
+				// json.put("kakao_add5",
+				// "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="+URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode),"UTF-8")+"&t="+URLEncoder.encode(aes.encryptStringToBase64(telNo),"UTF-8"));
+
+				System.out.println(json.toString());
+
+				HttpPost httpost = new HttpPost(new URI(url));
+
+				httpost.addHeader("Authorization", "NvMMEL2bEB1aeSeUK0Mgd5ymKwfQGUv6LNUo/vuY2f0=");
+
+				RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000).setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+				CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+
+				RequestConfig.Builder requestBuilder = RequestConfig.custom();
+				HttpClientBuilder builder = HttpClientBuilder.create();
+				builder.setDefaultRequestConfig(requestBuilder.build());
+				org.apache.http.client.HttpClient client = builder.build();
+
+				StringEntity stringEntity = new StringEntity(json.toJSONString(),ContentType.create("application/json", "UTF-8"));
+				httpost.setEntity(stringEntity);
+
+				HttpResponse response0 = httpClient.execute(httpost);
+				HttpEntity resEntity = response0.getEntity();
+
+				log.debug("■■resEntity■■" + resEntity);
+
+				String resData;
+				if (resEntity != null) {
+					resData = EntityUtils.toString(resEntity);
+					log.debug("■■ 응답데이터■■==" + resData);
+				}
+
+				System.out.println("///////////////////////////////알림톡end///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
+				////////////////////////////// 알림톡///////////////////////////////////////
+
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+		} else {
+			
+			String bizNo = var.find("shopInfo.bizNo").toString();
+			String cashier = var.find("shopInfo.cashier").toString();
+			String oriSalesBarCode = var.find("salesInfo.oriSalesBarCode").toString();
+			String salesBarCode = var.find("salesInfo.salesBarCode").toString();
+			String oriSalesDate = var.find("salesInfo.oriSalesDate").toString();
+			String salesDate = var.find("salesInfo.salesDate").toString();
+			
+			insertMap.put("bizNo", bizNo);
+			insertMap.put("cashier", cashier);
+			insertMap.put("oriSalesBarCode", oriSalesBarCode);
+			insertMap.put("salesBarCode", salesBarCode);
+			insertMap.put("oriSalesDate", oriSalesDate);
+			insertMap.put("salesDate", salesDate);
+			insertMap.put("telNo", var.find("userKey").toString());
+			
+			
+			
+			
+			resultMap = receiptService.cancleGetReceipt(insertMap);
+			String userKey = resultMap.get("USER_KEY").toString();
+			resultMap.put("telNo", userKey);
+			uplusUserKey = receiptService.uPlusChk(userKey);
+			CI = (String) receiptService.getCi(resultMap);
+			
+			resultMap.put("salesBarCode", salesBarCode);
+			resultMap.put("oriSalesDate", oriSalesDate);
+			resultMap.put("mainSalesBarCode", "RCP02"+salesBarCode);
+			resultMap.put("oriSalesDate", oriSalesDate);
+			resultMap.put("salesDate", salesDate);
+			resultMap.put("CI",CI);
+			
+			resultMap.put("userKey", resultMap.get("USER_KEY"));
+			resultMap.put("memo", resultMap.get("ETC_MEMO"));
+			resultMap.put("event", resultMap.get("ETC_EVENT"));
+			resultMap.put("shopName", resultMap.get("SHOP_NAME"));
+			resultMap.put("branchName", resultMap.get("SHOP_BRANCH"));
+			resultMap.put("bizNo", resultMap.get("SHOP_BIZNO"));
+			resultMap.put("addr", resultMap.get("SHOP_ADDR"));
+			resultMap.put("ceo", resultMap.get("SHOP_CEO"));
+			resultMap.put("phone", resultMap.get("SHOP_TEL_NUM"));
+			resultMap.put("cashier", resultMap.get("SHOP_CASHIER"));
+			resultMap.put("salesDate", resultMap.get("SALES_DATE"));
+			resultMap.put("printDate", resultMap.get("SALES_PRINT_DATE"));
+			resultMap.put("totAmt", resultMap.get("SALES_TOT_AMT"));
+			resultMap.put("discountAmt", resultMap.get("SALES_DISCOUNT_AMT"));
+			resultMap.put("chgAmt", resultMap.get("SALES_CHG_AMT"));
+			resultMap.put("paidAmt", resultMap.get("SALES_PAID_AMT"));
+			resultMap.put("surtaxAmt", resultMap.get("SALES_SURTAX_AMT"));
+			resultMap.put("dfAmt", resultMap.get("SALES_DF_AMT"));	
+			resultMap.put("taxAmt", resultMap.get("SALES_TAX_AMT"));
+			resultMap.put("detailCnt", resultMap.get("SALES_DETAIL_CNT"));
+			resultMap.put("rePrint", resultMap.get("SALES_RE_PRINT"));
+			resultMap.put("cashAmt", resultMap.get("CASH_AMT"));
+			resultMap.put("cashType", resultMap.get("CASH_TYPE"));
+			resultMap.put("cashNo", resultMap.get("CASH_NO"));
+			resultMap.put("cashAppNo", resultMap.get("CASH_APP_N0"));
+			resultMap.put("cashDate", resultMap.get("CASH_DATE"));
+			resultMap.put("cardAmt", resultMap.get("CARD_AMT"));
+			resultMap.put("cardInstallment", resultMap.get("CARD_INSTALLMENT"));
+			resultMap.put("cardAppNo", resultMap.get("CARD_APP_NO"));
+			resultMap.put("cardDate", resultMap.get("CARD_DATE"));
+			resultMap.put("cardICom", resultMap.get("CARD_ICOM"));
+			resultMap.put("cardPCom", resultMap.get("CARD_PCOM"));
+			resultMap.put("cardNo", resultMap.get("CARD_NO"));
+			resultMap.put("pointCardNo", resultMap.get("POINT_CARD"));
+			resultMap.put("pointAmt", resultMap.get("POINT_AMT"));
+			resultMap.put("pointType", resultMap.get("POINT_TYPE"));
+			resultMap.put("pointIcom", resultMap.get("POINT_ICOM"));
+			resultMap.put("pointGet", resultMap.get("POINT_GET"));
+			resultMap.put("eMail", resultMap.get("EMAIL"));
+			resultMap.put("salesBarCode", resultMap.get("SALES_BARCODE"));
+			resultMap.put("uplusUserKey", resultMap.get("UPLUS_USER_KEY"));
+			
+			receiptService.insertCancleReceiptData(resultMap);
+			
+			
+			
+			/////////////////////////////// 알림톡///////////////////////////////////////
+
+			try {
+				System.out.println(
+						"///////////////////////////////알림톡start//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
+				String url = "http://www.apiorange.com/api/send/notice.do";
+				int timeout = 10;
+
+				// Map<String, Object> kakaoMap = receiptService.getKakao(map)
+
+				AES256 aes = null;
+
+				if (CommonUtils.ipChk()) {
+					aes = new AES256("LGU+DEV258010247");
+>>>>>>> branch 'master' of https://github.com/realmkt/theReal
 				} else {
 					insertMap.put("cardAmt", "");
 					insertMap.put("cardInstallment", "");
@@ -2798,6 +2956,7 @@ public class ReceiptController {
 					insertMap.put("cardPcom", "");
 					insertMap.put("cardNo", "");
 				}
+<<<<<<< HEAD
 				if (paymentType.contains("모바일")) {
 					String payAmt = "";
 					String payAppNo = "";
@@ -2819,7 +2978,26 @@ public class ReceiptController {
 					insertMap.put("couponType", "");
 					insertMap.put("couponAmt", "");
 					insertMap.put("couponCashYN", "");
+=======
+
+				JSONObject json = new JSONObject();
+				String telNo = var.find("userKey").toString();
+				json.put("tmp_number", "5581");
+				json.put("kakao_sender", "02-540-3111");
+				json.put("kakao_phone",resultMap.get("USER_KEY").toString());
+				json.put("kakao_name", resultMap.get("USER_KEY").toString().substring(resultMap.get("USER_KEY").toString().length() - 4));
+				json.put("kakao_080", "Y");
+				json.put("TRAN_REPLACE_TYPE", "S");
+				json.put("kakao_add1", resultMap.get("SHOP_NAME").toString());
+				String td = resultMap.get("SALES_DATE").toString();
+				System.out.println(td);
+				if (td.length() > 10 && td.length() < 17) {
+					td = td.substring(0, 4) + "." + td.substring(4, 6) + "." + td.substring(6, 8) + " " + td.substring(8, 10) + ":" + td.substring(10, 12) + ":" + td.substring(12, 14);
+				} else if (td.length() == 8) {
+					td = td.substring(0, 4) + "." + td.substring(4, 6) + "." + td.substring(6, 8);
+>>>>>>> branch 'master' of https://github.com/realmkt/theReal
 				}
+<<<<<<< HEAD
 				if (paymentType.contains("쿠폰")) {
 					insertMap.put("couponNo", var.find("couponInfo.payAmt").toString());
 					insertMap.put("couponType", var.find("couponInfo.payAppNo").toString());
@@ -2830,6 +3008,45 @@ public class ReceiptController {
 					insertMap.put("couponType", "");
 					insertMap.put("couponAmt", "");
 					insertMap.put("couponCashYN", "");
+=======
+				json.put("kakao_add2", resultMap.get("SHOP_BRANCH").toString());
+				json.put("kakao_add3", td);
+				json.put("kakao_add4", replaceComma(Integer.parseInt(resultMap.get("SALES_PAID_AMT").toString())) + "원");
+
+				String kakaoBarcode = resultMap.get("SALES_BARCODE").toString();
+				
+				json.put("kakao_url1_1", "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(telNo), "UTF-8"));
+				// json.put("kakao_add5",
+				// "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="+URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode),"UTF-8")+"&t="+URLEncoder.encode(aes.encryptStringToBase64(telNo),"UTF-8"));
+				
+				System.out.println(json.toString());
+				
+				HttpPost httpost = new HttpPost(new URI(url));
+
+				httpost.addHeader("Authorization", "NvMMEL2bEB1aeSeUK0Mgd5ymKwfQGUv6LNUo/vuY2f0=");
+
+				RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
+						.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+				CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+
+				RequestConfig.Builder requestBuilder = RequestConfig.custom();
+				HttpClientBuilder builder = HttpClientBuilder.create();
+				builder.setDefaultRequestConfig(requestBuilder.build());
+				org.apache.http.client.HttpClient client = builder.build();
+
+				StringEntity stringEntity = new StringEntity(json.toJSONString(),ContentType.create("application/json", "UTF-8"));
+				httpost.setEntity(stringEntity);
+
+				HttpResponse response0 = httpClient.execute(httpost);
+				HttpEntity resEntity = response0.getEntity();
+
+				log.debug("■■resEntity■■" + resEntity);
+
+				String resData;
+				if (resEntity != null) {
+					resData = EntityUtils.toString(resEntity);
+					log.debug("■■ 응답데이터■■==" + resData);
+>>>>>>> branch 'master' of https://github.com/realmkt/theReal
 				}
 	
 				insertMap.put("pointType", var.find("pointType").toString());
@@ -5409,6 +5626,82 @@ public class ReceiptController {
 
 		return mv;
 	}
+	
+	// -----------------------------------------------------------------------
+		// 전자영수증 uplus 상세페이지
+		// -----------------------------------------------------------------------
+
+		@RequestMapping(value = "/receipt/kakaoReceiptRenew.do")
+		@ResponseBody
+		public Object kakaoReceiptDetailRenew(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
+			Map<String, Object> shopMap = null;
+			Map<String, Object> resultMap = null;
+			ModelAndView mv = new ModelAndView();
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			int listSize = 0;
+			String str;
+			AES256 aes = null;
+
+			//if (CommonUtils.ipChk()) {
+				aes = new AES256("LGU+DEV258010247");
+			/*} else {
+				aes = new AES256("LGU+210987654321");
+			}*/
+			JSONObject json = null;
+			try {
+
+				String barcode = (String) commandMap.get("No");
+				String telNo = (String) commandMap.get("t");
+
+				if (telNo.length() < 12) {
+					barcode = aes.encryptStringToBase64(barcode);
+					telNo = aes.encryptStringToBase64(telNo);
+				}
+				System.out.println(" 복호화전 seq   ::: " + barcode);
+				System.out.println(" 복호화전 telNo ::: " + telNo);
+
+				/*
+				 * barcode = URLDecoder.decode(barcode); telNo =
+				 * URLDecoder.decode(telNo);
+				 * 
+				 * System.out.println(" URL복호화전 seq   ::: " + barcode);
+				 * System.out.println(" URL복호화전 telNo ::: " + telNo);
+				 */
+
+				barcode = aes.decryptBase64String(barcode);
+				telNo = aes.decryptBase64String(telNo);
+				System.out.println(" 복호화후 seq   ::: " + barcode);
+				System.out.println(" 복호화후 telNo ::: " + telNo);
+				map.put("barcode", barcode);
+				map.put("telNo", telNo);
+				map.put("type", "01");
+
+				shopMap = receiptService.getShopInfo(map);
+
+				map.put("barcode", shopMap.get("SALES_BARCODE"));
+
+				System.out.println(shopMap);
+				map.put("salesType", shopMap.get("SALES_TYPE"));
+
+				String date = (String) shopMap.get("SALES_DATE");
+				date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8) + " " + date.substring(8, 10) + ":" + date.substring(10, 12) + ":" + date.substring(12, 14);
+				mv.addObject("salesDate", date);
+				mv.addObject("shopInfo", shopMap);
+
+				resultMap = receiptService.ReceiptDetail(map);
+				resultMap.put("shopInfo", shopMap);
+				receiptService.latestUpdateData(map);
+
+				mv.addObject("detailMap", resultMap);
+				mv.setViewName("/kakaoReceipt");
+				System.out.println(resultMap);
+
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+			return mv;
+		}
 
 	// 진호씨
 
