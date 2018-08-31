@@ -136,7 +136,7 @@ public class ReceiptController {
 		String test = "asdasd";
 		if (hangle.contains(test)) {
 			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-			System.out.println("■■■■■■■■■■■■YES OKEYDOKEYYO■■■■■■■■■■■■");
+			System.out.println("■■■■■■■■■■■■YES OKEYDOKEY Yo is that true yes■■■■■■■■■■■■");
 			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		}
 
