@@ -1043,7 +1043,7 @@
 	<insert id="insertReceiptDeatailDataRenew" parameterType="hashmap">
 		<![CDATA[
 			INSERT INTO 
-				TB_USER_DATA_DETAIL
+				TB_USER_DATA_DETAIL_RENEW
 					(
 					USER_CI				,
 					USER_KEY			,
@@ -1218,6 +1218,23 @@
 		<update id="latestUpdateData" parameterType="hashmap">
 		<![CDATA[
 			UPDATE TB_USER_DATA 
+			SET
+				REC_VIEW_YN 	=  'Y',
+				FNL_MOF_DTM 	=	now(), 
+				FNL_MDF_NM		= 'Admin'				
+			WHERE
+				USER_KEY = #{telNo}
+			AND
+				SALES_BARCODE = #{barcode}		
+		]]>
+		<if test="!''.equals(userKey)">
+                AND UPLUS_USER_KEY = #{userKey}
+       </if>			
+	</update>
+	
+		<update id="latestUpdateDataRenew" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TB_USER_DATA_RENEW 
 			SET
 				REC_VIEW_YN 	=  'Y',
 				FNL_MOF_DTM 	=	now(), 
@@ -3389,9 +3406,92 @@
 				SALES_BARCODE = #{barcode}
              </otherwise>
          </choose>	
-			
-
+		</select>
 		
+		
+		<select id="getShopInfoRenew" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT 
+				USER_CI					,
+						USER_KEY				,
+						SALES_BARCODE           ,
+						ETC_MEMO	            ,
+						ETC_EVENT	            ,
+						SHOP_NAME	            ,
+						SHOP_BRANCH				,
+						SHOP_BIZNO	            ,
+						SHOP_ADDR	            ,
+						SHOP_CEO	            ,
+						SHOP_TEL_NUM	        ,
+						SHOP_CASHIER	        ,
+						SALES_DATE	            ,
+						SALES_PRINT_DATE	    ,
+						SALES_TYPE	            ,
+						SALES_TOT_AMT	    	,
+						SALES_DISCOUNT_AMT	    ,
+						SALES_CHG_AMT       	,
+						SALES_PAID_AMT	    	,
+						SALES_SURTAX_AMT	    ,
+						SALES_DF_AMT	        ,
+						SALES_TAX_AMT , 
+						SALES_RE_PRINT	        ,
+						SALES_DETAIL_CNT	    ,
+						CASH_AMT	            ,
+						CASH_TYPE	            ,
+						CASH_NO            		,
+						CASH_APP_N0	            ,
+						CASH_DATE	            ,
+						CARD_AMT	            ,
+						CARD_INSTALLMENT	    ,
+						CARD_APP_NO	            ,
+						CARD_DATE	            ,
+						CARD_ICOM	            ,
+						CARD_PCOM	            ,
+						CARD_NO            		,
+						POINT_CARD				,
+						POINT_AMT	            ,
+						POINT_TYPE				,
+						POINT_ICOM				,
+						POINT_GET	            ,
+						REC_VIEW_YN	            ,
+						EMAIL	            ,
+						FRT_CREA_DTM	        ,
+						FRT_REGN_NM	            ,
+						FNL_MOF_DTM	            ,
+						FNL_MDF_NM				,
+						REC_NO				,
+						ORIGIN_REC_NO				,
+						ORIGIN_SALES_DATE,
+						UPLUS_USER_KEY
+			FROM
+				TB_USER_DATA_RENEW
+			]]>
+			<choose>
+             <when test="'00'.equals(type)">
+            WHERE
+            	SEQ = #{seq} 
+            AND
+            	SHOP_BIZNO = #{biz}
+            AND
+            	SALES_BARCODE = #{barcode}
+             </when>
+             <when test="'01'.equals(type)">
+            WHERE
+            	SALES_BARCODE = #{barcode} 
+            AND
+             	USER_KEY = #{telNo}
+             </when>
+             <otherwise>
+            WHERE
+				USER_KEY = #{telNo}
+			AND
+				UPLUS_USER_KEY = #{userKey}
+			AND
+				SHOP_BIZNO = #{bizNo}
+			AND
+				SALES_BARCODE = #{barcode}
+             </otherwise>
+         </choose>	
 		</select>
 		
 		
@@ -3415,6 +3515,52 @@
 			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d %H:%i:%s') AS FRT_CREA_DTM
 		FROM
 			TB_USER_DATA_DETAIL
+		]]>
+			<choose>
+             <when test="'00'.equals(type)">
+            WHERE
+            	SHOP_BIZNO = #{biz}
+            AND
+            	SALES_BARCODE = #{barcode}
+             </when>
+             <when test="'01'.equals(type)">
+            WHERE
+            	USER_KEY = #{telNo}
+            AND
+            	SALES_BARCODE = #{barcode}
+             </when>
+             <otherwise>
+            WHERE
+				USER_KEY = #{telNo}
+			AND
+				UPLUS_USER_KEY = #{userKey}
+			AND
+				SHOP_BIZNO = #{bizNo}
+			AND
+				SALES_BARCODE = #{barcode}
+             </otherwise>
+         </choose>	
+		</select>
+		
+		<select id="kakaoReceiptDetail" parameterType="hashmap" resultType="hashmap">
+			<![CDATA[
+				SELECT
+			SALES_BARCODE	,
+			SALES_SEQ_NO	,
+			USER_CI	    	,
+			USER_KEY	    ,
+			SALES_PNAME	    ,
+			SALES_PPRICE	,
+			SALES_OPRICE	,
+			SALES_QTY	    ,
+			SALES_DF_AMT	,
+			SALES_FP_AMT	,
+			SALES_TAX_AMT	,
+			SALES_SL_AMT	, 
+			SALES_TYPE		,
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d %H:%i:%s') AS FRT_CREA_DTM
+		FROM
+			TB_USER_DATA_DETAIL_RENEW
 		]]>
 			<choose>
              <when test="'00'.equals(type)">

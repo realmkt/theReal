@@ -162,7 +162,7 @@
                                     </ul>
                                     
                                     <c:forEach var="list" items="${detailMap.resultMap}" varStatus="status">
-                                    	<ul>
+                                    	<ul>	
                                      		<li class="rt_mlat01">${list.SALES_PNAME }</li>
                                       		<li class="rt_mlat02"><fmt:formatNumber value="${list.SALES_SL_AMT/list.SALES_QTY}"  groupingUsed="true"></fmt:formatNumber> </li>
                                       		<li class="rt_mlat03">${list.SALES_QTY}</li>
@@ -174,8 +174,8 @@
                                 
 								
                                 <div class="rt_tax">주문합계<span><fmt:formatNumber value="${shopInfo.SALES_PAID_AMT }" groupingUsed="true"/></span><br><br>
-                               						 공급가금액<span><fmt:formatNumber value="${shopInfo.SALES_SUM_FP_AMT }" groupingUsed="true"/></span><br><br>
-                               						 부가세<span><fmt:formatNumber value="${shopInfo.SALES_SUM_TAX_AMT }" groupingUsed="true"/></span></div>
+                               						 공급가금액<span><fmt:formatNumber value="${shopInfo.SALES_SURTAX_AMT }" groupingUsed="true"/></span><br><br>
+                               						 부가세<span><fmt:formatNumber value="${shopInfo.SALES_TAX_AMT }" groupingUsed="true"/></span></div>
                                 
                                 <div class="rt_total">Total<span><fmt:formatNumber value="${shopInfo.SALES_PAID_AMT }" groupingUsed="true"/></span></div>
                                 
@@ -227,7 +227,7 @@
                                 
                                 
                                 
-                                <c:if test="${(shopInfo.POINT_CARD != '' )}">
+                                <c:if test="${(shopInfo.POINT_CARD != '' )} || ${(shopInfo.POINT_CARD != NULL )}">
                                 	<div  class="rt_card">
                                 	<c:if test="${shopInfo.GET_POINT == '0'}">
                                 		<div>포인트카드 : <span>${shopInfo.POINT_CARD }</span> </div>
