@@ -611,6 +611,11 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public void latestUpdateData(Map<String, Object> map) throws Exception {
 		receiptDAO.latestUpdateData(map);
 	}
+	
+	@Override
+	public void latestUpdateDataRenew(Map<String, Object> map) throws Exception {
+		receiptDAO.latestUpdateDataRenew(map);
+	}
 
 	@Override
 	public Map<String, Object> houseHold(HashMap<String, Object> map) throws Exception {
@@ -855,6 +860,12 @@ public class ReceiptServiceImpl implements ReceiptService {
 	}
 	
 	@Override
+	public Map<String, Object> getShopInfoRenew(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = receiptDAO.getShopInfoRenew(map); 
+		return resultMap;
+	}
+	
+	@Override
 	public Map<String, Object> smsDetailData(Map<String, Object> map) throws Exception {
 		Map<String, Object> resultMap = receiptDAO.smsDetailData(map); 
 		return resultMap;
@@ -863,6 +874,13 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public Map<String, Object> ReceiptDetail(Map<String,Object> map) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<Map<String, Object>> list = receiptDAO.ReceiptDetail(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+	
+	public Map<String, Object> kakaoReceiptDetail(Map<String,Object> map) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.kakaoReceiptDetail(map);
 		resultMap.put("resultMap", list);
 		return resultMap;
 	}

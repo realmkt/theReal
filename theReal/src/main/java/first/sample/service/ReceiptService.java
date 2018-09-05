@@ -153,6 +153,8 @@ public interface ReceiptService {
 	String pushChk(String eMailChk);
 
 	void latestUpdateData(Map<String, Object> map) throws Exception;
+	
+	void latestUpdateDataRenew(Map<String, Object> map) throws Exception;
 
 	Map<String, Object> houseHold(HashMap<String, Object> map) throws Exception;
 
@@ -244,7 +246,11 @@ public interface ReceiptService {
 	
 	Map<String, Object> getShopInfo(Map<String, Object> map) throws Exception;
 	
+	Map<String, Object> getShopInfoRenew(Map<String, Object> map) throws Exception;
+	
 	Map<String, Object> ReceiptDetail(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> kakaoReceiptDetail(Map<String, Object> map) throws Exception;
 	
 	Map<String, Object> getDetailReceipt(Map<String, Object> map) throws Exception;
 

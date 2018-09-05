@@ -393,6 +393,11 @@ public class ReceiptDAO extends AbstractDAO {
 		log.debug("map:" + map);
 		update("sample.latestUpdateData", map);
 	}
+	
+	public void latestUpdateDataRenew(Map<String, Object> map) {
+		log.debug("map:" + map);
+		update("sample.latestUpdateDataRenew", map);
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> houseHold(HashMap<String, Object> map) {
@@ -577,9 +582,17 @@ public class ReceiptDAO extends AbstractDAO {
 	public Map<String, Object> getShopInfo(Map<String, Object> map) {
 		return (Map<String, Object>) selectOne("sample.getShopInfo", map);
 	}
+	
+	public Map<String, Object> getShopInfoRenew(Map<String, Object> map) {
+		return (Map<String, Object>) selectOne("sample.getShopInfoRenew", map);
+	}
 
 	public List<Map<String, Object>> ReceiptDetail(Map<String, Object> map) {
 		return selectList("sample.ReceiptDetail", map);
+	}
+	
+	public List<Map<String, Object>> kakaoReceiptDetail(Map<String, Object> map) {
+		return selectList("sample.kakaoReceiptDetail", map);
 	}
 
 	public List<Map<String, Object>> getDetailReceipt(Map<String, Object> map) {
