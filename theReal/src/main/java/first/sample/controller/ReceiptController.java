@@ -67,6 +67,7 @@ import first.common.filter.SmsParse;
 import first.common.util.AES256;
 import first.common.util.CharTokenizer;
 import first.common.util.CommonUtils;
+import first.common.util.FileUtils;
 import first.common.util.GoogleChartDTO;
 import first.common.util.JsonParser;
 import first.common.util.Sha256;
@@ -74,6 +75,7 @@ import first.common.util.Var;
 import first.common.util.consoleMail;
 import first.sample.service.ReceiptService;
 import first.sample.theRealShop.TheRealShopToUplus;
+import first.sample.controller.function.*;
 
 @Controller
 public class ReceiptController {
@@ -186,24 +188,7 @@ public class ReceiptController {
 		return paramData;
 	}
 
-	// -----------------------------------------------------------------------
-	// 금액 3자리 단위로 ,찍어주는 메서드
-	// -----------------------------------------------------------------------
-	static public String replaceComma(int value) {
-		String result = "";
-		String val = String.valueOf(value);
-		String temp = new StringBuffer(val).reverse().toString();
-		for (int i = 0; i < temp.length(); i += 3) {
-			if (i + 3 < temp.length()) {
-				result += temp.substring(i, i + 3) + ",";
-			} else {
-				result += temp.substring(i);
-			}
-		}
-		val = new StringBuffer(result).reverse().toString();
-
-		return val;
-	}
+	
 
 	// -----------------------------------------------------------------------
 	// 코드 바꿔주는 메서드
@@ -2555,7 +2540,7 @@ public class ReceiptController {
 			}
 			json.put("kakao_add2", td);
 			json.put("kakao_add3", var.find("shopInfo.name").toString());
-			json.put("kakao_add4", replaceComma(Integer.parseInt(var.find("salesInfo.paidAmt").toString())) + "원");
+			json.put("kakao_add4", first.common.util.CommonUtils.replaceComma(Integer.parseInt(var.find("salesInfo.paidAmt").toString())) + "원");
 
 			String kakaoBarcode = var.find("salesInfo.salesBarCode").toString();
 
@@ -2624,7 +2609,11 @@ public class ReceiptController {
 	// public ModelAndView insertReceiptData(CommandMap commandMap,
 	// HttpServletRequest request) throws Exception{
 	public Object receiptData(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+		//알림톡 초기화
+		kakaoArlimtalk kakaoArl = new kakaoArlimtalk();
+		Map<String, String> kakaoMap = new HashMap<String, String>();
+		
+		//변수 설정
 		String CI = "";
 		Var var = null;
 		String uplusUserKey = "";
@@ -2635,6 +2624,15 @@ public class ReceiptController {
 		String paymentTypeCode = "";
 		String errorCol = "";
 		String errorDeCol = "";
+		
+		
+		//암호화 모듈
+		AES256 aes = null;
+		if (CommonUtils.ipChk()) {
+			aes = new AES256("LGU+DEV258010247");
+		} else {
+			aes = new AES256("LGU+210987654321");
+		}
 
 		StringBuffer paramData = new StringBuffer();
 		BufferedReader br = null;
@@ -2913,80 +2911,38 @@ public class ReceiptController {
 				}
 	
 				
-				/////////////////////////////// 알림톡///////////////////////////////////////
-	
+				/////////////////////////////// 알림톡 renew RCP01///////////////////////////////////////
+				
 				try {
-					System.out.println( "///////////////////////////////알림톡 리뉴얼 start//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
-					String url = "http://www.apiorange.com/api/send/notice.do";
-					int timeout = 10;
-	
-					// Map<String, Object> kakaoMap = receiptService.getKakao(map)
-	
-					AES256 aes = null;
-	
-					if (CommonUtils.ipChk()) {
-						aes = new AES256("LGU+DEV258010247");
-					} else {
-						aes = new AES256("LGU+210987654321");
-					}
-	
-					JSONObject json = new JSONObject();
-					String telNo = var.find("userKey").toString();
-					json.put("tmp_number", "5580");
-					json.put("kakao_sender", "02-540-3111");
-					json.put("kakao_phone", telNo.toString());
-					json.put("kakao_name", telNo.substring(telNo.length() - 4));
-					json.put("kakao_080", "Y");
-					json.put("TRAN_REPLACE_TYPE", "S");
-					json.put("kakao_add1", var.find("shopInfo.shopName").toString());
-					String td = var.find("salesInfo.salesDate").toString();
-					System.out.println(td);
-					if (td.length() > 10 && td.length() < 17  ) {
-						td = td.substring(0, 4) + "." + td.substring(4, 6) + "." + td.substring(6, 8) + " " + td.substring(8, 10) + ":" + td.substring(10, 12) + ":" + td.substring(12, 14);
-					}else if(td.length()==8){
-						td = td.substring(0, 4) + "." + td.substring(4, 6) + "." + td.substring(6, 8);
-					}
-					json.put("kakao_add2", var.find("shopInfo.branchName").toString());
-					json.put("kakao_add3", td);
-					json.put("kakao_add4", replaceComma(Integer.parseInt(var.find("salesInfo.paidAmt").toString())) + "원");
-	
+					//Link URL 작성
 					String kakaoBarcode = var.find("salesInfo.salesBarCode").toString();
-	
-					json.put("kakao_url1_1", "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(telNo), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8"));
-					// json.put("kakao_add5",
-					// "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="+URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode),"UTF-8")+"&t="+URLEncoder.encode(aes.encryptStringToBase64(telNo),"UTF-8"));
-	
-					System.out.println(json.toString());
-	
-					HttpPost httpost = new HttpPost(new URI(url));
-	
-					httpost.addHeader("Authorization", "NvMMEL2bEB1aeSeUK0Mgd5ymKwfQGUv6LNUo/vuY2f0=");
-	
-					RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000).setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
-					CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
-	
-					RequestConfig.Builder requestBuilder = RequestConfig.custom();
-					HttpClientBuilder builder = HttpClientBuilder.create();
-					builder.setDefaultRequestConfig(requestBuilder.build());
-					org.apache.http.client.HttpClient client = builder.build();
-	
-					StringEntity stringEntity = new StringEntity(json.toJSONString(),ContentType.create("application/json", "UTF-8"));
-					httpost.setEntity(stringEntity);
-	
-					HttpResponse response0 = httpClient.execute(httpost);
-					HttpEntity resEntity = response0.getEntity();
-	
-					log.debug("■■resEntity■■" + resEntity);
-	
-					String resData;
-					if (resEntity != null) {
-						resData = EntityUtils.toString(resEntity);
-						log.debug("■■ 응답데이터■■==" + resData);
-					}
-	
-					System.out.println("///////////////////////////////알림톡end///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
-					////////////////////////////// 알림톡///////////////////////////////////////
-	
+					String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(var.find("userKey").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
+					
+					//고정 입력 값 (주석 사용x 추후 사용 가능)
+					kakaoMap.put("tmp_number", "5580");										//템플릿 번호
+					kakaoMap.put("kakao_sander", "02-540-3111");							//발송 번호
+					kakaoMap.put("kakao_phone", var.find("userKey").toString());			//발신 번호
+					kakaoMap.put("kakao_name", (var.find("userKey").toString()).substring(var.find("userKey").toString().length() - 4));		//발신자 이름
+					kakaoMap.put("kakao_080", "Y");											//080 무료 수신 유무
+					kakaoMap.put("TRAN_REPLACE_TYPE", "S");									//대체문자 S: SMS L:LMS
+					//추가정보 이하 동
+					kakaoMap.put("kakao_add1", var.find("shopInfo.shopName").toString());	//업체 명		
+					kakaoMap.put("kakao_add2", var.find("shopInfo.branchName").toString());	//매장 명
+					kakaoMap.put("kakao_add3", var.find("salesInfo.salesDate").toString());	//결제일시 (ex YYYY.MM.DD)
+					kakaoMap.put("kakao_add4", var.find("salesInfo.paidAmt").toString());	//금액       (2,000원)
+					//String kakao_add5 	= "";
+					//모바일 링크
+					kakaoMap.put("kakao_url1_1", kakaoUrl);
+					/*
+					String kakao_url1_2 = "";	
+					String kakao_url2_1 = "";		
+					String kakao_url2_2 = "";	
+					*/
+					
+					
+					String arlResult = kakaoArl.kakaoArlimtalk(kakaoMap);
+					System.out.println(arlResult);
+					
 				} catch (Exception e) {
 					jsonResData = "{";
 					jsonResData += "    \"result\":\"PI801\",";
@@ -2994,6 +2950,11 @@ public class ReceiptController {
 					jsonResData += "}";
 					System.out.println("jsonResData:" + jsonResData);
 				}
+				
+				
+				
+				
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////RCP02 *취소 영수증 발급
 			} else {
 				errorCol = "bizNo";
 				String bizNo = var.find("shopInfo.bizNo").toString(); errorCol = "cashier";
@@ -3073,82 +3034,37 @@ public class ReceiptController {
 				
 				
 				
-				/////////////////////////////// 알림톡///////////////////////////////////////
+				/////////////////////////////// 알림톡 renew RCP02///////////////////////////////////////
 	
 				try {
-					System.out.println(
-							"///////////////////////////////알림톡start//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
-					String url = "http://www.apiorange.com/api/send/notice.do";
-					int timeout = 10;
-	
-					// Map<String, Object> kakaoMap = receiptService.getKakao(map)
-	
-					AES256 aes = null;
-	
-					if (CommonUtils.ipChk()) {
-						aes = new AES256("LGU+DEV258010247");
-					} else {
-						aes = new AES256("LGU+210987654321");
-					}
-	
-					JSONObject json = new JSONObject();
-					String telNo = var.find("userKey").toString();
-					json.put("tmp_number", "5581");
-					json.put("kakao_sender", "02-540-3111");
-					json.put("kakao_phone",resultMap.get("USER_KEY").toString());
-					json.put("kakao_name", resultMap.get("USER_KEY").toString().substring(resultMap.get("USER_KEY").toString().length() - 4));
-					json.put("kakao_080", "Y");
-					json.put("TRAN_REPLACE_TYPE", "S");
-					json.put("kakao_add1", resultMap.get("SHOP_NAME").toString());
-					String td = resultMap.get("SALES_DATE").toString();
-					System.out.println(td);
-					if (td.length() > 10 && td.length() < 17) {
-						td = td.substring(0, 4) + "." + td.substring(4, 6) + "." + td.substring(6, 8) + " " + td.substring(8, 10) + ":" + td.substring(10, 12) + ":" + td.substring(12, 14);
-					} else if (td.length() == 8) {
-						td = td.substring(0, 4) + "." + td.substring(4, 6) + "." + td.substring(6, 8);
-					}
-					json.put("kakao_add2", resultMap.get("SHOP_BRANCH").toString());
-					json.put("kakao_add3", td);
-					json.put("kakao_add4", replaceComma(Integer.parseInt(resultMap.get("SALES_PAID_AMT").toString())) + "원");
-	
+					//Link URL 작성
 					String kakaoBarcode = resultMap.get("SALES_BARCODE").toString();
+					String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(var.find("userKey").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
 					
-					json.put("kakao_url1_1", "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(telNo), "UTF-8"));
-					// json.put("kakao_add5",
-					// "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="+URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode),"UTF-8")+"&t="+URLEncoder.encode(aes.encryptStringToBase64(telNo),"UTF-8"));
+					//고정 입력 값 (주석 사용x 추후 사용 가능)
+					kakaoMap.put("tmp_number", "5581");										//템플릿 번호
+					kakaoMap.put("kakao_sander", "02-540-3111");							//발송 번호
+					kakaoMap.put("kakao_phone", resultMap.get("USER_KEY").toString());			//발신 번호
+					kakaoMap.put("kakao_name", resultMap.get("USER_KEY").toString().substring(resultMap.get("USER_KEY").toString().length() - 4));		//발신자 이름
+					kakaoMap.put("kakao_080", "Y");											//080 무료 수신 유무
+					kakaoMap.put("TRAN_REPLACE_TYPE", "S");									//대체문자 S: SMS L:LMS
+					//추가정보 이하 동
+					kakaoMap.put("kakao_add1", resultMap.get("SHOP_NAME").toString());	//업체 명		
+					kakaoMap.put("kakao_add2", resultMap.get("SHOP_BRANCH").toString());	//매장 명
+					kakaoMap.put("kakao_add3", resultMap.get("SALES_DATE").toString());	//결제일시 (ex YYYY.MM.DD)
+					kakaoMap.put("kakao_add4", resultMap.get("SALES_PAID_AMT").toString());	//금액       (2,000원)
+					//String kakao_add5 	= "";
+					//모바일 링크
+					kakaoMap.put("kakao_url1_1", kakaoUrl);
+					/*
+					String kakao_url1_2 = "";	
+					String kakao_url2_1 = "";		
+					String kakao_url2_2 = "";	
+					*/
 					
-					System.out.println(json.toString());
+					String arlResult = kakaoArl.kakaoArlimtalk(kakaoMap);
+					System.out.println(arlResult);
 					
-					HttpPost httpost = new HttpPost(new URI(url));
-	
-					httpost.addHeader("Authorization", "NvMMEL2bEB1aeSeUK0Mgd5ymKwfQGUv6LNUo/vuY2f0=");
-	
-					RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
-							.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
-					CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
-	
-					RequestConfig.Builder requestBuilder = RequestConfig.custom();
-					HttpClientBuilder builder = HttpClientBuilder.create();
-					builder.setDefaultRequestConfig(requestBuilder.build());
-					org.apache.http.client.HttpClient client = builder.build();
-	
-					StringEntity stringEntity = new StringEntity(json.toJSONString(),ContentType.create("application/json", "UTF-8"));
-					httpost.setEntity(stringEntity);
-	
-					HttpResponse response0 = httpClient.execute(httpost);
-					HttpEntity resEntity = response0.getEntity();
-	
-					log.debug("■■resEntity■■" + resEntity);
-	
-					String resData;
-					if (resEntity != null) {
-						resData = EntityUtils.toString(resEntity);
-						log.debug("■■ 응답데이터■■==" + resData);
-					}
-	
-					System.out.println("///////////////////////////////알림톡end///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
-					////////////////////////////// 알림톡///////////////////////////////////////
-	
 				} catch (Exception e) {
 					jsonResData = "{";
 					jsonResData += "    \"result\":\"PI801\",";
@@ -4573,7 +4489,7 @@ public class ReceiptController {
 		for (int i = 0; i < menuSize; i++) {
 			menuName.add(i, ((String) menuList[i]).substring(0, ((String) menuList[i]).indexOf("#")));
 			int Price = Integer.parseInt(((String) menuList[i]).substring(((String) menuList[i]).indexOf("#") + 1));
-			menuPrice.add(i, replaceComma(Price));
+			menuPrice.add(i, CommonUtils.replaceComma(Price));
 		}
 		json.put("menuSize", menuSize);
 		json.put("menuName", menuName);
@@ -5620,11 +5536,11 @@ public class ReceiptController {
 						body[i] += "<tr><th style='padding:4px;  color:#666; font-size: 12px;' align='left'>"
 								+ userDataDtailMap.get("SALES_PNAME")
 								+ "</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='padding: 6px; color:#666; font-size: 12px;'>"
-								+ replaceComma(Integer.parseInt((String) userDataDtailMap.get("SALES_PPRICE")))
+								+ CommonUtils.replaceComma(Integer.parseInt((String) userDataDtailMap.get("SALES_PPRICE")))
 								+ "</th>" + "<th style='13px gulim;  padding:6px; color:#666; font-size: 12px;'>"
 								+ userDataDtailMap.get("SALES_QTY")
 								+ "</th><th style='13px gulim;  padding:6px; color:#666; font-size: 12px; font-size: 12px;'>"
-								+ replaceComma(Integer.parseInt((String) userDataDtailMap.get("SALES_FP_AMT")))
+								+ CommonUtils.replaceComma(Integer.parseInt((String) userDataDtailMap.get("SALES_FP_AMT")))
 								+ "</th></tr>";
 					}
 				}
@@ -5633,15 +5549,15 @@ public class ReceiptController {
 						+ "<br><hr width='100%' style='border:1px dashed #cccccc'><table width='100%' cellspacing='0' cellpadding='0'><tr>"
 						+ "<th style='color: black; padding: 6px; font-size: 17px' align='left' >과세물품가액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: black; padding: 6px; font:bold 13px gulim; font-size: 17px'  >"
-						+ replaceComma(Integer.parseInt((String) userDataMap.get("SALES_SUM_FP_AMT"))) + "</th></tr>"
+						+ CommonUtils.replaceComma(Integer.parseInt((String) userDataMap.get("SALES_SUM_FP_AMT"))) + "</th></tr>"
 						+ "<tr><th style='color: black; padding: 6px; font-size: 17px' align='left'>부가세</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: black; padding: 6px; font:bold 13px gulim; font-size: 17px'>"
-						+ replaceComma(Integer.parseInt((String) userDataMap.get("SALES_SUM_TAX_AMT"))) + "</th></tr>"
+						+ CommonUtils.replaceComma(Integer.parseInt((String) userDataMap.get("SALES_SUM_TAX_AMT"))) + "</th></tr>"
 						+ "<tr><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px' align='left'>합계금액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px'>"
-						+ replaceComma(Integer.parseInt((String) userDataMap.get("SALES_PAID_AMT"))) + "</th></tr>"
+						+ CommonUtils.replaceComma(Integer.parseInt((String) userDataMap.get("SALES_PAID_AMT"))) + "</th></tr>"
 						+ "<tr><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px' align='left'>반환금액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px'>0</th></tr>"
@@ -5656,7 +5572,7 @@ public class ReceiptController {
 
 						body[i] += "<div align='letf'>현금결제</div><br>";
 						body[i] += "<div align='left' style='float: left;'>승인금액 </div> <div align='right'> "
-								+ replaceComma(Integer.parseInt((String) paymentResultMap.get("CARD_AMT"))) + "</div>"
+								+ CommonUtils.replaceComma(Integer.parseInt((String) paymentResultMap.get("CARD_AMT"))) + "</div>"
 								+ "<div align='left' style='float: left;'>CARD_APP_NO </div><div align='right'>"
 								+ paymentResultMap.get("CARD_APP_NO") + "</div>"
 								+ "<div align='left' style='float: left;'>CASH_DATE </div> <div align='right'>"
@@ -5665,7 +5581,7 @@ public class ReceiptController {
 					} else {
 						body[i] += "<div align='left'>" + paymentResultMap.get("CARD_PCOM") + "</div><br>";
 						body[i] += "<div align='left' style='float: left;'>승인금액 </div> <div align='right'> "
-								+ replaceComma(Integer.parseInt((String) paymentResultMap.get("CARD_AMT"))) + "</div>"
+								+ CommonUtils.replaceComma(Integer.parseInt((String) paymentResultMap.get("CARD_AMT"))) + "</div>"
 								+ "<div align='left' style='float: left;'>CARD_APP_NO </div><div align='right'>"
 								+ paymentResultMap.get("CARD_APP_NO") + "</div>"
 								+ "<div align='left' style='float: left;'>CARD_DATE </div> <div align='right'>"
@@ -5722,11 +5638,11 @@ public class ReceiptController {
 						body[i] += "<tr><th style='padding:4px;  color:#666; font-size: 12px;' align='left'>"
 								+ userDataDtailMap.get("SALES_PNAME")
 								+ "</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='padding: 6px; color:#666; font-size: 12px;'>"
-								+ replaceComma(Integer.parseInt((String) userDataDtailMap.get("SALES_PPRICE")))
+								+ CommonUtils.replaceComma(Integer.parseInt((String) userDataDtailMap.get("SALES_PPRICE")))
 								+ "</th>" + "<th style='13px gulim;  padding:6px; color:#666; font-size: 12px;'>"
 								+ userDataDtailMap.get("SALES_QTY")
 								+ "</th><th style='13px gulim;  padding:6px; color:#666; font-size: 12px; font-size: 12px;'>"
-								+ replaceComma(Integer.parseInt((String) userDataDtailMap.get("SALES_FP_AMT")))
+								+ CommonUtils.replaceComma(Integer.parseInt((String) userDataDtailMap.get("SALES_FP_AMT")))
 								+ "</th></tr>";
 					}
 				}
@@ -5735,15 +5651,15 @@ public class ReceiptController {
 						+ "<br><hr width='100%' style='border:1px dashed #cccccc'><table width='100%' cellspacing='0' cellpadding='0'><tr>"
 						+ "<th style='color: black; padding: 6px; font-size: 17px' align='left' >과세물품가액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: black; padding: 6px; font:bold 13px gulim; font-size: 17px'  >"
-						+ replaceComma(Integer.parseInt((String) userDataMap.get("SALES_SUM_FP_AMT"))) + "</th></tr>"
+						+ CommonUtils.replaceComma(Integer.parseInt((String) userDataMap.get("SALES_SUM_FP_AMT"))) + "</th></tr>"
 						+ "<tr><th style='color: black; padding: 6px; font-size: 17px' align='left'>부가세</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: black; padding: 6px; font:bold 13px gulim; font-size: 17px'>"
-						+ replaceComma(Integer.parseInt((String) userDataMap.get("SALES_SUM_TAX_AMT"))) + "</th></tr>"
+						+ CommonUtils.replaceComma(Integer.parseInt((String) userDataMap.get("SALES_SUM_TAX_AMT"))) + "</th></tr>"
 						+ "<tr><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px' align='left'>합계금액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px'>"
-						+ replaceComma(Integer.parseInt((String) userDataMap.get("SALES_PAID_AMT"))) + "</th></tr>"
+						+ CommonUtils.replaceComma(Integer.parseInt((String) userDataMap.get("SALES_PAID_AMT"))) + "</th></tr>"
 						+ "<tr><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px' align='left'>반환금액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
 						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px'>0</th></tr>"

@@ -42,6 +42,33 @@ public class CommonUtils {
 	public static String getRandomString() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
+	
+	
+	
+	
+	
+	
+	
+	// -----------------------------------------------------------------------
+		// 금액 3자리 단위로 ,찍어주는 메서드
+		// -----------------------------------------------------------------------
+		static public String replaceComma(int value) {
+			String result = "";
+			String val = String.valueOf(value);
+			String temp = new StringBuffer(val).reverse().toString();
+			for (int i = 0; i < temp.length(); i += 3) {
+				if (i + 3 < temp.length()) {
+					result += temp.substring(i, i + 3) + ",";
+				} else {
+					result += temp.substring(i);
+				}
+			}
+			val = new StringBuffer(result).reverse().toString();
+
+			return val;
+		}
+		
+		
 
 	public static void printMap(Map<String, Object> map) {
 		Iterator<Entry<String, Object>> iterator = map.entrySet().iterator();
