@@ -2697,7 +2697,7 @@ public class ReceiptController {
 		try {
 			if (var.find("salesInfo.salesType").toString().equals("RCP01")) {
 				log.debug("====================================================");
-				log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■34■■■■■");
+				log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■7890■■■■■");
 				
 				delMap.put("salesType", "RCP01");
 				
@@ -5429,6 +5429,86 @@ public class ReceiptController {
 				map.put("barcode", barcode);
 				map.put("telNo", telNo);
 				map.put("type", "01");
+
+		@RequestMapping(value = "/receipt/kakaoReceiptRenew.do")
+		@ResponseBody
+		public Object kakaoReceiptDetailRenew(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
+			Map<String, Object> shopMap = null;
+			Map<String, Object> resultMap = null;
+			ModelAndView mv = new ModelAndView();
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			int listSize = 0;
+			String str;
+			AES256 aes = null;
+
+			//if (CommonUtils.ipChk()) {
+				aes = new AES256("LGU+DEV258010247");
+			/*} else {
+				aes = new AES256("LGU+210987654321");
+			}*/
+			JSONObject json = null;
+			try {
+
+				String barcode = (String) commandMap.get("No");
+				String telNo = (String) commandMap.get("t");
+
+				if (telNo.length() < 12) {
+					barcode = aes.encryptStringToBase64(barcode);
+					telNo = aes.encryptStringToBase64(telNo);
+				}
+				System.out.println(" 복호화전 seq   ::: " + barcode);
+				System.out.println(" 복호화전 telNo ::: " + telNo);
+
+				/*
+				 * barcode = URLDecoder.decode(barcode); telNo =
+				 * URLDecoder.decode(telNo);
+				 * 
+				 * System.out.println(" URL복호화전 seq   ::: " + barcode);
+				 * System.out.println(" URL복호화전 telNo ::: " + telNo);
+				 */
+
+				barcode = aes.decryptBase64String(barcode);
+				telNo = aes.decryptBase64String(telNo);
+				System.out.println(" 복호화후 seq   ::: " + barcode);
+				System.out.println(" 복호화후 telNo ::: " + telNo);
+				map.put("barcode", barcode);
+				map.put("telNo", telNo);
+				map.put("type", "01");
+
+				
+				log.debug("DB Access getShopInfoRenew");
+				shopMap = receiptService.getShopInfoRenew(map);
+
+				map.put("barcode", shopMap.get("SALES_BARCODE"));
+
+				System.out.println(shopMap);
+				map.put("salesType", shopMap.get("SALES_TYPE"));
+
+				String date = (String) shopMap.get("SALES_DATE");
+				
+				if(date.length() <= 8){
+					date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8);
+				}else{
+					date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8) + " " + date.substring(8, 10) + ":" + date.substring(10, 12) + ":" + date.substring(12, 14);
+				}
+				
+				mv.addObject("salesDate", date);
+				mv.addObject("shopInfo", shopMap);
+
+				resultMap = receiptService.kakaoReceiptDetail(map);
+				resultMap.put("shopInfo", shopMap);
+				receiptService.latestUpdateDataRenew(map);
+
+				mv.addObject("detailMap", resultMap);
+				mv.setViewName("/kakaoReceipt");
+				System.out.println(resultMap);
+ 
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+			return mv;
+		}
 
 				
 				log.debug("DB Access getShopInfoRenew");
