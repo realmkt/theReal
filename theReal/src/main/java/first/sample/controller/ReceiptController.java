@@ -2697,7 +2697,7 @@ public class ReceiptController {
 		try {
 			if (var.find("salesInfo.salesType").toString().equals("RCP01")) {
 				log.debug("====================================================");
-				log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■789■■■■■");
+				log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■7890■■■■■");
 				
 				delMap.put("salesType", "RCP01");
 				
