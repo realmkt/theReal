@@ -27,6 +27,12 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public Map<String, Object> selectBoardList(Map<String, Object> map) throws Exception {
 		return receiptDAO.selectBoardList(map);
 	}
+	
+	@Override
+	public String getCi(Map<String, Object> map) throws Exception {
+		String result = receiptDAO.getCi(map); 
+		return result;
+	}
 
 	@Override
 	public void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception {
@@ -231,10 +237,35 @@ public class ReceiptServiceImpl implements ReceiptService {
 		receiptDAO.insertReceiptData(map);
 		System.out.println("impl@@@" + map);
 	}
+	
+	@Override
+	public void insertReceiptDataRenew(HashMap<String, Object> map) throws Exception {
+		receiptDAO.insertReceiptDataRenew(map);
+		System.out.println("impl@@@" + map);
+	}
+	
+	@Override
+	public void insertCancleReceiptData(Map<String, Object> map) throws Exception {
+		receiptDAO.insertCancleReceiptData(map);
+		System.out.println("impl@@@" + map);
+	}
+
 
 	@Override
 	public void insertReceiptDeatailData(HashMap<String, Object> map) throws Exception {
 		receiptDAO.insertReceiptDeatailData(map);
+		System.out.println("impl@@@" + map);
+	}
+	
+	@Override
+	public void insertReceiptDeatailDataRenew(HashMap<String, Object> map) throws Exception {
+		receiptDAO.insertReceiptDeatailDataRenew(map); 
+		System.out.println("impl@@@" + map);
+	}
+	
+	@Override
+	public void deleteFailDate(HashMap<String, Object> map) throws Exception {
+		receiptDAO.deleteFailDate(map); 
 		System.out.println("impl@@@" + map);
 	}
 
@@ -270,6 +301,14 @@ public class ReceiptServiceImpl implements ReceiptService {
 		resultMap.put("resultMap", list);
 		return resultMap;
 	}
+	
+	@Override
+	public Map<String, Object> lgnChk2(HashMap<String, String> map) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.lgnChk2(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
 
 	@Override
 	public Map<String, Object> getId(HashMap<String, String> map) {
@@ -291,6 +330,83 @@ public class ReceiptServiceImpl implements ReceiptService {
 		resultMap.put("resultMap", list);
 		return resultMap;
 	}
+	
+	//리뉴얼 모바일
+	
+	
+	@Override
+	public String userMinDate(Map<String, Object> map) throws Exception {
+		String result = receiptDAO.userMinDate(map);
+		return result;
+	}
+	
+	
+	@Override
+	public Map<String, Object> list01(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.list01(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+	
+	@Override
+	public Map<String, Object> dayList02(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.dayList02(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> dayList03(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.dayList03(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+	
+	@Override
+	public Map<String, Object> cardList02(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.cardList02(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> cardList03(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.cardList03(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+	
+	@Override
+	public Map<String, Object> divList02(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.divList02(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> divList03(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.divList03(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+	
+	@Override
+	public void cateChange(Map<String, Object> map) throws Exception {
+		receiptDAO.cateChange(map);
+	}
+	
+	@Override
+	public void cateChangeBack(Map<String, Object> map) throws Exception {
+		receiptDAO.cateChangeBack(map);
+	}
+
 
 	@Override
 	public Map<String, Object> depth02CardList(Map<String, Object> map) throws Exception {
@@ -413,6 +529,48 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public String uPlusChk(String telNo) {
 		return receiptDAO.uPlusChk(telNo);
 	}
+	
+	@Override
+	public String userState(String userKey) {
+
+		return receiptDAO.userState(userKey);
+	}
+
+	@Override
+	public Map<String, Object> uplusUserData(Map<String, Object> userMap) {
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list2 = receiptDAO.uplusUserData(userMap);
+		resultMap.put("resultMap", list2);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> uplusReceipeDataDetail(Map<String, Object> userMap2) {
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list2 = receiptDAO.uplusReceipeDataDetail(userMap2);
+		resultMap.put("resultMap", list2);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> allPaid(Map<String, Object> userMap) {
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list2 = receiptDAO.allPaid(userMap);
+		resultMap.put("resultMap", list2);
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> uplusReceiptData2(Map<String, Object> userMap) {
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list2 = receiptDAO.uplusReceiptData2(userMap);
+		resultMap.put("resultMap", list2);
+		return resultMap;
+	}
 
 	@Override
 	public String pushChk(String eMailChk) {
@@ -425,10 +583,44 @@ public class ReceiptServiceImpl implements ReceiptService {
 
 		return identify;
 	}
+	
+	
+	@Override
+	public String getCreaDate(Map<String, Object> map) {
+		String userCreaDate = receiptDAO.getCreaDate(map);
+
+		return userCreaDate;
+	}
+	
+	@Override
+	public Map<String, Object> getKakaoApi(Map<String, Object> map) {
+		Map<String, Object> resultMap = receiptDAO.getKakaoApi(map);
+		return resultMap;
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public void latestUpdateData(Map<String, Object> map) throws Exception {
 		receiptDAO.latestUpdateData(map);
+	}
+	
+	@Override
+	public void latestUpdateDataRenew(Map<String, Object> map) throws Exception {
+		receiptDAO.latestUpdateDataRenew(map);
 	}
 
 	@Override
@@ -641,6 +833,19 @@ public class ReceiptServiceImpl implements ReceiptService {
 	}
 	
 	@Override
+	public HashMap<String, Object> cancleGetReceipt(HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = receiptDAO.cancleGetReceipt(map); 
+		System.out.println("TESTSTSTT");
+		return resultMap;
+	}
+	
+	@Override
+	public Integer joinChk(HashMap<String, Object> map) throws Exception {
+		Integer result = receiptDAO.joinChk(map); 
+		return result;
+	}
+	
+	@Override
 	public void couponUsing(HashMap<String, Object> map) {
 		receiptDAO.couponUsing(map); 
 	}
@@ -661,6 +866,12 @@ public class ReceiptServiceImpl implements ReceiptService {
 	}
 	
 	@Override
+	public Map<String, Object> getShopInfoRenew(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = receiptDAO.getShopInfoRenew(map); 
+		return resultMap;
+	}
+	
+	@Override
 	public Map<String, Object> smsDetailData(Map<String, Object> map) throws Exception {
 		Map<String, Object> resultMap = receiptDAO.smsDetailData(map); 
 		return resultMap;
@@ -669,6 +880,13 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public Map<String, Object> ReceiptDetail(Map<String,Object> map) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<Map<String, Object>> list = receiptDAO.ReceiptDetail(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+	
+	public Map<String, Object> kakaoReceiptDetail(Map<String,Object> map) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.kakaoReceiptDetail(map);
 		resultMap.put("resultMap", list);
 		return resultMap;
 	}
@@ -717,6 +935,91 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public void lastEmailUpdate(Map<String, Object> emailMap) {
 		receiptDAO.lastEmailUpdate(emailMap);
 	}
+	
+	@Override
+	public Map<String, Object> affliateDetail(String affliate_no) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+	      List<Map<String, Object>> list2 = receiptDAO.affliateDetail(affliate_no);
+	      resultMap.put("resultMap", list2);  
+	      return resultMap;  
+	}
+	
+	@Override 
+	public Map<String, Object> payment(Map<String, Object> payImportant) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+	     List<Map<String, Object>> list2 = receiptDAO.payment(payImportant);
+	     resultMap.put("resultMap", list2);  
+	     return resultMap;  
+	}
 
+	@Override
+	public void mailPush(Map<String, Object> mailMap) {
+		receiptDAO.mailPush(mailMap);
+		
+	}
+	
+	@Override
+	public Map<String, Object> affliate(Map<String, Object> findMap) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+	      List<Map<String, Object>> list = receiptDAO.affliate(findMap); 
+	      resultMap.put("resultMap", list);  
+	      return resultMap;  
+	}
+	
+	@Override
+	public Map<String, Object> reviewList(Map<String, Object> reviewMap) {
+		
+		 Map<String, Object> resultMap = new HashMap<String, Object>();
+	     List<Map<String, Object>> list2 = receiptDAO.reviewList(reviewMap);
+	     resultMap.put("resultMap", list2);  
+	     return resultMap; 
+	}
+
+	@Override
+	public void reviewInsert(Map<String, Object> map) {
+		receiptDAO.reviewInsert(map);
+	}
+	
+	@Override
+	public float reviewStarAvg(Map<String, Object> map) {
+		return receiptDAO.reviewStarAvg(map);	
+	}
+			
+	@Override 
+	public void starUpdate(Map<String, Object> starMap){
+		receiptDAO.starUpdate(starMap);
+	}
+
+	@Override
+	public void starUpdateA(Map<String, Object> starMap) {
+		receiptDAO.starUpdateA(starMap);
+	}
+	
+	@Override
+	public void reviewDelete(int review_num) {
+		receiptDAO.reviewDelete(review_num);
+	}
+	
+	@Override
+	public int reviewCount(String affliate_no) {
+		return receiptDAO.reviewCount(affliate_no);
+	}
+	
+	// 1월 29일 추가
+	@Override
+	public void countUp(String affliate_no) {
+		receiptDAO.countUp(affliate_no);
+
+	}
+
+	@Override
+	public void countDown(String affliate_no) {
+		receiptDAO.countDown(affliate_no);
+	}
+	
+	@Override
+	public void leave(String CI) {
+		receiptDAO.leave(CI);
+	}
 	
 }

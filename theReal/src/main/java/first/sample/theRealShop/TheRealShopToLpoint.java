@@ -65,12 +65,12 @@ public class TheRealShopToLpoint {
 		try {
 			String lpointUrl;
 			/* URL 설정 */
-			if (!CommonUtils.ipChk()) {
+			if (CommonUtils.ipChk()) {
 				lpointUrl = "https://devop.lpoint.com:8903/op";
 			} else {
 				lpointUrl = "https://op.lpoint.com/op";
 			}
-			lpointUrl = "https://devop.lpoint.com:8903/op";
+			//lpointUrl = "https://devop.lpoint.com:8903/op";
 			log.debug("CommonUtils.ipChk():" + CommonUtils.ipChk());
 			log.debug("lpointUrl:" + lpointUrl);
 			HttpPost httpost = new HttpPost(new URI(lpointUrl));
@@ -233,7 +233,8 @@ public class TheRealShopToLpoint {
 		try {
 			String lpointUrl;
 			/* URL 설정 */
-			if (!CommonUtils.ipChk()) {
+			if (CommonUtils.ipChk()) {
+				System.out.println("트루인것만");
 				lpointUrl = "https://devop.lpoint.com:8903/op";
 				System.out.println("lpointUrl11■■■■■■■■■■■"+lpointUrl);
 			} else {
@@ -268,27 +269,39 @@ public class TheRealShopToLpoint {
 				log.debug("복호화 : " + json);
 				jsonObject = (JSONObject) jsonParser.parse(json);
 				jsonObject2 = (JSONObject) jsonParser.parse(jsonObject.get("control").toString());
-				log.debug(jsonObject2.get("flwNo"));
+				log.debug("flwNo : " + jsonObject2.get("flwNo"));
 
 				/*
 				 * 추적 번호 생성 - 서비스ID(전문ID) + 기관코드 + 요청일(yyyyMMdd) + 일련번호(6자리)
 				 */
+				log.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				
 				String flwno = (String) jsonObject2.get("flwNo");
 				log.debug("flwno.length():" + flwno.length());
 				if (flwno.length() == 22) {
+					log.debug("00000000000000");
 					flwNo = flwno;
+					log.debug("11111111111111111");
 				} else {
+					log.debug("222222222222222");
 					flwNo = jsonObject2.get("flwNo") + "O180" + genFlwNo();
+					log.debug("333333333333   ::: " + flwNo);
+					log.debug(jsonObject2.toString());
+					log.debug("333333333333   ::: " + flwNo);
 				}
 				if ("60".equals(jsonObject2.get("rspC"))) {
+					log.debug("4444444444");
 					rspc = "60";
 				} else {
+					log.debug("555555555555");
 					rspc = "  ";
 				}
 				JSONObject value = new JSONObject();
+				log.debug("6666666666666666");
 				value.put("flwNo", flwNo);
 				value.put("rspC", rspc);
 				jsonObject.put("control", value);
+				log.debug("77777777777777777");
 			} catch (org.json.simple.parser.ParseException e) {
 				e.printStackTrace();
 			}
@@ -388,7 +401,7 @@ public class TheRealShopToLpoint {
 		Date dt = new Date();
 		String makeFile = "";
 		SimpleDateFormat dtFmt = new SimpleDateFormat("yyyyMMdd");
-		if (CommonUtils.ipChk()) {
+		if (!CommonUtils.ipChk()) {
 			// makeFile = "/LOGS/"+dtFmt.format(dt)+".txt";
 			makeFile = "/home/realmkt/tomcat7/webapps/theReal/temp/" + dtFmt.format(dt) + ".txt";
 		} else {

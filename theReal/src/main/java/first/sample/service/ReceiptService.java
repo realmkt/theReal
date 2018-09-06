@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface ReceiptService {
 
+	String getCi(Map<String, Object> map) throws Exception;
+	
 	Map<String, Object> selectBoardList(Map<String, Object> map) throws Exception;
 
 	void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception;
@@ -59,8 +61,16 @@ public interface ReceiptService {
 	Map<String, Object> appChartTest2(Map<String, Object> map) throws Exception;
 
 	void insertReceiptData(HashMap<String, Object> map) throws Exception;
+	
+	void insertReceiptDataRenew(HashMap<String, Object> map) throws Exception;
+	
+	void insertCancleReceiptData(Map<String, Object> map) throws Exception;
 
 	void insertReceiptDeatailData(HashMap<String, Object> map) throws Exception;
+	
+	void insertReceiptDeatailDataRenew(HashMap<String, Object> map) throws Exception;
+	
+	void deleteFailDate(HashMap<String, Object> map) throws Exception;
 
 	/**
 	 * 설유진 추가
@@ -73,12 +83,14 @@ public interface ReceiptService {
 	void insertSmsData(HashMap<String, Object> map) throws Exception;
 
 	void appMemberInsert(Map<String, Object> map) throws Exception;
-
+	
 	void telNumInit(Map<String, Object> map) throws Exception;
 
 	void appMemberUpdate(Map<String, Object> map) throws Exception;
 
 	Map<String, Object> lgnChk(HashMap<String, String> map);
+	
+	Map<String, Object> lgnChk2(HashMap<String, String> map);
 
 	Map<String, Object> getId(HashMap<String, String> map);
 
@@ -113,6 +125,28 @@ public interface ReceiptService {
 	Map<String, Object> startRecYnData(Map<String, Object> map) throws Exception;
 	
 	Map<String, Object> affliateData(Map<String, Object> map) throws Exception;
+	
+	//리뉴얼 mobile
+	
+	String userMinDate(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> list01(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> dayList02(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> dayList03(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> cardList02(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> cardList03(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> divList02(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> divList03(Map<String, Object> map) throws Exception;
+	
+	void cateChange(Map<String, Object> map) throws Exception;
+	
+	void cateChangeBack(Map<String, Object> map) throws Exception;
 
 	String eMailChk(String telNo);
 
@@ -121,6 +155,8 @@ public interface ReceiptService {
 	String pushChk(String eMailChk);
 
 	void latestUpdateData(Map<String, Object> map) throws Exception;
+	
+	void latestUpdateDataRenew(Map<String, Object> map) throws Exception;
 
 	Map<String, Object> houseHold(HashMap<String, Object> map) throws Exception;
 
@@ -195,7 +231,15 @@ public interface ReceiptService {
 	
 	Map<String, Object> cancleReceipt(HashMap<String, Object> map) throws Exception;
 	
+	HashMap<String, Object> cancleGetReceipt(HashMap<String, Object> map) throws Exception;
+	
 	void couponUsing(HashMap<String, Object> map);
+	
+	Integer joinChk(HashMap<String, Object> map) throws Exception;
+	
+	String getCreaDate(Map<String, Object> map);
+	
+	Map<String, Object> getKakaoApi(Map<String, Object> map);
 	
 	
 	/* uplus */
@@ -204,11 +248,24 @@ public interface ReceiptService {
 	
 	Map<String, Object> getShopInfo(Map<String, Object> map) throws Exception;
 	
+	Map<String, Object> getShopInfoRenew(Map<String, Object> map) throws Exception;
+	
 	Map<String, Object> ReceiptDetail(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> kakaoReceiptDetail(Map<String, Object> map) throws Exception;
 	
 	Map<String, Object> getDetailReceipt(Map<String, Object> map) throws Exception;
 
-	
+
+	String userState(String userKey);
+
+	Map<String, Object> uplusUserData(Map<String, Object> userMap);
+
+	Map<String, Object> uplusReceipeDataDetail(Map<String, Object> userMap2);
+
+	Map<String, java.lang.Object> allPaid(Map<String, Object> userMap);
+
+	Map<String, Object> uplusReceiptData2(Map<String, Object> userMap);
 	
 	
 	
@@ -223,5 +280,35 @@ public interface ReceiptService {
 	void lastEmailUpdate(Map<String, Object> emailMap);
 
 	Map<String, Object> smsDetailData(Map<String, Object> map) throws Exception;
+
+	Map<String, java.lang.Object> affliateDetail(String affliate_no);
+	
+	Map<String, java.lang.Object> payment(Map<String, Object> payImportant);
+
+	void mailPush(Map<String, Object> mailMap);
+
+	Map<String, Object> affliate(Map<String, Object> findMap);
+	
+	Map<String, java.lang.Object> reviewList(Map<String, java.lang.Object> reviewMap);
+
+	void reviewInsert(Map<String, java.lang.Object> map);
+	
+	float reviewStarAvg(Map<String, java.lang.Object> map);
+
+	void starUpdate(Map<String, Object> starMap);
+
+	void starUpdateA(Map<String, java.lang.Object> starMap);
+	
+	void reviewDelete(int review_num);
+	
+	int reviewCount(String affliate_no);
+	
+	void countUp(String affliate_no);
+	
+	void countDown(String affliate_no);
+	
+
+	void leave(String CI);
+	
 	
 }

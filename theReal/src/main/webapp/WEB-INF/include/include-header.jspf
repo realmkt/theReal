@@ -2,7 +2,11 @@
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<title>first</title>
+<meta property="og:type" content="website"> 
+<meta property="og:image" content="http://117.52.97.40/theReal/img/reciept.jpg"/>
+<meta property="og:title" content="모바일영수증"/>
+<meta property="og:description" content="링크를 눌러 모바일영수증을 확인하세요."/>
+<title>모바일영수증</title>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  

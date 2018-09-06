@@ -57,7 +57,7 @@ public class SmsParse {
 				sms = sms.replace("  ", " ").replace("   ", " ").replace("    ", " ").replace("[Web발신]", "");
 				if(sms.contains("한도") || sms.contains("초과") || sms.contains("금지") || sms.contains("도용") || sms.contains("신고") || sms.contains("도난") || 
 				   sms.contains("부족") || sms.contains("정지") || sms.contains("대출") || sms.contains("금리") || sms.contains("이자") || sms.contains("이율") ||
-				   sms.contains("포인트사용") || sms.contains("결제대금") || sms.contains("결제예정") || sms.contains("거절")){
+				   sms.contains("포인트사용") || sms.contains("결제대금") || sms.contains("결제예정") || sms.contains("거절") ){
 					return null;
 				}
 				
@@ -165,6 +165,11 @@ public class SmsParse {
 						if(smsStr[i].matches(".*[(][0-9][*].*") && !((smsStr[i].contains("승인")) || (smsStr[i].contains("취소")))){
 							
 						}
+						//버려야할 데이터
+						else if(smsStr[i].contains("적립예정")){
+						
+						}
+						else if(smsStr[i].contains("지급가능액")){ }//우리카드 체크카드 "지급가능액" 남은금액이므로 분리할필요 x 
 						//카드 승인&취소 건
 						else if(smsStr[i].contains("승인") && !(smsStr[i].contains("취소"))){
 							insertMap.put("CARD_APP_DIV", "승인");
@@ -257,6 +262,12 @@ public class SmsParse {
 					if(smsStr[i].matches(".*[(][0-9][*].*") && !((smsStr[i].contains("승인")) || (smsStr[i].contains("취소"))))
 					{   }
 					
+					//버려야할 데이터
+					else if(smsStr[i].contains("적립예정")){
+						
+					}
+					
+					
 					//카드 승인&취소 건
 					else if(smsStr[i].contains("승인") && !(smsStr[i].contains("취소"))){
 						insertMap.put("CARD_APP_DIV", "승인");
@@ -308,7 +319,7 @@ public class SmsParse {
 					
 					//상호명
 					else{
-						if(i!=0){
+						if(i!=0 && !smsStr[i].equals("체크")){
 							app_co += smsStr[i]+" ";
 							insertMap.put("APP_CO", app_co);
 							}
@@ -679,7 +690,7 @@ public class SmsParse {
 					
 					//상호명
 					else{
-						if(i!=0){
+						if(i!=0 && !smsStr[i].equals("누적")){
 							app_co += smsStr[i]+" ";
 							insertMap.put("APP_CO", app_co);
 							}
@@ -721,7 +732,7 @@ public class SmsParse {
 					
 					if(smsStr[i].matches("^.[롯데][0-9][*][0-9][*]$")){ }
 					//카드 승인&취소 건
-					if(smsStr[i].contains("승인") && !(smsStr[i].contains("취소"))){
+					else if(smsStr[i].contains("승인") && !(smsStr[i].contains("취소"))){
 						insertMap.put("CARD_APP_DIV", "승인");
 					}
 					else if(smsStr[i].contains("취소")){

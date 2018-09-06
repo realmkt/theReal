@@ -176,8 +176,13 @@ public class LPointController {
 			/* URL 설정 */
 			if (!CommonUtils.ipChk()) {
 				System.out.println("★★★★★★★★★★★devop"); 
+				
+				//L.point P003600002 가맹점 번호 개발
 				lpointUrl = "https://devop.lpoint.com:8903/op";
 			} else {
+				
+				//L.point  P005100006 가맹점 번호
+				//uplus 101065 가맹점번호
 				System.out.println("★★★★★★★★★★★op");
 				lpointUrl = "https://op.lpoint.com/op";
 			}
@@ -287,5 +292,5 @@ public class LPointController {
 		}
 		return ip;
 	}
-
+ 
 }
