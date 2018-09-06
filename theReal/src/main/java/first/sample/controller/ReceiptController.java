@@ -2616,12 +2616,15 @@ public class ReceiptController {
 		//변수 설정
 		String CI = "";
 		Var var = null;
+		String delBarcode = "";
+		String delBizNo = "";
 		String uplusUserKey = "";
 		String jsonResData = "";
 		String str = null;
 		String resStrEnc = "";
 		String paymentType = "";
 		String paymentTypeCode = "";
+		boolean dateDel = false;
 		String errorCol = "";
 		String errorDeCol = "";
 		
@@ -2684,11 +2687,20 @@ public class ReceiptController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		HashMap<String, Object> detailMap = new HashMap<String, Object>();
 		
+		//catch 오류 시 삭제를 위한 컬럼
+		delBarcode = var.find("salesInfo.salesBarCode").toString();
+		delBizNo = var.find("shopInfo.bizNo").toString();
+		HashMap<String, Object> delMap = new HashMap<String, Object>();
+		delMap.put("delBarcode", delBarcode);
+		delMap.put("delBizNo", delBizNo);
+		
 		try {
 			if (var.find("salesInfo.salesType").toString().equals("RCP01")) {
 				log.debug("====================================================");
-				log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■■■■■■");
-	
+				log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■789■■■■■");
+				
+				delMap.put("salesType", "RCP01");
+				
 				System.out.println(var.find("paymentList").size());
 				errorCol = "compoundYN";
 				if (var.find("compoundYN").toString().equals("Y")) {
@@ -2868,6 +2880,7 @@ public class ReceiptController {
 				}
 	
 				
+				dateDel = true;
 				System.out.println("INSERT MAP ::: "+insertMap);
 				receiptService.insertReceiptDataRenew(insertMap);
 				errorDeCol ="";
@@ -2910,7 +2923,7 @@ public class ReceiptController {
 					receiptService.insertReceiptDeatailDataRenew(detailMap);
 				}
 	
-				
+				dateDel = false;
 				/////////////////////////////// 알림톡 renew RCP01///////////////////////////////////////
 				
 				try {
@@ -2920,7 +2933,7 @@ public class ReceiptController {
 					
 					//고정 입력 값 (주석 사용x 추후 사용 가능)
 					kakaoMap.put("tmp_number", "5580");										//템플릿 번호
-					kakaoMap.put("kakao_sander", "02-540-3111");							//발송 번호
+					kakaoMap.put("kakao_sender", "02-540-3111");							//발송 번호
 					kakaoMap.put("kakao_phone", var.find("userKey").toString());			//발신 번호
 					kakaoMap.put("kakao_name", (var.find("userKey").toString()).substring(var.find("userKey").toString().length() - 4));		//발신자 이름
 					kakaoMap.put("kakao_080", "Y");											//080 무료 수신 유무
@@ -2956,13 +2969,14 @@ public class ReceiptController {
 				
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////RCP02 *취소 영수증 발급
 			} else {
+				delMap.put("salesType", "RCP02");
 				errorCol = "bizNo";
 				String bizNo = var.find("shopInfo.bizNo").toString(); errorCol = "cashier";
 				String cashier = var.find("shopInfo.cashier").toString(); errorCol = "oriSalesBarCode";
 				String oriSalesBarCode = var.find("salesInfo.oriSalesBarCode").toString(); errorCol = "salesBarCode";
 				String salesBarCode = var.find("salesInfo.salesBarCode").toString(); errorCol = "oriSalesDate";
 				String oriSalesDate = var.find("salesInfo.oriSalesDate").toString(); errorCol = "salesDate";
-				String salesDate = var.find("salesInfo.salesDate").toString(); errorCol = "DB 데이터 형식 오류 / 중복 SalseBarCode 확인";
+				String salesDate = var.find("salesInfo.salesDate").toString(); errorCol = "DB 데이터 형식 오류 / 중복 SalesBarCode 확인";
 				
 				insertMap.put("bizNo", bizNo);
 				insertMap.put("cashier", cashier);
@@ -3029,11 +3043,11 @@ public class ReceiptController {
 				resultMap.put("eMail", resultMap.get("EMAIL"));
 				resultMap.put("salesBarCode", resultMap.get("SALES_BARCODE"));
 				resultMap.put("uplusUserKey", resultMap.get("UPLUS_USER_KEY"));
-				
+				dateDel = true;
 				receiptService.insertCancleReceiptData(resultMap);
 				
 				
-				
+				dateDel = false;
 				/////////////////////////////// 알림톡 renew RCP02///////////////////////////////////////
 	
 				try {
@@ -3043,7 +3057,7 @@ public class ReceiptController {
 					
 					//고정 입력 값 (주석 사용x 추후 사용 가능)
 					kakaoMap.put("tmp_number", "5581");										//템플릿 번호
-					kakaoMap.put("kakao_sander", "02-540-3111");							//발송 번호
+					kakaoMap.put("kakao_sender", "02-540-3111");							//발송 번호
 					kakaoMap.put("kakao_phone", resultMap.get("USER_KEY").toString());			//발신 번호
 					kakaoMap.put("kakao_name", resultMap.get("USER_KEY").toString().substring(resultMap.get("USER_KEY").toString().length() - 4));		//발신자 이름
 					kakaoMap.put("kakao_080", "Y");											//080 무료 수신 유무
@@ -3089,6 +3103,14 @@ public class ReceiptController {
 			
 			jsonResData += "}";
 			System.out.println("jsonResData:" + jsonResData);
+			
+			
+			if(dateDel){
+				receiptService.deleteFailDate(delMap);
+			}
+			
+			
+			
 			
 		}
 		

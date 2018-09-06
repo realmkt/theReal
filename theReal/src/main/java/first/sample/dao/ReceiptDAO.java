@@ -200,6 +200,13 @@ public class ReceiptDAO extends AbstractDAO {
 		insert("sample.insertReceiptDeatailDataRenew", map);
 	}
 	
+	public void deleteFailDate(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		System.out.println("dao@@@@" + map);
+		delete("sample.deleteFailDate", map);
+		delete("sample.deleteFailDateDetail", map);
+	}
+	
 	public void insertReceiptDeatailDataRenew(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		System.out.println("dao@@@@" + map);

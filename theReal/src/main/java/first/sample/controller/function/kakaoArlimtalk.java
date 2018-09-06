@@ -60,8 +60,8 @@ public class kakaoArlimtalk {
 			}
 			kakaoMap.put("kakao_add3", sd);
 			
-			json.put("kakao_add3",CommonUtils.replaceComma(Integer.parseInt(kakaoMap.get("kakao_add3").toString())) + "원");
-			json.put("kakao_add4",  kakaoMap.get("kakao_add4"));
+			json.put("kakao_add3", kakaoMap.get("kakao_add3"));
+			json.put("kakao_add4", CommonUtils.replaceComma(Integer.parseInt(kakaoMap.get("kakao_add4").toString())) + "원");
 			json.put("kakao_url1_1", kakaoMap.get("kakao_url1_1"));
 			
 			System.out.println(json.toString());

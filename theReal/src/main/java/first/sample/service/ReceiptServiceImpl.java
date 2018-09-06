@@ -262,6 +262,12 @@ public class ReceiptServiceImpl implements ReceiptService {
 		receiptDAO.insertReceiptDeatailDataRenew(map); 
 		System.out.println("impl@@@" + map);
 	}
+	
+	@Override
+	public void deleteFailDate(HashMap<String, Object> map) throws Exception {
+		receiptDAO.deleteFailDate(map); 
+		System.out.println("impl@@@" + map);
+	}
 
 	/**
 	 * 설유진 추가
