@@ -1091,6 +1091,33 @@
 	</insert>	
 	
 	
+	<delete id="deleteFailDate" parameterType="hashmap">
+	    <![CDATA[
+	    	DELETE FROM
+	    		TB_USER_DATA_RENEW
+	   		WHERE
+	   			SALES_BARCODE = #{delBarcode} 	
+	   		AND
+	   			SHOP_BIZNO = #{delBizNo}
+	   		AND
+	   			SALES_TYPE = #{salesType}
+	    ]]>
+	</delete>
+	
+	<delete id="deleteFailDateDetail" parameterType="hashmap">
+	    <![CDATA[
+	    	DELETE FROM
+	    		TB_USER_DATA_DETAIL_RENEW
+	   		WHERE
+	   			SALES_BARCODE = #{delBarcode} 	
+	   		AND
+	   			SHOP_BIZNO = #{delBizNo}
+	   		AND
+	   			SALES_TYPE = #{salesType}
+	    ]]>
+	</delete>
+	
+	
 	<!-- 
 	설유진 추가
 	 -->
