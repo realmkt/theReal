@@ -2697,7 +2697,7 @@ public class ReceiptController {
 		try {
 			if (var.find("salesInfo.salesType").toString().equals("RCP01")) {
 				log.debug("====================================================");
-				log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■345678■■■■■");
+				log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■■■■■■");
 				
 				delMap.put("salesType", "RCP01");
 				
@@ -2766,7 +2766,7 @@ public class ReceiptController {
 				insertMap.put("rePrint", var.find("salesInfo.rePrint").toString()); errorDeCol = "detailCnt";
 				insertMap.put("detailCnt", var.find("salesInfo.detailCnt").toString()); 
 				
-				// paymentType.
+				// paymentType. 
 				System.out.println();
 				errorCol = "paymentType";
 				errorDeCol = "";
@@ -3046,6 +3046,19 @@ public class ReceiptController {
 				dateDel = true;
 				receiptService.insertCancleReceiptData(resultMap);
 				
+				//////////////////////취소 디테일 시작/////////////////////
+				errorDeCol ="";
+				// 디테일
+				System.out.println();
+				errorCol = "salesList";
+				
+				errorDeCol = "shopBizNo";
+				detailMap.put("shopBizNo", resultMap.get("SHOP_BIZNO")); //사업자 번호
+				errorDeCol = "salesBarCode";
+				detailMap.put("salesBarCode", resultMap.get("SALES_BARCODE")); //바코드
+				errorDeCol = "salesType";
+				detailMap.put("salesType", delMap.get("salesType")); //판매 구분 (RCP02 - 취소)
+				receiptService.insertCancelReceiptDeatailDataRenew(detailMap); //취소 상세 저장
 				
 				dateDel = false;
 				/////////////////////////////// 알림톡 renew RCP02///////////////////////////////////////
@@ -5429,6 +5442,8 @@ public class ReceiptController {
 				map.put("barcode", barcode);
 				map.put("telNo", telNo);
 				map.put("type", "01");
+
+		
 
 				
 				log.debug("DB Access getShopInfoRenew");

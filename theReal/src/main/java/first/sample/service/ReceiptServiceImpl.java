@@ -264,6 +264,12 @@ public class ReceiptServiceImpl implements ReceiptService {
 	}
 	
 	@Override
+	public void insertCancelReceiptDeatailDataRenew(HashMap<String, Object> map) throws Exception {
+		receiptDAO.insertCancelReceiptDeatailDataRenew(map); 
+		System.out.println("impl@@@" + map);
+	} 
+	
+	@Override
 	public void deleteFailDate(HashMap<String, Object> map) throws Exception {
 		receiptDAO.deleteFailDate(map); 
 		System.out.println("impl@@@" + map);
@@ -1021,5 +1027,6 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public void leave(String CI) {
 		receiptDAO.leave(CI);
 	}
+
 	
 }
