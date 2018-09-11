@@ -28,17 +28,18 @@
     
 	<script src="code/common.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    
+<script type="text/javascript" charset="utf-8" src="telephonenumber.js"></script>
 </head>
 
 <body class="login_page">
-
+<input type="hidden" id="deviceId">
+<input type="hidden" id="telNo">
 <div class="wrap">
 
 	<div class="container login_box">
     
-    	<div class="login_img"><img src="code/web_point3.png"></div>
-<div style="color: white; font-size: 20px; font-weight: 500; height: 100px; position: relative; left: 5px;  top: 70%; z-index: 1; text-align: center;">
+    	<div class="login_img"><img src="common/log_img5.png"></div>
+<div style="color: black; font-size: 20px; font-weight: 500; height: 100px; position: relative; left: 5px;  top: 70%; z-index: 1; text-align: center; margin-top: 80px">
 자동 로그인 체크 중입니다...
 </div>
     
@@ -55,20 +56,64 @@
     
     </div> -->
 
-
+<div class="alert_body" id="alert_body">
+			<div class="alert_box" id="alert_box">
+				<div class="alert_txt" id="alert_desc">알러트창</div>
+				<div class="alert_btn"><a href="#">확인</a></div>
+			</div>
+		</div>
     
 </div>
 
 <input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
 <script type="text/javascript">
+function versionChk(){
+	var version = "v1.0.5"
+	$.ajax({
+        type: "post",
+        url : commonIp()+"/theReal/receipt/versionChk.do",
+        data: {
+        	version 	: version
+        },
+        success: fnVersionChk,
+        error: whenError
+    });
+}
 
-//자동로그인 설정된 아이디 값 가져오기
-var id = window.localStorage.getItem("id");
+function fnVersionChk(res){
+	if(res==0){
+		alert("최신버전으로 업그레이드 해주세요.");
+		location.href='https://play.google.com/store/apps/details?id=com.theReal.Erect';
+		return false;
+	}
+}
+//자동로그인 설정된 CI 값 가져오기
+var CI = window.localStorage.getItem("CI");
 //자동로그인 설정된 비밀번호 값 가져오기
-var pw = window.localStorage.getItem("pw");	
-document.addEventListener("deviceready", onDeviceReady, true);
-	var permissions = null;
+var telNo = window.localStorage.getItem("telNo");
+var uuId  = window.localStorage.getItem("uuId");
+
+var result = "";
+
+var permissions = null;
+	
 function onDeviceReady() {
+	var deviceId = device.uuid;
+	$("#deviceId").val(deviceId);
+	console.log("device.uuid:"+device.uuid);
+     var telephoneNumber = cordova.require("cordova/plugin/telephonenumber");
+     
+     telephoneNumber.get(function(result) {
+             console.log("result = " + result);
+             result = result.replace( "+82", "0");
+			$("#telNo").val(result);          
+			$("#deviceId").val(deviceId);          
+         }, function() {
+        	 $("#telNo").val("");     
+         });
+     
+     
+     
 	//permissions.requestPermission(successCallback, errorCallback, permission);
 	permissions = cordova.plugins.permissions;
 
@@ -78,7 +123,7 @@ function onDeviceReady() {
 	permissions.hasPermission(permissions.WAKE_LOCK, checkWakeLockPermissionCallback, null);
 	permissions.hasPermission(permissions.ACCESS_COARSE_LOCATION, checkCoarseLocationPermissionCallback, null);
 	permissions.hasPermission(permissions.ACCESS_FINE_LOCATION, checkFineLocationPermissionCallback, null);
-	
+
 }
 
 
@@ -128,7 +173,9 @@ function checkReceiveSmsPermissionCallback(status) {
   if(!status.hasPermission) {
 	console.log("1111");
     var errorCallback = function() {
-      alert('READ_PHONE_STATE permission is not turned on');
+      /* alert('READ_PHONE_STATE permission is not turned on'); */
+      alert("등록된 핸드폰이 아닙니다.");
+      navigator.app.exitApp();
     }
  
 	console.log("222222");
@@ -218,33 +265,47 @@ function checkFineLocationPermissionCallback(status) {
 
 }); */
 
+ 
+ 
+var exit = "";
 $(document).ready(function(){
-	 //var permissions = cordova.require("plugins/cordova-plugin-android-permissions/www/permissions.js");
+	document.addEventListener("deviceready", onDeviceReady, false);
+	versionChk();
+	
 
+	$(function(){
+		setTimeout(function(){
+			if(CI != null || telNo != null || uuId != null){
+				$.ajax({
+			        type: "post",
+			        url : commonIp()+"/theReal/receipt/lgnChk2.do",
+			        data: {
+			        	CI	 		: CI,
+			        	telNo 		: telNo,
+			        	deviceId 	: $("#deviceId").val()
+			        },
+			        success: fnSucData,
+			        error: whenError
+			    	});		
+			}else{
+				//자동로그인 설정안되어있을시 1.5초 뒤에 로그인 페이지로 이동
+				setTimeout(function() {
+					location.href='login.html?uuid='+$("#deviceId").val();
+				}, 500); 
+			}
+		},3000)
+	});
 	/**
 	자동로그인 체크로직
 	**/
 	//return false;
-	if(id != "" || id != null){
-		$.ajax({
-	        type: "post",
-	        url : commonIp()+"/theReal/receipt/lgnChk.do",
-	        data: {
-	        	eMail	 	: id,
-	        	pwd 		: pw
-	        },
-	        success: fnSucData,
-	        error: whenError
-	    	});		
-	}else{
-		//자동로그인 설정안되어있을시 1.5초 뒤에 로그인 페이지로 이동
-		setTimeout(function() {
-			location.href='login.html';
-		}, 1500);
-	}		
-})
+	
+});
 
-
+/* function exit(){
+	navigator.app.exitApp();
+} */
+	
 	/*
 	자동로그인 체크로직 성공함수
 	*/
@@ -252,26 +313,30 @@ $(document).ready(function(){
 		
 		var resultData = resdata.resultMap;
 		var uuId = "";
-		var telNo = "";
+		var deviceTelNo = "";
 		resultCnt = resultData.length;
 		if(resultData.length>0){
 			for(var i=0; i<resultData.length; i++){
 				uuId = resultData[i].UUID;
-				telNo = resultData[i].TEL_NO;
+				deviceTelNo = resultData[i].TEL_NO;
 				console.log(resultData[i].UUID);
 				console.log(resultData[i].TEL_NO);
 			}
+			
 			//DB에 저장된 단말기 번호와 핸드폰 번호를 가져와 메인페이지로 이동
 			setTimeout(function() {
-				location.href='./html/index.html?uuId='+uuId+'&telNo='+telNo;
-			}, 1500);		
+				location.href='./html/index.html?CI='+CI+'&telNo='+telNo;
+			},300);		
 		}		 
 			 
 		else{
 			//자동로그인 설정안되어있을시 1.5초 뒤에 로그인 페이지로 이동
-			setTimeout(function() {
-				location.href='login.html';
-			}, 1500);		
+			var alertStr = "";
+			$("#alert_box").empty();
+			alertStr += '<div class="alert_txt" >다른 디바이스에서 접속하였거나, 세션이 만료되었습니다 <br>본인인증을 다시해주세요.</div>';
+			alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(1)">확인</a></div>';
+			$("#alert_box").append(alertStr);
+			$("#alert_body").fadeIn(1000);	
 		}		
 		
 		
@@ -281,9 +346,22 @@ $(document).ready(function(){
 	자동로그인 체크로직 실패함수
 	*/
 	function whenError(){
-		setTimeout(function() {
+		var alertStr = "";
+		$("#alert_box").empty();
+		alertStr += '<div class="alert_txt" >다른 디바이스에서 접속하였거나, 세션이 만료되었습니다 <br>본인인증을 다시해주세요.</div>';
+		alertStr += '<div class="alert_btn" ><a href="javascript:alertClose(1)">확인</a></div>';
+		$("#alert_box").append(alertStr);
+		$("#alert_body").fadeIn(1000);
+		/* setTimeout(function() {
 			location.href='login.html';
-		}, 1500);		
+		}, 500); */
+	}
+	
+	function alertClose(val){
+		$("#alert_body").fadeOut(10);
+		if(val == 1){
+			location.href='login.html?uuid='+$("#deviceId").val();
+		}
 	}
 
             // app.initialize();

@@ -25,7 +25,11 @@ public class kakaoArlimtalk {
 	
 	@SuppressWarnings("unchecked")
 	public String kakaoArlimtalk(Map<String, String> kakaoMap) {
+<<<<<<< HEAD
 		System.out.println("■■■■■■■■■■■■ 알림톡 Start tt ■■■■■■■■■■■■");
+=======
+		System.out.println("■■■■■■■■■■■■ 알림톡 Starttt ■■■■■■■■■■■■");
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 		
 		JSONObject json = new JSONObject();
 		String arlResult = "";

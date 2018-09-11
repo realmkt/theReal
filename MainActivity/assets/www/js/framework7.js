@@ -2067,14 +2067,23 @@
         
             // Set pages classess for animationEnd
             animatePages: function (leftPage, rightPage, direction, view) {
-                // Loading new page
+                // Loading new page 어디/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 var removeClasses = 'page-on-center page-on-right page-on-left';
                 if (direction === 'to-left') {
-                    leftPage.removeClass(removeClasses).addClass('page-from-center-to-left');
-                    rightPage.removeClass(removeClasses).addClass('page-from-right-to-center');
+                	 if(affliateFlag){
+                         setTimeout(function(){
+                            leftPage.removeClass(removeClasses).addClass('page-from-center-to-left');
+                              rightPage.removeClass(removeClasses).addClass('page-from-right-to-center');
+                        },100);
+                         }else{
+                            leftPage.removeClass(removeClasses).addClass('page-from-center-to-left');
+                              rightPage.removeClass(removeClasses).addClass('page-from-right-to-center');
+                         }
                 }
                 // Go back
                 if (direction === 'to-right') {
+                	$("#top_menu").show();
+                	$(".page").css("background","#eee");
                     leftPage.removeClass(removeClasses).addClass('page-from-left-to-center');
                     rightPage.removeClass(removeClasses).addClass('page-from-center-to-right');
         
@@ -3963,9 +3972,11 @@
             
             // Transition End;
             var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : panel;
+            
             var openedTriggered = false;
             
             function panelTransitionEnd() {
+            	
                 transitionEndTarget.transitionEnd(function (e) {
                     if ($(e.target).is(transitionEndTarget)) {
                         if (panel.hasClass('active')) {
@@ -3975,13 +3986,13 @@
                             panel.trigger('closed');
                         }
                         if (app.params.material) $('.panel-overlay').css({display: ''});
-                        app.allowPanelOpen = true;
+                        	app.allowPanelOpen = true;
                     }
                     else panelTransitionEnd();
                 });
             }
             panelTransitionEnd();
-        
+            
             $('body').addClass('with-panel-' + panelPosition + '-' + effect);
             return true;
         };
@@ -4132,7 +4143,6 @@
                 e.preventDefault();
                 var threshold = opened ? 0 : -app.params.swipePanelThreshold;
                 if (side === 'right') threshold = -threshold;
-                
                 touchesDiff = pageX - touchesStart.x + threshold;
         
                 if (side === 'right') {
@@ -4158,6 +4168,7 @@
                 else {
                     panel.transform('translate3d(' + translate + 'px,0,0)').transition(0);
                     if (app.params.material) {
+                    	
                         panelOverlay.transition(0);
                         overlayOpacity = Math.abs(translate/panelWidth);
                         panelOverlay.css({opacity: overlayOpacity});
@@ -4249,7 +4260,8 @@
                     views.transform('');
                 }
                 panel.transition('').transform('');
-                panelOverlay.css({display: ''}).transform('').transition('').css('opacity', '');
+                /*panelOverlay.css({display: ''}).transform('').transition('').css('opacity', '');*/
+                
             }
             $(document).on(app.touchEvents.start, handleTouchStart);
             $(document).on(app.touchEvents.move, handleTouchMove);
@@ -16734,5 +16746,10 @@
     };
 
 })();
+
+$(document).on('click','#left-close-icon',function(){
+	app.closePanel();	
+	});
+
 
 //# sourceMappingURL=framework7.js.map

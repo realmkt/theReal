@@ -1,94 +1,80 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0 minimal-ui"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    
+        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=gAnO6LlGEkgRPUUN7YGO&submodules=geocoder"></script>
+   
+	 <!--베너스크롤스와이퍼-->
+    <link rel="stylesheet" href="../Swiper/dist/css/swiper.min.css">
+  
+   <script src="../Swiper/dist/js/swiper.min.js"></script>
+	
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+   <link rel="stylesheet" type="text/css" href="../css/starRating.css"/>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="external">
     <title>더리얼마케팅 전자영수증</title>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"> </script> 
+    <script src="https://code.jquery.com/jquery-1.12.4.js"> </script> 
+    
+    
     <link rel="stylesheet" media="all" href="../code/layout.css" />
     <link rel="stylesheet" media="all" href="../code/common.css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- main -->
 	<script src="../code/jquery.bxslider.min.js"></script>
     <link href="../code/jquery.bxslider.css" rel="stylesheet" />
-    
-    <!--  naver map API -->
-    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
-   <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=gAnO6LlGEkgRPUUN7YGO&submodules=geocoder"></script>
-   <script src="https://openapi.map.naver.com/openapi/v3/maps.js?v=20170525"></script>
-    
-    
+    			
     <!-- tab -->
 	<script type='text/javascript' src='../code/tabs.js'></script>
-
+	<script src="../code/jquery.bpopup.min.js"></script>
+	
+	<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9RPpq1OHee6vF9FtBmYb1twdPV3kK9NE" type="text/javascript">
+    </script>
     <!-- scroll -->
 	<script src="../code/fm.scrollator.jquery.js"></script>
 	<link rel="stylesheet" href="../code/fm.scrollator.jquery.css" />
-    
+   
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="../css/my-app.css">
-    <link href="../css/monthpicker.css" rel="stylesheet" />
+   <link href="../css/monthpicker.css" rel="stylesheet" /> 
 	<script src="../code/common.js"></script>
 <!-- 	<script type="text/javascript" charset="utf-8" src="../cordova.js"></script> -->
-<style type="text/css">
-/* .on { color: blue; border: 1px solid blue; } */
-.on { background-color:#DDF4FE;}
-.list-block {display: none; }
-.item-title.small-fonts{font-size: small;}
-
-.alen_list_box2 {margin:0px 0px; background:#fff; border:0; }
-.alen_list_box2 li { background-color:#fff; }
-.alen_list_combtnbox { height:42px; /*margin-bottom:5px;*/ }
-.alen_list_combtn { margin:0 5px; padding:0 5px 0 5px; border:1px solid #539bff; color:#fff; /* font-size:1.5em; */ font-weight:400; text-align:center; line-height:50px; cursor:pointer; background:#539bff; -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
-.albpad { padding:0px 0 0px 0; }
-
-.alen_list_btn2 {background-color:#fff;padding:5px 5px;border-top:1px solid #ddd;}
-/* .alen_list_btn2 { margin:10px 10px 10px 10px; padding:0; border-radius:10px; background:#333; } */
-.alen_list_btn2item { width:20%;float:left; text-align:center; /* color:#a99f9f;  */}
-.alen_list_btn2item:nth-of-type(5){margin-right:0;}
-/* .alen_list_btn2item { width:20%; float:left;; text-align:center; color:#fff; } */
-.alen_list_btn2item .al_btn_txt {padding:8px 0; border:1px solid #ddd; border-radius:5px;margin-right:2px;}
-.alen_list_btn2item .al_btn_txt:nth-of-type(5) {margin-right:0;}
-/* .alen_list_btn2item .al_btn_txt { padding:10px 0; border-right:1px solid #666; } */
-.alen_list_btn2item .al_btn_txt.last {background-color:#ddd; }
-
-.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner { padding-right: 15px; text-align:center; }
-.alen_list_box2 label.label-radio input[type="radio"] ~ .item-inner .item-title { margin:0 auto; }
-.alen_list_box2 label.label-radio input[type="radio"]:checked ~ .item-inner { background: no-repeat center; background-position: 50% 3px; background-position: -webkit-calc(50% - 8px) 3px; background-position: calc(50% - 8px ) 3px; -webkit-background-size: 13px 10px; background-size: 13px 10px; 
-background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23539bff'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");  }
-.divPage{background: url(../common/divPage.png) no-repeat 0 0;background-position: 0% 0%; height: 30px;}
-.alen_radio_box2 { margin:10px; border:1px solid #e5e5e5; }
-.alen_table_in { border-radius:5px; margin:0 5px;}
-    .search_member_stor {padding:10px 0 0 0;width:100%;text-align:center;}
-    .search_member_stor li{}
-    .search_member_stor>li {padding:5px 0;}
-    .search_member_stor>li input[type="search"]{font-size:12px; height:39px; line-height:39px;
-	border-color:#ddd; border-style:solid; border-width:2px 0 2px 2px;
-	border-radius:10px 0 0 10px;width:250px;}
-    .search_map {text-align:left;padding-left:20px;}
-    .search_member_stor>li .search_click{background-color:#ddd;vertical-align:middle;border-radius:0 10px 10px 0;height:39px; cursor:pointer}
-    .search_map>img {vertical-align: middle;}
-    .search_map>span {vertical-align: middle; font-size: 15px;}
-    .search_map>span:after {content: ' ▼';font-size:0.5em;}
-    .autoframe {padding-top:10px;display:none;}
-    .autoframe ul li {text-align:left;padding:5px 0 5px 20px;}   
-    .search_adress {padding-top:10px;display:none;}
-</style>
+	
 </head>
 
 <body>
-<form>
+<!-- <div id="map" class="mapmap" style="width:100%;height:400px; display: none;"></div> -->
+            <!-- //alert 대체	 -->
+        <div class="alert_body" id="alert_body">
+			<div class="alert_box" id="alert_box">
+				<div class="alert_txt" id="alert_desc">알러트창</div>
+				<div class="alert_btn"><a href="#">확인</a></div>
+			</div>
+		</div>	
+   		 
+	<div class="review_write_box" style="display: none;">
+    
+    </div>
+    
     <!-- Status bar overlay for fullscreen mode-->
     <div class="statusbar-overlay"></div>
+
+
     <!-- Panels overlay-->
     <div class="panel-overlay"></div>
+
+
     <div class="panel panel-left panel-reveal">
+    
     	<div class="profile_box">
         	<!-- <div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div> -->
+            
             <div class="pf_txt">
             	<h2>김종현</h2>
                 <p>쿠폰 <span>0</span>개</p>
@@ -99,221 +85,371 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
         
         <div class="left_menu">
         </div>
-    </div>   
+
+    </div>
+    
+    
     <div class="views">
-		<div class="view view-main">
+		<div class="view view-main" data-page="index">
         
             <div class="navbar top_menu">
                 <div data-page="index" class="navbar-inner">
-                
-                    <div class="left">
-                    <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+                <div class="left">
+                     <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
                     </div>
-                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 27%;"><img style="width: 75%;height: 50%;margin: 0 auto" src="../common/logo_01.png"></div>
-                </div>     
-            </div>          
+                         <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 18%; text-align: center"><img src="../common/mobile_loge.png" width="180px" height="40px" style="margin-top: 3px"></div> 
+				
+               
+                
+				<input type="radio" id="latest04" name="latestsbox" value="detail">
+                  <label class="set_btn" data-modal-id="ser_box"><img src ="../common/set_icon.png" class="imga"></label> 
+				</div>
+                 
+                <div data-page="receipt_details" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link" onclick="backS();"> <i class="icon icon-back"></i><span id="backS">Back</span></a></div>
+                <div class="center sliding">가맹점 상세</div>
+                </div>
+                
+                
+                <div data-page="agree01" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
+                </div>
+                
+                
+                <div data-page="agree03" class="navbar-inner cached">
+                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="center sliding">본인확인서비스 이용약관</div>
+                </div>
+                
+                
+            </div>
+            
+
+<style type="text/css">
+ #map {
+        height: 300px;
+        width: 100%;
+       }
+/*  p {width:90px; height: 40px; background-color:skyblue;border-radius: 20px;text-align:center;font-size:22px;color:#fff;}    
+ p span {line-height: 1.7;} */
+.loadingView{text-align: center; background-color: #272727; opacity : 0.6;   width:100%; height:100%; position: fixed; z-index:  9999; }
+.loadingView img{width: 90px ; position: relative; top: 40%}
+
+.latest_contitle { color:#747474; background:#0d0d0d; }
+.latest_contitle h2 { padding:15px 15px; font-size:0.8; font-weight:400; color:#fff; line-height:25px; }
+.latest_contitle h2 span { float:right; color:#ddd; border:1px solid #666; border-radius:8px; font-size:0.7em; padding:0 5px; margin-left:5px; line-height:21px; }
+.latest_contitle h2 span.active { border:1px solid #539bff; color:#539bff; }
+
+.latest_coninfo { padding:8px 15px; color:#bbb; background:#222; font-size:0.7em; text-align:left; border-bottom:1px solid #333;}
+.latest_coninfo .latest_allsms { width:50%; float:left; background:url(common/sms.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo .latest_allrec { width:50%; float:right; background:url(common/receipt.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo > div span { color:#e5e5e5; }
+
+
+
+/* 드래그막기 */
+div {
+   -ms-user-select: none; 
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   user-select: none;
+ }
+
+.latest_conser { margin:3% 2% 0; background:#fff; text-align:center; }
+.latest_conser input[type=radio] { display:none; margin:10px; }
+.latest_conser input[type=radio] + label { float:left; padding:7px 12px; width:25%; background:#fff; font-size:12px; border-right:1px solid #e5e5e5;}
+.latest_conser input[type=radio] + label:last-child { border-right:0; }
+.latest_conser input[type=radio]:checked + label { background:#539bff; color:#fff; }
+
+.latest_conlist { margin:3% 2%; background:#fff; }
+.latest_conlist ul { padding:15px 10px; position:relative; border-bottom:1px solid #e5e5e5;}
+.latest_conlist li { float:left; width:60%; text-align:left; }
+.latest_conlist li h3.mal_credit { background:url(common/credit.gif) no-repeat left; }
+.latest_conlist li h3.mal_cash { background:url(common/cash.gif) no-repeat left; }
+.latest_conlist li.mal_price { width:40%; text-align:right; font-size:0.8em; font-weight:400; color:#555;  position:absolute; top:40%; right:10px; }
+.latest_conlist li.mal_price span { font-size:1.4em; font-weight:700; color:#000; }
+.mal_more { background:#f2f2f2; color:#666; font-size:0.8em; padding:10px 0; }
+.trpage_inbox{font-family: Helvetica Neue, Helvetica, Arial, sans-serif;}
+.nonoreview{margin: 20px auto; width:100%;  font-weight: 400px; display: inline-block; text-align: center;}
+.imga{    width: 8%;
+    float: right;
+    margin-right: 2px;
+    padding-bottom: 3px;}
+/*가맹점 상세페이지*/   
+.gnb_box {position:fixed;width:100%;top:0;z-index: 9999;}
+.gnb_box a {color:#fff; font-size:18px; padding:14px 15px;display:inline-block;}
+.gnb_box i {color:#fff; 
+    }
+    i.icon.icon-back {   display:inline-block; width: 12px; height: 20px; background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2012%2020'%3E%3Cpath%20d%3D'M10%2C0l2%2C2l-8%2C8l8%2C8l-2%2C2L0%2C10L10%2C0z'%20fill%3D'%23539bff'%2F%3E%3C%2Fsvg%3E"); }
+    .gnb_box span {vertical-align: top;font-weight:lighter; color: black;}    
+.list_banner img {width:100%;object-fit: cover;height:350px}   
+
+
+@media (min-width:320px) {
+        .list_banner img{height:240px;}
+    }
+    @media (min-width:360px) {
+        .list_banner img {height:270px;}
+    } 
+@media (min-width:370px) {
+        .list_banner img {height:279px;}
+    }
+@media (min-width:412px) {
+        .list_banner img {height:312px;}
+    }
+    @media (min-width:420px) {
+        .list_banner img {height:340px;}
+    }
+.store_title { background:#fff;padding-left:10px;border-bottom:1px solid #ddd;
+font-family: Helvetica Neue, Helvetica, Arial, sans-serif }   
+.store_title h1 {font-size:25px;font-weight: 900;padding:3% 0; color:black;}   
+.store_title p:nth-child(2){font-size:15px;padding-bottom:3%;color:#aaa;}
+.store_title p:nth-child(3){font-size:17px;padding-bottom:3%;color:#539BFF;}  
+    
+.store_list {background:#fff;padding:10px 10px; font-size:17px;color:#000;}
+.store_list p{padding-bottom:3%;font-family: Helvetica Neue, Helvetica, Arial, sans-serif}
+.store_list span.list_1 {font-size:13px;max-width:300px;display:inline-block;vertical-align: middle;}
+.store_list i {padding-right:1%;color:#539BFF;}
+    
+.reviewdate{font-size: 12px; margin-left: 48px;}
+.store_menu {border-bottom:1px solid #ddd;padding-bottom:2%;}
+.store_menu .menu:before {position:absolute;top:50%;right:0;left:0;border-top:1px dashed #ddd;content:'';height:1px;}
+.store_menu li {position:relative;line-height:2;}
+.store_menu .menu_list {overflow:hidden;max-width:100%;padding-right:7px; text-overflow:ellipsis;white-space:nowrap;vertical-align: top;position:relative;
+
+font-family: Helvetica Neue, Helvetica, Arial, sans-serif}
+.store_menu li .menu_list span{float:left;background-color:#fff;padding-right:10px;}
+.store_menu li .menu_list em{float:right;background-color:#fff;padding-left:10px;overflow:hidden;white-space: nowrap;position:relative;text-overflow:ellipsis;max-width:100%;display:inline-block;font-size:13px;}
+.store_menu li .menu_list:after {display:block; content:''; clear:both;}
+
+.store_map {padding:2% 0;border-bottom:1px solid #ddd;}
+.store_map .map p {font-size:13px;}    
+
+.store_review {border-bottom:1px solid #ddd;padding:5% 0;}  
+.store_review:after {display:block; clear:both;content:'';}   
+.store_review .store_left {float:left;width:40px; height:60px;}
+.store_review .store_left img {width:100%;}
+.store_review .store_right ul {overflow:hidden;}
+.store_review .store_right ul li {font-size:13px;line-height: 1.5; }
+
+ .member_star {background-color:#fff;padding:3% 5%; border-bottom:1px solid #ddd;}
+    .member_star:after {display:block; clear:both; content:'';}
+    .member_star .member_name {float:left;}
+    .member_star .member_name p:nth-child(1) {font-size:20px;margin-bottom:10px;}
+    .member_star .member_name p:nth-child(2) {font-size:13px; color:#aaa;}
+    .member_star .member_nums {float:right;}
+    .member_star .member_nums p:nth-child(1) {font-size:25px;color:#539bff
+    ;text-align: center;}
+    .member_star .member_nums p:nth-child(2) {font-size:20px;color:#539bff
+    ;}
+    .review_btn{margin:10px 0;padding:0 10px;}
+   
+    .review_btn a{text-align: center;font-size:16px; display:block;background-color:#222222; color:#fff;width:100%;padding:12px 0;cursor: pointer;border: none; }    
+    
+  html, body {
+      position: relative;
+      height: 100%;
+    }
+    body {
+      background: #eee;
+     /*  font-family: Helvetica Neue, Helvetica, Arial, sans-serif; */
+      font-size: 0.75em;
+      color:#000;
+      margin: 0;
+      padding: 0;
+    }
+    .swiper-container {
+      width: 100%;
+  		
+    }
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }    
+    
+.writer{font-weight: 1000;}
+.star{color: #539bff; font-weight: 300; font-size: 1.3em;}
+
+.latest_contitle { color:#747474; background:#0d0d0d; }
+.latest_contitle h2 { padding:15px 15px; font-size:1em; font-weight:400; color:#fff; line-height:25px; }
+ #latest04 {display:none;}
+.latest_contitle h2 span { float:right; color:#ddd; border:1px solid #666; border-radius:8px; font-size:0.7em; padding:0 5px; margin-left:5px; line-height:21px; }
+.latest_contitle h2 span.active { border:1px solid #539bff; color:#539bff; }
+
+.latest_coninfo { padding:8px 15px; color:#bbb; background:#222; font-size:0.7em; text-align:left; border-bottom:1px solid #333;}
+.latest_coninfo input[type="radio"] {display:none;}   
+.latest_coninfo .latest_allsms { width:50%; float:left;  line-height:20px; padding-left:25px;background:url(../common/category.png) no-repeat left;}
+.latest_coninfo .latest_allsms  span {font-size:10px;}
+.latest_coninfo .latest_allrec { width:50%; float:right; background:url(../common/place.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo > div span { color:#e5e5e5; }
+
+
+
+.latest_conser { margin:10px; text-align:center; height:43px;position:relative;}
+.latest_conser .search_text {width:100%;height:40px;border:0; padding: 15px}
+.latest_conser .search_btn {width:60px; height:43px; border:0; position:absolute;background-color:#539bff;color:#fff;font-size:14px;right:0;top:0; padding: 2px 15px}
+
+.latest_conlist { margin:0 10px; background:#fff; text-align:center; }
+
+.latest_conlist ul { padding:15px 10px; position:relative; border-bottom:1px solid #e5e5e5;}
+.latest_conlist li { float:left; width:80%; text-align:left; }
+.latest_conlist li:after {content:''; display:block; clear:both;}
+.latest_conlist li img {float:left;  margin-right:12px;width:90px; height:90px;}   
+.latest_conlist li .ellip {width: 123px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0.8em;
+    font-weight: 300;
+    color: #555;
+    padding-bottom: 20px;}
+.latest_conlist li p { font-size: 1.0em;
+    font-weight: 600;
+    color: #000;
+    padding-bottom: 3px;
+   }
+.latest_conlist li h3 { font-size:0.8em; font-weight:400; color:#555; padding-left:27px; line-height:16px; }
+.latest_conlist li h3 span { background:#f2f2f2; border:1px solid #ddd; border-radius:3px; padding:2px 5px; font-size:0.85em; color:#539bff; }
+.latest_conlist li h3.mal_credit { background:url(common/credit.gif) no-repeat left; }
+.latest_conlist li h3.mal_cash { background:url(common/cash.gif) no-repeat left; }
+.latest_conlist li.mal_price { width:20%; text-align:right; font-size:0.8em; font-weight:400; color:#555;  position:absolute; top:40%; right:10px; }
+.latest_conlist li.mal_price span { font-size:1.4em; font-weight:700; color:#000; }
+.mal_more { background:#f2f2f2; color:#666; font-size:0.8em; padding:10px 0; }
+/* .dis_none{display: none;} */
+.moreBtn {  height: 41px;  padding: 15px;  background-color: #272727; color: #f2f2f2; position: relative; top: -2%; text-align: center; margin-bottom: 20px}
+
+.star_rating {font-size:0; letter-spacing:-4px;}
+.star_rating a {
+    font-size:18px;
+    letter-spacing:0;
+    display:inline-block;
+    margin-left:5px;
+    color:#ccc;
+    text-decoration:none;
+}
+.star_rating a:first-child {margin-left:0;}
+.star_rating a.on {color:#F4FA58;}
+
+#detailRecData{
+	padding-top: 0;
+}
+.page-content, .navbar-fixed .page-content{
+	padding-top: 0;
+}
+.content-block{
+	padding: 0;
+}
+
+#pageC{
+	padding: 0;
+}
+#receipt_details{}
+
+.alen_modal_overlay { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
+ .review_write{margin-top:10px;width:90%;margin:20px auto 10px;}
+ .review_name span{display:block; font-size:18px;text-align: center;margin:10px 0;}
+ .review_star span{text-align:center;display:block; font-size:22px;margin:-10px 0 15px 0;color:#539bff;}
+ .review_name img{text-align: center;display:block;border-radius: 50px;width:60px; margin:0 auto;}
+ .review_write textarea{ width:100%;margin:0 0 10px 0;border-bottom:1px solid #ddd;border-top:1px solid #ddd; border-left: none; border-right: none; padding: 15px}
+ .review_write .review_btn {width:100%;border:0; background-color:#272727;padding:10px 0; color:#fff;margin:10px auto;font-size:16px;}
+.review_write_box{position: fixed;
+    top: 20%;
+    left: 55%;
+    margin-left: -50%;
+    box-shadow: 1px 1px 10px #aaa;
+    background: #fff;
+    width: 90%;
+    z-index: 9000;} 
+ 
+ 
+/*  .alert_box {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    margin-left: -30%;
+    box-shadow: 1px 1px 10px #aaa;
+    background: #fff;
+    width: 60%;
+    z-index: 10000;
+ }; */
+ 
+ .emptyImg{width: 80%}
+ 
+ .reviewCount{color: black;}			
+</style>		
+			
+				
+												
 			<div class="pages navbar-through toolbar-through">
                 <div data-page="index" class="page">
-                    <div class="page-content">
-
-                    
-                    <div class="history_title" style="background-color:#fff; height: 60px">
-                        <div class="history_txt"  style="font-size:1.2em; color:#539bff; font-weight:600; line-height:20px; padding:7px 0 0px 0px;">가맹점 조회</div>
-                        <hr>
-                        <div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="../common/bx_loader.gif" />
-                    </div>                                  
-                    
-<script> 
-    $(document).ready(function(){
-        $("#search1").on('click',function(){
-            $("#autoframe1").slideToggle("slow");
-            $('.search_adress').hide("slow");					
-        });		
-    });
-</script>
-
- <script> 
-    $(document).ready(function(){
-        $(".search_map ").click(function(){
-            $(".search_adress").slideToggle("slow");
-             $('#autoframe1').hide("slow");
-          });	
-        });
-</script>    
-				<div class="alen_list_btn2">
-				<!-- <div class="">
-					<div id="map"  style="margin-bottom: 20px; width: 100%; height: 400px; clear: both;"></div>
-				
-				</div> -->
-					<div class="search_box">
-						<ul class="search_member_stor">
-							<!-- <li>
-								<div class="search_union">
-								    <form>
-								        <fieldset>
-								           <input type="search" class="search" id="search1" title="검색어 입력">
-								            <input type="image" src="../img/ser.png" alt="검색">
-                                        </fieldset>
-								    </form>
-								    자동레이어완성
-								    <div class="autoframe" id="autoframe1">
-								        <ul>
-								            <li><a href="">맛집</a></li>
-								            <li><a href="">동네</a></li>
-								            <li><a href="">어디</a></li>
-								            <li><a href="">여기</a></li>
-								            <li><a href="">서교동</a></li>
-								            <li><a href="">가로수길</a></li>
-								            <li><a href="">이태원</a></li>
-								        </ul>
-								    </div>autoframe
-								</div>
-							</li> -->
-							<li>
-                               <div class="search_map">
-                                   <img src="../img/spmc.png" alt="">
-                                   <span id="search_dong"></span>
-                               </div>
-                               <div class="search_adress">
-								    <form>
-								        <fieldset>
-								           <input type="text" class="search" title="검색어 입력" placeholder="지역 및 매장명을 입력하세요" id="searchArea"/>
-								            <input type="submit" id="searchAreaBtn" style="display: none"><img class="search_click" src="../img/ser.png" alt="검색" >
-                                        </fieldset>
-								    </form>
-                               </div>
-                            </li>	
-						</ul>
-					</div>
-				</div>
-
-<style type="text/css">
-.alen_radio_box { margin:0px; border:0; font-size:1.2em; }
-.alen_table_list { width:23%; float:left; height:30px; margin:1.5% 0% 1.5% 1.6%; }
-.alen_table_last { border-right:0; }
-.alen_table_top { border-bottom:1px solid #e5e5e5}
-.alen_radio_box .alabel-radio { display:block;}
-.alen_radio_box .aitem-content { height:30px; padding:0 0;}
-.alen_radio_box .item-title { text-align:center; height:30px; line-height:30px; font-size:small; margin:0 auto; }
-label.alabel-radio { cursor: pointer; }
-label.alabel-radio input[type="radio"] { display: none; }
-label.alabel-radio input[type="radio"] ~ .aitem-inner { padding-right:0px; background:#fff; border:1px solid #ddd; border-radius:5px; }
-label.alabel-radio input[type="radio"]:checked ~ .aitem-inner { background:#DDF4FE; color:#333; }
-label.alabel-radio { -webkit-transition-duration: 300ms; transition-duration: 300ms; }
-html:not(.watch-active-state) label.alabel-radio:active,
-label.alabel-radio.active-state { -webkit-transition-duration: 0ms; transition-duration: 0ms; background-color: #fff; }
-html:not(.watch-active-state) label.alabel-radio:active .aitem-inner:after,
-label.alabel-radio.active-state .aitem-inner:after { background-color: transparent; }
-.smart-select select { display: none; }    
-.search_member_list {height:100%;padding:20px 10px 20px 10px;background-repeat: no-repeat;background-position:15px center;margin:5px 20px;}
-    
-.aff_title{margin: 5px 0px;}
-.aff_title h3{margin: 6px 0px 0px 0px; font-size: 13px;}
-.search_member_list h2 {font-size:20px;font-weight: 500;}
-.search_member_list_p{font-size: 12px; color: #8e8e93; text-align: right; padding: 8px 20px;}
-.latest_box ul li:first-child {border-top:1px solid #ddd; border-bottom: 0.6px solid #ddd; height: 140px;}
-.latest_box ul li {border-bottom:1px solid #ddd;height: 140px;}
-.ellip{width: 200px; text-overflow:ellipsis; overflow: hidden; white-space:nowrap;}
-
-    .list_pic_box{} 
-    .list_pic_box a {display:block;padding:10px 0;}
-    .list_pic_box img {float:left; margin: 7px 10px; width:90px; height: 90px}
-    .list_pic_box a:after {content:'';display:block; clear:both;}
-    .list_pic_box a p {line-height:2;}
-    .list_pic_box a span {display:block;line-height: 2; font-size: 15px}
-</style>
-				
-				
-				
-				<div class="latest_box alen_outbox" id="aff_list_div">
-                </div>
-                    <div class="foot_info">
-                    
-<!--                     	<div class="foot_box">
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#agree03">이용약관</a>file:///C:/theRealErec/theRealErec/platforms/android/assets/www/common/logo_01.png
-                            </div>
-                            
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#agree01">개인정보 취급방침</a>
-                            </div>
-                            
-                        	<div class="foot_btn alen_outbox">
-                            <a href="javascript:void(0)">고객센터</a>
-                            </div>
-                            
-                            
-                            <hr>
-                        </div> -->
-<!-- <p>
-(주)더리얼마케팅 | 대표이사:손종희<br>
-사업자등록번호:220-88-19101   |   통신판매업신고 강남 04134호<br>
-서울시 강남구 압구정로10길 13, 401호(신사동, 마사빌딩)<br>
-이메일 : The REAL @naver.com<br>
-고객센터 : 02-518-5112 | 마케팅:02-540-3111<br>
-</p>
-
-<p class="copytxt">CopyrightⓒThe REAL Co.All rights reserved</p> -->
-                    </div>                    
+                    <div class="page-content" id="papap">
+					<div id="loadingView" class="loadingView">
+					<img src="../common/loadingBar.gif" id="loading_gif">
+					</div>	 
+                   				
+                    <div class="latest_contitle" onclick="reroad();">
+                    	<h2>가맹점 찾기
+                          
+                        </h2>	
+                  		  	
                     </div>
-                </div>
-                
-<style type="text/css">
-
-.rtpage_box { background:#f2f2f2; border:1px solid #e5e5e5; margin-bottom:20px; padding:5px; border-radius:5px; }
-.rtpage_inbox { background:#fff; border:1px solid #e5e5e5; padding:10px 30px; border-radius:5px; }
-.rtpage_holl { padding:5px 5px 15px 5px; height:35px; }
-.rtpage_holl div { width:6%; height:100%; margin:0 2%; border-radius:30px; border:1px solid #e5e5e5; float:left; background:#f2f2f2; }
-
-
-.rt_title { padding:20px 0 0px 0; }
-.rt_title h2 { text-align:center; font-size:3em; font-weight:700; color:#000; clear:both; padding:5px 0 15px 0; }
-.rt_title p { text-align:center; font-size:1em; color:#000; clear:both; }
-
-.rt_txt01 { text-align:left; font-size:1em; color:#666; clear:both; /* padding:0px 10px; */ }
-.rt_txt01 span { text-align:right; float:right; }
-
-.rt_total { text-align:left; font-size:1.5em; font-weight:700; color:#000; clear:both; padding:20px 10px; border-bottom:2px dashed #aaa; border-top:2px dashed #aaa; margin-top:20px; }
-.rt_total span { text-align:right; float:right; }
-
-.rt_total { text-align:left; font-size:1.8em; font-weight:700; color:#000; clear:both; padding:20px 10px; border-bottom:1px dashed #aaa; border-top:1px dashed #aaa; margin-top:20px; }
-.rt_total span { text-align:right; float:right; }
-
-.rt_orderno { border-bottom:1px dashed #aaa; border-top:1px dashed #aaa; padding:20px 0; margin-top:20px; }
-.rt_orderno p { text-align:center; font-size:1.2em; color:#666; clear:both; }
-.rt_orderno h2 { text-align:center; font-size:1.8em; color:#000; clear:both; padding:5px 0; }
-
-.rt_table { border-top:1px solid #ddd; border-bottom:1px solid #ddd; margin:20px 5px 0px 5px;  }
-.rt_table .rt_tabletitle { border-bottom:1px solid #ddd; background:#fff;}
-.rt_table li { float:left; padding:5px 0; text-align:center; color:#333; }
-.rt_table li.rt_mlat01 { width:45%; }
-.rt_table li.rt_mlat02 { width:20%; }
-.rt_table li.rt_mlat03 { width:10%; }
-.rt_table li.rt_mlat04 { width:25%; text-align:right; padding-right:5px; }
-
-.rt_etc { text-align:left; font-size:1.3em; font-weight:700; color:#333; clear:both; padding:10px 10px; border-bottom:1px dashed #aaa; }
-.rt_etc span { text-align:right; float:right; }
-
-.rt_copy { text-align:center; font-size:0.7em; }
-	/* 로딩*/
-
-#loading2 {height: 100%; left: 0px; position: fixed; _position:absolute;  top: 0px; width: 100%; filter:alpha(opacity=50); -moz-opacity:0.5; opacity : 0.5;}
-#loading {height: 100%; left: 0px; position: fixed; _position:absolute; top: 0px; width: 100%; filter:alpha(opacity=50); -moz-opacity:0.5; opacity : 0.5;}
-.loading {background-color: #c3c3c3; z-index: 199; }
-#loading_img2{width: 20px; height: 20px; position:absolute; top:50%; left:50%; z-index: 200;}
-#loading_img{width: 20px; height: 20px;	position:absolute; top:50%; left:50%; z-index: 200;}
-</style>                
-                
-
-                <div data-page="receipt_details" class="page cached">
-                    <div class="page-content">
-						<div id="loading2" class="loading"></div><img id="loading_img2" alt="loading" src="../common/bx_loader.gif" />
+                    <div class="latest_coninfo" id="searchMenu">
+                      
+                       <div class="latest_allsms">
+                        	 	카테고리			
+                            <span>전체</span>
+                        </div>
+                    
+                        <div class="latest_allrec">
+                            	검색거리반경
+                            <span> 전체</span>
+                        </div>
+                    	
+                        <hr>
+                    </div>
+                    
+                    <div class="latest_conser">
+                    <input type="search" class="search_text" onKeypress="javascript:if(event.keyCode==13) {search()}">
+                    <button type="button" class="search_btn" onclick="search();" >검색</button>
+                    
+                    <hr>
+                    </div>
+            			
+            	
+            
+            
+            
+                    
+                          
+        		<div data-page="receipt_details" class="page cached" id="receipt_details">
+                    <div class="page-content" id="pageC">
                         <div class="content-block">
 
 						<div class="rtpage_box">
                         	<div class="rtpage_inbox" id ="detailRecData">
+                           	
                             </div>
-                        </div>
+                       
+                       
+                       
+                      
+                		</div>
                         
 <!-- 						<div class="receipt_box">
                         	<div class="receipt_inbox" id ="detailRecData">
@@ -321,13 +457,482 @@ label.alabel-radio.active-state .aitem-inner:after { background-color: transpare
                             </div>
                         </div> -->
                         
-                        <div class="latest_btnbox">
-                            
-                        </div>
-
+                       
+                       	
+                        
+                        
                         </div>
                     </div>
+                    
+                    
+			 																
+			
                 </div>
+                    
+                    
+                
+                
+                
+                    
+                    
+                    <div class="latest_conlist alen_outbox" id="testDiv">
+                    
+                        	
+
+                    </div>
+                     
+                    <!--  <div class="moreBtn dis_none" id="moreBtn">더보기</div> -->
+                    
+                    <!-- <div class="foot_info">
+                    
+                    	<div class="foot_box">
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree03">이용약관</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#agree01">개인정보 취급방침</a>
+                            </div>
+                            
+                        	<div class="foot_btn alen_outbox">
+                            <a href="#">고객센터</a>
+                            </div>
+                            
+                            
+                            <hr>
+                        </div>
+<p>
+(주)이베이 코리아   |   대표이사 : 변광윤<br>
+사업자등록번호 : 220-81-83676   |   통신판매업신고 강남 10630호<br>
+서울시 강남구 테헤란로 152 (역삼동 강남파이낸스센터)<br>
+이메일 :information@corp.auction.co.kr<br>
+고객센터 :1588-0184(오전9시~오후6시,토요일/공휴일휴무<br>
+</p>
+
+<p class="copytxt">Copyrightⓒnoname Co,.All rights reserved</p>
+                    </div> -->
+                    
+                    
+                    </div>
+                </div>
+                
+
+  
+    
+    
+<style>
+.close_icon { position:absolute; background-image:url(../common/exit.png); background-color: none; background-repeat:no-repeat; background-size:cover; width:20px; height:20px; left:95%; top:1%; margin-left:-15px; }
+.close_review{position:absolute; background-image:url(../common/exit.png); background-color: none; background-size:cover; background-repeat:no-repeat; width: 25px;
+    height: 25px;
+    margin-top: 13px;
+    position: absolute; right: 10%}
+.shop_name{font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 10px;}
+
+.cpop_btn { font-size:3vmin; padding:0.3em 1.5em; background-color:#222; color:#e5e5e5; text-decoration:none; display:inline; border-radius:4px; -webkit-transition: background-color 1s ease; -moz-transition: background-color 1s ease; transition: background-color 1s ease; }
+.cpop_btn:hover { background-color: #ddd; -webkit-transition:background-color 1s ease; -moz-transition:background-color 1s ease; transition:background-color 1s ease; }
+.cpop_btn_small { padding:.5em 1.5em; font-size:0.8em; }
+/*위치반경/카테고리 설정*/
+.modal_box { display: none; position:fixed; z-index: 1000; background: white; width:90%; border-bottom: 1px solid #aaa; border-radius: 4px; box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1); background-clip: padding-box; }
+.modal_box .modal_body { padding: 1em 1em; }
+    .modal_box .modal_body>p{font-weight: 600;}
+.modal_box footer, .modal_box .modal-footer { padding: 1em; border-top: 1px solid #ddd; background: rgba(0, 0, 0, 0.02); text-align: center; }
+
+.ser_2box { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
+.ser_2box input[type=radio] { display:none; margin:10px; }
+.ser_2box input[type=radio] + label { float:left; padding:10px 0; width:50%; background:#fff; font-size:12px; border-right:1px solid #ddd;}
+.ser_2box input[type=radio] + label.slast_radio { border-right:0;  }
+.ser_2box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
+.set_btn {    padding: 1px;
+    float: right;
+    border: 0;
+    margin-bottom: 1px;
+    margin-left: 5px;}
+    
+    
+/*위치 반경/카테고리 설정*/    
+.ser_4box {background:#fff; text-align:center;  margin-top:2%; margin-bottom:2%;  }
+.ser_4box input[type=radio] { display:none; margin:10px; }
+.ser_4box input[type=radio] + label { float:left; padding:10px 0; width:24.222%; background:#fff; font-size:12px; border:1px solid #ddd;margin:0 1% 0 0;}
+.ser_4box input[type=radio] + label.slast_radio { margin-right:0; }
+.ser_4box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
+    
+.ser_3box {background:#fff; text-align:center; margin-top:2%; margin-bottom:2%;  }
+.ser_3box input[type=radio] { display:none; margin:10px; }
+.ser_3box input[type=radio] + label { float:left; padding:10px 0; width:32.6666%; background:#fff; font-size:12px; border:1px solid #ddd;margin:0 1% 0 0;}
+.ser_3box input[type=radio] + label.slast_radio { margin-right:0; }
+.ser_3box input[type=radio]:checked + label { background:rgba(0, 147, 255, 0.27)}   
+.ser_4box input[type=radio]:checked + label { background:rgba(0, 147, 255, 0.27)}   
+.alen_modal_overlay {position:absolute;top:0;left:0; z-index:900;width:100%;height:100%;background:rgba(0, 0, 0, 1) !important;}
+
+.rere{font-size: 0.8em;}
+
+
+/* 별점
+ */
+ 
+.star-input>.input,
+.star-input>.input>label:hover,
+.star-input>.input>input:focus+label,
+.star-input>.input>input:checked+label{display: inline-block;vertical-align:middle;background:url('../common/starlage.png')no-repeat;}
+.star-input{display:inline-block; white-space:nowrap;height:40px;padding:25px;line-height:30px;}
+.star-input>.input{display:inline-block;width:150px;background-size:150px;height:28px;white-space:nowrap;overflow:hidden;position: relative; }
+.star-input>.input>input{position:absolute;width:1px;height:1px;opacity:0;}
+.star-input>.input.focus{outline:1px dotted #ddd;}
+.star-input>.input>label{width:30px;height:0;padding:28px 0 0 0;overflow: hidden;float:left;cursor: pointer;position: absolute;top: 0;left: 0;}
+.star-input>.input>label:hover,
+.star-input>.input>input:focus+label,
+.star-input>.input>input:checked+label{background-size: 150px;background-position: 0 bottom;}
+.star-input>.input>label:hover~label{background-image: none;}
+.star-input>.input>label[for="p1"]{width:30px;z-index:5;}
+.star-input>.input>label[for="p2"]{width:60px;z-index:4;}
+.star-input>.input>label[for="p3"]{width:90px;z-index:3;}
+.star-input>.input>label[for="p4"]{width:120px;z-index:2;}
+.star-input>.input>label[for="p5"]{width:150px;z-index:1;}
+.star-input>output{display:inline-block;width:60px; font-size:18px;text-align:right; vertical-align:middle;}
+
+.reviewList textarea{width: 85%; padding: 10px; border: none; height: 80px}
+
+</style>
+
+<!--위치반경/카테고리 선택-->
+<div id="ser_box" class="modal_box">
+    
+    <div class="modal_body">
+
+	    <p>거리</p>
+        <div class="ser_4box">
+        
+        <input type="radio" id="pays01" name="paysort" value="0.5">
+        <label for="pays01">500m</label>
+        
+        <input type="radio" id="pays02" name="paysort" value="1">
+        <label for="pays02">1km</label>
+        
+        <input type="radio" id="pays03" name="paysort" value="3">
+        <label for="pays03">3km</label>
+        
+        <input type="radio" id="pays04" name="paysort" value="ALL" checked>
+        <label for="pays04" class="slast_radio">전체</label>
+        <hr>
+        </div>
+        
+        <p>카테고리</p>
+        <div class="ser_3box">
+        <input type="radio" id="array01" name="arraysort" value="000" checked>
+        <label for="array01">전체</label>
+        
+        <input type="radio" id="array02" name="arraysort" value="001">
+        <label for="array02">외식/식사</label>
+        
+        <input type="radio" id="array03" name="arraysort" value="002">
+        <label for="array03" class="slast_radio">카페/베이커리</label>
+        <hr>
+        </div>
+        
+        <div class="ser_3box">
+        <input type="radio" id="array04" name="arraysort" value="003" >
+        <label for="array04">술/유흥</label>
+        
+        <input type="radio" id="array05" name="arraysort" value="004">
+        <label for="array05">마트/편의</label>
+        
+        <input type="radio" id="array06" name="arraysort" value="005">
+        <label for="array06" class="slast_radio">뷰티/미용</label>
+        <hr>
+        </div>
+        
+        <div class="ser_3box">
+        <input type="radio" id="array07" name="arraysort" value="006" >
+        <label for="array07">주거/생활</label>
+        
+        <input type="radio" id="array08" name="arraysort" value="007">
+        <label for="array08">교통/주유</label>
+        
+       	<input type="radio" id="array10" name="arraysort" value="009" >
+        <label for="array10" class="slast_radio">쇼핑</label> 
+        <hr>
+        </div>
+        
+       
+         <div class="ser_3box">
+        <input type="radio" id="array12" name="arraysort" value="011">
+        <label for="array12">문화/예술</label>
+        
+        <input type="radio" id="array13" name="arraysort" value="012" >
+        <label for="array13">서점/문구</label>
+        
+         <input type="radio" id="array14" name="arraysort" value="013">
+         <label for="array14" class="slast_radio">레저/스포츠</label>
+        <hr>			
+        </div>		
+        
+       	<div class="ser_3box">
+         <input type="radio" id="array15" name="arraysort" value="014">
+        <label for="array15" >의료/건강</label>
+        
+       
+        <input type="radio" id="array16" name="arraysort" value="015" >
+        <label for="array16">여행/숙박</label>
+        <hr>			
+        </div>
+        
+      
+      
+        
+      
+      
+    
+    </div>
+    
+	<footer> 
+	<a href="#" class="cpop_btn cpop_btn_small js-modal-close" onclick="findCategory();">확인</a> 
+	<a href="#" class="cpop_btn cpop_btn_small js-modal-close" >취소</a> 
+	</footer>
+	
+	
+	
+	
+</div>
+    
+
+
+<script type="text/javascript" src="../js/framework7.js"></script>
+
+<script type="text/javascript" src="../js/my-app.js"></script>
+
+<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+
+
+
+
+
+
+	
+    
+<script>
+
+$(window).on("load", function() {
+
+
+}); 
+
+
+
+
+$(document).ready(function() {
+	
+	 var CI = window.localStorage.getItem("CI"); 
+		
+	 $(document).ajaxStart(function(){
+	 	 $('#loadingView').show();
+	 	})
+	 	.ajaxStop(function(){
+	 	   $('#loadingView').hide();
+	 	});
+	
+	if (navigator.geolocation) {
+  		
+	  		 navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation, showError);
+	  	
+	}else{
+        	var center = map.getCenter();
+    }
+ 	
+	$('label[data-modal-id]').click(function(e) {
+		e.preventDefault();
+		
+	$(".pages").append(appendthis); 
+	$(".alen_modal_overlay").fadeTo(300, 0.7);
+    //$(".js-modalbox").fadeIn(500);
+    //$(".js-modalbox").fadeIn(500);
+    	page = false;
+    	serbox_flag = true;
+		$("#ser_box").fadeIn($(this).data());
+	});  
+  
+
+ $(".js-modal-close, .modal-overlay").click(function() {
+	 page = true;
+	 serbox_flag = false;
+    $(".modal_box, .modal-overlay").fadeOut(500, function() {
+    	$(".alen_modal_overlay").remove();
+		$('input[name="latestsbox"]:radio[value="detail"]').prop('checked',true);
+    });
+ 
+});
+
+ 
+$(window).resize(function() {
+    $(".modal_box").css({
+        top: ($(window).height() - $(".modal_box").outerHeight()) / 4,
+        left: ($(window).width() - $(".modal_box").outerWidth()) / 2
+    });
+});
+ 
+$(window).resize();
+ 
+
+
+
+function serbox_close2(){
+	
+	$("#ser_box").fadeOut(300, function() {
+		$(".alen_modal_overlay").remove()
+	});
+}
+	
+	
+	commonUserData();
+	
+	
+	
+
+	
+	
+	str = '';
+	kmm = 0;
+	category = "000";
+	
+		
+		 
+	$(document).on('click', '[name="affliateDetail"]', function() {
+		$(".set_btn").css("display","none");
+		detailStart();	
+		page = false;
+	});
+		
+});  
+
+
+$(window).on("load", function() {	
+	
+}); 
+
+
+//내위치
+function onSuccessGeolocation(position) {
+	
+	
+	var location = new naver.maps.LatLng(position.coords.latitude,
+                                         position.coords.longitude);
+
+  /*map.setCenter(location); // 얻은 좌표를 지도의 중심으로 설정합니다.
+    map.setZoom(10); // 지도의 줌 레벨을 변경합니다. */
+	  
+    lat1 = location.lat();
+ 	lon1 = location.lng();
+
+ 	if(find!=null){
+ 		affliate_count=0;
+ 	}
+ 	
+ 	if(affliate_count==0){
+	
+ 		$.ajax({
+	 		type : 'post',
+			url : commonIp() + "/theReal/receipt/affliate.do",
+			data: {
+				affliate_no : affliate_no,
+				find : find,
+				lat1 : lat1,
+				lon1 : lon1,
+				affliate_endSeq : 1515151
+	 		},
+	 		error : function(request,status,error) {
+	 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			},	 		   			
+			success : fn_affliatedata,
+	 	})
+ 	
+ 	}else{
+ 		
+ 		find = $(".search_text").val();
+ 		
+ 		$.ajax({	
+	 		type : 'post',
+			url : commonIp() + "/theReal/receipt/affliate.do",
+			data: {
+				affliate_no : affliate_no,
+				find : find,	
+				lat1 : lat1,
+				lon1 : lon1,
+				affliate_endSeq : 1515151
+	 		},
+	 		error : function(request,status,error) {
+	 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			},	 		   			
+			success : more_affliatedata,
+	 	})
+ 	} 
+ }
+
+
+
+//detail 화면창
+function detailStart(){	
+			
+			$.ajax({
+				global : false,	
+				type : "post",
+				url : commonIp() + "/theReal/receipt/startUserData.do",
+			
+			data : {
+									
+				CI : CI,
+				webType : "mobile"
+			},
+			
+			success : function(data){
+				user_nmm = data.resultMap[0].USER_NM;
+				user_nm = data.resultMap[0].USER_NM.replace(/o/, "*");
+				user_nm = maskingName(user_nm);
+						
+				function maskingName(user_nm) {
+				    if(user_nm === undefined || user_nm === '') {
+				        return '';
+				    }
+				    var pattern = /.$/; // 정규식
+				    return user_nm.replace(pattern, "*"); 
+				}
+						
+			}, 		
+			error : function(request,status,error){
+			    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+			
+			
+		}); 
+			
+			
+		$.ajax({
+				type : "post",
+			
+			global : false,	
+			url : commonIp() + "/theReal/receipt/affliate.do",
+			data : {
+	
+				affliate_no : affliate_no,
+				find : find,
+				lat1 : lat1,
+				lon1 : lon1,
+				affliate_endSeq : 1515151,
+			},
+			success : fn_affliateDetaildata,
+			
+			error : function(request,status,error){
+			    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		}); 
+	 }	
+
+
+
+
+</script>               
+                          
+       
                 <div data-page="agree01" class="page cached">
                     <div class="page-content agree_acon">
                         <div class="content-block">
@@ -335,8 +940,9 @@ label.alabel-radio.active-state .aitem-inner:after { background-color: transpare
                         </div>
                     </div>
                 </div>
-
-                <div data-page="agree03" class="page cached">
+                
+                
+                <div data-page="agree03" class="page cached" >
                     <div class="page-content agree_acon">
                         <div class="content-block">
 						<iframe src="agree03.html" frameborder="0" width="100%" height="100%"></iframe>
@@ -344,317 +950,1755 @@ label.alabel-radio.active-state .aitem-inner:after { background-color: transpare
                     </div>
                 </div>
                 
-                
 			</div>
+            
+           
+           
 
 		</div>
+    </div>
+</body>
 
-    </div>    
-    
-    </form>
-<!-- <div id="div_ajax_load_image">
-    <img src="../common/log_img.png" />
-</div>  -->
 
-<script src="../js/monthpicker.min.js"></script>
-<script src="../js/monthpicker-dom.min.js"></script>
-<script src="../js/monthpicker.js"></script>
-<script type="text/javascript" src="../js/framework7.js"></script>
-
-<script type="text/javascript" src="../js/my-app.js"></script>
-
-<input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
 
 <script type="text/javascript">
-
-
-
-
-
-
-
+	
+function index(){
+	
+	 location.href='index.html';
+}
+var affliateFlag = true; 
 var request = new Request();
 var telNo = request.getParameter('telNo');
-var uuId = request.getParameter('uuId');
 
-$(document).ready(function(){
-	//alert("개발중입니다.");
-	//window.history.back();
-	$("#searchAreaBtn").click(function(){
-		dong = $("#searchArea").val();
+var review_date = "";
+var forcount = 0;
+var watchID = "";
+var serbox_flag = false
+var affliate_count = 0;
+var reviewaffliate_no = 0;
+var alertwflag = false;
+var alertflag = false;
+var reviewImage = "";
+var str = '';
+var kmm = 0;
+var lat2 = 0; 
+var lon2 = 0;
+var find = null;
+var affliate_no = null;
+var user_nm = "";
+var user_nmm = "";
+var review_flag = false;
+var maxSize = 0;
+var endSeq = 3;
+var writer = "";
+var detailstr = "";
+var appendthis = ("<div class='alen_modal_overlay js-modal-close' id='dadadadada'></div>");
+var CI = window.localStorage.getItem("CI");
+var detailflag = false;
+/* 
+		//시작 중심지
+		var map = new naver.maps.Map('map', {
+		    
+		    zoom: 5,
+		    mapTypeId: naver.maps.MapTypeId.NORMAL
+		});
 		
-		 $.ajax({
-	        type: "post",
-	        url : commonIp()+"/theReal/receipt/searchAff.do",
-	        data: {
-	        	dong : dong
-	        },
-	        success: fn_searchAff,
-	        error: whenError
-    	});			
-	});
+		var infowindow = new naver.maps.InfoWindow();
+		  
+		
+			
+		 */
+	
+	    
+		    function fn_affliatedata(resdata){
+	            str = "";
+	             var res = resdata.resultMap;   
+	             var km = resdata.kmList;
+	             
+	             
+	              for(var i=0; i<res.length; i++){
+	                 
+	                 if(km[i]<1){
+	                        res[i].ROAD_ADDR = km[i];
+	                     }else{
+	                       res[i].ROAD_ADDR = km[i].toFixed(1);
+	                     } 
+	                
+	             }
+	                
+	                
+	       
+	              
+	             
+	                     
+	                     /*  if(d<1){
+	                        res[i].ROAD_ADDR = d;
+	                     }else{
+	                        res[i].ROAD_ADDR = d.toFixed(1);
+	                      } */
+	                
+	             
 
-});
-
-function fn_searchAff(resdata){
-	geolocationInit(resdata.dong);
-}
-var lat ="";
-var lng ="";
-var coord1 = "";
-var coord2 = "";
-var dong = request.getParameter('dong');
-bind(window, 'load', function () {
-    geolocationInit("");
-});
-
-function bind(elem, type, handler, capture) {
-    type = typeof type === 'string' && type || '';
-    handler = handler || function () { ; };
-
-    if (elem.addEventListener) {
-        elem.addEventListener(type, handler, capture);
-    }
-    else if (elem.attachEvent) {
-        elem.attachEvent(' oｎ' + type, handler);
-    }
-
-    return elem;
-};
-
-
-
-function geolocationInit(dongVal) {
-
-    if (navigator.geolocation) {
-    	
-        var geo = navigator.geolocation;
-        geo.getCurrentPosition(function (pos) {
-            // 위도
-            //alert(pos.coords.latitude);
-            // 경도
-          	//alert(pos.coords.longitude);
-            // 정확도
-            //alert(pos.coords.accuracy);
-            // 마지막 업데이트 시간(초)
-            //alert(pos.timestamp);
-
-            // google map 연동
-            //mapInit(pos.coords.latitude, pos.coords.longitude);
-            //
-            lat = pos.coords.latitude;
-            lng = pos.coords.longitude;
-            coord1 = new naver.maps.LatLng(lat,lng);
-//          alert(coord1);
-//          var mapOptions = {
-//   		center: new naver.maps.LatLng(lat, lon),
-//				zoom: 10
-//				};
-//
-//			var map = new naver.maps.Map('map', mapOptions);
-            
-            
-            /* var map = new naver.maps.Map('map', {          	//지도 표시
-                center: new naver.maps.LatLng(lat, lng),
-                zoom: 12
-            });
-
-            var marker = new naver.maps.Marker({				//지도 마커 표시
-                position: new naver.maps.LatLng(lat, lng),
-                map: map
-            }); */
-            
-            
-            //file:///C:/theRealErec/theRealErec/platforms/android/assets/www/html/affliate.html?uuId=3e12598995f8c9b2202d27eed2326180ebf30a1b33746a3a8b004c717b81c9c5&telNo=01074505585
-            
-            		
-            naver.maps.Service.reverseGeocode({
-            location: new naver.maps.LatLng(lat, lng),
-            }, function(status, response) {
-                if (status !== naver.maps.Service.Status.OK) {
-                    return alert('위치를 읽어들일 수 없습니다... \n위치 설정을 켜져있는지 확인해주세요.');
-                }
-
-                var result = response.result, // 검색 결과의 컨테이너
-                    items = result.items; // 검색 결과의 배열
-				if(dongVal==""){
-                	//alert("페이지 초기 로딩");
-					dong = items[0].addrdetail.dongmyun
+	      
+	          
+	             
+	             
+	          res.sort(function(a,b){ 
+	             
+	             return a.ROAD_ADDR-b.ROAD_ADDR;
+	          });
+	       
+	       
+	          
+	          
+	          
+	        if(category == "000"){
+	             
+	             for(var i=0; i < res.length; i++){
+	                         
+	                if(kmm!=0){
+	                      
+	                   if(parseFloat(res[i].ROAD_ADDR) >= parseFloat(kmm)){
+	                      
+	                      if(str==""){
+	                         str+= '<img src="../common/emptyAffliate.png" class="emptyImg"></img>';   
+	                      }
+	                      
+	                      $("#testDiv").empty();   
+	                       $("#testDiv").append(str).trigger("create");   
+	                      break;
+	                     } 
+	                }   
+	                   
+	                
+	                
+	                  str += ' <a href = "#receipt_details">                                  ';
+	                
+	                  str += ' <ul name ="affliateDetail" onclick="level('+res[i].AFFLIATE_NO+')">      ';
+	                 
+	                  str += '  <li>                                                                ';
+	                  
+	                  str += '       <img src="'+commonIp()+'/theReal/affliateImg/'+res[i].AFFLIATE_IMAGE+'" alt="">             ';
+	                  
+	                  str += ' <input type="hidden" value='+res[i].AFFLIATE_NO+' id="No'+i+'">        ';      
+	                  
+	                  str += '       <p class="shop_name">'+res[i].SHOP_NAME+'</p>                      ';
+	                  
+	                  str += '     <p class="ellip">'+res[i].AFFLIATE_EXPLAIN+'</p>                ';
+	                  
+	                  str += '<p style="width:60px; height: 22px; background-color:#539bff;border-radius:20px;text-align:center;font-size:14px;color:#fff; display:inline-block;">';
+	                 
+	                   if (res[i].AFFLIATE_STAR.toString().indexOf('.')==-1){
+	                  
+	                     str+= ' <span style="line-height: 1.7;">'+res[i].AFFLIATE_STAR+'.0</span>      ';  
+	                  }
+	                  
+	                  else{
+	                     str+= ' <span style="line-height: 1.7;">'+res[i].AFFLIATE_STAR+'</span>      ';
+	                  }
+	                  
+	                  str += '<span style="line-height: 1.7;">★</span>                           ';
+	                             
+	                  str +='</p>                                                      ';
+	                  
+	                    str += '<span style="color:black; font-weight:400;">리뷰 '+res[i].AFFLIATE_STAR_COUNT+'개</span>   ';
+	                  
+	                  str += '  </li>                                                    ';
+	                        
+	                  str += ' <li class="mal_price">                                         ';
+	                  
+	            if(res[i].ROAD_ADDR<1){
+	               var m = res[i].ROAD_ADDR*1000;
+	                 str += '       <span>'+parseInt(m)+'</span>m                              ';         
+	                
+	            }else{   
+	                  
+	                  str += '       <span>'+res[i].ROAD_ADDR+'</span>km                           ';                  
+	            }
+	                  
+	                 str += ' </li>                                                   ';
+	                  
+	                  str += ' <hr>                                                      ';
+	                       
+	                    str += ' </ul>                                                   ';   
+	                 
+	                    str += ' </a>                                                      ';   
+	                  
+	            if(i==9){
+	                 str += ' <div class="moreBtn dis_none" id="Amorebtn" onclick = "moreAAA('+i+');">더보기</div>   ';
+	                     
+	                    $("#testDiv").empty();   
+	                   $("#testDiv").append(str).trigger("create");    
+	                      
+	                   break;
+	            }        
+	         }   
+	             }else{
+	               
+	                for(var i=0; i < res.length; i++){
+	                      
+	                   if(res[i].M_DIV_CD == category){
+	                        
+	                      if(kmm!=0){
+	                         
+	                         if(parseFloat(res[i].ROAD_ADDR) >= parseFloat(kmm)){
+	                            
+	                            if(str==""){
+	                            	str += '<img src="../common/emptyAffliate.png" class="emptyImg"></img>';    
+	                            }
+	                         
+	                            $("#testDiv").empty();   
+	                             $("#testDiv").append(str).trigger("create");   
+	                            
+	                                break;
+	                           } 
+	                      }   
+	                        
+	                     str += ' <a href = "#receipt_details">                               '; 
+	                     
+	                     str += ' <ul name ="affliateDetail" onclick="level('+res[i].AFFLIATE_NO+')">    ';
+	                    
+	                     str += '  <li>                                                             ';
+	                     
+	                     str += '       <img src="'+commonIp()+'/theReal/affliateImg/'+res[i].AFFLIATE_IMAGE+'" alt="">             ';
+	                     
+	                     str += ' <input type="hidden" value='+res[i].AFFLIATE_NO+' >               ';      
+	                     
+	                     str += '       <p class ="shop_name">'+res[i].SHOP_NAME+'</p>                 ';
+	                     
+	                     str += '     <p class="ellip">'+res[i].AFFLIATE_EXPLAIN+'</p>                ';
+	                       
+	                     str += '<p style="width:60px; height: 22px; background-color:#539bff;border-radius:20px;text-align:center;font-size:14px;color:#fff; display:inline-block;">';
+	                       
+	                      if (res[i].AFFLIATE_STAR.toString().indexOf('.')==-1){
+	                     
+	                        str+= ' <span style="line-height: 1.7;">'+res[i].AFFLIATE_STAR+'.0</span>      ';  
+	                     }
+	                     
+	                     else{
+	                        str+= ' <span style="line-height: 1.7;">'+res[i].AFFLIATE_STAR+'</span>      ';
+	                     }
+	                     
+	                     str += '<span style="line-height: 1.7;">★</span>                           ';
+	                    
+	                     str +='</p>                                                      ';
+	                     
+	                       str += '<span style="color:black; font-weight:400;">리뷰 '+res[i].AFFLIATE_STAR_COUNT+'개</span>   ';
+	                     
+	                       str += '  </li>                                                    ';
+	                     
+	                     str += ' <li class="mal_price">                                         ';
+	                     
+	               if(res[i].ROAD_ADDR<1){
+	                  var m = res[i].ROAD_ADDR*1000;            
+	                    str += '       <span>'+parseInt(m)+'</span>m                              ';         
+	                         
+	                }else{
+	                           
+	                    str += '       <span>'+res[i].ROAD_ADDR+'</span>km                           ';                  
+	               } 
+	                     
+	                     str += ' </li>                                                   ';
+	                    if(km!=0)         
+	                     str += ' <hr>                                                      ';
+	                       
+	                     str += ' </ul>                                                   ';   
+	                      
+	                     str += '   </a>                                                   ';   
+	                   
+	                     if(i==9){
+	                        str += ' <div class="moreBtn dis_none" id="Amorebtn" onclick = "moreAAA('+i+');">더보기</div>   ';
+	                        $("#testDiv").empty();   
+	                         $("#testDiv").append(str).trigger("create");    
+	                         
+	                         break;
+	                     }        
+	                   
+	                   }
+	            }   
+	          }
+	          
+	          
+	             find = null; 
+	             affliate_no = null;
+	             
+	             if(str==""){
+	            	 str += '<img src="../common/emptyAffliate.png" class="emptyImg"></img>';    
+	            }
+	         
+	                $("#testDiv").empty();   
+	                $("#testDiv").append(str).trigger("create");    
+	                
+	             
+	          }
+	      
+	          
+	       function more_affliatedata(resdata){
+	          
+	          var res = resdata.resultMap;   
+	          var km = resdata.kmList;
+	          
+	          
+	           for(var i=0; i<res.length; i++){
+	              if(km[i]<1){
+	                     res[i].ROAD_ADDR = km[i];
+	                  }else{
+	                    res[i].ROAD_ADDR = km[i].toFixed(1);
+	                  } 
+	          }
+	       
+	          
+	      res.sort(function(a,b){ 
+	             
+	             return a.ROAD_ADDR-b.ROAD_ADDR;
+	          });
+	          
+	          if(category == "000"){
+	          
+	                /*    $('#Abmorebtn'+affliate_count+'').css("display", "none"); */
+	                  
+	               
+	          for(var i=affliate_count+1; i<affliate_count+11;i++){
+	                   
+	              if(i==res.length){
+	                
+	                  var adada = affliate_count-10;
+	                                       
+	                 $("#testDiv").empty();   
+	                  $("#testDiv").append(str).trigger("create");    
+	                  $("#Amorebtn").css("display","none");   
+	                 $('#Abmorebtn'+affliate_count+'').css("display","none"); 
+	                 $('#Abmorebtn'+adada+'').css("display","none"); 
+	                 return;
+	              }    
+	          
+	                if(kmm!=0){
+	                      
+	                   if(parseFloat(res[i].ROAD_ADDR) >= parseFloat(kmm)){
+	                     $("#testDiv").empty();   
+	                       $("#testDiv").append(str).trigger("create");   
+	                      
+	                        var adada = affliate_count-10;
+	                          
+	                       $("#testDiv").empty();   
+	                        $("#testDiv").append(str).trigger("create");    
+	                        $("#Amorebtn").css("display","none");   
+	                       $('#Abmorebtn'+affliate_count+'').css("display","none"); 
+	                       $('#Abmorebtn'+adada+'').css("display","none");
+	                       
+	                       return false;
+	                     } 
+	                  }
+	                 
+	                   
+	                  str += ' <a href = "#receipt_details">                                  ';
+	            
+	                  str += ' <ul name ="affliateDetail" onclick="level('+res[i].AFFLIATE_NO+')">      ';
+	                 
+	                  str += '  <li>                                                                ';
+	                  
+	                  str += '       <img src="'+commonIp()+'/theReal/affliateImg/'+res[i].AFFLIATE_IMAGE+'" alt="">             ';
+	                  
+	                  str += ' <input type="hidden" value='+res[i].AFFLIATE_NO+' id="No'+i+'">        ';      
+	                  
+	                  str += '       <p class="shop_name">'+res[i].SHOP_NAME+'</p>                      ';
+	                  
+	                  str += '     <p class="ellip">'+res[i].AFFLIATE_EXPLAIN+'</p>                ';
+	                  
+	                  str += '<p style="width:60px; height: 22px; background-color:#539bff;border-radius:20px;text-align:center;font-size:14px;color:#fff; display:inline-block;">';
+	                    
+	                   if (res[i].AFFLIATE_STAR.toString().indexOf('.')==-1){
+	                  
+	                     str+= ' <span style="line-height: 1.7;">'+res[i].AFFLIATE_STAR+'.0</span>      ';  
+	                  }
+	                  
+	                  else{
+	                     str+= ' <span style="line-height: 1.7;">'+res[i].AFFLIATE_STAR+'</span>      ';
+	                  }
+	                  
+	                  str += '<span style="line-height: 1.7;">★</span>                           ';
+	                 
+	                  str +='</p>                                                      ';
+	                  
+	                    str += '<span style="color:black; font-weight:400;">리뷰 '+res[i].AFFLIATE_STAR_COUNT+'개</span>   ';
+	              
+	                  str += '  </li>                                                    ';
+	                        
+	                  str += ' <li class="mal_price">                                         ';
+	                  
+	            if(res[i].ROAD_ADDR<1){
+	               var m = res[i].ROAD_ADDR*1000;
+	                 str += '       <span>'+parseInt(m)+'</span>m                              ';         
+	                
+	            }else{
+	               
+	                  str += '       <span>'+res[i].ROAD_ADDR+'</span>km                           ';                  
+	            }
+	                  
+	                 str += ' </li>                                                   ';
+	                  
+	                  str += ' <hr>                                                      ';
+	                       
+	                    str += ' </ul>                                                   ';   
+	                 
+	                    str += ' </a>                                                      ';   
+	                  
+	                  if(i==affliate_count+10){
+	                     
+	                     str += ' <div class="moreBtn dis_none" id="Abmorebtn'+i+'" onclick = "moreAAA('+i+');">더보기</div>';
+	                  }
+	            
+	         }
+	          
+	             }else{
+	                
+	                
+	                $('#Abmorebtn'+affliate_count+'').css("display", "none");   
+	                  
+	                for(var i=affliate_count+1; i<affliate_count+11;i++){
+	                      
+	                   
+	                    if(i==res.length){
+	                        var adada = affliate_count-10;
+	                       $("#testDiv").empty();   
+	                      $("#testDiv").append(str).trigger("create");    
+	                      $("#Amorebtn").css("display","none");   
+	                       $('#Abmorebtn'+affliate_count+'').css("display","none"); 
+	                       $('#Abmorebtn'+adada+'').css("display","none"); 
+	                       return;
+	                     } 
+	                      
+	                   if(res[i].M_DIV_CD == category){
+	                            
+	                            
+	                     if(kmm!=0){
+	                        
+	                     if(parseFloat(res[i].ROAD_ADDR) >= parseFloat(kmm)){
+	                        $("#testDiv").empty();   
+	                          $("#testDiv").append(str).trigger("create");   
+	                         
+	                           var adada = affliate_count-10;
+	                             
+	                          $("#testDiv").empty();   
+	                           $("#testDiv").append(str).trigger("create");    
+	                           $("#Amorebtn").css("display","none");   
+	                          $('#Abmorebtn'+affliate_count+'').css("display","none"); 
+	                          $('#Abmorebtn'+adada+'').css("display","none");
+	                          
+	                          return false;
+	                          
+	                        } 
+	                  }
+	                        
+	                     str += ' <a href = "#receipt_details">                               '; 
+	                     
+	                     str += ' <ul name ="affliateDetail" onclick="level('+res[i].AFFLIATE_NO+')">    ';
+	                    
+	                     str += '  <li>                                                             ';
+	                                                            
+	                     str += '       <img src="'+commonIp()+'/theReal/affliateImg/'+res[i].AFFLIATE_IMAGE+'" alt="">             ';
+	                     
+	                     str += ' <input type="hidden" value='+res[i].AFFLIATE_NO+' >               ';      
+	                     
+	                     str += '       <p class ="shop_name">'+res[i].SHOP_NAME+'</p>                 ';
+	                     
+	                     str += '     <p class="ellip">'+res[i].AFFLIATE_EXPLAIN+'</p>                ';
+	                                   
+	                     str += '<p style="width:60px; height: 22px; background-color:#539bff;border-radius:20px;text-align:center;font-size:14px;color:#fff; display:inline-block;">';
+	                       
+	                      if (res[i].AFFLIATE_STAR.toString().indexOf('.')==-1){
+	                     
+	                        str+= ' <span style="line-height: 1.7;">'+res[i].AFFLIATE_STAR+'.0</span>      ';  
+	                     }
+	                     
+	                     else{
+	                        str+= ' <span style="line-height: 1.7;">'+res[i].AFFLIATE_STAR+'</span>      ';
+	                     }
+	                     
+	                     str += '<span style="line-height: 1.7;">★</span>                           ';
+	                    
+	                     str +='</p>                                                      ';
+	                     
+	                       str += '<span style="color:black; font-weight:400;">리뷰 '+res[i].AFFLIATE_STAR_COUNT+'개</span>   ';
+	                           
+	                     str += '  </li>                                                    ';
+	                     
+	                     str += ' <li class="mal_price">                                         ';
+	                     
+	               if(res[i].ROAD_ADDR<1){
+	                  var m = res[i].ROAD_ADDR*1000;               
+	                    star += '       <span>'+parseInt(m)+'</span>m                              ';         
+	                         
+	                }else{
+	                           
+	                    str += '       <span>'+res[i].ROAD_ADDR+'</span>km                           ';                  
+	               } 
+	                     
+	                     str += ' </li>                                                   ';
+	                     
+	                     str += ' <hr>                                                      ';
+	                       
+	                     str += ' </ul>                                                   ';   
+	                      
+	                     str += '   </a>                                                   ';
+	                     
+	                     if(i==affliate_count+10){
+	                        
+	                        str += ' <div class="moreBtn dis_none" id="Abmorebtn'+i+'" onclick = "moreAAA('+i+');">더보기</div>   ';
+	                     }
+	                   }
+	               
+	             }   
+	          }   
+	             
+	          
+	             find = null;
+	             affliate_no = null;
+	             
+	             
+	             $("#testDiv").empty();   
+	             $("#testDiv").append(str).trigger("create");    
+	             $("#Amorebtn").css("display","none");   
+	              $('#Abmorebtn'+affliate_count+'').css("display","none"); 
+	          }
+	          
+	     
+	       
+	     function fn_affliateDetaildata(resdata){
+	          
+	          var res = resdata.resultMap;
+	          
+	          var arr = new Array();
+	          
+	          var menu = res[0].AFF_DETAIL_MENU
+	          
+	          arr = menu.split("/");
+	         
+	           var myaddress = res[0].ROAD_ADDR;// 도로명 주소나 지번 주소만 가능 (건물명 불가!!!!)
+	          
+	           naver.maps.Service.geocode({address: myaddress}, function(status, response) {
+	               if (status !== naver.maps.Service.Status.OK) {
+	                   return alert(myaddress + '의 검색 결과가 없거나 기타 네트워크 에러');
+	               }
+	               var result = response.result;
+	              
+	               // 검색 결과 갯수: result.total
+	               // 첫번째 결과 결과 주소: result.items[0].address
+	               // 첫번째 검색 결과 좌표: result.items[0].point.y, result.items[0].point.x
+	            
+	               lat2 = result.items[0].point.y; 
+	               lon2 = result.items[0].point.x;
+	             
+	           });   
+	              
+	             
+	       /*    var map = new naver.maps.Map('map', {
+	              center: new naver.maps.LatLng(lat2, lon2),
+	              zoom: 10
+	           }); 
+	             
+	                 
+	          var marker = new naver.maps.Marker({
+	              position: new naver.maps.LatLng(lat2, lon2),
+	              map: map
+	          });   
+	           */      
+	           var request = new Request();
+	                 
+	           var imgarr = res[0].AFF_DETAIL_IMAGE.split("/");
+	             
+	              
+	          detailstr += '       <div class="list_banner swiper-container" style="">                        ';
+	          
+	          detailstr += '      <div class="store_pic swiper-wrapper" id="store_pic" style="margin-bottom:7px;">   ';
+	                      
+	             
+	        for(var i=0; i<imgarr.length; i++){
+	          
+	          reviewImage = imgarr[i];
+	                   
+	          detailstr += '               <img src="'+commonIp()+'/theReal/affliateImg/'+reviewImage+'" alt="" class="swiper-slide">          ';
+	          
+	       } 
+	          
+	          detailstr += '          </div>                                                         ';
+	          
+	          detailstr += '          <div class="swiper-pagination"></div>                                 ';
+	          
+	          detailstr += '         </div>                                                         ';   
+	          
+	          detailstr += '         <div class="store_title">                                          ';
+	          
+	          detailstr += '                <h1>'+res[0].AFFLIATE_NM+'</h1>                              ';
+	          
+	          detailstr += '                <p>'+res[0].M_DIV_NM+'</p>                                    ';
+	          
+	         detailstr += '   <span class="starRating">                                                ';
+	         
+	         if(res[0].AFFLIATE_STAR==1){
+	              
+	               detailstr += '   <span style="width:20%"></span>                                             ';            
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR>1&&res[0].AFFLIATE_STAR<=1.3){
+	              
+	             detailstr += '   <span style="width:27%"></span>                                                ';   
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR>1.3&&res[0].AFFLIATE_STAR<=1.5){
+	              
+	             detailstr += '   <span style="width:30%"></span>                                                ';   
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR>1.5&&res[0].AFFLIATE_STAR<=1.9){
+	              
+	              detailstr +='   <span style="width:35%"></span>                                             ';
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR==2){
+	            
+	               detailstr += '   <span style="width:40%"></span>                                             ';            
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR>2&&res[0].AFFLIATE_STAR<=2.3){
+	              
+	             detailstr += '   <span style="width:47%"></span>                                                ';   
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR>2.3&&res[0].AFFLIATE_STAR<=2.5){
+	              
+	             detailstr += '   <span style="width:50%"></span>                                                ';   
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR>2.5&&res[0].AFFLIATE_STAR<=2.9){
+	              
+	              detailstr +='   <span style="width:55%"></span>                                             ';
+	         }
+	         
+	          if(res[0].AFFLIATE_STAR==3){
+	               
+	               detailstr += '   <span style="width:60%"></span>                                             ';            
+	         }
+	         
+	          if(res[0].AFFLIATE_STAR>3&&res[0].AFFLIATE_STAR<=3.3){
+	              
+	             detailstr += '   <span style="width:67%"></span>                                                ';   
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR>3.3&&res[0].AFFLIATE_STAR<=3.5){
+	              
+	             detailstr += '   <span style="width:70%"></span>                                                ';   
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR>3.5&&res[0].AFFLIATE_STAR<=3.9){
+	              
+	              detailstr +='   <span style="width:75%"></span>                                             ';
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR==4){
+	            
+	               detailstr += '   <span style="width:80%"></span>                                             ';            
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR>4&&res[0].AFFLIATE_STAR<=4.3){
+	              
+	             detailstr += '   <span style="width:85%"></span>                                                ';   
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR>4.3&&res[0].AFFLIATE_STAR<=4.5){
+	              
+	             detailstr += '   <span style="width:90%"></span>                                                ';   
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR>4.5&&res[0].AFFLIATE_STAR<4.9){
+	              
+	              detailstr +='   <span style="width:95%"></span>                                             ';
+	         }
+	         
+	         if(res[0].AFFLIATE_STAR==5){
+	            
+	               detailstr += '   <span style="width:100%"></span>                                          ';            
+	         }
+	                  
+	         detailstr += '   </span>                                                                     ';   
+	          
+	         if (res[0].AFFLIATE_STAR.toString().indexOf('.')==-1){
+	         
+	         detailstr += '<span class="star">                                                            ';
+	         
+	         detailstr += '   '+res[0].AFFLIATE_STAR+'.0                                                      ';
+	          
+	         detailstr += '</span>                                                                     ';
+	         
+	         }else{
+	            
+	         detailstr += '<span class="star">                                                            ';
+	            
+	         detailstr += '   '+res[0].AFFLIATE_STAR+'                                                      ';
+	             
+	         detailstr += '</span>                                                                     ';
+	            
+	         }
+	         
+	         detailstr += '<span style="color:#539bff; font-weight: 500; font-size: 1.1em; margin-left: 10px; ">리뷰 '+resdata.reviewCount+'개</span>';
+	         
+	         detailstr += '                <hr>                                                   ';
+	          
+	          detailstr += '         </div>                                                         ';
+	          
+	          detailstr += '         <div class="store_list">                                          ';
+	                
+	          detailstr += '             <p>                                                      ';
+	          
+	          detailstr += '               <i class="fa fa-map-marker"></i>                              ';
+	          
+	          detailstr += '               <span class="list_1"> '+res[0].ROAD_ADDR+'</span>                  ';
+	          
+	          detailstr += '            </p>                                                      ';
+	          
+	          detailstr += '            <p>                                                         ';
+	             
+	          detailstr += '                <i class="fa fa-clock-o"></i>                                 ';
+	          
+	          detailstr += '               <span class="list_1">'+res[0].AFF_DETAIL_TIME+'</span>               ';
+	          
+	          detailstr += '               <span class="list_1">일요일 휴무</span>                            ';
+	          
+	          detailstr += '            </p>                                                      ';
+	             
+	         detailstr += '            <p>                                                         ';
+	         
+	         detailstr += '               <i class="fa fa-file-text-o"></i> <span class="list_1"> 메뉴안내</span>    ';
+	          
+	         detailstr += '            </p>                                                      ';
+	         
+	         detailstr += '            <div class="store_menu">                                       ';
+	         
+	         detailstr += '               <ul>                                                   ';
+	                        
+	      for(var i=0; i<arr.length; i++){
+	         
+	         detailstr += '                  <li>                                                ';
+	                     
+	         detailstr += '                     <div class="menu">                                    ';
+	         
+	         detailstr += '                        <div class="menu_list">                              ';
+	         
+	         detailstr += '                           <span class="list_1">'+arr[i]+'</span>               ';
+	            
+	         detailstr += '                           <em>'+numCommas(arr[i+1])+'</em>                  ';
+	                                          
+	         detailstr += '                        </div>                                          ';
+	         
+	         detailstr += '                     </div>                                             ';
+	                              
+	         detailstr += '                  </li>                                                ';
+	                      i++;       
+	      }
+	         detailstr += '               </ul>                                                   ';
+	         
+	         detailstr += '            </div>                                                      ';
+	                              
+	         detailstr += '   <div class="store_map">                                                   ';
+	            
+	         detailstr += '      <div class="map">                                                   ';
+	         
+	         detailstr += '         <p>찾아오시는 길</p>                                                   ';
+	            
+	         detailstr += '       <div id="map"></div>                                                ';
+	         
+	         detailstr += '      </div>                                                            ';
+	         
+	         detailstr += '   </div>                                                               ';
+	         
+	         detailstr += '   <div class="review_btn">                                                ';
+	         
+	         detailstr += '<div class="noreview">';
+	         
+	         detailstr += '</div>';
+	         detailstr += '   <a href="#" onclick="reviewAppend();"><i class="fa fa-pencil-square-o"></i> 리뷰 쓰기</a>   ';
+	         
+	          reviewListAppend();
+	          reviewaffliate_no = affliate_no;
+	          affliate_no = null; 
+	       }                                    
+	         
+	       
+	    
+	    function reviewListAppend(){
+	    
+			$.ajax({
+		 		type : 'post',
+				url : commonIp() + "/theReal/receipt/reviewList.do",
+				data: {
+					affliate_no : affliate_no,
+					endSeq : endSeq
+				},
+		 		error : function(request,status,error) {
+		 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				},	 		   			
+				success : reviewList,
+		 	})
+	    }
+	    
+	    
+	    
+	function reviewList(reviewData){
+		
+		var reviewMap = reviewData.resultMap;
+					
+		
+		 	maxSize = reviewData.maxSize;
+		
+			for(var i=0; i<reviewMap.length; i++){
+				
+			if(reviewMap[i].REVIEW_WRITER_CI == CI){  
+					
+				detailstr += '<span class="close_review" onclick="reviewDelete('+reviewMap[i].REVIEW_NUM+')"></span>'; 	
+				
+				if(review_date==""){
+					review_date = reviewMap[i].REVIEW_DATE;
 				}else{
-					//alert("페이지 검색 로딩");
-					//alert(dongVal);
+					
 				}
-                $("#search_dong").empty();
-                $("#search_dong").append(dong);
-                
-                $.ajax({
-        	        type: "post",
-        	        url : commonIp()+"/theReal/receipt/affliateData.do",
-        	        data: {
-        	        	dong  : dong,
-        	        	lat   : lat,
-        	        	lng	  : lng
-        	        },
-        	        success: fn_affliateData,
-        	        error: errorgps
-            	});	
-            });
-            
-        }, function (e) {
-            msg({
-                0: '위치 정보 검색에 문제가 있습니다.(msg:' + e.message + ')',
-                1: '현재 페이지에서 사용자가 위치 정보 검색을 거부했습니다.',
-                2: '브라우저가 위치정보를 검색하지 못했습니다.(msg:' + e.message + ')',
-                3: '위치를 읽어들일 수 없습니다. \n위치 설정을 켜져있는지 확인해주세요. '
-            }[e.code]);
+			}
+			if(i==(reviewMap.length)-1){				
+				detailstr += ' 	<div class="store_review" style="margin-bottom: 50px">																';
+			}else{
+				detailstr += ' 	<div class="store_review">																';
+			}
+			detailstr += '	 <div class="store_left">																';
+								
+			detailstr += ' 		<img src="../img/leftm3.png" alt="">												';
+					
+			detailstr += '	</div>																					';
+								
+			detailstr += '	 <div class="store_right">																';
+										
+			detailstr += '			<ul class = "reviewList">														';
+			
+			detailstr += '   <span class="starRating">																';
+			
+			if(reviewMap[i].REVIEW_AFFLIATE_STAR==1){
+	  				
+				detailstr += '	<li><span style="width:20%"></span></li>											';				
+			}
+						
+			if(reviewMap[i].REVIEW_AFFLIATE_STAR==2){
+					
+				detailstr += '	<li><span style="width:40%"></span></li>											';				
+				      	
+			}
+			if(reviewMap[i].REVIEW_AFFLIATE_STAR==3){
+					
+			 	detailstr += '	<li><span style="width:60%"></span></li>											';				
+				      	
+			}
+			if(reviewMap[i].REVIEW_AFFLIATE_STAR==4){
+					
+				detailstr += '	<li><span style="width:80%"></span></li>											';				
+				      	
+			}
+			if(reviewMap[i].REVIEW_AFFLIATE_STAR==5){
+					
+				detailstr += '	<li><span style="width:100%"></span></li>											';				
+			}
+			
+		 		detailstr += '	</span>																				';	
+			
+				detailstr += '				<span class="reviewdate">'+reviewMap[i].REVIEW_DATE+'</span>			';
+				
+				detailstr += '				<li>																	';
+				
+		 		writer = reviewMap[i].REVIEW_WRITER.replace(/o/, "*");
+				writer = maskingName(writer);
+				
+				function maskingName(writer) {
+				    if(writer === undefined || writer === '') {
+				        return '';
+				    }
+				    var pattern = /.$/; 
+				    return writer.replace(pattern, "*");  
+				}
+				
+			detailstr += '				<p class="writer">'+writer+'</p>											';
+			
+			detailstr += '				</li>																		';
+																														
+					
+			detailstr += '				<li><textarea disable style="resize:none">'+reviewMap[i].REVIEW_CONTENT+'</textarea></li>						';
+			
+			detailstr += '		 	</ul>																			';
+			
+			detailstr += '	</div>																					';
+			
+			detailstr += '	</div>																					';
+		 	
+			}
+			detailstr += '	<div class="delMore" id="asdasd">														';
+			
+			detailstr += ' <div class="moreBtn dis_none" id="moreBtn" onclick = "morettt();">리뷰 더보기</div>			';
+						
+			detailstr += '	</div>																					';
+				
+			detailstr += '	 </div> 																				';	
+			
+			detailstr += '	<div class="review_write_append">														';																
+			
+			detailstr += '	</div>																					';
+			
+			detailstr += ' </div>																					';
+		 	
+			/* detailstr += '    <div class="latest_contitle">                                                        ';
+         	
+			detailstr += '	<h2 class="rere"> 리뷰 작성</h2>															';
+			
+        	detailstr += ' 	</div>																					';
+			
+        	detailstr += ' 	<div class="review_write">																';
+        	
+        	detailstr += '		<div class="review_name">															';
+        	
+        	detailstr += '		<div class="name_img">																';								
+			
+        	detailstr += '     		<img src="../img/no.png" alt="">												';	
+        	
+        	detailstr += '			<span>'+user_nm+'님</span>  														';
+        	
+        	detailstr += '     	</div>																				';
+        	
+        	detailstr += '	</div> 																					';
+        	
+        	detailstr += '	<div class="review_star">																';
+        	
+        	detailstr += '	<span class="star-input">																';
+        	
+        	detailstr += ' 	<span class="input">																	';
+        	
+        	detailstr += '		<input type="radio" name="star-input" value="1" id="p1">							';
+        	
+        	detailstr += '		<label for="p1">1</label>															';
+        	
+        	detailstr += '  		<input type="radio" name="star-input" value="2" id="p2">							';
+        	
+        	detailstr += '    	<label for="p2">2</label>															';
+        	
+        	detailstr += '		<input type="radio" name="star-input" value="3" id="p3">							';
+        	
+        	detailstr += '		<label for="p3">3</label>															';
+        	
+        	detailstr += '   		<input type="radio" name="star-input" value="4" id="p4">							';
+        	
+        	detailstr += '		<label for="p4">4</label>															';
+        	
+        	detailstr += '		<input type="radio" name="star-input" value="5" id="p5">							';
+        	
+        	detailstr += '		<label for="p5">5</label>															';
+        	
+        	detailstr += ' 	</span>																					';
+        	
+        	detailstr += '   </span>																					';
+        	
+        	detailstr += '	</div>																					';
+        	
+        	detailstr += '    <div class="review_text">                 												';
+        	
+        	detailstr += ' 		<textarea name="" id="" cols="30" rows="10">										';
+        	
+        	detailstr += '		</textarea>																			';
+        	
+        	detailstr += '	</div>																					';
+			
+        	detailstr += '    <button class="review_btn">리뷰작성완료</button>											';
+        	
+        	detailstr += '	</div>					 																';*/
+         			
+        	detailstr += ' </div>																					';
+								
+         			
+        	
+        	 $("#detailRecData").empty();
+		   /*   $("#detailRecData").addClass("page-content");  */
+			 $("#detailRecData").append(detailstr).trigger("create");
+							
+			 if(maxSize==0){
+				 var delStr = "";
+				 delStr += "<span class='nonoreview'>등록된 리뷰가 없습니다.</span>";
+			 	 $(".noreview").append(delStr);
+			 }
+		   
+		   	 if(maxSize == reviewMap.length){
+		   		
+	    		$("#moreBtn").css("display","none");
+	         }						
+	  				
+		    find = null;
+	    	
+	    	detailstr = ""; 
+	  	setTimeout(function(){
+	  		initMap();
+	  	},500)
+	  }   
+	    
+	    
+	    function initMap() {
+	 		
 
-        }, {
-            enableHeighAccuracy: false,
-            timeout: 10000,
-            maximumAge: 0
-        });
-    }
-    else {
-        alert('HTML 5 지오로케이션을 지원하지 않는 브라우저입니다.');
-    }
-}
-function fn_affliateData(data){
-	var list = data;
-	var size = list.length;
-	if(size <= 0){
-		alert("해당 검색결과가 없습니다.");
-	}else{
-	var str = '<ul class="list_pic_box">';
-	for(var i=0; i < size; i++){
-		var img = list[i].AFF_DETAIL_IMAGE;
-		str += '<li>';
-		//str += '<div class="latest_box alen_outbox" id="aff_list_div" onclick="affDetail('+"'"+list[i].AFFLIATE_NO+"'"+')">';
-		str += '<a href="javascript:affDetail('+"'"+list[i].AFFLIATE_NO+"'"+')" class="search_member_list">'
-		if(!(img == null || img =="" ||img =="undefined")){
-			var image = img.substring(0,img.indexOf('/'));
-			str += '<img src="'+commonIp()+'/adminReal/affImages/'+image+'">';
+	        var uluru = {lat: lat2, lng: lon2};
+	        var map = new google.maps.Map(document.getElementById('map'), {
+	          zoom: 15,
+	          center: uluru,
+	          gestureHandling: 'cooperative'
+	        });
+	        var marker = new google.maps.Marker({
+	          position: uluru,
+	          map: map
+	        });
+	       
+	        var swiper = new Swiper('.swiper-container', {
+		        pagination: {
+		          el: '.swiper-pagination',
+		        },
+		      });
+	    }	
+	 
+	  
+	    //리뷰 삭제 경고 창
+	    function reviewDelete(review_num){
+			
+	        var alertstr = "";
+			
+			alertstr += '<div class="alert_txt" id="alert_desc">정말 삭제하시겠습니까?</div>';
+			alertstr += '<div class="alert_btnR"><a href="#" onclick="review_Delete('+review_num+')">확인</a></div>';
+			alertstr += '<div class="alert_btnL"><a href="#" onclick="yes();">취소</a></div>';
+							
+		    $("#alert_box").empty();
+		    $("#alert_box").append(alertstr).trigger("create");
+		    
+			$("#alert_body").fadeIn(300); 
+			
+			alertwflag = true;
+		 	
+	    }
+	 
+	    function review_Delete(review_num){
+				
+	 		$.ajax({
+		 		type : 'post',
+				url : commonIp() + "/theReal/receipt/reviewDelete.do",
+				data: {
+					review_num : review_num,
+					REVIEW_AFFLIATE_NO : reviewaffliate_no
+		 		},
+		 		error : function(request,status,error) {
+		 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				},	 		   			
+				success : fn_reviewDeleteReload,
+		 	})
+	    }
+	    
+	    
+	    function fn_reviewDeleteReload(){
+	     	
+	    	var alertstr = "";
+					
+			alertstr +=  '<div class="alert_txt" id="alert_desc">리뷰가 삭제되었습니다.</div>';
+		   
+	    	$("#alert_box").empty();
+		  	$("#alert_box").append(alertstr).trigger("create");
+		  			
+		  	$("#alert_body").fadeIn(300);
+			
+		  	yes2();			
+	    		
+	    	affliate_no = reviewaffliate_no;
+		  	review_date = "";
+	    		
+		  	
+		  	detailStart();	
+	    }
+	    
+	    
+	    
+	    
+	    
+	    
+		//에러
+		function onErrorGeolocation() {
+			
+			var alertstr = "";
+			alertstr +=  '<div class="alert_txt" id="alert_desc">휴대폰 설정에서 위치를 허용해주세요.</div>';
+		   	alertstr +=  '<div class="alert_btn"><a href="#" onclick="yes();">확인</a></div>';
+		   
+		   	$("#alert_box").empty();
+		  	$("#alert_box").append(alertstr).trigger("create");
+		  	
+		  	$("#alert_body").fadeIn(300);
+		}
+		
+		function showError(){
+			alert("위치정보 꺼짐");
+		}
+		
+		
+		
+		
+		
+		Number.prototype.toRad = function() {
+	      return this * Math.PI / 180;
+	    } 	
+	 
+	 
+		//카테고리 검색
+	 function findCategory(){
+		
+		  $(".search_text").val(null);	
+			
+		  kmm = $("input[name=paysort]:checked").val();
+		  
+		  category = $("input[name=arraysort]:checked").val();
+		 
+		  affliate_count = 0;
+		  
+		  var newstr = "";
+		  
+		  if(category == "000"){
+			  
+			newstr += ' <div class="latest_allsms">카테고리 <span> 전체	</span>		';
+			  
+		  }
+		  
+		  if(category == "001"){
+		  
+		  	newstr += ' <div class="latest_allsms">카테고리 <span> 외식/식사	</span>	';
+		  
+		  }
+		  	
+		  if(category == "002"){
+			  
+			newstr += ' <div class="latest_allsms">카테고리 <span> 카페/베이커리</span> ';
+			  
+		  }
+		  
+		  if(category == "003"){
+			  
+			newstr += ' <div class="latest_allsms">카테고리 <span> 술/유흥	</span>	 ';
+			  
+		  }
+		 				
+		  if(category == "004"){
+			   
+			newstr += ' <div class="latest_allsms">카테고리 <span> 마트/편의	</span>	 ';
+			 		
+		  }
+		  			
+		  if(category == "005"){
+			  
+			newstr += ' <div class="latest_allsms">카테고리 <span> 뷰티/미용	</span>	';
+			  
+		  }
+		  
+		  if(category == "006"){
+			
+			newstr += ' <div class="latest_allsms">카테고리 <span> 주거/생활	</span>	';
+		  
+		  }
+		  
+		  if(category == "007"){
+			 
+			  newstr += ' <div class="latest_allsms">카테고리 <span> 교통/주유 </span>	 ';
+		  }
+		  
+		  if(category == "008"){
+			  
+				newstr += ' <div class="latest_allsms">카테고리 <span> 통신	</span>	 ';
+		  }
+		  
+		  if(category == "009"){
+			  
+				newstr += ' <div class="latest_allsms">카테고리 <span> 쇼핑	</span>	 ';
+		  }
+		  
+		  if(category == "010"){
+			  
+				newstr += ' <div class="latest_allsms">카테고리 <span> 온라인쇼핑</span>';
+		  }
+		  
+		  if(category == "011"){
+			  
+				newstr += ' <div class="latest_allsms">카테고리 <span>문화/예술</span>  ';
+		  }
+		  
+		  if(category == "012"){
+			  
+				newstr += ' <div class="latest_allsms">카테고리 <span> 서점/문구</span>  ';
+		  }
+		  
+		  if(category == "013"){
+			  
+				newstr += ' <div class="latest_allsms">카테고리 <span> 레저/스포츠</span>	';
+		  }
+		  
+		  if(category == "014"){
+			  
+				newstr += ' <div class="latest_allsms">카테고리 <span> 의료/건강</span>	';
+		  }
+		  
+		  if(category == "015"){
+			  
+				newstr += ' <div class="latest_allsms">카테고리 <span> 여행/숙박</span>	';
+		  }
+		  
+		  if(category == "016"){
+			  
+				newstr += ' <div class="latest_allsms">카테고리 <span> 교육</span>	    ';
+		  }
+		  
+		  if(category == "017"){
+			  
+				newstr += ' <div class="latest_allsms"> 카테고리 <span> 육아/아동</span>	';
+		  }
+		  
+		  if(category == "018"){
+			  
+				newstr += ' <div class="latest_allsms">카테고리 <span> 경조사/종교</span>	';
+		  }
+		  
+		  if(category == "019"){
+			  	
+				newstr += ' <div class="latest_allsms">카테고리 <span> 금융	</span>		';
+		  }
+		  
+		  if(category == "020"){
+			  
+				newstr += ' <div class="latest_allsms">카테고리 <span> 세금	</span>		';
+		  }
+		  
+		  if(category == "021"){
+			  
+				newstr += ' <div class="latest_allsms">카테고리 <span> 자동차/관리	</span>	';
+		  }
+		  
+		  newstr += ' </div>													';
+		  
+		  newstr += ' <div class="latest_allrec">		검색거리반경				';
+		 
+		  if(kmm=="ALL"){
+		  
+			  newstr += '  		<span> 전체</span>								';
+		  }
+		  else{
+		  	  
+			  if(parseInt(kmm)>1){
+				  newstr += '  		<span> '+kmm+'km</span>						';	  	
+			  }else{
+			  	newstr += '  		<span>   500m</span>						';
+			  }
+		  }
+		  newstr += ' </div>													';	  
+          
+		  newstr += ' <hr>														';	
+  				
+			  
+			$("#searchMenu").empty();
+			$("#detailRecData").addClass("page-content"); 
+		  	$("#searchMenu").append(newstr);
+			  
+		  if (navigator.geolocation) {
+		        navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
+		    } else {
+		        var center = map.getCenter();
+		    }
+	}
+		
+		
+		
+		
+//문자검색
+
+	function search(){
+		
+		find = $(".search_text").val();
+		find = find.replace(/\s|　/gi, '');
+		
+		if(find==''){
+			
+			
+			var alertstr = "";
+			alertstr +=  '<div class="alert_txt" id="alert_desc">검색어를 입력해주세요</div>';
+		   	alertstr +=  '<div class="alert_btn"><a href="#" onclick="yes();">확인</a></div>';
+		   
+		   	$("#alert_box").empty();
+		  	$("#alert_box").append(alertstr).trigger("create");
+		  	
+		  	$("#alert_body").fadeIn(300);
+		 
 		}else{
-			str += '<img src="'+commonIp()+'/adminReal/affImages/affImg.PNG">';
+			if (navigator.geolocation) {
+		        navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
+		    } else {
+		        var center = map.getCenter();
+		    }
+	    
 		}
-		str += '<div class="aff_title"><h2>'+list[i].AFFLIATE_NM+'</h2><h3>'+list[i].SHOP_BRANCH+'</h3></div>';
-		str += '<span class="ellip">'+list[i].AFF_DETAIL_EXPLAIN+'</span>';
-		str += '<p class="search_member_list_p">'+list[i].distance+'</p>';
-		str += '</a>';
-		//str += '</div>';
-		str += '</li>';
 	}
-	str += "</ul>";
-	$("#aff_list_div").empty();
-	$("#aff_list_div").append(str);
-	
-	$(".search_adress").hide();
-    $('#autoframe1').hide();
-	}
-}
+			
+//리뷰쓰기창 열기 
+	function reviewAppend(event){
+		
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; 
+		var yyyy = today.getFullYear();
 
-function distance (){//두좌표 거리구하기
-	
-}
+		if(dd<10) {
+		    dd='0'+dd
+		} 
 
-function msg(msg) {
-    alert(msg);
-}
+		if(mm<10) {
+		    mm='0'+mm
+		} 
 
-function errorgps(){
-	alert("GPS인식 실패");
-};
-
-function affDetail(no){
-	location.href = "./affliateDetail.html?affliateNo="+no+"&telNo="+telNo;
-}
-
-function whenError(){
-	alert('오류');
-}
-
-//지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-
-
-
-/* function mapInit(latitude, longitude) {
-    var opt = {
-        zoom: 15,
-        center: new google.maps.LatLng(latitude, longitude),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    var map = new google.maps.Map(document.getElementById('map_canvas'), opt);
-}; */
-
-//지도
-
-/* var map;
-var infoWindow;
-var infoOldNum;
- */
-/* function initialize(){
-	var mapDiv = document.getElementById('map-canvas');
-	//지도를 생성하는 곳의 위치는 위에서 mapDiv 변수에 활당하여 넘겨 줍니다. 
-	  map = new google.maps.Map(mapDiv, {
-	//임의의 위도, 경도 값으로 중심 위치를 잡습니다.
-	center: new google.maps.LatLng(37.4419, -122.1419),
-	//zoom 값이 작으면 축소된 지도 크면 확대된 지도가 보입니다.
-	zoom: 13,
-	//지도의 타입을 로드맵 형태로 잡았습니다.
-	mapTypeId: google.maps.MapTypeId.ROADMAP
-	});
-	//지도를 초기화 하고 아래에서 정의한 마커 표시 함수를 실행하여 마커를 표시 한다.
-	dispMarks();
-	} */
-	
-/* 	function initialize(i,j){
-		var myLatlng = new google.maps.LatLng(i,j);
-		var myOptions={
-				zoom : 17,
-				center : myLatlng,
-				mapTypeId : google.maps.MapTypeId.ROADMAP
+		today = yyyy+'-'+mm+'-'+dd;
+		
+		
+		
+		var review_ye = "";
+													
+		review_ye = review_date.substring(0,10);
+		
+		
+		if(review_ye==today){
+			
+			var alertstr = "";
+			alertstr +=  '<div class="alert_txt" id="alert_desc">리뷰는 하루에 하나만 작성가능합니다.</div>';
+		   	alertstr +=  '<div class="alert_btn"><a href="#" onclick="yes();">확인</a></div>';
+		   	
+		   	$("#alert_box").empty();
+		  	$("#alert_box").append(alertstr).trigger("create");
+		  	
+		  	$("#alert_body").fadeIn(300);
+		  
+		  	
+		  	alertwflag = true;
+		   	return;
 		}
-		var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
 		
-		var marker = new google.maps.Marker({
-			position : myLatlng,
-			map:map,
-			title:"theReal"
+		
+	if(review_flag==false){	
+					
+		var str = "";
+		
+	/* 	str += '    <div class="latest_contitle">                                                        	';
+     	
+		str += '	<h2 class="rere"> 리뷰 작성</h2>															';
+		
+    	str += ' 	</div>																					';
+		 */
+    	str += ' 	<div class="review_write" id="target1">													';
+    	
+    	str += '	<img src="../common/exit.png" onclick="close2()" style="width : 25px; position: relative; left: 90%">								';	
+    	
+    	str += '		<div class="review_name">															';
+    	
+    	str += '		<div class="name_img">																';								
+		
+    	str += '     		<img src="../img/'+reviewImage+'" alt="">										';	
+    	
+    	str += '			<span>'+user_nm+'님</span>  														';
+    	
+    	str += '     	</div>																				';
+    	
+    	str += '	</div> 																					';
+    	
+    	str += '	<div class="review_star">																';
+    	
+    	str += '	<span class="star-input">																';
+    	
+    	str += ' 	<span class="input">																	';
+    	
+    	str += '		<input type="radio" name="star-input" value="1" id="p1">							';
+    	
+    	str += '		<label for="p1">1</label>															';
+    	
+    	str += '  		<input type="radio" name="star-input" value="2" id="p2">							';
+    	
+    	str += '    	<label for="p2">2</label>															';
+    	
+    	str += '		<input type="radio" name="star-input" value="3" id="p3">							';
+    	
+    	str += '		<label for="p3">3</label>															';
+    				
+    	str += '   		<input type="radio" name="star-input" value="4" id="p4">							';
+    	
+    	str += '		<label for="p4">4</label>															';
+    	
+    	str += '		<input type="radio" name="star-input" value="5" id="p5">							';
+    	
+    	str += '		<label for="p5">5</label>															';
+    	
+    	str += ' 	</span>																					';
+    	
+    	str += '   </span>																					';
+    	
+    	str += '	</div>																					';
+    	
+    	str += '    <div class="review_text">                 												';
+    	
+    	str += ' 		<textarea name="reviewcontent" id="rtext" cols="30" rows="5" placeholder="이 매장의 평가를 솔직하게 적어주세요! \n(최대 90자 입력가능)" onkeyup="onkeyup_event();"></textarea>';
+    	
+    	str += '	</div>																					';
+													
+    	str += '    <button class="review_btn" onclick="reviewInsert();">리뷰작성완료</button>					';
+    														
+    	str += '	</div>																					';			 				
+    	
+    	alertflag = true;
+    	$(".pages").append(appendthis); 
+    	$(".review_write_box").empty();
+    	$(".review_write_box").append(str).trigger("create");
+		$(".alen_modal_overlay").fadeTo(300, 0.7);
+    	$(".review_write_box").fadeIn(300);
+    	
+    }
+	
+	else{
+	 /* 	str += '    <div class="latest_contitle">                                                        	';
+     	
+		str += '	<h2 class="rere"> 리뷰 작성</h2>															';
+		
+    	str += ' 	</div>																					';
+		 					
+     	str += ' 	<div class="review_write" id="target1">													';
+    	
+    	str += '		<div class="review_name">															';
+    	
+    	str += '		<div class="name_img">																';								
+		
+    	str += '     		<img src="../img/no.png" alt="">												';	
+    	
+    	str += '			<span>'+user_nm+'님</span>  														';
+    	
+    	str += '     	</div>																				';
+    	
+    	str += '	</div> 																					';
+    	
+    	str += '	<div class="review_star">																';
+    	
+    	str += '	<span class="star-input">																';
+    	
+    	str += ' 	<span class="input">																	';
+    	
+    	str += '		<input type="radio" name="star-input" value="1" id="p1">							';
+    	
+    	str += '		<label for="p1">1</label>															';
+    	
+    	str += '  		<input type="radio" name="star-input" value="2" id="p2">							';
+    	
+    	str += '    	<label for="p2">2</label>															';
+    	
+    	str += '		<input type="radio" name="star-input" value="3" id="p3">							';
+    	
+    	str += '		<label for="p3">3</label>															';
+    	
+    	str += '   		<input type="radio" name="star-input" value="4" id="p4">							';
+    	
+    	str += '		<label for="p4">4</label>															';
+    	
+    	str += '		<input type="radio" name="star-input" value="5" id="p5">							';
+    	
+    	str += '		<label for="p5">5</label>															';
+    	
+    	str += ' 	</span>																					';
+    	
+    	str += '   </span>																					';
+    	
+    	str += '	</div>																					';
+    	
+    	str += '    <div class="review_text">                 												';
+    	
+    	str += ' 		<textarea name="" id="rtext" cols="30" rows="5" placeholder="최대 50자까지 입력가능" onKeyup="len_chk();">			';
+    	
+    	str += '		</textarea>																			';
+    	
+    	str += '	</div>																					';
+		
+    	str += '    <button class="review_btn">리뷰작성완료</button>											';
+    	
+    	str += '	</div>						 														';			 				
+    	 */
+    	$(".review_write_append").empty();
+    	
+    	review_flag = false;
+		
+	}
+    	
+  }
+	
+	 //review insert
+	
+	function reviewInsert(){
+		
+				
+		 var checkedValue = $("input[type=radio][name=star-input]:checked").val()
+		 var content = $("#rtext").val();
+		 var contentResult = content.replace(/\s|　/gi, '');
+		 			
+			if(checkedValue == null){
+			
+				var alertstr = "";
+				alertstr +=  '<div class="alert_txt" id="alert_desc">별점을 선택해주세요.</div>';
+			   	alertstr +=  '<div class="alert_btn"><a href="#" onclick="yes();">확인</a></div>';
+			   	
+			   	$("#alert_box").empty();
+			  	$("#alert_box").append(alertstr).trigger("create");
+			  	
+			  	$(".alert_body").fadeIn(300);
+			  	alertwflag = true;
+			   	
+			  	return;
+		 	}
+		 
+		 
+		 	if(contentResult == ''){
+				
+		 	
+				var alertstr = "";
+				alertstr +=  '<div class="alert_txt" id="alert_desc">내용을 입력해주세요.</div>';
+			   	alertstr +=  '<div class="alert_btn"><a href="#" onclick="yes();">확인</a></div>';
+			   
+			   	$("#alert_box").empty();
+			  	$("#alert_box").append(alertstr).trigger("create");
+			  	
+			  	$("#alert_body").fadeIn(300);
+			  	alertwflag = true;
+			   	
+			  	return;
+		 	}
+		 
+		 	if($("#rtext").val().length>100){
+				
+		 		var rtext = $("#rtext").val().substring(0,100);
+		 		$("#rtext").val(rtext);
+		 		
+				var alertstr = "";
+				alertstr +=  '<div class="alert_txt" id="alert_desc">최대글자수를 초과하였습니다.</div>';
+			   	alertstr +=  '<div class="alert_btn" onclick="outS();"><a href="#" onclick="yes();">확인</a></div>';
+			   
+			   	$("#alert_box").empty();
+			  	$("#alert_box").append(alertstr).trigger("create");
+			  	
+			  	$("#alert_body").fadeIn(300);
+			  	alertwflag = true; 
+		 		
+			  	return;
+		 	}
+		 	
+		 	
+		 	
+			$.ajax({
+					type : "post",
+					url : commonIp() + "/theReal/receipt/reviewInsert.do",
+				data : {
+					REVIEW_WRITER : user_nmm,
+					REVIEW_WRITER_CI : CI,
+					REVIEW_CONTENT : content,
+					REVIEW_AFFLIATE_NO : reviewaffliate_no,
+					REVIEW_AFFLIATE_STAR : checkedValue
+				},
+				success : fn_insertReroad,
+				error : function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			}); 
+		
+		
+	 } 
+		
+	 //reviewinsert후 새로고침
+	 
+	 function fn_insertReroad(){
+			
+		 	alertflag=false;
+		 
+		 	$(".review_write_box").fadeOut(300, function() {
+				$(".alen_modal_overlay").remove()
+			});
+		 	
+		 
+			var alertstr = "";
+			
+			alertstr +=  '<div class="alert_txt" id="alert_desc">리뷰작성완료</div>';
+		   
+		   	$("#alert_box").empty();
+		  	$("#alert_box").append(alertstr).trigger("create");
+		  	$("#alert_body").fadeIn(300);
+		  	
+		 	yes2();	
+			
+		  
+		  	
+		  	affliate_no = reviewaffliate_no;
+		  	
+		  	review_date = "";
+		  	
+		  	detailStart();	
+	 }
+	 
+	 function level(d){
+		
+		affliate_no = d;
+	 }
+	 
+	 function reroad(){
+		 location.href = "affliate.html";
+	 }
+	 	
+	 var page = true;
+	 history.pushState(null,null,location.href);  
+	 window.onpopstate = function(event){	 
+	//백키 이벤트
+		
+		if(page){
+			
+			history.back();
+			 endSeq = 3;
+		}else{
+			
+			if(serbox_flag == true){
+				 
+			     history.pushState(null,null,location.href);
+				 $(".modal_box, .modal-overlay").fadeOut(300, function() {
+				    	$(".alen_modal_overlay").remove();
+				 });
+				 serbox_flag =false;
+				 page = true;
+				 return;
+			}
+			
+			if(alertwflag==true){
+				history.pushState(null,null,location.href);
+				$("#alert_body").fadeOut(10);
+				alertwflag=false;
+				page = false;
+				return;
+			}	
+			
+			if(alertflag==true){
+				history.pushState(null,null,location.href);
+				$(".review_write_box").fadeOut(300, function() {
+					$(".alen_modal_overlay").remove()
+				});
+				alertflag = false;
+				page = false;
+			}
+			
+			else{
+			history.pushState(null,null,location.href);  
+			page = true; 
+			$("#backS").trigger("click");
+			 endSeq = 3;
+			}
+		}
+	 }	
+	 		
+	 function back(){
+		 page = true;	 	
+		 endSeq = 3;		
+	 }
+	 	
+	 function numCommas(x) { //3자리수 , 찍어주기
+		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	 } 
+	
+	 //더보기 버튼
+	function morettt(){
+			kmm = $("input[name=paysort]:checked").val();
+			endSeq +=3;
+			affliate_no = reviewaffliate_no;
+			
+			detailStart();	
+	};
+		
+	//alert 확인버튼
+	function yes(){
+		
+		alertwflag = false;
+		$("#alert_body").fadeOut(10);
+	}
+	//리뷰쓰기창 close
+	
+	function close2(){
+		alertflag = false;
+		$(".review_write_box").fadeOut(300, function() {
+			$(".alen_modal_overlay").remove()
 		});
+	}
+	
+	function moreAAA(dd){
 		
-	}3333333333 */
+		affliate_count = dd;
+		
+		if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
+	    } else {
+	        var center = map.getCenter();
+	    }
+	}
+	
+	//안내창 열닫버튼
+	function yes2(){
+		
+		alertwflag = false;
+		$("#alert_body").fadeOut(600);
+	}
+	
+	
+	function backS(){
+		endSeq = 3;
+		$(".set_btn").css("display","block");
+		review_date = "";
+	}
+	
+	function showError(){
+		alert();
+	}
+	
+	
+	function onkeyup_event(e){
+		
+		var textLength = $('textarea').val().length;
+		 
+			if (textLength > 90) {
+				
+				$('textarea').val($('textarea').val().substr(0, 90));
+				
+				var alertstr = "";
+				alertstr +=  '<div class="alert_txt" id="alert_desc">최대 글자수를 초과하였습니다.</div>';
+			   	alertstr +=  '<div class="alert_btn"><a href="#" onclick="yes3();">확인</a></div>';
+			   
+			   	$(".alert_box").empty();
+			  	$(".alert_box").append(alertstr).trigger("create");
+			  	
+			  	$(".alert_box").fadeIn(300);
+	           
+			  	alertwflag = true;
+			  
+	        }
+	}
+	
+	
+ function yes3(){
+	 alertwflag = false;
+	 $(".alert_box").fadeOut();
+ }
 
-	var request = new Request();
-	
-	$(document).ready(function(){
-		commonUserData();
-		
- 		$(window).on('ajaxStart',function(){
-			$("#loading_img").css("z-index",200);
-			$("#loading_img2").css("z-index",200);
-			$("#loading").show();
-			$("#loading2").show();
-		}).on('ajaxStop',function(){
- 			$("#loading").hide();
- 			$("#loading_img").hide();
-			$("#loading_img").css("z-index",-200);
-			$("#loading2").hide();
-			$("#loading_img2").css("z-index",-200);
-
-
-		});
-		
-		
-		
-	})
-
-	
-	
-	
-	
-	
 </script>
 
 
-</body>
+
 </html>
+
+
+

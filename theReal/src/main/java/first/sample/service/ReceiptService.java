@@ -64,12 +64,21 @@ public interface ReceiptService {
 	
 	void insertReceiptDataRenew(HashMap<String, Object> map) throws Exception;
 	
+<<<<<<< HEAD
 	void insertCancleReceiptData(Map<String, Object> map) throws Exception;
+=======
+	void insertcancelReceiptData(Map<String, Object> map) throws Exception;
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 
 	void insertReceiptDeatailData(HashMap<String, Object> map) throws Exception;
 	
 	void insertReceiptDeatailDataRenew(HashMap<String, Object> map) throws Exception;
 	
+<<<<<<< HEAD
+=======
+	void insertCancelReceiptDeatailDataRenew(HashMap<String, Object> map) throws Exception;
+	
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 	void deleteFailDate(HashMap<String, Object> map) throws Exception;
 
 	/**
@@ -229,7 +238,9 @@ public interface ReceiptService {
 	
 	Map<String, Object> couponDetail(HashMap<String, Object> map) throws Exception;
 	
-	Map<String, Object> cancleReceipt(HashMap<String, Object> map) throws Exception;
+	Map<String, Object> cancelReceipt(HashMap<String, Object> map) throws Exception;
+	
+	HashMap<String, Object> cancelGetReceipt(HashMap<String, Object> map) throws Exception;
 	
 	HashMap<String, Object> cancleGetReceipt(HashMap<String, Object> map) throws Exception;
 	

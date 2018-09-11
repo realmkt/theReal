@@ -8,7 +8,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     
     <title>더리얼마케팅 전자영수증</title>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script> 
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"> </script> 
+    <script src="https://code.jquery.com/jquery-1.12.4.js"> </script> 
     <link rel="stylesheet" media="all" href="../code/layout.css" />
     <link rel="stylesheet" media="all" href="../code/common.css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,33 +29,52 @@
     
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="../css/my-app.css">
-   <link href="../css/monthpicker.css" rel="stylesheet" />
+   <link href="../css/monthpicker.css" rel="stylesheet" /> 
 	<script src="../code/common.js"></script>
 <!-- 	<script type="text/javascript" charset="utf-8" src="../cordova.js"></script> -->
 	
 	
 	 <link rel="stylesheet" href="webjars/jquery-ui/1.11.4/jquery-ui.min.css"/>
-
+<!-- 
   <script src="/webjars/jquery/2.2.1/jquery.min.js"/></script>
-
+ -->
 
   <script src="/webjars/jquery-ui/1.11.4/jquery-ui.min.js"/></script>
 
 <style type="text/css">
 
 @font-face {font-family: barcode-font; src:url("../barcode-font/barcode-font.ttf")}
-
+.dis_none {display: none;}
 /* .on { color: blue; border: 1px solid blue; } */
 .on { background-color:#DDF4FE;}
 .list-block {display: none; }
 .item-title.small-fonts{font-size: small;}
 
+
+.loadingView{text-align: center; background-color: #272727; opacity : 0.6;   width:100%; height:100%; position: fixed; z-index:  9999; }
+.loadingView img{width: 90px ; position: relative; top: 40%}
+.loading-disable{display: none;}
+div {
+   -ms-user-select: none; 
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   user-select: none;
+ }
 .alen_list_box2 {margin:0px 0px; background:#fff; border:0; }
 .alen_list_box2 li { background-color:#fff; }
 .alen_list_combtnbox { height:42px; background-color: #fff/*margin-bottom:5px;*/ }
 .alen_list_combtn { margin:0 5px; padding:0 5px 0 5px; border:1px solid #539bff; color:#fff; /* font-size:1.5em; */ font-weight:400; text-align:center; line-height:50px; cursor:pointer; background:#539bff; -webkit-border-radius:10; -moz-border-radius:10; border-radius:10px; }
 .albpad { padding:0px 0 0px 0; }
-
+.inputsubject{  padding: 16px 8px;
+    display: block;
+    font-size: 15px;
+    margin-bottom: 36px;
+    font-weight: 400;
+    background-color: black;
+    color: white;
+    text-align: center;
+    }
 .alen_list_btn2 {background-color:#fff;padding:5px 5px;border-top:1px solid #ddd;}
 /* .alen_list_btn2 { margin:10px 10px 10px 10px; padding:0; border-radius:10px; background:#333; } */
 .alen_list_btn2item { width:20%;float:left; text-align:center; /* color:#a99f9f;  */}
@@ -72,13 +92,17 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
 .divPage{background: url(../common/divPage.png) no-repeat 0 0;background-position: 0% 0%; height: 30px;"}
 .alen_radio_box2 { margin:10px; border:1px solid #e5e5e5; }
 
-
+.page-content{background: white;}
 .alen_table_in { border-radius:5px; margin:0 5px;}
-.dd{position: fixed;}
+.ddassasa{position: fixed;}
+
+
+
 </style>	
 </head>
-
+ 
 <body>
+	
 	<input type="hidden" value="" id="dealDate">
 
 
@@ -89,12 +113,12 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
     <!-- Panels overlay-->
     <div class="panel-overlay"></div>
 
-	
+		
     <div class="panel panel-left panel-reveal">
     
     	<div class="profile_box">
         	<!-- <div class="pf_photo" style="background:url(common/profile.jpg) no-repeat center;"></div> -->
-            
+            	
             <div class="pf_txt">
             	<h2>김종현</h2>
                 <p>쿠폰 <span>0</span>개</p> 
@@ -109,37 +133,37 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
     </div>
     <div class="views">
 		<div class="view view-main">
-        
+      	
             <div class="navbar top_menu">
                 <div data-page="index" class="navbar-inner">
                    <div class="left">
-                    <div class="left sliding"><a class="back link" onclick="back();"> <i class="icon icon-back"></i><span class="backfont">Back</span></a></div>
+                    <div class="left sliding"></div>
                     		
                     </div>	
                    
-                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 18%; text-align: center"><img src="../common/logo_01.png" width="200px" height="44px"></div> 
-
+                    <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 18%; text-align: center"><img src="../common/mobile_loge.png" width="180px" height="40px" style="margin-top: 3px"></div> 
+						<a class="back link"><span class="backfont" onclick="backfont();">닫기&nbsp;&nbsp;</span></a> 
                 </div>
                 
                 <div data-page="receipt_details" class="navbar-inner cached" >
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span id="backS">Back</span></a></div>
-                <div class="center sliding">영수증 상세 내역</div>
+                <div class="left sliding"><a href="#" class="back link"onclick="backs();"> <i class="icon icon-back" ></i><span id="backS">Back</span></a></div>
+                <div class="sliding alen_logo" style="width: 65%;position: absolute;left: 18%; text-align: center"><img src="../common/mobile_loge.png" width="180px" height="40px" style="margin-top: 3px"></div> 
                 </div>
                 
                 
                 <div data-page="agree01" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="left sliding"><a href="#" class="back link" > <i class="icon icon-back"></i><span>Back</span></a></div>
                 <div class="center sliding">개인정보 수집이용취급위탁 동의</div>
                 </div>
                 
                 
                 <div data-page="agree03" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="left sliding"><a href="#" class="back link"  > <i class="icon icon-back"></i><span>Back</span></a></div>
                 <div class="center sliding">본인확인서비스 이용약관</div>
                 </div>
                 
                 <div data-page="detailSearch" class="navbar-inner cached">
-                <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+                <div class="left sliding"><a href="#" class="back link" > <i class="icon icon-back"></i><span>Back</span></a></div>
                 <div class="center sliding">상세조회</div>
                 </div>
                 
@@ -147,64 +171,44 @@ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3
             </div>
 
 <style type="text/css">
+
 .dis_none{display: none;}
 .moreBtn { height: 41px;  padding: 14px;  background-color: #272727; color: #f2f2f2; position: relative; top: -2%; margin: 2%;text-align: center}
 .mal_more { background:#f2f2f2; color:#666; font-size:0.8em; padding:10px 0; }
 
 
-.latest_contitle { color:#747474; background:#0d0d0d; margin-bottom: 13px; }
+.latest_contitle { color:#747474; background:#0d0d0d; position: fixed; z-index: 9999; width: 100%; }
 .latest_contitle h2 { padding:15px 15px; font-size:1em; font-weight:400; color:#fff; line-height:25px; } 
 .latest_contitle h2 span { float:right; color:#ddd; font-size:0.7em; padding:0 5px; margin-left:5px; line-height:21px; } 
-.emailButton {
-   -moz-box-shadow: 3px 4px 0px 0px #1564ad;
-   -webkit-box-shadow: 3px 4px 0px 0px #1564ad;
-   box-shadow: 3px 4px 0px 0px #1564ad;
-   background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5));
-   background:-moz-linear-gradient(top, #79bbff 5%, #378de5 100%);
-   background:-webkit-linear-gradient(top, #79bbff 5%, #378de5 100%);
-   background:-o-linear-gradient(top, #79bbff 5%, #378de5 100%);
-   background:-ms-linear-gradient(top, #79bbff 5%, #378de5 100%);
-   background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
-   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5',GradientType=0);
-   background-color:#79bbff;
-   -moz-border-radius:5px;
-   -webkit-border-radius:5px;
-   border-radius:5px;
-   border:1px solid #337bc4;
-   display:inline-block;
-   cursor:pointer;
-   color:#ffffff;
-   font-family:Arial;
-   font-size:12px;
-   font-weight:bold;
-   padding:4px 13px;
-   text-decoration:none;
-   text-shadow:0px 1px 0px #528ecc;
+
+.sendB{
+	color: white;
+    float: right;
+    /* color: white; */
+    /* border: 1px solid #666; */
+    border-radius: 2px;
+    font-size: 0.7em;
+    padding: 1px 10px 0 10px;
+    margin-left: 5px;
+    line-height: 16px;
+    background-color: #272727;
+    margin-right: 31px;
+  	box-shadow: 1px 1px;
+    border-left: 1px solid #636363;
+    border-top: 1px solid #636363;
+    border-right: 2px solid #222;
+    border-bottom: 2px solid #222;
 }
-.emailButton:hover {
-   background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff));
-   background:-moz-linear-gradient(top, #378de5 5%, #79bbff 100%);
-   background:-webkit-linear-gradient(top, #378de5 5%, #79bbff 100%);
-   background:-o-linear-gradient(top, #378de5 5%, #79bbff 100%);
-   background:-ms-linear-gradient(top, #378de5 5%, #79bbff 100%);
-   background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
-   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff',GradientType=0);
-   background-color:#378de5;
-}
-.emailButton:active {
-   position:relative;
-   top:1px;
-}
-.latest_coninfo { padding:8px 15px; color:#bbb; background:#222; font-size:0.7em; text-align:left; border-bottom:1px solid #333;}
+.latest_coninfo {padding: 8px 15px; color: #bbb; background: #222; font-size: 0.7em; text-align: left; border-bottom: 1px solid #333; position: fixed; margin-top: 55px; width: 400px;}
 .latest_coninfo .latest_allsms { width:50%; float:left; background:url(../common/sms.png) no-repeat left; line-height:20px; padding-left:25px;}
 .latest_coninfo .latest_allrec { width:50%; float:right; background:url(../common/receipt.png) no-repeat left; line-height:20px; padding-left:25px;}
 .latest_coninfo > div span { color:#e5e5e5; }
-.latest_conser { margin:2% 2% 1%; background:#fff; text-align:center; }
+.latest_conser {margin: 3% 2% 0; background: #fff; text-align: center; margin-top: 102px; }
 .latest_conser input[type=radio] { display:none; margin:10px; }
-.latest_conser input[type=radio] + label {  float:left; padding:7px 12px; width:25%; background:#fff; font-size:12px; border-right:1px solid #e5e5e5;}
+.latest_conser input[type=radio] + label { float:left; padding:7px 12px; width:25%; background:#fff; font-size:12px; border-right:1px solid #e5e5e5; line-height: 20px}
 .latest_conser input[type=radio] + label:last-child { border-right:0; }
-.latest_conser input[type=radio]:checked + label { background:#539bff; color:#fff;}
-.latest_conser input[type=date] { width: 115px; height: 18px;  } 
+.latest_conser input[type=radio]:checked + label { background:#539bff; color:#fff; }
+
 .latest_conser input[type=button] { background: #424242; 
 border: none;	
  
@@ -221,7 +225,7 @@ padding: 1px 1px 1px 1px;
  
 text-shadow: 0px 0px 0px 0px #e7e7e7;  
 } 
-.latest_conlist { margin:4% 2%; background:#fff; text-align:center; }
+.latest_conlist { margin:3% 2%; background:#fff; text-align:center;}
 .latest_conlist ul { padding:15px 10px; position:relative; border-bottom:1px solid #e5e5e5;}
 .latest_conlist li { float:left; width:60%; text-align:left; }
 .latest_conlist li h2 { font-size:1em; font-weight:400; color:#000; padding-bottom:3px; }
@@ -234,19 +238,23 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
 .latest_conlist li.mal_price { width:40%; text-align:right; font-size:0.8em; font-weight:400; color:#555;  position:absolute; top:68%; right:10px; }
 .latest_conlist li.mal_price span { font-size:1.4em; font-weight:700; color:#000; }
 .mal_more { background:#f2f2f2; color:#666; font-size:0.8em; padding:10px 0; }
+.golbang{}
 .latest_conlist searchstyle {margin: 0 0; text-align:right;}
-  
+.latest_coninfo {  padding: 8px 15px; color: #bbb; background: #222; font-size: 0.7em;  text-align: left;  border-bottom: 1px solid #333; width: 100%}
+.latest_coninfo .latest_allLeft { width:65%; float:left;background:url(../common/receipt.png) no-repeat left; line-height:20px; padding-left:25px;}
+.latest_coninfo .latest_allRight {width:35%; float:right; line-height:20px; }
+.latest_coninfo > div span { color:#e5e5e5; }
   
 .cpop_btn { font-size:3vmin; padding:0.3em 1.5em; background-color:#222; color:#e5e5e5; text-decoration:none; display:inline; border-radius:4px; -webkit-transition: background-color 1s ease; -moz-transition: background-color 1s ease; transition: background-color 1s ease; }
 .cpop_btn:hover { background-color: #ddd; -webkit-transition:background-color 1s ease; -moz-transition:background-color 1s ease; transition:background-color 1s ease; }
 .cpop_btn_small { padding:.5em 1.5em; font-size:0.8em; }
-.modal_box { display: none; position:fixed; z-index: 1000; background: white; width:90%; border-bottom: 1px solid #aaa; border-radius: 4px; box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1); background-clip: padding-box; }
-.modal_box .modal_body { padding: 3em 2em; }
+.modal_box { display: none; position:fixed; background: white;  z-index: 1000; width:90%; border-bottom: 1px solid #aaa; border-radius: 4px; box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1); background-clip: padding-box; }
+.modal_box .modal_body { padding: 1em 1em; }
 .modal_box footer, .modal_box .modal-footer { padding: 1em; border-top: 1px solid #ddd; background: rgba(0, 0, 0, 0.02); text-align: center; }
 .maildiv{ height: 30%;}
 .alen_modal_overlay { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
 .alen_modal_overlay2 { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
-.ser_datebox { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%; height:50px;  }
+.ser_datebox { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:5%; height:50px;  }
 .ser_datebox input[type=date] { width:45%; height:40px; line-height:40px; border:none; box-sizing:border-box; text-align:center; }
 .ser_2box { margin:0; background:#fff; text-align:center; border:1px solid #ddd; margin-top:2%;  }
 .ser_2box input[type=radio] { display:none; margin:10px; }
@@ -260,7 +268,7 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
 .ser_4box input[type=radio]:checked + label { background:#f2f2f2; color:#000; }
 .recdetail { max-width:500px; padding:1%; height:50;  position:absolute;}
 .recdetail .modal_body { height:100%; padding:0; }
-.close_icon { position:absolute; background-image:url(../common/close.png); background-color: #2E2E2E; background-repeat:no-repeat; background-size:cover; width:20px; height:20px; left:90%; top:1%; margin-left:-15px; }
+.close_icon { position:absolute; background-image:url(../common/close.png); background-color: #2E2E2E; background-repeat:no-repeat; background-size:cover; width:20px; height:20px; left:90%; top:1%; margin-left:10px; }
 .abcd { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
  input[type=checkbox] {  
   	display: none; 
@@ -303,38 +311,136 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
     background:#58ACFA;
     text-align: center;  
     line-height: 18px;  
+ }   
+
+
+
+.search{text-align:center; padding:10px;  text-shadow: 1px 1px 3px #666666; background: #ffff;  width:50%;float:left;}
+.serarchR{ text-shadow: 1px 1px 3px #999; color: #ffffff; font-size: 1.2em;  display:inline-block; text-decoration: none;width:100%;
+   padding:10px 20px;background-color: #272727;}	
+.alert_btnR { text-align:center; padding:10px;  text-shadow: 1px 1px 3px #666666; width:50%; float:right; }
+.alert_btnL { text-align:center; padding:10px;  text-shadow: 1px 1px 3px #666666; background: #ffff;  width:50%;float:left;  }
+
+.search a { text-shadow: 1px 1px 3px #999; color: #ffffff; font-size: 1.1em;  display:inline-block; text-decoration: none;width:100%;
+   padding:10px 20px;background-color: #272727;}
+.alert_btnL a { text-shadow: 1px 1px 3px #999; color: #fff; font-size: 1.1em; display:inline-block; text-decoration: none;padding:10px 20px; background-color: #272727;width:100%;}
+.backfont{padding: 5px 1px 2px 3px;
     
+    font-size: 13px;
+    font-weight: 500;
+    color: black;
+    line-height: 25px;}
 
+.start{color: black; padding: 52px;}
+.start2{color: black; padding: 46px;}
 
+#log{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100px;
+	height:50px;
+	background-color:rgba(0,0,0,0.7);
+	color:white;
+	text-align:center;
+	line-height:50px;
+}
 
+/*-------------------------------------------------------------------------------------------*/
 
-   </style>  
- 
-   	
+.mail_box{z-index: 1000; position: fixed; top: 10%; background-color: white; height: 38%;
+	margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 2px 2px 15px blanchedalmond;
+}
+  
+.etitle {position: absolute;top:43px;left:0;width:100%;padding:7px 15px; background-color:#222;color:#ddd;font-size:12px;line-height: 20px;}
+    
+    .mail {padding:96px 10px 0px 10px;}
+    		
+    .email .email_radio {margin:0 0 20px 0px;vertical-align: middle}
+    .email .email_radio input[type="radio"] {vertical-align: middle;} 
+    .email .email_radio label {margin-right:8px;}
+    
+    .email_box>label {display:block;}
+    
+    .email .email_box .email_adr {padding:6px 5px;margin:5px 0 20px 0px;max-width:30%;border-bottom:1px solid #ddd;border-top:0; border-left:0;border-right:0;}
+    .email .email_box .email_adr2 {padding:6px 5px;margin:5px 0 20px 0;max-width:31%;border-bottom:1px solid #ddd;border-top:0; border-left:0;border-right:0;}
+    .email_adr3 {padding:6px 5px;margin:5px 0 15px 3px;max-width:27%;border-bottom:1px solid #ddd;border-top:0; border-left:0;border-right:0; margin-bottom: 50px;}
+    .email_adr4 {padding:6px 5px;margin:5px 0 15px 3px;max-width:27%;border-bottom:1px solid #ddd;border-top:0; border-left:0;border-right:0; margin-left: 16px;}
+    .email .email_box select {padding:6px 0px;margin:5px 0 20px 5px;vertical-align: bottom;max-width:30%;border-top:0; border-left:0;border-right:0;border-bottom:1px solid #ddd;}
+    .selectha{padding:6px 0px;margin:5px 0 50px 3px;vertical-align: bottom;max-width:30%;border-top:0; border-left:0;border-right:0;border-bottom:1px solid #ddd;}
+    .email .email_title {padding:8px 5px;display:block; width:100%; margin:5px 0 20px 0;border:0 0 1px 0;border:1px solid #ddd;}
+    
+    .email textarea {width:100%; display:block;margin:5px 0 20px 0;padding:10px 5px;font-family: inherit;border:1px solid #ddd;}
+    
+    .email input::-webkit-input-placeholder {color:#2E2E2E;}
+    .email input:-moz-placeholder {color:#2E2E2E;}
+    .email textarea::-webkit-input-placeholder {color:#2E2E2E;}
+    .email textarea:-moz-placeholder {color:#2E2E2E;}
+    
+     button{width:100%;display:block; padding:11px 5px;border:0;background-color:#0d0d0d;color:#fff;font-size:15px;}
+    
+  	.couponR{background-color: #0d0d0d;}
+    .navbar span.backfont {color: black; font-weight: 400;}
+	.sub{padding: 10px 5px; background: #222; color: #fff; }
+	label.label-checkbox i.icon-form-checkbox { background-color:#D8D8D8; width: 22px; height: 22px; position: relative; border-radius: 22px; border: 1px solid #D8D8D8; box-sizing: border-box; right: 18px;}
+	.item-title{left: 30px;}
+	.alen_modal_overlay2 { opacity:0; filter:alpha(opacity=1); position: absolute; top:0; left:0; z-index:900; width:100%; height:100%; background:rgba(0, 0, 0, 1) !important;}
 	
-			<div class="pages navbar-through toolbar-through" id="abcd">
+.alert_box:after {clear:both; display:block; content:'';}
+.alert_box .alert_txt { text-align:center; padding:20px 10px 20px; color:#666; font-size:1.2em; }
+.alert_box .alert_btnR { text-align:center; padding:10px 10px 10px 5px;  text-shadow: 1px 1px 3px #666666; width:50%; float:right; }
+.alert_box .alert_btnL { text-align:center; padding:10px 5px 10px 10px;  text-shadow: 1px 1px 3px #666666; background: #ffff;  width:50%;float:left;  }
+.alert_box .alert_btnR a { text-shadow: 1px 1px 3px #999; color: #ffffff; font-size: 1.2em;  display:inline-block; text-decoration: none;width:100%;
+   padding:10px 20px;background-color: #272727;}
+.alert_box .alert_btnL a { text-shadow: 1px 1px 3px #999; color: #fff; font-size: 1.2em; display:inline-block; text-decoration: none;padding:10px 20px; background-color: #272727;width:100%;}
+
+.alert_box .alert_btn a { text-shadow: 1px 1px 3px #999; color: #ffffff; font-size: 1.2em;  width:100%;display:block; text-decoration: none; }
+
+#indexpage{background: white;}
+</style>  
+ 
+   		            <!-- //alert 대체	 -->
+   		<div class="alert_body" id="alert_body">
+			<div class="alert_box" id="alert_box">
+				<div class="alert_txt" id="alert_desc">알러트창</div>
+				<div class="alert_btn"><a href="#">확인</a></div>
+			</div>
+		</div>
+   		 
+   		 <div class="mail_box">
+   		 
+   		 
+   		 </div>
+   		
+   		<div class="pages navbar-through toolbar-through" id="abcd">
                 <div data-page="index" class="page">
                     <div class="page-content">
-			
-                   			
-                    <div class="latest_contitle">
+			<div id="loadingView" class="loadingView">
+					<img src="../common/loadingBar.gif" id="loading_gif">
+					</div>	 
+                     <div class="latest_contitle">
                     
-                    	<h2>영수증 관리<span id="serbtn"  >
-                    		<input type="button" class="emailButton" value="영수증 발송"></span></h2>
+                    	<h2>영수증 보내기
+                    		</h2>
                     </div>	
-                   
-                   
-            	       
+                    <div class="latest_coninfo" style="z-index: 1;" id="coninfofo">
+                    	<div class="latest_allLeft" id="count">선택된 영수증 0건 / <span>금액 : 0원</span></div>
+        				<div class="latest_allRight" id="choice"><a href="#receipt_details" name="receiptDetail">이메일 발송</a	></div>
+            			<hr>
+                    </div> 
+  
                     	
                     <div class="latest_conser alen_outbox" id="bbt">
                   <input type="radio" id="latest01" name="latestsbox" value="latest" checked> 
-                    <label for="latest01" class="maint">전체영수증</label>
+                    <label for="latest01" onclick="maint();">전체</label>
                     			
                    <input type="radio" name="latestsbox" id="latest02" value="week"> 
-                    <label for="latest02" class="transno">미발행</label>
+                    <label for="latest02" onclick="transno();">미발행</label>
                   			
                  <input type="radio" id="latest03" name="latestsbox" value="month" >
-                    <label for="latest03" class="transok">발행</label>
+                    <label for="latest03" onclick="transok();" class="transok">발행</label>
                      
                     <input type="radio" id="latest04"  name="latestsbox" value="detail">
                     <label for="latest04" id="dda" onclick="ass();">날짜검색</label>
@@ -342,50 +448,46 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
                  
                     <hr>
                     
-               </div>
-             
+               </div> 
+           
+        <div data-page="receipt_details" class="page cached" id="receipt_details">
+        	<div id="loadingView2" class="loadingView loading-disable">
+					<img src="../common/loadingBar.gif" id="loading_gif">
+					</div>
+                    <div class="page-content">
+                        <div class="content-block">
+
+						<div class="rtpage_box">
+                        	<div class="rtpage_inbox" id ="detailRecData">
+                            </div>
+                        </div>
+                        
+<!-- 						<div class="receipt_box">
+                        	<div class="receipt_inbox" id ="detailRecData">
+                                
+                            </div>
+                        </div> -->
+                        
+                        <div class="latest_btnbox">
+                            
+                        </div>
+                        
+                        
+                        
+                        
+                        </div>
+                    </div>
+                </div>
                  
                    <div class="latest_conlist alen_outbox" id="receipt_div">
                     	
                     </div>
 					 <div class="moreBtn dis_none" id="moreBtn">더보기</div>
-	
-                  
-                    	
-                    <div class="foot_info">
-                    
-                    	<div class="foot_box">
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#agree03">이용약관</a>
-                            </div>
-                            
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#agree01">개인정보 취급방침</a>
-                            </div>
-                            
-                        	<div class="foot_btn alen_outbox">
-                            <a href="#">고객센터</a>
-                            </div>
-                            
-                            
-                            <hr>
-                        </div>
-<p>	
-(주)이베이 코리아   |   대표이사 : 변광윤<br>
-사업자등록번호 : 220-81-83676   |   통신판매업신고 강남 10630호<br>
-서울시 강남구 테헤란로 152 (역삼동 강남파이낸스센터)<br>
-이메일 :information@corp.auction.co.kr<br>
-고객센터 :1588-0184(오전9시~오후6시,토요일/공휴일휴무<br>
-</p>
 
-<p class="copytxt">Copyrightⓒnoname Co,.All rights reserved</p>
-                    </div>
-                    
-                    
-                    </div>
+   		
+              		</div>
                 </div>
                 
-
 
 <div id="closeMan">
 
@@ -393,56 +495,147 @@ text-shadow: 0px 0px 0px 0px #e7e7e7;
 <div id="ser_box" class="modal_box">
   		
  <div class="modal_body">
-    <div class="close_icon js-modal-close"><a href="#" class="js-modal-close"></a></div>
+  		
+        
+        <span class="start">시작날짜</span> <span class="start2">종료날짜</span>
         <div class="ser_datebox">
-      <input type="date" id="first" size="8" class="first">ㅡ<input type="date" id="second" class="second">
+      	<input type="date" id="first" size="8" class="first">ㅡ<input type="date" id="second" class="second">
          </div>
      </div>
       
-         
-   
-	<footer> <a href="#" class="search" style="color: black; border: 3px">조회</a> </footer>
+  
 	
-</div>
+ 
+	<footer> 
+		<div class="search"><a href="#">조회</a></div>
+   		<div class="alert_btnL"><a href="#" onclick="searchNo();">취소</a></div>
+	</footer>
+ </div>
 
 
 </div>
 
-	<!-- <iframe id="iframe">
-	</iframe> -->
 
-<!-- <script src="../js/monthpicker.min.js"></script>
+
+<script src="../js/monthpicker.min.js"></script>
 <script src="../js/monthpicker-dom.min.js"></script>
-<script src="../js/monthpicker.js"></script> -->
+<script src="../js/monthpicker.js"></script>
 <script type="text/javascript" src="../js/framework7.js"></script>
 
 <script type="text/javascript" src="../js/my-app.js"></script>
 
 <input value="activate scrollator" id="activate_scrollator4" type="button"  style="display:none;">
+
+
+
 <script type="text/javascript">
+$(document).ajaxStart(function(){
+	 $('#loadingView').show();
+	})
+	.ajaxStop(function(){
+	   $('#loadingView').hide();
+	});
+var page = true;
+
+//백키 이벤트
+
+history.pushState(null,null,location.href);  
+window.onpopstate = function(event){
+	
+	 if(pagestate=='check'&&mailboxstate == 'check'){
+	
+		history.pushState(null,null,location.href); 
+		
+		$("#alert_body").fadeOut(10);
+	
+		pagestate="";
+		
+		return false;
+	} 
+	
+	if(mailboxstate == 'check'){
+	
+		history.pushState(null,null,location.href); 
+		$(".mail_box").fadeOut(300, function() {
+			$(".alen_modal_overlay2").remove();
+		});
+		
+		mailboxstate="";
+		
+		return false;
+	}
+	
+	if(modalOfmodalVal){
+		history.pushState(null,null,location.href); 
+		outS();
+		return false;
+	}
+	
+	if(pagestate=='check'){
+			
+			history.pushState(null,null,location.href); 
+				
+			$("#alert_body").fadeOut(300, function() {
+				$(".alen_modal_overlay2").remove();
+			});
+				$("#ser_box").fadeOut(300);
+				pagestate='';
+		return false;
+	}
+	
+	if(page){
+		history.back();
+	}else{
+	
+		history.pushState(null,null,location.href);  
+		$(".backfont").css('display','block');
+		page = true; 
+		$("#backS").trigger("click");
+	}
+}
+
+
+	
 function numCommas(x) { //3자리수 , 찍어주기
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 } 
 	var appendthis = ("<div class='alen_modal_overlay2 js-modal-close' id='dadadadada'></div>");
+	var CI = window.localStorage.getItem("CI");
+	var choice = 0;
+
+	var now_email = "";		 		
+	var last_email = "";	
 	//체크여부변수
 	var checkV = new Array();
+	var barcode = new Array();
+
+	var totalmoney = 0;
+	
 	var request = new Request();
 	
 	var telNo = request.getParameter('telNo');
+	
 	var uuId =  request.getParameter('uuId');
-				
+	
+	var pagestate = "";
+	var mailboxstate = "";		
+	/* var scrollValue = parseInt(request.getParameter('scroll')); */
+	var barcodeSend = new Array();
+	var Seq = new Array();
 	var maxSize = 0;
 	var endSeq = 10;
 	var startDay = "";
-	var endDay   = "";
+	var endDay   = ""; 
 	var payDivCd  = "ALL";
 	var orderByCd = "NEW";
 	var smsDivCd = "ONLYREC";
 	var dateDivCd = "";
 	var dateSrchCd = "N";	
 	var transMission = "";
-
-		
+	var salestype = "yes";
+	var modalOfmodalVal=false;
+	/* var scrollValue = 0 ; */
+	
 	function allClear(){
 		startDay = "";
 		endDay   = "";
@@ -455,20 +648,509 @@ function numCommas(x) { //3자리수 , 찍어주기
 		transMission = "";
 	}
 	
-				
+	var dateObj = new Date();
+
+	var year = dateObj.getFullYear();
+
+	var month = dateObj.getMonth()+1;
+
+	var day = dateObj.getDate();
+
+	var today = year + "-" + month + "-" + day;
+	
+	var sendBarcode = new Array();
+	
+	$(".second").val(today);
+	
+	
+		
+		
 	//메인 영수증 목록
 	$(document).ready(function() {
-		latestData();
+		var CI = window.localStorage.getItem("CI");
+		
+		 maint();
+		   
+		
+		
+		 $(document).ajaxStart(function(){
+			 $('#loadingView').show();
+			})
+			.ajaxStop(function(){
+			   $('#loadingView').hide();
+			});
+		 
+		
+		$(document).on('click', '[name="receiptDetail"]', function() {
+			
+			$(".backfont").css('display','none');
+			
+			var arr=$("input[name='haha']");
+			var count = 0;
+			
+			$(arr).each(function(){
+				if(this.checked){
+					Seq[count]=this.value;
+					count++;
+				}	
+			}); 
+			
+			
+			var arr=$("input[name='hahab']");
+			var count2 = 0;
+			
+			$(arr).each(function(){
+				if(this.checked){
+					barcodeSend[count2]=this.value;
+					count2++;
+				}	
+			}); 
+			
+			
+			page = false;
+			
+			$.ajax({
+					type : "post",
+					url : commonIp() + "/theReal/receipt/emailOk.do",
+				data : {
+					telNo : CI
+				},
+				success : fn_mailOk,
+				error : function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			}); 
+		});
+		
+		
+		
+		
+	/* 	if(scrollValue!=0||scrollValue!='NaN'){
+		$('html, body').animate({ scrollTop: scrollValue }, 1000);
+		}
+		 */
+		
+		
+		/* if(flag==0){
+				latestData(); 
+			}  */
+			
+	//이메일 확인페이지 갔다 돌아왔을때  
+		 
+		 var param = new Array();
+		
+		
+		 
+		 var barcodeResult = "";
+
+		 var url = decodeURIComponent(location.href);
+
+		 url = decodeURIComponent(url);
+					
+		 var params;
+		 	
+		 params = url.substring( url.indexOf('?')+1, url.length );
+
+		 params = params.split("&");
+
+		 var size = params.length;
+		 var key, value;
+
+		 for(var i=0 ; i < size ; i++) {
+		     key = params[i].split("=")[0];
+		     value = params[i].split("=")[1];
+		     if(key == 'barcode'){
+		     	barcode[i] = value;
+		     }
+		 }	 
 	});
-	 
-								
-	function latestData(){
+	
+		function fn_mailOk(resdata){
+			
+			var res =  resdata.resultMap;
+			
+		 
+			
+		if(res[0].EMAIL==""||res[0].EMAIL==null){
 				
-		//maxSize = $("#maxSize").val();
+		
+			var str = "";
+				
+			str += '<div class="alert_txt" id="alert_desc">등록된 이메일이 없습니다. <br>등록하시겠습니까?</div>';
+			str += '<div class="alert_btnR"><a href="#" onclick="yesMail();">확인</a></div>';
+		    str += '<div class="alert_btnL"><a href="#" onclick="no();">취소</a></div>';
+			
+		    $("#alert_box").empty();
+		    $("#alert_box").append(str).trigger("create");
+		    $("#alert_body").fadeIn(300);
+			
+		    pagestate = 'check';
+		}	
+		
+			
+		now_email = res[0].EMAIL;
+		last_email = res[0].LAST_EMAIL;
+			
+		var str = "";
+						
+		var i = res[0].EMAIL.indexOf("@");
+		var first = res[0].EMAIL.substring(0,i);
+		var last = res[0].EMAIL.substring(i+1); 
+		
+		str += '<div class="email_radio">';
+		
+		str += '<div class="log_auto" style="float:left;">';
+		
+		str += '<label class="label-checkbox item-content" onclick="nowEmail(this);">';
+		
+		str += '<input type="checkbox" id="checked" name="ks-checkbox" value="Food" checked>';
+		
+		str += '<div class="item-media" id="asf"><i class="icon icon-form-checkbox activeChk" id="asd"></i></div>';
+		
+		str += '<div class="item-inner">';
+		
+		str += '<div class="item-title" style="color: black; margin-left: -18px;">내게 보내기</div>';
+		
+		str += '</div>';
+		
+		str += '</label>';
+				
+		str += '<hr>';
+		
+		str += '</div>';
+
+		str += '<div class="log_auto">';
+		
+		str += '<label class="label-checkbox item-content" id="checked22" onclick="lastEmail(this);">';
+		
+		str += '<input type="checkbox" name="ks-checkbox" value="Food" id="checked" >';
+		
+		str += '<div class="item-media" id="asf"><i class="icon icon-form-checkbox" id="asd"></i></div>';
+		
+		str += '<div class="item-inner">';
+		
+		str += '<div class="item-title" style="color: black; margin-left: -18px;">최근 이메일</div>';
+		
+		str += '</div>';
+		
+		str += '</label>';
+		
+		str += '<hr>';
+			
+		str += '</div>';
+		
+		str += '</div>';
+		
+		str += '<div class="email_box">';
+
+		str += '<label class="sub"><b>받는사람</b></label>';
+		
+		str += '<div id="test">'
+		
+		str += '<input type="text" class="email_adr" value="'+first+'" id="firstEmailValue">						';
+		
+		str += '<span>@</span>';
+		
+		str += '<input type="text" class="email_adr2" value="'+last+'" id="lastEmailValue">							';
+		
+		str += '			<select id="email_select2" onchange="change();">																';
+					
+		str += '				<option value="" selected>::선택하기::</option>										';
+		 
+		str += '				<option value="naver.com">naver.com</option>										';
+		
+		str += '				<option value="nate.com">nate.com</option>											';
+		
+		str += '				<option value="daum.net">daum.net</option>											';
+		
+		str += '				<option value="gmail.com">gmail.com</option>										';
+		
+		str += '				<option value="hotmail.com">hotmail.com</option>									';
+		
+		str += '				<option value="bondingedu.com">bondingedu.com</option>								';
+		
+		str += '				<option value="hanmir.com">hanmir.com</option>										';
+			
+		str += '				<option value="empas.com">empas.com</option>										';
+		
+		str += '				<option value="dreamwiz.com">dreamwiz.com</option>									';
+		
+		str += '				<option value="korea.com">korea.com</option>										';
+		
+		str += '				<option value="lycos.co.kr">lycos.co.kr</option>									';
+		
+		str += '				<option value="freechal.com">freechal.com</option>									';
+		
+		str += '				<option value="1">::직접입력::</option>												';
+		
+		str += '			</select>																				';
+		
+		str += '</div>'
+		
+		str += '<label class="sub">';
+
+		str += '<b>제목</b>';
+
+		str += '</label>';
+
+		str += '<input type="text" placeholder="THEREAL# 이메일 영수증" class="email_title" id="subject" >				';
+
+		str += '<label class="sub">																					';
+
+		str += '<b>내용</b>																							';
+		
+		str += '</label>																							';
+
+		str += '<textarea name="" id="content" cols="30" rows="10" placeholder="THEREAL# 이메일영수증 입니다."></textarea>';
+		
+		str += '</div>																								';
+		
+		str += '<button onclick="emailcheck();">보내기</button>														';
+			 $("#detailRecData").empty();
+		     $("#detailRecData").addClass("email"); 
+			 $("#detailRecData").append(str);
+		};
+
+	
+	function yesMail(){
+		
+		$("#alert_body").fadeOut(10);
+		pagestate = "";
+		var str = "";
+		str += '<div>';
+		
+		str += '<label class="inputsubject">내 이메일 등록	</label>													';
+		
+		str += '<span class="close_icon" onclick="close2();"></span>												';
+		
+		str += '</div>																								';
+		
+		str += '<input type="text" class="email_adr4" id="firstEmailValue5">										';
+		
+		str += '<span calss="golbang" style="color: black;">@</span>												';
+		
+		str += '<input type="text" class="email_adr3" id="lastEmailValue5" >										';
+		
+		str += '			<select id="email_select" class="selectha" onchange="change2();">						';
+			
+		str += '				<option value="" selected>::선택하기::</option>										';
+		 
+	 	str += '				<option value="naver.com">naver.com</option>										';
+		
+		str += '				<option value="nate.com">nate.com</option>											';
+		
+		str += '				<option value="daum.net">daum.net</option>											';
+		
+		str += '				<option value="gmail.com">gmail.com</option>										';
+		 
+		str += '				<option value="hotmail.com">hotmail.com</option>									';
+		
+		str += '				<option value="bondingedu.com">bondingedu.com</option>								';
+		
+	    str += '				<option value="hanmir.com">hanmir.com</option>										';
+			
+		str += '				<option value="empas.com">empas.com</option>										';
+		
+		str += '				<option value="dreamwiz.com">dreamwiz.com</option>									';
+		
+		str += '				<option value="korea.com">korea.com</option>										';
+		
+		str += '				<option value="lycos.co.kr">lycos.co.kr</option>									';
+		
+		str += '				<option value="freechal.com">freechal.com</option>									';
+		
+		str += '				<option value="1">::직접입력::</option>												';
+		
+		str += '			</select>																				';
+		
+		str += '				<button onclick="emailcheck2();" style="background-color: #539bff; width: 92%; margin-left: 15px;">등록하기</button>'; 
+		
+			mailboxstate = 'check';
+			
+			$(".pages").append(appendthis);  
+			$(".alen_modal_overlay2").fadeTo(300, 0.7);  
+		    
+			$(".mail_box").empty();
+		    $(".mail_box").append(str).trigger("create");
+			$(".mail_box").fadeIn(300);
+	}
+	
+	
+	function no2(){
+		mailboxstate = "";
+		$("#alert_body").fadeOut(10);
+	}
+	
+	function emailcheck2(){
+		
+	
+		 var first = $("#firstEmailValue5").val();
+		 var last = $("#lastEmailValue5").val();
+		 
+		 mail = first += "@";
+		 mail += last;
+				
+		 //이메일 체크
+			if(email_check(mail)==false){
+				
+				
+				var str = "";
+				
+				str += '<div class="alert_txt" id="alert_desc">잘못된 이메일 형식입니다.</div>';
+				str += '<div class="alert_btn"><a href="#" onclick="no2();">확인</a></div>';
+			   		
+				$("#alert_box").empty();
+				
+				$("#alert_box").append(str);
+				$("#alert_body").fadeIn(300);
+				
+				pagestate='check'
+				
+			
+			}else{
+				mailPush(mail);
+			}
+	}; 
+		
+	function mailPush(){
+		
+		$.ajax({
+			type : "post",
+			url : commonIp() + "/theReal/receipt/mailPush.do",
+		data : {
+			CI : CI,
+			mail: mail
+		},
+		success : fn_mailOk2(mail),
+		error : function(request,status,error){
+		    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	}); 
+	}
+		
+	function emailcheck(){
+		
+		 var first = $("#firstEmailValue").val();
+		 var last = $("#lastEmailValue").val();
+	
+		 mail = first += "@";
+		 mail += last;
+		
+		 //이메일 체크
+			if(email_check(mail)==false){
+				
+				
+				var str = "";
+				pagestate = "check";
+				str += '<div class="alert_txt" id="alert_desc">잘못된 이메일 형식입니다.</div>';
+				str += '<div class="alert_btn"><a href="#" onclick="no();">확인</a></div>';
+			   	
+				$("#alert_box").empty();
+			    $("#alert_box").append(str).trigger("create");
+			    
+				$("#alert_body").fadeIn(300);
+				
+				return; 
+			
+			}else{
+				mailcheck();
+			}
+	}; 
+	
+	//발송확인
+	function mailcheck(){
+		
+		
+		var str = "";
+		pagestate = "check";
+		
+		str += '<div class="alert_txt" id="alert_desc">발송하시겠습니까?</div>';
+		str += '<div class="alert_btnR"><a href="#" onclick="yes();">확인</a></div>';
+	    str += '<div class="alert_btnL"><a href="#" onclick="no();">취소</a></div>';
+		
+	    $("#alert_box").empty();
+	    $("#alert_box").append(str).trigger("create");
+	    
+		$("#alert_body").fadeIn(300);
+	
+	}
+	
+	//발송
+	function yes(){
+		
+		$("#alert_body").fadeOut(10);
+		$("#loadingView2").removeClass("loading-disable");
+		setTimeout(function(){
+			mailsend();	
+		},1000)
+	}
+	
+	function mailsend(){
+		
+		var subject = "";
+		var content = "";
+		
+		if($("#subject").val()==null||$("#subject").val()==""){
+			subject = "THEREAL# 이메일 영수증";
+		}
+		else{
+			subject = $("#subject").val();
+		}
+		
+		if($("#content").val()==null||$("#content").val()==""){
+			content = "THEREAL# 이메일영수증 입니다.";
+		}
+		else{
+			content = $("#content").val();
+		}
+			
+			$.ajax({  
+		    	type : 'post',
+		    	url :	commonIp() + "/theReal/receipt/sendMail.do", 
+		    	dataType : 'text',
+		    	async: false,
+		    	data: {
+		    		CI : CI,
+		    		barcode : barcodeSend,
+		    		SEQ : Seq,
+		    	 	email : mail,
+		    	 	telNo : telNo,
+		    	 	subject : subject,
+		    	 	content : content
+		    	 	},
+		    	error : function() {
+		       		alert('통신실패!!'); 
+		    	},	 		   			
+		    	success : function(data) {
+		    		
+		    	/* 	sendBarcode = new Array();
+		    		Seq = new Array(); */
+		    		
+		    		var str = "";
+					
+					str += '<div class="alert_txt" id="alert_desc">전송완료</div>';
+					str += '<div class="alert_btn"><a href="#" onclick="historyback();">확인</a></div>';
+				   								
+					page = false;
+					
+					$("#alert_box").empty();
+				    $("#alert_box").append(str).trigger("create");
+				  	$("#alert_body").fadeIn(300);
+					$("#loadingView2").addClass("loading-disable");
+		    	}
+		   }); 	  
+		};
+	 
+									
+	function latestData(){		
+			
+			
+	/* 	maxSize = $("#maxSize").val(); */
 		$.ajax({
 			type : "post",
 			url : commonIp() + "/theReal/receipt/latestData.do",
 			data : {
+				CI : CI,
 				telNo : telNo,
 				startDay : startDay,
 				endDay : endDay,
@@ -478,8 +1160,9 @@ function numCommas(x) { //3자리수 , 찍어주기
 				dateDivCd : dateDivCd,
 				smsDivCd : smsDivCd,
 				dateSrchCd: dateSrchCd,
-				maxSize : maxSize,
-				transMission : transMission 
+				maxSize : maxSize,					
+				transMission : transMission, 
+				salestype : salestype
 			},
 			success : fn_latestData,
 			error : function(request,status,error){
@@ -487,34 +1170,145 @@ function numCommas(x) { //3자리수 , 찍어주기
 			}
 		});
 	}
+			
+	//현재 내 이메일  버튼
+	function nowEmail(a){
 		
+		
+		//하나만 체크
+		var obj = document.getElementsByName("ks-checkbox");
+
+	    for(var i=0; i<obj.length; i++){
+	    	
+	        if(obj[i] != a){
+					
+	            obj[i].checked = false;
+			}	
+	    }
+	    
+	    
+	    
+	    
+	    var i = now_email.indexOf("@");
+		var first = now_email.substring(0,i);
+		var last = now_email.substring(i+1); 
+			
+		$("#firstEmailValue").val(first);  
+		$("#lastEmailValue").val(last); 
+	}
+	   	 
+	 //지난 이메일버튼
+	 function lastEmail(a){
+		
+	     //하나만 체크
+	     var obj = document.getElementsByName("ks-checkbox");
+	    			
+	     for(var i=0; i<obj.length; i++){
+	    			
+	         if(obj[i] != a){
+	    			
+	            obj[i].checked = false;
+	    				
+	         }
+
+	     }	
+	      
+	    	var i = last_email.indexOf("@");
+			var first = last_email.substring(0,i);
+			var last = last_email.substring(i+1); 
+									
+			
+			$("#firstEmailValue").val(first);  
+			$("#lastEmailValue").val(last); 
+	 }
+	
+	
+	
+	
+	
 	//전체 영수증 돌아가기 			
-	$(".maint").click(function(){
-		allClear()
+	function maint(){
+		endSeq = 10;
+		transMission = "ALL";
+		dateSrchCd = "N";
 		checkV = new Array(); 
-		latestData();
-	});
+		choice = 0;
+		/* endSeq = 10; */
 		
+		var str = "";
+		
+		str += '<div class="latest_allLeft" id="count">선택된 영수증 0건 / <span>0원</span></div>';
+		str += '<div class="latest_allRight" id="choice">';
+    	str += '<hr></div>';
+    	
+        $("#coninfofo").empty();
+		$("#coninfofo").append(str).trigger("create");
+		
+		latestData();
+	} 	
+					
 	 //미발행 영수증 목록
-	  $(".transno").click(function(){
+	  function transno(){
+		  endSeq = 10;
+		 dateSrchCd = "N";
 		transMission = "Y02";
 		checkV = new Array(); 
+		choice = 0;	
+			
+		/* endSeq = 10; */
+			
+		var str = "";
+				
+		str += '<div class="latest_allLeft" id="count">선택된 영수증 0건 / <span>0원</span></div>';
+		str += '<div class="latest_allRight" id="choice">';
+    	str += '<hr></div>';
+        totalmoney = 0;	
+        	
+        $("#coninfofo").empty();
+        $("#coninfofo").append(str);
+			
 		latestData();
-	}); 
 		
+	};	
+	 	
 	//발행된 영수증 목록
-	$(".transok").click(function(){
+	function transok(){
+		endSeq = 10;
+		dateSrchCd = "N";
 		transMission = "Y01";
 		checkV = new Array(); 
+		choice = 0;
+		/* endSeq = 10; */
+			
+		var str = "";
+		
+		str += '<div class="latest_allLeft" id="count">선택된 영수증 0건 / <span>0원</span></div>';
+		str += '<div class="latest_allRight" id="choice">';
+    	str += '<hr></div>';
+		totalmoney = 0;
+		
+        $("#coninfofo").empty();
+        $("#coninfofo").append(str);
+		
 		latestData();	
+		
+	};
+
+
+	/* $(window).scroll(function () { 
+		scrollValue = $(document).scrollTop(); 
+		console.log(scrollValue);
 	});
-									
+ */
+				
 	//더보기 버튼 	
 	$("#moreBtn").click(function(){
-		endSeq += 10;
+		
+		endSeq +=10;
+			
 		var arr=$("input[type='checkbox']");
 		var count = 0;
-		
+					
 		//새로고침 전 체크상태 확인
 		$(arr).each(function(){
 			if(this.checked){
@@ -525,9 +1319,15 @@ function numCommas(x) { //3자리수 , 찍어주기
 			
 		latestData(); 
 	});
-			
-	//날짜별 검색
+						
+/* 	$(window).scroll(function () { 
+		scrollValue = $(document).scrollTop(); 
+	}); */
+
 	$(".search").click(function(){
+		
+		$("#alert_box").empty();
+		transMission = "SEARCH";
 		dateSrchCd = "Y";
 		startDay = $(".first").val(); 
 		endDay = $(".second").val();		
@@ -537,201 +1337,504 @@ function numCommas(x) { //3자리수 , 찍어주기
 		var secondArr = endDay.split('-');
 		var firstCompare = new Date(firstArr[0], parseInt(firstArr[1])-1, firstArr[2]);
 	    var secondCompare = new Date(secondArr[0], parseInt(secondArr[1])-1, secondArr[2]);
-	   	
-	   if(startDay==""||startDay==null||endDay==""||endDay==null){
+	   
+ 		if((startDay == '' || startDay == null) && (endDay == '' || endDay == null)){
 		   	
-		   alert("시작날짜 종료날짜 모두 입력")
+			var str = "";
+			
+			pagestate = 'check';
+			
+			str +=  '<div class="alert_txt" id="alert_desc">시작날짜와 종료날짜를 입력하세요.</div>';
+		   	str +=  '<div class="alert_btn" onclick="outS();"><a href="#">확인</a></div>';
+		  	
+		   	modalOfmodalVal=true;
 		   	
-		   return false;
-	   }	
-	     				
-	   if(firstCompare.getTime() > secondCompare.getTime()) {
-            
-            alert("검색시작날짜 종료날짜 확인");
-            
+		 	
+		  	$("#alert_box").append(str).trigger("create");
+		
+		  	$("#alert_body").fadeIn(300);
+		   	 		
+		   	return false;
+	   }
+	   
+ 	   else if(startDay==''||startDay==null){
+		    
+ 			var str = "";
+ 			
+ 			pagestate = 'check';
+			
+ 			str +=  '<div class="alert_txt" id="alert_desc">시작날짜를 입력하세요.</div>';
+		   	str +=  '<div class="alert_btn" onclick="outS();"><a href="#">확인</a></div>';
+		  	
+		   	modalOfmodalVal=true
+		   
+		  
+		  	$("#alert_box").append(str).trigger("create");
+		  	
+			$("#alert_body").fadeIn(300)();
+		   	 		
+		   	return false;
+	   }
+	    
+ 	   else if(endDay==''||endDay==null){
+		    
+ 			var str = "";
+		   	
+ 			pagestate = 'check';
+ 			
+ 			str +=  '<div class="alert_txt" id="alert_desc">종료날짜를 입력하세요.</div>';
+		   	str +=  '<div class="alert_btn" onclick="outS();"><a href="#">확인</a></div>';
+		  	
+		   	modalOfmodalVal=true
+		  
+		  
+		  	$("#alert_box").append(str).trigger("create");
+		 
+			$("#alert_body").fadeIn(300);
+		   	 				
+		   	return false;
+	   }
+	   
+	  					
+	if(firstCompare.getTime() > secondCompare.getTime()) {
+								          		
+			var str = "";
+			
+			pagestate = 'check';
+	
+			str +=  '<div class="alert_txt" id="alert_desc">종료날짜가 시작날짜보다 이전입니다.</div>';
+		   	str +=  '<div class="alert_btn" onclick="outS();"><a href="#">확인</a></div>';
+		  	
+		   	modalOfmodalVal=true;
+		   
+		  	
+		  	$("#alert_box").append(str).trigger("create");
+		  	
+			$("#alert_body").fadeIn(300);
+			
+		 	
             return false;
 	   }	
-	   
+	   										
 	   		$('#ser_box').hide();  	
 			$('#modal_body').hide();
 			$(".modal_box, .alen_modal_overlay2").fadeOut(300, function() {
 			$(".alen_modal_overlay2").remove();
 		});
-	   							
-	  latestData();	
-	   			 		
-	});	
-				 	
-	 	 function checkProp(data){
-	 		 
-	 	 	if($('input:checkbox[id="'+data+'"]').is(":checked")){
+					
+			var str = "";
+			
+			str += '<div class="latest_allLeft" id="count">선택된 영수증 0건 / <span>0원</span></div>';
+			str += '<div class="latest_allRight" id="choice">';
+	    	str += '<hr></div>';					
+			
+	    	totalmoney = 0;
+	        
+	    	$("#coninfofo").empty();
+	    	$("#coninfofo").append(str);
+			latestData();	
+		});	
+																 	
+	 	 function checkProp(data,money){
+	 		
+			//체크박스 개수체크
+		
+	 		if($('input:checkbox[id="'+data+'"]').is(":checked")){
 	           	 $('input[id="'+data+'"]').prop('checked',false);
 	             $('.'+data+'').css({"background":"#ffffff"});
-	        }else{
+	             
+	            
+	             totalmoney -= money;
+	             choice = choice-1;
+	             if(totalmoney < 0){
+	            	 return; 
+	             }
+	 														
+	 		}else{
 	             $('input[id="'+data+'"]').prop('checked',true);
-	             $('.'+data+'').css({"background":"#eeeeee"});
-	        } 
-	    }  
- 			
-	 				
-	function fn_latestData(resdata){	
+	             $('.'+data+'').css({"background":"#cccccc"});
+	            
+	           
+	             totalmoney += money;
+	             
+	             choice = choice+1;
+	             if(totalmoney < 0){
+	            	 return;
+	             }	
+	 		} 	
+	 	 	
+	 		/* var value = document.getElementByClassName(data).innerHTML;
+			alert(value); */
+				
+			var str = "";
+						
+			if (totalmoney == 0) {
+				str += '<div class="latest_allLeft" id="count">선택된 영수증 '+choice+'건 / <span> 금액 : '+numCommas(totalmoney)+'원</span></div>';
+				str += '<div class="latest_allRight" id="choice">';
+		    	str += '<hr></div>';
+					
+		    	$("#coninfofo").empty();
+				$("#coninfofo").append(str).trigger("create");
+			}
+			
+			else{
+				str += '<div class="latest_allLeft" id="count">선택된 영수증 '+choice+'건 / <span> 금액 : '+numCommas(totalmoney)+'원</span></div>';
+				str += '<div class="latest_allRight" id="choice"><a href="#receipt_details" name="receiptDetail" class="sendB">이메일 발송</a>';
+	    		str += '<hr></div>';
+			
+	    		$("#coninfofo").empty();
+				$("#coninfofo").append(str).trigger("create");
+			}
+		} 				 
+ 			 	
+	 			
+	 function fn_latestData(resdata){
+		
 		var res = resdata.resultMap;	
 		var str = "";
-						
+	 
+		maxSize = resdata.maxSize	
+		
+	
+	if(maxSize==0){
+		if(transMission=="ALL"){
+			
+			str = '<img alt="noFile" src="../common/emptyList01.jpg">';
+			$("#moreBtn").addClass("dis_none");
+		}else if(transMission=="Y01"){
+			str = '<img alt="noFile" src="../common/emptyList01.jpg">';
+			$("#moreBtn").addClass("dis_none");
+		}else{
+			str = '<img alt="noFile" src="../common/emptyList01.jpg">';
+			$("#moreBtn").addClass("dis_none");
+		}
+	}
+	else{
 		for(var i = 0; i < res.length; i++){
-			str += '<div class ="'+res[i].SALES_BARCODE+'" id="checkDivv" onclick="checkProp(\''+res[i].SALES_BARCODE+'\');">';
-			str += '<ul data-modal-id="receip_box")>';
-			str += '	<li class="checkli">';
-			str += '		<h2>'+res[i].SHOP_NAME+'</h2>';
+				
+				str += '<div class ="'+res[i].SEQ+'" id="'+res[i].SEQ+'" onclick="checkProp(\''+res[i].SEQ+'\','+res[i].TOTAL_AM+');">';
+				str += '<ul data-modal-id="receip_box")>';
+				str += '	<li class="checkli">';
+				str += '		<h2>'+res[i].SHOP_NAME+'</h2>';
+				str += ' <input type="hidden" id="'+res[i].SALES_BARCODE+'" value="'+res[i].TOTAL_AM+'">';
+				str += ' <input type="hidden" id="seq" value="'+res[i].SEQ+'"> ';
 				
 			if(res[i].SMS_DIV == '00'){
+				
 				var tempDate = res[i].SALES_DATE;
 				tempDate = tempDate.substring(0,4)+"-"+tempDate.substring(4,6)+"-"+tempDate.substring(6,8)/* +" "+tempDate.substring(8,10)+":"+tempDate.substring(10,12)+":"+tempDate.substring(12) */;
  								
 			}else{
+				
 				var tempDate = res[i].SALES_PRINT_DATE;
 			}
-			str += '		<p>'+ tempDate  +'</p>';
+				
+				str += '		<p>'+ tempDate  +'</p>';
 					 
 			if(res[i].CARD_ICOM != ''){
-			str += '<h3 class="mal_credit">'+res[i].CARD_ICOM+'&nbsp;<span> ';
-				if(res[i].SMS_DIV == '00'){ str += '전자영수증'; }else 
-				if(res[i].SMS_DIV == '01'){ str += 'SMS'; }
-				str += '</span></h3>';
+				
+				str += '<h3 class="mal_credit">'+res[i].CARD_ICOM+'&nbsp;<span> ';
+					
+					if(res[i].SMS_DIV == '00'){ str += '전자영수증'; }else 
+					if(res[i].SMS_DIV == '01'){ str += 'SMS'; }
+						
+						str += '</span></h3>';
 			}else if(res[i].CARD_ICOM == ''){
-			str += '<h3 class="mal_cash">현금&nbsp;<span>';
-				if(res[i].SMS_DIV == '00'){ str += '전자영수증'; }else 
-				if(res[i].SMS_DIV == '01'){ str += 'SMS'; }
-				str += '</span></h3>';
-			} 	
-			str += '</li>';
-			str += '<li class="mal_price">';
-			str += '<span id="price">'+numCommas(res[i].TOTAL_AM)+'</span> 원';
-			str += '</li>';
-			str += '<input type="checkbox" name="haha" id="'+res[i].SALES_BARCODE+'" class="checkSelect" value='+res[i].SALES_BARCODE+'><label for="receipt_div"></label>'
-			str += '<hr></ul>';
-			str += '</div>';
-		}
-		
-		if(res.length % 10 == 0 && maxSize != res.length){
-			$("#moreBtn").removeClass("dis_none");
+				
+				str += '<h3 class="mal_cash">현금&nbsp;<span>';
+					
+					if(res[i].SMS_DIV == '00'){ str += '전자영수증'; }else 
+					if(res[i].SMS_DIV == '01'){ str += 'SMS'; }
+						
+						str += '</span></h3>';
+			} 				
+				
+				str += '</li>';
+				str += '<li class="mal_price">';
+				str += '<span id="price"'+i+'">'+numCommas(res[i].TOTAL_AM)+'</span> 원';
+				str += '</li>';
+				str += '<input type="checkbox" name="haha" id="'+res[i].SEQ+'" class="checkSelect" value='+res[i].SEQ+'><label for="receipt_div"></label>';
+				str += '<input type="checkbox" name="hahab" id="'+res[i].SEQ+'" class="checkSelect" value='+res[i].SALES_BARCODE+' style="display:none;"><label for="receipt_div"></label>';
+				str +=	'<hr></ul>';
+				str += '</div>';
+		}	
+											
+	 	if(res.length % 10 == 0 && maxSize != res.length){
+	 		$("#moreBtn").removeClass("dis_none");
+			
 		}else{
 			$("#moreBtn").addClass("dis_none");
 		}
-		
+	}	
 		$("#receipt_div").empty();
 		$("#receipt_div").append(str).trigger("create");
 		
-		//새로고침 전 체크여부
-		if(checkV==''||checkV==null){
-			
-		}
-		else{
+		if(barcode==''||barcode==null){
 				
-			for(var i=0; i<checkV.length; i++){
-				$('#'+checkV[i]+'').prop('checked', true);
-				$('.'+checkV[i]+'').css({"background":"#eeeeee"});
-			}
-		} 
-	};	
-	
-var send_array = new Array();
- 
+		}else{
 			
-	$(".emailButton").click(function(){ 
+			var amt = 0;
+			var number = 0;
+			
+			for(var i=0; i<barcode.length; i++){
+				/* 
+				$('input[id="'+barcode[i]+'"]').prop('checked', true);
+			 	$('.'+barcode[i]+'').css({"background":"#eeeeee"}); */
+			 
+				if($('input:checkbox[id="'+barcode[i]+'"]').is(":checked")){
+		          	
+					$('input[id="'+barcode[i]+'"]').prop('checked',false);
+		            $('.'+barcode[i]+'').css({"background":"#ffffff"});
+		          	
+		            amt = $('input:hidden[id="'+barcode[i]+'"]').val();
+		         	
+		          	totalmoney -= parseInt(amt);
+		            
+		          	if(totalmoney < 0){
+		           	 	return;
+		            } 
+					
+				}											
+		        
+				else{
+				
+		            $('input[id="'+barcode[i]+'"]').prop('checked',true);
+		            $('.'+barcode[i]+'').css({"background":"#eeeeee"});
+		            
+		            amt = $('input:hidden[id="'+barcode[i]+'"]').val();
+		          	
+		            totalmoney += parseInt(amt);
+		            
+		          	if(totalmoney < 0){
+		           	 	return;
+		            }
+					
+		          	number++;
+		       }
+		}		
+	
+			
+			var str = "";
+			
+			str += '<div class="latest_allLeft" id="count">선택된 영수증 '+number+'건 / <span> 금액 : '+numCommas(totalmoney)+'원</span></div>';
+			str += '<div class="latest_allRight" id="choice"><a href="#receipt_details" name="receiptDetail" class="sendB">이메일 발송</a>';
+	    	str += '<hr></div>';
+			
+	    	$("#coninfofo").empty();
+			$("#coninfofo").append(str).trigger("create");
+		
+		}
+		
+		
+		barcode = new Array();
+		
+							
+		//새로고침 전 체크여부	
+		if(checkV==''||checkV==null){	
+			
+		}else{
+			for(var i=0; i<checkV.length; i++){
+				
+				$('input[id="'+checkV[i]+'"]').prop('checked',true);
+			 	$('.'+checkV[i]+'').css({"background":"#eeeeee"}); 
+			
+			}
+		}
+	 	
+		
+	 };	
+		
+	var send_array = new Array();
+ 			
+
+	
+	function emailButton(){
+		
 		var arr=$("input[type='checkbox']");
 		var count = "";
 		var str="";
-		
+				
 		$(arr).each(function(){
+			
 			if(this.checked){
+				
 				str+="barcode=";
 				str+=this.value;
 				str+="&";
 				count++;
+			
 			}
 		});
-				
+		
+		
+		
+		
+		
+	//alert대체			
 		if(count==0){
-			alert("선택안됨");
-			return false;
+			var str = "";
+					  		 			
+			str +=  '<div class="alert_txt" id="alert_desc">영수증을 선택해주세요.</div>';
+		   	str +=  '<div class="alert_btn" onclick="out();"><a href="#">확인</a></div>';
+		   	
+		   	$(".pages").append(appendthis);
+		   	$(".alert_box").empty();
+		  	$(".alert_box").append(str).trigger("create");
+		  	$(".alen_modal_overlay2").fadeTo(300, 0.7);   	
+			
+		 	$(".alert_box").fadeIn(300);
+		 		
+		 	return false;
+		}
+		
+		else if(count>30){
+			
+			var str = "";
+				
+			str +=  '<div class="alert_txt" id="alert_desc">영수증을 30개 이하로 선택해주세요.</div>';
+		   	str +=  '<div class="alert_btn" onclick="out();"><a href="#">확인</a></div>';
+		   	
+		   	$(".pages").append(appendthis);
+		   	$(".alert_box").empty();
+		  	$(".alert_box").append(str).trigger("create");
+		  	$(".alen_modal_overlay2").fadeTo(300, 0.7);   	
+			
+		 	$(".alert_box").fadeIn(300);
+		 		
+		 	return false;
 		}
 			
 		str=str.substring(0,str.length-1);
 		
+		if(transMission=='Y01'){
+			pageType = "transOk";
+		}else if(transMission=='Y02'){
+			pageType = "transNo";
+		}else if(transMission=="ALL"){
+			pageType = "ALL";
+		}else{
+			pageType = "SEARCH";
+		}
+				
+		location.href = 'emailOk2.html?'+str+'&telNo='+request.getParameter('telNo')+'&uuid='+request.getParameter('uuid')+'&pageType='+pageType+'&endSeq='+endSeq+'&startDay='+startDay+'&endDay='+endDay+'';
+	}
 			
-	 	location.href = 'emailOk2.html?'+str+'&telNo='+request.getParameter('telNo')+'&uuid='+request.getParameter('uuid');
-						
-	});
-		
-		
-	/* 	$.ajax({
+	/* 	$.ajax({	
 	type : "post",
 	url : commonIp() + "/theReal/receipt/eMailChk.do",
 	data : {
 		telNo : telNo
 	},
-	success : fn_mailOk,
+	success : fn_mailOk2,
 	error : whenError
 }); */
-//이메일 확인 화면 append 	
-	function fn_mailOk(data) {
+			
 		
-		var send_cnt = 0;
-		var chkbox = $(".checkSelect");
+	//영수증 미선택 확인창
+	function out(){
 		
-		for(var i=0;i<chkbox.length;i++) {
-		    if (chkbox[i].checked == true){
-		    	send_array[send_cnt] = chkbox[i].value;
-		        send_cnt++;
-		    }
-		}
-			 					
-//체크박스 선택 유무
-		if(send_cnt==0){
-			alert("선택안됨");
-			return;
-		}
-		 		
-//통과하면 append 	
-		  
-		var email = data; 
-		var str = "";
-		
-		var i = email.indexOf("@");
-		var first = email.substring(0,i);
-		var last = email.substring(i+1);
-		
-				
-		str	+= 		"<input type='text' id='first_email' size='10' value="+first+">";
-		str	+= 		"@<input type='text' id='last_email' size='10' value="+last+">";
-		str +=			"<select id='email_select'>";
-		str +=              "<option value='' selected>::선택하기::</option>";
-		str +=				"<option value='naver.com'>naver.com</option>";
-		str += 				"<option value='nate.com'>nate.com</option>";
-		str += 				"<option value='daum.net'>daum.net</option>";
-		str +=  			"<option value='gmail.com'>gmail.com</option>";
-		str += 				"<option value='hotmail.com'>hotmail.com</option>";
-		str +=				"<option value='bondingedu.com'>bondingedu.com</option>";
-		str +=				"<option value='hanmir.com'>hanmir.com</option>";
-		str +=				"<option value='empas.com'>empas.com</option>";
-		str +=				"<option value='dreamwiz.com'>dreamwiz.com</option>";
-		str +=				"<option value='korea.com'>korea.com</option>";
-		str	+=				"<option value='lycos.co.kr'>lycos.co.kr</option>";
-		str +=				"<option value='freechal.com'>freechal.com</option>";
-		str +=				"<option value='1'>::직접입력::</option>";
-		str += 			"</select>"; 
-					
-		
-		/* $("#maildiv").empty();
-		$("#maildiv").append(str).trigger("create");
-		
-		$(".pages").append(appendthis);
-		
-		$("#receip_box").fadeIn(500);
-		$(".alen_modal_overlay").fadeTo(300, 0.7);      */
+		$(".alert_box").fadeOut(300); 
+		$(".alen_modal_overlay2").remove(); 
 	}
 	
+	function outS(){
+		$("#alert_body").fadeOut(10);
+		modalOfmodalVal=false;
+	}
+	
+	function outZ(){
+		
+		$(".modal_box").fadeOut(300, function() {
+			$(".alen_modal_overlay2").remove()
+							
+		});
+	}
+	
+	//발송창 취소
+	function no(){
+			
+		$("#alert_body").fadeOut(10);
+		
+		pagestate = "";
+	}
+		
+	function searchNo(){
+		
+		$("#ser_box").fadeOut(300, function() {
+			$(".alen_modal_overlay2").remove()
+		});	
+		
+	}
+	
+	function close2(){
+		 $(".mail_box").fadeOut(300, function() {
+				$(".alen_modal_overlay2").remove()
+			});	
+		
+		 mailboxstate = ""; 
+	}
+			
+ 	//이메일 확인 화면 append 	
+	function fn_mailOk2(mail) {
+		
+		$(".pages").append(appendthis); 
+		 $(".mail_box").fadeOut(300, function() {
+			$(".alen_modal_overlay2").remove()
+		});	
+		 
+		mailboxstate = ""; 
+		
+		var i = mail.indexOf("@");
+		var first = mail.substring(0,i);
+		var last = mail.substring(i+1); 
+		
+		var testStr = "";		
+		
+		testStr += '<input type="text" class="email_adr" id="firstEmailValue" value="'+first+'">						';
+		
+		testStr += '<span>@</span>																						';
+		
+		testStr += '<input type="text" class="email_adr2" id="lastEmailValue" value="'+last+'" >						';
+		
+		testStr += '			<select id="email_select" onchange="change();">											';
+			
+		testStr += '				<option value="" selected>::선택하기::</option>										';
+		 
+		testStr += '				<option value="naver.com">naver.com</option>										';
+			
+		testStr += '				<option value="nate.com">nate.com</option>											';
+		
+		testStr += '				<option value="daum.net">daum.net</option>											';
+		
+		testStr += '				<option value="gmail.com">gmail.com</option>										';
+		
+		testStr += '				<option value="hotmail.com">hotmail.com</option>									';
+		
+		testStr +=	'				<option value="bondingedu.com">bondingedu.com</option>								';
+		
+		testStr +=	'				<option value="hanmir.com">hanmir.com</option>										';
+			
+		testStr +=	'				<option value="empas.com">empas.com</option>										';
+		
+		testStr +=	'				<option value="dreamwiz.com">dreamwiz.com</option>									';
+		
+		testStr +=	'				<option value="korea.com">korea.com</option>										';
+		
+		testStr+=	'				<option value="lycos.co.kr">lycos.co.kr</option>									';
+		
+		testStr +=	'				<option value="freechal.com">freechal.com</option>									';
+		
+		testStr +=	'				<option value="1">::직접입력::</option>												';
+		
+		testStr += '			</select>';
+		
+		$("#test").empty();	
+		$("#test").append(testStr);
+												
+		return;	
+			
+	}	 
+		
 	
 	//이메일 영수증 발송 모달 끄는 fun
 	$("#dadadadada").click(function(){
@@ -747,12 +1850,14 @@ var send_array = new Array();
 		
 	//날짜 검색 모달
 	function ass(){
-
-		$(".pages").append(appendthis);
-		$(".modal_box").fadeIn(300);	
-		$(".alen_modal_overlay2").fadeTo(300, 0.7);   	
+		
+		pagestate = 'check';
+		$(".pages").append(appendthis); 
+		$(".alen_modal_overlay2").fadeTo(300, 0.7);   
+		$("#ser_box").fadeIn(300);	
+		  	
 	};    	
-	
+					
 	$(".alen_modal_overlay2").click(function() {
 		
 		$(".modal_box").fadeOut(300, function() {
@@ -760,21 +1865,23 @@ var send_array = new Array();
 							
 		});
 	});	
-
+				
 	//이메일 컨트롤러로 전송
 	$(".transemail").click(function() {
+		
 		var first = $("#first_email").val();
 		var last = $("#last_email").val();
-
+			
 		var mail = first += "@"; 
 
 		mail += last;
-
+		
+		
 		//이메일 체크
 		if (email_check(mail) == false) {
 			alert("잘못된 이메일 형식입니다");
 			return;
-		}
+		} 
 
 		$.ajax({
 			type : 'post',
@@ -785,8 +1892,8 @@ var send_array = new Array();
 				barcode : send_array,
 				email : mail,
 				telNo : telNo
-			},
-			error : function() {
+			},	
+			error : function() {	
 				alert('통신실패!!');
 			},
 			success : function(data) {
@@ -798,50 +1905,51 @@ var send_array = new Array();
 			}
 		});
 	});
-							
+									
 	//이메일 정규식 유효성 체크  
 	function email_check(mail) {
-
+			
 		var regex = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
 		return (mail != '' && mail != 'undefined' && regex.test(mail));
 	}
 
-	//이메일 셀렉트
-	$(document).change($('#email_select'), function() {
+	/*   //이메일 셀렉트
+	$(document).change($('#email_select2'), function() {
+			
+		
+		if ($('#email_select2').val() == "1") {
 
-		if ($('#email_select').val() == "1") {
+			$("#lastEmailValue").val("");
 
-			$("#last_email").val("");
+			$("#lastEmailValue").prop("readonly", false);
 
-			$("#last_email").prop("readonly", false);
+		} else if ($('#email_select2').val() == "") {
 
-		} else if ($('#email_select').val() == "") {
+			$("#lastEmailValue").val("");
 
-			$("#last_email").val("");
-
-			$("#last_email").prop("readonly", true);
+			$("#lastEmailValue").prop("readonly", true);
 		} else {
+	
+			$("#lastEmailValue").val($('#email_select').val());
 
-			$("#last_email").val($('#email_select').val());
-
-			$("#last_email").prop("readonly", true);
+			$("#lastEmailValue").prop("readonly", true);
 		}
-	});
-				
-	$(".js-modal-close").click(function() {
+	});  
+				 */
+	/* $(".js-modal-close").click(function() {
 		$(".modal_box").fadeOut(300, function() {
 			
 			$(".alen_modal_overlay2").remove()
 
 		});	
-	});
-				
+	}); */
+					
 	$(".alen_arrow").click(
 			function() {
 				$('input[name="latestsbox"]:radio[value="detail"]').prop(
 						'checked', true);
-			});
+			});	
 	
 	$(window).resize(function() {
 		$(".modal_box").css({
@@ -849,19 +1957,86 @@ var send_array = new Array();
 			left : ($(window).width() - $(".modal_box").outerWidth()) / 2
 		});
 	});		
-	
+		 
 	$(window).resize();
-						
+		
 	function whenError(request, status, error) {
 		alert("에러");
 	}
+				
+	function backback(){
 		
-	function back(){
-		history.back(-1);
 	}
+
+	
+	
+	//전송완료 확인창
+	
+	function historyback(){
+		  $("#alert_body").fadeOut(10);
+			$('#receiptData').hide();
+		
+	}
+	
+ 	//이메일 셀렉트
+	function change(){
+			
+		if($('#email_select2').val() == "1"){
+	   	 							
+			$("#lastEmailValue").val("");  
+		    	
+			$("#lastEmailValue").prop("readonly",false); 
+		   		
+		}else if($('#email_select2').val() == ""){
+		    
+			$("#lastEmailValue").val("");  
+		    
+			$("#lastEmailValue").prop("readonly",true); 
+		
+		}else{
+		    		
+			$("#lastEmailValue").val($('#email_select2').val()); 
+		    
+			$("#lastEmailValue").prop("readonly",true); 
+		}	
+	}; 
+
+function change2(){
+	   	
+		if($('#email_select').val() == "1"){
+	   	 	
+			$("#lastEmailValue5").val("");  
+		    
+			$("#lastEmailValue5").prop("readonly",false); 
+		   
+		}else if($('#email_select').val() == ""){
+		    
+			$("#lastEmailValue5").val("");  
+		    
+			$("#lastEmailValue5").prop("readonly",true); 
+		}else{
+		    		
+			$("#lastEmailValue5").val($('#email_select').val()); 
+		    
+			$("#lastEmailValue5").prop("readonly",true); 
+		}	
+	};
+	
+	
+	
+	function backs(){
+		page = true;
+		$(".backfont").css('display','block');
+	}
+	
+	function backfont(){
+		location.href ="latest.html?telNo="+telNo;
+	}
+	
+
 </script>
                 		 
-           					     	 	  			
+           										     	 	  			
                 <div data-page="agree01" class="page cached">
                     <div class="page-content agree_acon">
                         <div class="content-block">
@@ -870,7 +2045,7 @@ var send_array = new Array();
                     </div>
                 </div>
                 			   
-        								
+     					
                 <div data-page="agree03" class="page cached">
                     <div class="page-content agree_acon">
                         <div class="content-block">
@@ -878,6 +2053,9 @@ var send_array = new Array();
                         </div>
                     </div>
                 </div> 
+                
+                
+                
              </div>
         </div>
     </div>

@@ -871,7 +871,11 @@
 	</insert>	
 	
 	
+<<<<<<< HEAD
 	<insert id="insertCancleReceiptData" parameterType="hashmap">
+=======
+	<insert id="insertcancelReceiptData" parameterType="hashmap">
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 		<![CDATA[
 			INSERT INTO 
 				TB_USER_DATA_RENEW
@@ -1041,6 +1045,7 @@
 	</insert>	
 	
 	<insert id="insertReceiptDeatailDataRenew" parameterType="hashmap">
+<<<<<<< HEAD
 		<![CDATA[
 			INSERT INTO 
 				TB_USER_DATA_DETAIL_RENEW
@@ -1090,6 +1095,215 @@
 		]]>
 	</insert>	
 	
+	
+	<delete id="deleteFailDate" parameterType="hashmap">
+	    <![CDATA[
+	    	DELETE FROM
+	    		TB_USER_DATA_RENEW
+	   		WHERE
+	   			SALES_BARCODE = #{delBarcode} 	
+	   		AND
+	   			SHOP_BIZNO = #{delBizNo}
+	   		AND
+	   			SALES_TYPE = #{salesType}
+	    ]]>
+	</delete>
+	
+	<delete id="deleteFailDateDetail" parameterType="hashmap">
+	    <![CDATA[
+	    	DELETE FROM
+	    		TB_USER_DATA_DETAIL_RENEW
+	   		WHERE
+	   			SALES_BARCODE = #{delBarcode} 	
+	   		AND
+	   			SHOP_BIZNO = #{delBizNo}
+	   		AND
+	   			SALES_TYPE = #{salesType}
+	    ]]>
+	</delete>
+	
+	
+	<!-- 
+	설유진 추가
+	 -->
+	<insert id="insertSmsData" parameterType="hashmap">
+=======
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+		<![CDATA[
+			INSERT INTO 
+				TB_USER_DATA_DETAIL_RENEW
+					(
+<<<<<<< HEAD
+					USER_CI 			,
+					REC_TEN_NO			,
+					SEND_TEN_NO			,	
+					APP_DT				,
+					APP_CO				,
+					CARD_APP_DIV		,
+					CARD_APP_CO			,
+					ACC_SUM_AMMOUNT		,
+					INST_DIV			,
+					APP_AMOUNT			,
+					APP_CO_DIV			,
+=======
+					USER_CI				,
+					USER_KEY			,
+					SALES_SEQ_NO		,
+					SALES_BARCODE		,
+					SALES_PNAME	    	,
+					SALES_PPRICE		,
+					SALES_OPRICE		,
+					SALES_QTY	    	,
+					SALES_DF_AMT		,
+					SALES_FP_AMT		,
+					SALES_TAX_AMT		,
+					SALES_SL_AMT		,
+					SALES_TYPE			,
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+					FRT_CREA_DTM		,
+					FRT_REGN_NM     	,
+					FNL_MOF_DTM	    	,
+					FNL_MDF_NM			,
+					UPLUS_USER_KEY		,
+					SHOP_BIZNO
+					)
+				VALUES
+					(
+<<<<<<< HEAD
+					#{CI} 				,
+					#{REC_TEN_NO}     	,
+					#{SEND_TEN_NO}    	,
+					#{APP_DT}     		,
+					#{APP_CO}       	,
+					#{CARD_APP_DIV}   	,
+					#{CARD_APP_CO}    	,
+					#{ACC_SUM_AMOUNT} 	,
+					#{INST_DIV}			,	
+					#{APP_AMOUNT}     	,
+					#{APP_CO_DIV}     	,
+					now()               ,
+					#{REC_TEN_NO}      	,
+=======
+					#{CI}   	        ,
+					#{userKey}          ,
+					#{seqNo}            ,
+					#{salesBarCode}     ,
+					#{pName}            ,
+					#{pPrice}           ,
+					#{oPrice}           ,
+					#{qty}              ,
+					#{dfAmt}			,	
+					#{fpAmt}            ,
+					#{taxAmt}           ,
+					#{slAmt}            ,
+					#{salesType}		,
+					now()               ,
+					'admin'             ,
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+					now()				,
+					'admin'				,
+					#{uplusUserKey}		,
+					#{shopBizNo}
+					)
+		]]>
+	</insert>	
+<<<<<<< HEAD
+
+
+	
+	<insert id="appMemberInsert" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO TB_USER
+			(
+				UUID			,
+				USER_CI			,
+				TEL_NO		    ,
+				USER_NM	        ,
+				USER_RRN	    ,
+				SEX_DIV_CD	    ,
+				TEL_COM_CD	    ,
+				LOCAL_DIV_CD	,
+				FRT_CREA_DTM	,
+				FRT_REGN_NM		,
+				FNL_MOF_DTM	    ,
+				FNL_MDF_NM		,
+				PUSH_KEY		,
+				PUSH_YN
+			)
+			VALUES 
+			(
+				#{uuId},
+				#{CI},
+				#{mbphnNo},
+				#{name},
+				#{birthday},  
+				#{gender},
+				#{comCd},
+				#{nation},
+			    now(), 
+			    'Admin',
+			    now(), 
+			    'Admin',
+				#{pushKey},
+			    'Y'
+			)
+		]]>
+	</insert>
+=======
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+	
+	<insert id="insertCancelReceiptDeatailDataRenew" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO 
+				TB_USER_DATA_DETAIL_RENEW
+					(
+					USER_CI				,
+					USER_KEY			,
+					SALES_SEQ_NO		,
+					SALES_BARCODE		,
+					SALES_PNAME	    	,
+					SALES_PPRICE		, 
+					SALES_OPRICE		,
+					SALES_QTY	    	,
+					SALES_DF_AMT		,
+					SALES_FP_AMT		,
+					SALES_TAX_AMT		,
+					SALES_SL_AMT		,
+					SALES_TYPE			,
+					FRT_CREA_DTM		,
+					FRT_REGN_NM     	,
+					FNL_MOF_DTM	    	,
+					FNL_MDF_NM			,
+					UPLUS_USER_KEY		,
+					SHOP_BIZNO
+					)
+				SELECT
+					USER_CI				,
+					USER_KEY			,
+					SALES_SEQ_NO		,
+					#{salesBarCode}		,
+					SALES_PNAME	    	,
+					SALES_PPRICE		,
+					SALES_OPRICE		,
+					SALES_QTY	    	,
+					SALES_DF_AMT		,
+					SALES_FP_AMT		,
+					SALES_TAX_AMT		,
+					SALES_SL_AMT		,
+					#{salesType}		,
+					FRT_CREA_DTM		,
+					FRT_REGN_NM     	,
+					FNL_MOF_DTM	    	,
+					FNL_MDF_NM			,
+					UPLUS_USER_KEY		,
+					SHOP_BIZNO					
+				FROM TB_USER_DATA_DETAIL_RENEW
+				WHERE 
+					SALES_BARCODE = #{oriSalesBarCode}
+		   		AND
+		   			SHOP_BIZNO = #{shopBizNo}
+		]]>
+	</insert>	
 	
 	<delete id="deleteFailDate" parameterType="hashmap">
 	    <![CDATA[
@@ -1309,6 +1523,28 @@
 			PWD = #{pwd}
 		]]>
 	</select>	
+<<<<<<< HEAD
+=======
+	
+	<select id="lgnChk2" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			TEL_NO,
+			UUID,
+			USER_CI,
+			USER_STATE
+		FROM
+			TB_USER
+		WHERE 
+			USER_CI = #{CI}
+		AND
+			TEL_NO = #{telNo}
+		
+		]]>
+		<!-- AND
+			uuId = #{deviceId} -->
+	</select>		
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 	
 	<select id="lgnChk2" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
@@ -2508,6 +2744,7 @@
 		ORDER BY DIV_DAY DESC
 		]]>
 	</select>
+<<<<<<< HEAD
 	
 	<!-- 리뉴얼 dayList -->	
 	<select id="userMinDate" parameterType="hashmap" resultType="String">
@@ -2700,6 +2937,215 @@
 		]]>
 	</select>		
 		
+=======
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+	
+	<!-- 리뉴얼 dayList -->	
+	<select id="userMinDate" parameterType="hashmap" resultType="String">
+	    <![CDATA[
+	    SELECT 
+	    	MIN(DATE_FORMAT(FRT_CREA_DTM,'%Y%m')) AS MIN_DATE
+	    FROM 
+	    	TB_SMS_MASTER 
+	    WHERE 
+	    	USER_CI = #{CI}
+	    ]]>
+	</select>
+	
+	<update id="cateChange" parameterType="hashmap">
+	    <![CDATA[
+	    UPDATE 
+	    	TB_SMS_MASTER
+		SET
+			APP_CO_DIV = #{appDiv}
+		WHERE
+			SMS_NO = #{smsNo}
+		AND
+			USER_CI = #{CI}
+	    ]]>
+	</update>
+	
+	<insert id="cateChangeBack" parameterType="hashmap">
+		    <![CDATA[
+		    	INSERT INTO TB_SMS_MASTER_CHANGE
+		    	(
+		    		USER_CI,
+		    		SMS_NO,
+		    		APP_CO,
+		    		APP_DIV,
+		    		APP_DIV_ORIGINAL,
+		    		CHANGE_DTM
+		    	)
+		    	VALUES
+		    	(
+		    		#{CI},
+		    		#{smsNo},
+		    		#{appCo},
+		    		#{appDiv},
+		    		#{appDivOri},
+		    		now()
+		    	)
+		    ]]>
+		</insert>
+
+
+	<select id="list01" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			SUM(APP_AMOUNT) AS TOTAL_AM,
+			COUNT(*) AS TOTAL_CNT
+		FROM
+			TB_SMS_MASTER
+		WHERE
+<<<<<<< HEAD
+			A.USER_CI = #{CI}
+			AND A.USER_CI = B.USER_CI
+			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
+		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) DESC
+=======
+			DATE_FORMAT(FRT_CREA_DTM,'%Y%m') = #{days}
+		AND
+			USER_CI = #{CI}
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+		]]>
+	</select>	
+	
+	
+	
+	<select id="dayList02" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d') AS DIV_DAY,
+			DATE_FORMAT(FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
+			DATE_FORMAT(FRT_CREA_DTM,'%m-%d') AS DIV_DATE,			
+			COUNT(*) AS MONTH_CNT, 
+			FORMAT(SUM(APP_AMOUNT),0) AS TOTAL_AMT 	
+		FROM 
+			TB_SMS_MASTER
+		WHERE 
+<<<<<<< HEAD
+			A.USER_CI = #{CI}
+			AND A.USER_CI = B.USER_CI
+			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
+		GROUP BY APP_CO_DIV,DIV_MONTH
+		ORDER BY DIV_MONTH DESC, convert(SUM(A.APP_AMOUNT), decimal)  DESC
+=======
+			USER_CI = #{CI}
+			AND DATE_FORMAT(FRT_CREA_DTM,'%Y%m') = #{days}
+		GROUP BY DIV_DAY
+		ORDER BY DIV_DAY DESC
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+		]]>
+	</select>	
+	
+	<select id="dayList03" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d') AS DIV_FULL,
+			DATE_FORMAT(FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
+			DATE_FORMAT(FRT_CREA_DTM,'%H:%i') AS DIV_TIME,
+			DATE_FORMAT(FRT_CREA_DTM,'%m-%d') AS DIV_DATE,
+			APP_AMOUNT,
+			APP_CO AS APP_CO,
+			CARD_APP_CO,
+			case when APP_CO_DIV is null then '999' else APP_CO_DIV end AS APP_CO_DIV,
+			INST_DIV,
+			SMS_NO
+		FROM
+			TB_SMS_MASTER
+		WHERE
+			USER_CI = #{CI}
+			AND DATE_FORMAT(FRT_CREA_DTM,'%Y%m') = #{days}
+		ORDER BY DIV_FULL DESC, DIV_TIME DESC
+		]]>
+	</select>	
+	
+	
+	<!-- card list 리뉴얼 -->
+	<select id="cardList02" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			DATE_FORMAT(FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
+			DATE_FORMAT(FRT_CREA_DTM,'%m-%d') AS DIV_DATE,
+			REC_TEN_NO,
+			CARD_APP_CO,
+			COUNT(SMS_NO) AS MONTH_CNT, 
+			FORMAT(SUM(APP_AMOUNT),0) AS TOTAL_AMT 
+		FROM 
+			TB_SMS_MASTER
+		WHERE 
+			USER_CI= #{CI}
+			AND DATE_FORMAT(FRT_CREA_DTM,'%Y%m')  = #{days}
+		GROUP BY CARD_APP_CO,DIV_MONTH
+		ORDER BY  MONTH_CNT DESC, TOTAL_AMT DESC
+		
+		]]>
+	</select>		
+	
+	<select id="cardList03" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d %H:%i:%s') AS DIV_FULL,
+			DATE_FORMAT(FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
+			DATE_FORMAT(FRT_CREA_DTM,'%m-%d') AS DIV_DATE,
+			APP_AMOUNT,
+			APP_CO AS APP_CO,
+			CARD_APP_CO,
+			case when APP_CO_DIV is null then 'etc' else APP_CO_DIV end AS APP_CO_DIV,
+			INST_DIV,
+			SMS_NO
+		FROM
+			TB_SMS_MASTER
+		WHERE
+			USER_CI = #{CI}
+
+			AND DATE_FORMAT(FRT_CREA_DTM,'%Y%m') = #{days}
+		ORDER BY DIV_FULL DESC
+		
+		]]>
+	</select>
+
+	
+	<!-- div 리뉴얼 -->
+	
+	<select id="divList02" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			DATE_FORMAT(FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
+			DATE_FORMAT(FRT_CREA_DTM,'%m-%d') AS DIV_DATE,
+			case when APP_CO_DIV is null then 'etc' else APP_CO_DIV end AS APP_CO_DIV,
+			COUNT(SMS_NO) AS MONTH_CNT, 
+			FORMAT(SUM(APP_AMOUNT),0) AS TOTAL_AMT 
+		FROM 
+			TB_SMS_MASTER
+		WHERE 
+			USER_CI = #{CI}
+			AND DATE_FORMAT(FRT_CREA_DTM,'%Y%m') = #{days}
+		GROUP BY APP_CO_DIV
+		ORDER BY APP_CO_DIV ASC
+		]]>
+	</select>		
+	
+	<select id="divList03" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d') AS DIV_FULL,
+			DATE_FORMAT(FRT_CREA_DTM,'%Y%d') AS DIV_MONTH,
+			DATE_FORMAT(FRT_CREA_DTM,'%m-%d') AS DIV_DATE,
+			APP_AMOUNT,
+			APP_CO AS APP_CO,
+			CARD_APP_CO,
+			APP_CO_DIV,
+			SMS_NO
+		FROM
+			TB_SMS_MASTER
+		WHERE
+			USER_CI = #{CI}
+			AND DATE_FORMAT(FRT_CREA_DTM,'%Y%m') = #{days}
+			ORDER BY  APP_CO_DIV ASC
+		]]>
+	</select>		
+		
 	
 	<select id="depth03DayList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
@@ -2715,6 +3161,8 @@
 		WHERE
 			A.USER_CI = #{CI}
 			AND A.USER_CI = B.USER_CI
+<<<<<<< HEAD
+=======
 			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
 		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) DESC
 		]]>
@@ -2755,6 +3203,7 @@
 		WHERE
 			A.USER_CI = #{CI}
 			AND A.USER_CI = B.USER_CI
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
 		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) DESC
 		]]>
@@ -3068,7 +3517,7 @@
 		    
 		</update>
 		
-		<select id="cancleReceipt" parameterType="hashmap" resultType="hashmap">
+		<select id="cancelReceipt" parameterType="hashmap" resultType="hashmap">
 		    <![CDATA[
 		    	SELECT 
 		   		 	USER_KEY,
@@ -3123,7 +3572,11 @@
 		</select>
 		
 		
+<<<<<<< HEAD
 		<select id="cancleGetReceipt" parameterType="hashmap" resultType="hashmap">
+=======
+		<select id="cancelGetReceipt" parameterType="hashmap" resultType="hashmap">
+>>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 		    <![CDATA[
 		    	SELECT 
 		    		USER_KEY,

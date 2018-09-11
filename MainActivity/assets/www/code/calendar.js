@@ -94,8 +94,8 @@
             '{yyyy}/<span class="m">{mm}</span>',
             '</a>',
             '<div class="calendar-arrow">',
-            '<i class="prev" data-calendar-arrow-date>{prev}</i>',
-            '<i class="next" data-calendar-arrow-date>{next}</i>',
+            '<i class="prev" id="prev_btn" data-calendar-arrow-date>{prev}</i>',
+            '<i class="next" id="next_btn" data-calendar-arrow-date>{next}</i>',
             '</div>',
             '</div>',
             '<div class="calendar-ct">',
@@ -299,6 +299,7 @@
             if (dt.isSame(y, m, d)) {
                 data['class'] += ' ' + TODAY_CLASS;
             }
+            
 
             data.date = idt.format(this.options.format);
             data.action = this.getDayAction(idt);
@@ -659,12 +660,12 @@
 
                 var y = Number(_this.$disMonth.html()),
                     type = getClass(this);
-
+                	type = type.substring(0,4)
                 y = type === 'prev' ? y - 1 : y + 1;
                 _this.updateMonthView(y);
                 vc('month', y);
             });
-/*
+
            // selected 해당 달이 아닌 일이 눌릴경우 해당 달로 이동되는 js
             _this.$element.on('click', '[' + ITEM_DAY + ']', function() {
                 var d = parseInt(this.innerHTML),
@@ -680,12 +681,16 @@
             }).on('click', '[' + ITEM_MONTH + ']', function() {
                 var y = Number(_this.$disMonth.html()),
                     m = parseInt(this.innerHTML);
-
+                	
+                	
+                
+                
                 _this.updateDateView(y, m);
                 vc('date', y, m);
                 _this.options.onSelected.call(this, 'month', new Date(y, m - 1));
-            });*/
-
+                
+                //month_change(y,m)
+            });
             // hover
             _this.$element.on('mouseenter', '[' + ITEM_DAY + ']', function(e) {
                 var $this = $(this),
@@ -753,6 +758,8 @@
             args.shift();
             return calendar.methods(fn, args);
         }
+        
+        if(la)
 
         return this;
     }

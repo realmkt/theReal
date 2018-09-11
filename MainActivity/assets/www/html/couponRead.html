@@ -41,9 +41,6 @@
         	<!-- <div class="pf_photo" style="background:url(../common/profile.jpg) no-repeat center;"></div> -->
             
             <div class="pf_txt">
-            	<h2>김종현</h2>
-                <p>쿠폰 <span>0</span>개</p>
-                <p>포인트 <span>200</span>p</p>
             </div>
             <hr>
         </div>
@@ -241,7 +238,7 @@ function back(){
 }
 var request = new Request();
 var telNo = request.getParameter('telNo');
-var uuId = request.getParameter('uuId');
+var CI = window.localStorage.getItem("CI");
 var seq = request.getParameter('seq');
 $(document).ready(function(){
 	
@@ -297,6 +294,8 @@ function fn_couponRead(seq){
 	        url : commonIp()+"/theReal/receipt/couponRead.do",
 	        data: {
 	        	seq : seq,
+	        	CI : CI
+	        	
 	        },
 	        success: fn_sucCouponRead,
 	        error: whenError
@@ -308,7 +307,7 @@ function fn_sucCouponRead(resdata){
 	$(".coupond_inbox").empty();
 	var strDtl = "";
 	strDtl += '<div class="cod_table">';
-	strDtl += '	<ul>';
+	strDtl += '	<ul style="font-family : "Droid Sans Fallback", sans-serif">';
 	strDtl += '      <li>'+resdata.COUPON_TITLE+'</li>';
 	strDtl += '      <li class="cod_tsub"><span style="font-size:13px; padding:10px; color:#000">'+resdata.USE_DATE_ORG+'</span><span class="cod_right">조회수 : '+resdata.COUPON_CNT;
 	if((resdata.COUPON_TOTAL-resdata.COUPON_DOWNLOAD)==0){
@@ -329,10 +328,17 @@ function fn_sucCouponRead(resdata){
 	
 	if(resdata.downCnt){
 		$("#couponInBtn").val("모두 소진된 쿠폰입니다.");
-		$("#couponInBtn").css("background","#eee");
-		$("#couponInBtn").css("color","red");
+		$("#couponInBtn").css("background","#999");
+		$("#couponInBtn").css("color","black");
 		$("#couponInBtn").prop("disabled", true);
-	}		
+	}
+
+	if(resdata.valueInt == 1){
+		$("#couponInBtn").val("이미 발급받은 쿠폰입니다.");
+		$("#couponInBtn").css("background","#999");
+		$("#couponInBtn").css("color","black");
+		$("#couponInBtn").prop("disabled", true);
+	}
 		
 }
 
@@ -344,7 +350,7 @@ function couponInBtn(){
 	        	nowDay : dateInput(0,"-"),
 	        	seq : seq,
 	        	telNo : telNo,
-	        	uuId : uuId
+	        	CI : CI
 	        },
 	        success: fn_sucCouponAdd,
 	        error: whenError
@@ -364,8 +370,8 @@ function fn_sucCouponAdd(resdata){
 	}else if(resdata==2){
 		alert("쿠폰이 모두 소진되었습니다.\n다음 이벤트를 기대해주세요!");
 	}
-	$("#couponInBtn").css("background","#eee");
-	$("#couponInBtn").prop("disabled", true);
+	$("#couponInBtn").css("background","#999");
+	//$("#couponInBtn").prop("disabled", true);
 }
 </script>
 </body>

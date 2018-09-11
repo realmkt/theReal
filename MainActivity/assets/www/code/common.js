@@ -1,3 +1,5 @@
+var affliateFlag = false;
+
 $(function () {
 	var $activate_scrollator4 = $('#activate_scrollator4');
 
@@ -24,47 +26,49 @@ $(function () {
 $(document).ready(function(){
 	
  	$(document).on('click','#leftMenuLatest',function(){
- 		location.href='latest.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='latest.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
 /* 	$(document).on('click','#leftMenuHistory',function(){
  		location.href='latest.html?telNo='+request.getParameter('telNo');
  	});*/
 /* 	$(document).on('click','#leftMenuComHistiry',function(){
- 		location.href='household.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='household.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#leftMenuSmsHistory',function(){
- 		location.href='mobile.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='mobile.html?CI='+request.getParameter('CI')+'&telNo='+request.getParameter('telNo');
  	});*/
- 	/*$(document).on('click','#leftMenuAffliate',function(){
- 		location.href='affliate.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
- 	}); */
+ 	$(document).on('click','#leftMenuAffliate',function(){
+ 		location.href='affliate.html?CI='+CI+'&telNo='+request.getParameter('telNo');
+ 	});
  	$(document).on('click','#leftMenuComHistiry',function(){
- 		location.href='mobile.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='mobile.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	}); 	
  	$(document).on('click','#leftMenuEvent',function(){
- 		location.href='event.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='event.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#leftMenuCoupon',function(){
- 		location.href='coupon.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='coupon.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#leftMenuNotice',function(){
- 		location.href='notice.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='notice.html?CI='+CI+'&telNo='+request.getParameter('telNo');
+ 	});
+ 	$(document).on('click','.left-setting-icon',function(){
+ 		location.href='setting.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','.alen_logo',function(){
- 		location.href='index.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='index.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#settingBtn',function(){
- 		location.href='setting.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='setting.html?CI='+CI+'&telNo='+request.getParameter('telNo');
  	});
  	$(document).on('click','#leftMenuLogOut',function(){
 	  	var storage = window.localStorage;
-	  	localStorage.removeItem("id");
-	  	localStorage.removeItem("pw");		
+	  	localStorage.removeItem("CI");
 		location.href='../login.html';
  	});
  	
  	$(document).on('click','#myCoupon',function(){
- 		location.href='couponMy.html?uuId='+request.getParameter('uuId')+'&telNo='+request.getParameter('telNo');
+ 		location.href='couponMy.html?telNo='+request.getParameter('telNo');
  	});
 	/*   $("#allCheck").on("click",function(){
 alert();
@@ -183,12 +187,12 @@ return true;
 //개발IP셋팅
 function commonIp(){
 	var commonIp = "";
-	var dev = true;
+	var dev = false;
 	if(dev){
 		commonIp = "http://182.162.84.177:80";
 		//commonIp = "117.52.97.40";
 	}else{
-		commonIp = "http://117.52.97.40:80";
+		commonIp = "http://110.45.190.114:80";
 	}
 	return commonIp; 
 }
@@ -241,18 +245,29 @@ function numberWithCommas(x) {
 function parseAppCoDiv(appCoCd) {
 	var appCoCdNm ="";
 	switch (appCoCd) {
-	  case 'A01'  : appCoCdNm ='레져/문화'; break;
-	  case 'B01'  : appCoCdNm ='뷰티/미용'; break;
-	  case 'C01'  : appCoCdNm ='카페/베이커리'; break;
-	  case 'E01'  : appCoCdNm ='주유'; break;
-	  case 'E02'  : appCoCdNm ='음식점'; break;
-	  case 'F01'  : appCoCdNm ='프렌차이즈'; break;
-	  case 'M01'  : appCoCdNm ='생활/마트'; break;
-	  case 'M02'  : appCoCdNm ='의료/건강'; break;
-	  case 'S01'  : appCoCdNm ='쇼핑'; break;
-	  case 'T01'  : appCoCdNm ='교통'; break;
-	  case 'T02'  : appCoCdNm ='통신'; break;
-	  default   : appCoCdNm ='기타'; break;
+	/*case "000": appCoCdNm = "미확인"; break;*/
+	case "001": appCoCdNm = "외식/식사" ;break;
+	case "002": appCoCdNm = "카페/베이커리" ;break;
+	case "003": appCoCdNm = "술/유흥" ;break;
+	case "004": appCoCdNm = "마트/편의" ;break;
+	case "005": appCoCdNm = "뷰티/미용" ;break;
+	case "006": appCoCdNm = "주거/생활" ;break;
+	case "007": appCoCdNm = "교통/주유" ;break;
+	case "008": appCoCdNm = "통신"; break;
+	case "009": appCoCdNm = "쇼핑"; break;
+	case "010": appCoCdNm = "온라인쇼핑"; break;
+	case "011": appCoCdNm = "문화/예술"; break;
+	case "012": appCoCdNm = "서점/문구"; break;
+	case "013": appCoCdNm = "레저/스포츠" ;break;
+	case "014": appCoCdNm = "의료/건강" ;break;
+	case "015": appCoCdNm = "여행/숙박"; break;
+	case "016": appCoCdNm = "교육"; break;
+	case "017": appCoCdNm = "육아/아동"; break;
+	case "018": appCoCdNm = "경조사/종교"; break;
+	case "019": appCoCdNm = "금융"; break;
+	case "020": appCoCdNm = "세금"; break;
+	case "021": appCoCdNm = "자동차/관리"; break;
+	case "999": appCoCdNm = "기타/미확인"; break;
 	}			
 	return appCoCdNm;
 }
@@ -306,7 +321,7 @@ function phoneFomatter(num,type){
         }
     }
     return formatNum;
-    
+   
 }
 
 
@@ -316,7 +331,7 @@ function commonUserData(){
         type: "post",
         url : commonIp()+"/theReal/receipt/startUserData.do",
         data: {
-        	telNo  	: request.getParameter('telNo'),  
+        	CI  	: window.localStorage.getItem("CI")
         },
         success: fn_commonUserData,
         error: fn_whenError
@@ -332,15 +347,15 @@ function fn_commonUserData(resdata){
 	$(".left_menu").empty();
 	resultCnt = resultData.length;
 	if(resultData.length>0){
-		for(var i=0; i<resultData.length; i++){
-			str += '<table><tr><td><img src="../common/mobile.png"></td> '
-			str += '<td><h2>'+resultData[i].USER_NM+'</h2><br><span>'+resultData[i].EMAIL+'</span></td></tr></table>';
+		for(var i=0; i<1; i++){
+			str += '<table><tr><td><img src="../common/mobile.png" onclick="mainLoca()"></td> '
+			str += '<td><h2>'+resultData[i].USER_NM+'</h2><br>';  //<span>'+resultData[i].EMAIL+'</span></td></tr></table>';
 			if(resultData[i].PUSH_YN == "Y"){
 				$("#alarmBtn").prop('checked', true) ;
 			}else{
 				$("#alarmBtn").prop('checked', false) ;
 			}
-			str += '<a class="myCoupon" id="myCoupon" href="#"><img src="../common/myCoupon.png"><p> 내 쿠폰함</p></a>';
+			/*str += '<a class="myCoupon" id="myCoupon" href="#"><img src="../common/myCoupon.png"><p> 내 쿠폰함</p></a>';*/
 			
 			$("#barcodeName").empty();
 			$("#barcodeName").append(resultData[i].USER_NM);
@@ -369,12 +384,12 @@ function fn_commonUserData(resdata){
 	str2 += '    </li>';*/
 	str2 += '	<li id="leftMenuComHistiry">';
 	str2 += '    <div class="leftm_box leftm03"></div>';
-	str2 += '    <a href="javascript:void(0)">지출내역</a>';
+	str2 += '    <a href="javascript:void(0)">월별내역</a>';
 	str2 += '    </li>';
-/*	str2 += '	<li id="leftMenuAffliate">';
-	str2 += '    <div class="leftm_box leftm08"></div>';
+	str2 += '	<li id="leftMenuAffliate">';
+	str2 += '    <div class="leftm_box leftm08" style="left:5px; top:3px"></div>';
 	str2 += '    <a href="javascript:void(0)">가맹점</a>';
-	str2 += '    </li>';*/
+	str2 += '    </li>';
 /*	str2 += '	<li id="leftMenuSmsHistory">';
 	str2 += '    <div class="leftm_box leftm07"></div>';
 	str2 += '    <a href="javascript:void(0)">모바일영수증</a>';
@@ -383,10 +398,10 @@ function fn_commonUserData(resdata){
 	str2 += '    <div class="leftm_box leftm04"></div>';
 	str2 += '    <a href="javascript:void(0)">이벤트</a>';
 	str2 += '    </li>';
-	str2 += '	<li id="leftMenuCoupon">';
+/*	str2 += '	<li id="leftMenuCoupon">';
 	str2 += '    <div class="leftm_box leftm09"></div>';
 	str2 += '    <a href="javascript:void(0)">더리얼 쿠폰</a>';
-	str2 += '    </li>';
+	str2 += '    </li>';*/
 	str2 += '	<li id="leftMenuNotice">';
 	str2 += '    <div class="leftm_box leftm05"></div>';
 	str2 += '    <a href="javascript:void(0)">공지사항</a>';
@@ -405,10 +420,155 @@ function fn_commonUserData(resdata){
 	
 }
 
+/*function fn_commonUserData(resdata){
+	 var str = "";
+	 var str2 = "";
+	var resultData = resdata.resultMap;
+	var cardCashDiv = "";
+	$(".pf_txt").empty();
+	$(".left_menu").empty();
+	resultCnt = resultData.length;
+	if(resultData.length>0){
+		for(var i=0; i<1; i++){
+			str += '<table><tr><td><img src="../common/mobile.png" onclick="mainLoca()" style="width:30px"></td> ';
+			str += '<td><h2>'+resultData[i].USER_NM+'</h2><br><span>'+resultData[i].EMAIL+'</span></td></tr></table>';
+			str += '<td><h2>'+resultData[i].USER_NM+'님</h2></td>';
+			str += '<td><img src="../common/setting_white.png" class="left-setting-icon"><img src="../common/x_white.png" class="left-close-icon" id="left-close-icon" onclick="javascript:close_left()"></td>';
+			
+			
+			
+			
+			str += '</tr></table>';
+			if(resultData[i].PUSH_YN == "Y"){
+				$("#alarmBtn").prop('checked', true) ;
+			}else{
+				$("#alarmBtn").prop('checked', false) ;
+			}
+			str += '<a class="myCoupon" id="myCoupon" href="#"><img src="../common/myCoupon.png"><p> 내 쿠폰함</p></a>';
+			
+			$("#barcodeName").empty();
+			$("#barcodeName").append(resultData[i].USER_NM);
+		}
+	}		 
+	
+	else{
+		str += '<h2></h2>';
+		str += '<h1></h1>';
+		//str += '<p>쿠폰 <span>2</span>개 <span> &emsp; 포인트 </span><span>1721</span>p</p>';		
+	}
+	str += '<div class="alen_setting" id="settingBtn">';
+	str += '<a href="javascript:void(0);"><i class="icon icon-form-settings"></i></a>';
+	str += '</div>	';
+	
+	$(".pf_txt").append(str);
+	
+	str2 += '<ul>';
+	str2 += '	<li>';
+	str2 += '<a><img src="../common/mobile.png"></a>';
+	str2 += '';
+	str2 += '	</li>';
+	str2 += '</ul>';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	str2 += '<ul>';
+	str2 += '	<li id="leftMenuLatest">';
+	str2 += '    <div class="leftm_box leftm01"></div>';
+	str2 += '    <a href="javascript:void(0)">최근사용내역</a>';
+	str2 += '    </li>';
+	str2 += '	<li id="leftMenuHistory">';
+	str2 += '    <div class="leftm_box leftm02"></div>';
+	str2 += '    <a href="javascript:void(0)">영수증확인</a>';
+	str2 += '    </li>';  제거
+	str2 += '	<li id="leftMenuComHistiry">';
+	str2 += '    <div class="leftm_box leftm03"></div>';
+	str2 += '    <a href="javascript:void(0)">월별내역</a>';
+	str2 += '    </li>';
+	str2 += '	<li id="leftMenuAffliate">';
+	str2 += '    <div class="leftm_box leftm08" style="left:5px; top:3px"></div>';
+	str2 += '    <a href="javascript:void(0)">가맹점</a>';
+	str2 += '    </li>';
+	str2 += '	<li id="leftMenuSmsHistory">';
+	str2 += '    <div class="leftm_box leftm07"></div>';
+	str2 += '    <a href="javascript:void(0)">모바일영수증</a>';
+	str2 += '    </li>'; 제거  
+	str2 += '	<li id="leftMenuEvent">';
+	str2 += '    <div class="leftm_box leftm04"></div>';
+	str2 += '    <a href="javascript:void(0)">이벤트</a>';
+	str2 += '    </li>';
+	str2 += '	<li id="leftMenuCoupon">';
+	str2 += '    <div class="leftm_box leftm09"></div>';
+	str2 += '    <a href="javascript:void(0)">더리얼 쿠폰</a>';
+	str2 += '    </li>'; 제거 
+	str2 += '	<li id="leftMenuNotice">';
+	str2 += '    <div class="leftm_box leftm05"></div>';
+	str2 += '    <a href="javascript:void(0)">공지사항</a>';
+	str2 += '    </li>';
+	str2 += '    </li>';
+	str2 += '	<li id="leftMenuLogOut">';
+	str2 += '    <div class="leftm_box leftm05"></div>';
+	str2 += '    <a href="javascript:void(0)">로그아웃</a>';
+	str2 += '    </li>'; 제거 
+	str2 += '	<li id="settingBtn">';
+	str2 += '    <div class="leftm_box leftm06"></div>';
+	str2 += '    <a href="javascript:void(0)">설정</a>';
+	str2 += '    </li>';
+	str2 += '</ul>';	
+	
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	str2 += '';
+	
+	
+	
+	
+	
+	
+	
+	$(".left_menu").append(str2);
+	
+}*/
+
 function fn_whenError(){
-	alert("실패.");
+	//alert("실패.??");
 }
 
+function mainLoca(){
+	location.href='index.html?CI='+CI+'&telNo='+request.getParameter('telNo');
+}
 
 var Request = function()
 {
@@ -428,6 +588,48 @@ var Request = function()
         }
         return rtnval;
     }
+}
+
+
+function category(divCd){
+	var div
+	
+	switch (divCd) {
+	case "000": div = "미확인"; break;
+	case "001": div = "외식/식사" ;break;
+	case "002": div = "카페/베이커리" ;break;
+	case "003": div = "술/유흥" ;break;
+	case "004": div = "마트/편의" ;break;
+	case "005": div = "뷰티/미용" ;break;
+	case "006": div = "주거/생활" ;break;
+	case "007": div = "교통/주유" ;break;
+	case "008": div = "통신"; break;
+	case "009": div = "쇼핑"; break;
+	case "010": div = "온라인쇼핑"; break;
+	case "011": div = "문화/예술"; break;
+	case "012": div = "서점/문구"; break;
+	case "013": div = "레저/스포츠" ;break;
+	case "014": div = "의료/건강" ;break;
+	case "015": div = "여행/숙박"; break;
+	case "016": div = "교육"; break;
+	case "017": div = "육아/아동"; break;
+	case "018": div = "경조사/종교"; break;
+	case "019": div = "금융"; break;
+	case "020": div = "세금"; break;
+	case "021": div = "자동차/관리"; break;
+	case "999": div = "기타/미확인";break;
+	default:
+		break;
+	}
+	
+	
+	
+}
+
+
+function close_left(){
+	$(".panel-overlay").trigger("click"); 	
+	$(".panel-overlay").trigger("click"); 	
 }
 
 
