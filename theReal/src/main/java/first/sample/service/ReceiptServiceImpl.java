@@ -245,8 +245,8 @@ public class ReceiptServiceImpl implements ReceiptService {
 	}
 	
 	@Override
-	public void insertCancleReceiptData(Map<String, Object> map) throws Exception {
-		receiptDAO.insertCancleReceiptData(map);
+	public void insertcancelReceiptData(Map<String, Object> map) throws Exception {
+		receiptDAO.insertcancelReceiptData(map);
 		System.out.println("impl@@@" + map);
 	}
 
@@ -833,14 +833,14 @@ public class ReceiptServiceImpl implements ReceiptService {
 	}
 	
 	@Override
-	public Map<String, Object> cancleReceipt(HashMap<String, Object> map) throws Exception {
-		Map<String, Object> resultMap = receiptDAO.cancleReceipt(map); 
+	public Map<String, Object> cancelReceipt(HashMap<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = receiptDAO.cancelReceipt(map); 
 		return resultMap;
 	}
 	
 	@Override
-	public HashMap<String, Object> cancleGetReceipt(HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = receiptDAO.cancleGetReceipt(map); 
+	public HashMap<String, Object> cancelGetReceipt(HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = receiptDAO.cancelGetReceipt(map); 
 		System.out.println("TESTSTSTT");
 		return resultMap;
 	}

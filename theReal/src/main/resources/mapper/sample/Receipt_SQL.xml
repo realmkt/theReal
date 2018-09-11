@@ -871,7 +871,7 @@
 	</insert>	
 	
 	
-	<insert id="insertCancleReceiptData" parameterType="hashmap">
+	<insert id="insertcancelReceiptData" parameterType="hashmap">
 		<![CDATA[
 			INSERT INTO 
 				TB_USER_DATA_RENEW
@@ -1119,7 +1119,7 @@
 					USER_CI				,
 					USER_KEY			,
 					SALES_SEQ_NO		,
-					SALES_BARCODE		,
+					#{salesBarCode}		,
 					SALES_PNAME	    	,
 					SALES_PPRICE		,
 					SALES_OPRICE		,
@@ -1137,7 +1137,7 @@
 					SHOP_BIZNO					
 				FROM TB_USER_DATA_DETAIL_RENEW
 				WHERE 
-					SALES_BARCODE = #{salesBarCode}
+					SALES_BARCODE = #{oriSalesBarCode}
 		   		AND
 		   			SHOP_BIZNO = #{shopBizNo}
 		]]>
@@ -3120,7 +3120,7 @@
 		    
 		</update>
 		
-		<select id="cancleReceipt" parameterType="hashmap" resultType="hashmap">
+		<select id="cancelReceipt" parameterType="hashmap" resultType="hashmap">
 		    <![CDATA[
 		    	SELECT 
 		   		 	USER_KEY,
@@ -3175,7 +3175,7 @@
 		</select>
 		
 		
-		<select id="cancleGetReceipt" parameterType="hashmap" resultType="hashmap">
+		<select id="cancelGetReceipt" parameterType="hashmap" resultType="hashmap">
 		    <![CDATA[
 		    	SELECT 
 		    		USER_KEY,
