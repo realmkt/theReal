@@ -872,10 +872,14 @@
 	
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<insert id="insertCancleReceiptData" parameterType="hashmap">
 =======
 	<insert id="insertcancelReceiptData" parameterType="hashmap">
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+	<insert id="insertCancleReceiptData" parameterType="hashmap">
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 		<![CDATA[
 			INSERT INTO 
 				TB_USER_DATA_RENEW
@@ -1281,7 +1285,7 @@
 					USER_CI				,
 					USER_KEY			,
 					SALES_SEQ_NO		,
-					#{salesBarCode}		,
+					SALES_BARCODE		,
 					SALES_PNAME	    	,
 					SALES_PPRICE		,
 					SALES_OPRICE		,
@@ -1299,7 +1303,7 @@
 					SHOP_BIZNO					
 				FROM TB_USER_DATA_DETAIL_RENEW
 				WHERE 
-					SALES_BARCODE = #{oriSalesBarCode}
+					SALES_BARCODE = #{salesBarCode}
 		   		AND
 		   			SHOP_BIZNO = #{shopBizNo}
 		]]>
@@ -3517,7 +3521,7 @@
 		    
 		</update>
 		
-		<select id="cancelReceipt" parameterType="hashmap" resultType="hashmap">
+		<select id="cancleReceipt" parameterType="hashmap" resultType="hashmap">
 		    <![CDATA[
 		    	SELECT 
 		   		 	USER_KEY,
@@ -3573,10 +3577,14 @@
 		
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<select id="cancleGetReceipt" parameterType="hashmap" resultType="hashmap">
 =======
 		<select id="cancelGetReceipt" parameterType="hashmap" resultType="hashmap">
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+		<select id="cancleGetReceipt" parameterType="hashmap" resultType="hashmap">
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 		    <![CDATA[
 		    	SELECT 
 		    		USER_KEY,

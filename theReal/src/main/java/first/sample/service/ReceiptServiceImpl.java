@@ -246,12 +246,17 @@ public class ReceiptServiceImpl implements ReceiptService {
 	
 	@Override
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public void insertCancleReceiptData(Map<String, Object> map) throws Exception {
 		receiptDAO.insertCancleReceiptData(map);
 =======
 	public void insertcancelReceiptData(Map<String, Object> map) throws Exception {
 		receiptDAO.insertcancelReceiptData(map);
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+	public void insertCancleReceiptData(Map<String, Object> map) throws Exception {
+		receiptDAO.insertCancleReceiptData(map);
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 		System.out.println("impl@@@" + map);
 	}
 
@@ -841,12 +846,13 @@ public class ReceiptServiceImpl implements ReceiptService {
 	}
 	
 	@Override
-	public Map<String, Object> cancelReceipt(HashMap<String, Object> map) throws Exception {
-		Map<String, Object> resultMap = receiptDAO.cancelReceipt(map); 
+	public Map<String, Object> cancleReceipt(HashMap<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = receiptDAO.cancleReceipt(map); 
 		return resultMap;
 	}
 	
 	@Override
+<<<<<<< HEAD
 <<<<<<< HEAD
 	public HashMap<String, Object> cancleGetReceipt(HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = receiptDAO.cancleGetReceipt(map); 
@@ -854,6 +860,10 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public HashMap<String, Object> cancelGetReceipt(HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = receiptDAO.cancelGetReceipt(map); 
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+	public HashMap<String, Object> cancleGetReceipt(HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = receiptDAO.cancleGetReceipt(map); 
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 		System.out.println("TESTSTSTT");
 		return resultMap;
 	}

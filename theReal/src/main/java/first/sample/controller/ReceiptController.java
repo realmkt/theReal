@@ -1726,10 +1726,14 @@ public class ReceiptController {
 	/*
 	 * 전송받은 전자영수증 데이터 저장
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 */
 =======
 	 */  //http://182.162.84.177/theReal/receipt/insertReceiptData.do
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+	 */
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/receipt/insertReceiptData.do")
 	@ResponseBody
@@ -1793,6 +1797,7 @@ public class ReceiptController {
 			 * 회원이메일을 가져오기 위한 로직 추가
 			 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			log.debug("cancle resultMap :: " + var.toString());
 
 			Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -1803,10 +1808,17 @@ public class ReceiptController {
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			HashMap<String, Object> cancelMap = new HashMap<String, Object>();
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+			log.debug("cancle resultMap :: " + var.toString());
+
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			HashMap<String, Object> cancleMap = new HashMap<String, Object>();
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 
 			if (var.find("salesInfo.salesType").toString().equals("RCP02")) {
 
 				log.debug(var);
+<<<<<<< HEAD
 <<<<<<< HEAD
 				cancleMap.put("originRecNo", var.find("salesInfo.originRecNo").toString());
 				cancleMap.put("shopBizNo", var.find("shopInfo.bizNo").toString());
@@ -1818,6 +1830,12 @@ public class ReceiptController {
 
 				resultMap = receiptService.cancelReceipt(cancelMap);
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+				cancleMap.put("originRecNo", var.find("salesInfo.originRecNo").toString());
+				cancleMap.put("shopBizNo", var.find("shopInfo.bizNo").toString());
+
+				resultMap = receiptService.cancleReceipt(cancleMap);
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 
 				telNo = (String) resultMap.get("USER_KEY");
 
@@ -1835,10 +1853,14 @@ public class ReceiptController {
 				String eMailChk = receiptService.eMailChk(telNo);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				// cancleMap.put("businessNumber",
 =======
 				// cancelMap.put("businessNumber",
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+				// cancleMap.put("businessNumber",
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				// var.find("shopInfo.bizNo").toString());
 
 				telNo = (String) resultMap.get("USER_KEY");
@@ -1899,10 +1921,14 @@ public class ReceiptController {
 				}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				detailMap = (HashMap<String, Object>) receiptService.getDetailReceipt(cancleMap);
 =======
 				detailMap = (HashMap<String, Object>) receiptService.getDetailReceipt(cancelMap);
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+				detailMap = (HashMap<String, Object>) receiptService.getDetailReceipt(cancleMap);
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				List detailList = (List) detailMap.get("resultMap");
 
 				for (int i = 0; i < detailList.size(); i++) {
@@ -3009,6 +3035,7 @@ public class ReceiptController {
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////RCP02 *취소 영수증 발급
 			} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				delMap.put("salesType", "RCP02");
 				errorCol = "bizNo";
 				String bizNo = var.find("shopInfo.bizNo").toString(); errorCol = "cashier";
@@ -3020,18 +3047,24 @@ public class ReceiptController {
 				
 =======
 				errorCol = "shopInfo";
+=======
+				delMap.put("salesType", "RCP02");
+				errorCol = "bizNo";
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				String bizNo = var.find("shopInfo.bizNo").toString(); errorCol = "cashier";
 				String cashier = var.find("shopInfo.cashier").toString(); errorCol = "oriSalesBarCode";
-				errorCol = "salesInfo";
 				String oriSalesBarCode = var.find("salesInfo.oriSalesBarCode").toString(); errorCol = "salesBarCode";
-				String salesBarCode = "RCP02"+ var.find("salesInfo.salesBarCode").toString(); errorCol = "oriSalesDate";
+				String salesBarCode = var.find("salesInfo.salesBarCode").toString(); errorCol = "oriSalesDate";
 				String oriSalesDate = var.find("salesInfo.oriSalesDate").toString(); errorCol = "salesDate";
 				String salesDate = var.find("salesInfo.salesDate").toString(); errorCol = "DB 데이터 형식 오류 / 중복 SalesBarCode 확인";
 				
+<<<<<<< HEAD
 				delMap.put("salesType", "RCP02");
 				delMap.put("delBarcode", salesBarCode);
 				
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				insertMap.put("bizNo", bizNo);
 				insertMap.put("cashier", cashier);
 				insertMap.put("oriSalesBarCode", oriSalesBarCode);
@@ -3041,13 +3074,19 @@ public class ReceiptController {
 				insertMap.put("telNo", var.find("userKey").toString());
 				
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				
 				
 				
 				resultMap = receiptService.cancleGetReceipt(insertMap);
+<<<<<<< HEAD
 =======
 				resultMap = receiptService.cancelGetReceipt(insertMap);
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				String userKey = resultMap.get("USER_KEY").toString();
 				resultMap.put("telNo", userKey);
 				uplusUserKey = receiptService.uPlusChk(userKey);
@@ -3056,10 +3095,14 @@ public class ReceiptController {
 				resultMap.put("salesBarCode", salesBarCode);
 				resultMap.put("oriSalesDate", oriSalesDate);
 <<<<<<< HEAD
+<<<<<<< HEAD
 				resultMap.put("mainSalesBarCode", "RCP02"+salesBarCode);
 =======
 				resultMap.put("mainSalesBarCode", salesBarCode);
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+				resultMap.put("mainSalesBarCode", "RCP02"+salesBarCode);
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				resultMap.put("oriSalesDate", oriSalesDate);
 				resultMap.put("salesDate", salesDate);
 				resultMap.put("CI",CI);
@@ -3107,10 +3150,14 @@ public class ReceiptController {
 				resultMap.put("uplusUserKey", resultMap.get("UPLUS_USER_KEY"));
 				dateDel = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				receiptService.insertCancleReceiptData(resultMap);
 				
 =======
 				receiptService.insertcancelReceiptData(resultMap);
+=======
+				receiptService.insertCancleReceiptData(resultMap);
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				
 				//////////////////////취소 디테일 시작/////////////////////
 				errorDeCol ="";
@@ -3120,10 +3167,8 @@ public class ReceiptController {
 				
 				errorDeCol = "shopBizNo";
 				detailMap.put("shopBizNo", resultMap.get("SHOP_BIZNO")); //사업자 번호
-				errorDeCol = "oriSalesBarCode";
-				detailMap.put("oriSalesBarCode", resultMap.get("salesBarCode")); //바코드
 				errorDeCol = "salesBarCode";
-				detailMap.put("salesBarCode", resultMap.get("mainSalesBarCode")); //바코드
+				detailMap.put("salesBarCode", resultMap.get("SALES_BARCODE")); //바코드
 				errorDeCol = "salesType";
 				detailMap.put("salesType", delMap.get("salesType")); //판매 구분 (RCP02 - 취소)
 				receiptService.insertCancelReceiptDeatailDataRenew(detailMap); //취소 상세 저장
@@ -3135,6 +3180,7 @@ public class ReceiptController {
 				try {
 					//Link URL 작성
 <<<<<<< HEAD
+<<<<<<< HEAD
 					String kakaoBarcode = resultMap.get("SALES_BARCODE").toString();
 					String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(var.find("userKey").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
 =======
@@ -3142,6 +3188,10 @@ public class ReceiptController {
 					String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(resultMap.get("USER_KEY").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
 					
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+					String kakaoBarcode = resultMap.get("SALES_BARCODE").toString();
+					String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(var.find("userKey").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 					
 					//고정 입력 값 (주석 사용x 추후 사용 가능)
 					kakaoMap.put("tmp_number", "5581");										//템플릿 번호
@@ -3192,10 +3242,14 @@ public class ReceiptController {
 			jsonResData += "}";
 			System.out.println("jsonResData:" + jsonResData);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			
 =======
 			System.out.println(e);
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+			
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 			
 			if(dateDel){
 				receiptService.deleteFailDate(delMap);
@@ -5547,12 +5601,17 @@ public class ReceiptController {
 
 				if (telNo.length() < 12) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 					barcode = aes.encryptStringToBase64(barcode);
 					telNo = aes.encryptStringToBase64(telNo);
 =======
 					barcode = 	aes.encryptStringToBase64(barcode);
 					telNo = 	aes.encryptStringToBase64(telNo);
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+					barcode = aes.encryptStringToBase64(barcode);
+					telNo = aes.encryptStringToBase64(telNo);
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				}
 				System.out.println(" 복호화전 seq   ::: " + barcode);
 				System.out.println(" 복호화전 telNo ::: " + telNo);
@@ -5566,12 +5625,17 @@ public class ReceiptController {
 				 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				barcode = aes.decryptBase64String(barcode);
 				telNo = aes.decryptBase64String(telNo);
 =======
 				barcode = 	aes.decryptBase64String(barcode);
 				telNo = 	aes.decryptBase64String(telNo);
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+				barcode = aes.decryptBase64String(barcode);
+				telNo = aes.decryptBase64String(telNo);
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				System.out.println(" 복호화후 seq   ::: " + barcode);
 				System.out.println(" 복호화후 telNo ::: " + telNo);
 				map.put("barcode", barcode);
@@ -6915,6 +6979,7 @@ public class ReceiptController {
 		return st;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	
 	
@@ -7472,5 +7537,7 @@ public class ReceiptController {
 	
 	
 >>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
+=======
+>>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 
 }
