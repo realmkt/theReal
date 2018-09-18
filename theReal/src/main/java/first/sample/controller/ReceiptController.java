@@ -34,7 +34,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.connector.Request;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
@@ -44,7 +43,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.apache.ibatis.annotations.ResultMap;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONObject;
@@ -67,18 +65,18 @@ import first.common.filter.SmsParse;
 import first.common.util.AES256;
 import first.common.util.CharTokenizer;
 import first.common.util.CommonUtils;
-import first.common.util.FileUtils;
 import first.common.util.GoogleChartDTO;
 import first.common.util.JsonParser;
 import first.common.util.Sha256;
 import first.common.util.Var;
 import first.common.util.consoleMail;
+import first.sample.controller.function.kakaoArlimtalk;
 import first.sample.service.ReceiptService;
 import first.sample.theRealShop.TheRealShopToUplus;
-import first.sample.controller.function.*;
+
 
 @Controller
-public class ReceiptController {
+public class ReceiptController {  
 	private static final int Object = 0;
 	Logger log = Logger.getLogger(this.getClass());
 	/*
@@ -1725,15 +1723,8 @@ public class ReceiptController {
 
 	/*
 	 * 전송받은 전자영수증 데이터 저장
-<<<<<<< HEAD
-<<<<<<< HEAD
 	 */
-=======
-	 */  //http://182.162.84.177/theReal/receipt/insertReceiptData.do
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
-	 */
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
+	 //http://182.162.84.177/theReal/receipt/insertReceiptData.do
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/receipt/insertReceiptData.do")
 	@ResponseBody
@@ -1796,46 +1787,18 @@ public class ReceiptController {
 			/**
 			 * 회원이메일을 가져오기 위한 로직 추가
 			 */
-<<<<<<< HEAD
-<<<<<<< HEAD
 			log.debug("cancle resultMap :: " + var.toString());
 
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			HashMap<String, Object> cancleMap = new HashMap<String, Object>();
-=======
-			log.debug("cancel resultMap :: " + var.toString());
-
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			HashMap<String, Object> cancelMap = new HashMap<String, Object>();
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
-			log.debug("cancle resultMap :: " + var.toString());
-
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			HashMap<String, Object> cancleMap = new HashMap<String, Object>();
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 
 			if (var.find("salesInfo.salesType").toString().equals("RCP02")) {
 
 				log.debug(var);
-<<<<<<< HEAD
-<<<<<<< HEAD
 				cancleMap.put("originRecNo", var.find("salesInfo.originRecNo").toString());
 				cancleMap.put("shopBizNo", var.find("shopInfo.bizNo").toString());
 
-				resultMap = receiptService.cancleReceipt(cancleMap);
-=======
-				cancelMap.put("originRecNo", var.find("salesInfo.originRecNo").toString());
-				cancelMap.put("shopBizNo", var.find("shopInfo.bizNo").toString());
-
-				resultMap = receiptService.cancelReceipt(cancelMap);
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
-				cancleMap.put("originRecNo", var.find("salesInfo.originRecNo").toString());
-				cancleMap.put("shopBizNo", var.find("shopInfo.bizNo").toString());
-
-				resultMap = receiptService.cancleReceipt(cancleMap);
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
+				resultMap = receiptService.cancelReceipt(cancleMap);
 
 				telNo = (String) resultMap.get("USER_KEY");
 
@@ -1852,15 +1815,7 @@ public class ReceiptController {
 
 				String eMailChk = receiptService.eMailChk(telNo);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 				// cancleMap.put("businessNumber",
-=======
-				// cancelMap.put("businessNumber",
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
-				// cancleMap.put("businessNumber",
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				// var.find("shopInfo.bizNo").toString());
 
 				telNo = (String) resultMap.get("USER_KEY");
@@ -1920,15 +1875,7 @@ public class ReceiptController {
 					jsonResData += "}";
 				}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 				detailMap = (HashMap<String, Object>) receiptService.getDetailReceipt(cancleMap);
-=======
-				detailMap = (HashMap<String, Object>) receiptService.getDetailReceipt(cancelMap);
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
-				detailMap = (HashMap<String, Object>) receiptService.getDetailReceipt(cancleMap);
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				List detailList = (List) detailMap.get("resultMap");
 
 				for (int i = 0; i < detailList.size(); i++) {
@@ -2748,13 +2695,8 @@ public class ReceiptController {
 		
 		try {
 			if (var.find("salesInfo.salesType").toString().equals("RCP01")) {
-<<<<<<< HEAD
-				log.debug("===================================================="); 
-				log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■5678■■■■■");      
-=======
 				log.debug("====================================================");
 				log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■■■■■■");
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 				
 				delMap.put("salesType", "RCP01");
 				
@@ -2823,11 +2765,7 @@ public class ReceiptController {
 				insertMap.put("rePrint", var.find("salesInfo.rePrint").toString()); errorDeCol = "detailCnt";
 				insertMap.put("detailCnt", var.find("salesInfo.detailCnt").toString()); 
 				
-<<<<<<< HEAD
-				// paymentType.
-=======
 				// paymentType. 
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 				System.out.println();
 				errorCol = "paymentType";
 				errorDeCol = "";
@@ -2842,11 +2780,7 @@ public class ReceiptController {
 					insertMap.put("cashDate", var.find("cashInfo[0].cashDate").toString());
 					errorDeCol ="";
 				} else {
-<<<<<<< HEAD
-					insertMap.put("cashAmt", "");  
-=======
 					insertMap.put("cashAmt", "");
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 					insertMap.put("cashType", "");
 					insertMap.put("cashNo", "");
 					insertMap.put("cashAppNo", "");
@@ -3015,6 +2949,8 @@ public class ReceiptController {
 					String kakao_url1_2 = "";	
 					String kakao_url2_1 = "";		
 					String kakao_url2_2 = "";	
+					
+					String Authorization = "";	
 					*/
 					
 					
@@ -3034,23 +2970,9 @@ public class ReceiptController {
 				
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////RCP02 *취소 영수증 발급
 			} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-				delMap.put("salesType", "RCP02");
-				errorCol = "bizNo";
-				String bizNo = var.find("shopInfo.bizNo").toString(); errorCol = "cashier";
-				String cashier = var.find("shopInfo.cashier").toString(); errorCol = "oriSalesBarCode";
-				String oriSalesBarCode = var.find("salesInfo.oriSalesBarCode").toString(); errorCol = "salesBarCode";
-				String salesBarCode = var.find("salesInfo.salesBarCode").toString(); errorCol = "oriSalesDate";
-				String oriSalesDate = var.find("salesInfo.oriSalesDate").toString(); errorCol = "salesDate";
-				String salesDate = var.find("salesInfo.salesDate").toString(); errorCol = "DB 데이터 형식 오류 / 중복 SalesBarCode 확인";
-				
-=======
 				errorCol = "shopInfo";
-=======
 				delMap.put("salesType", "RCP02");
 				errorCol = "bizNo";
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				String bizNo = var.find("shopInfo.bizNo").toString(); errorCol = "cashier";
 				String cashier = var.find("shopInfo.cashier").toString(); errorCol = "oriSalesBarCode";
 				String oriSalesBarCode = var.find("salesInfo.oriSalesBarCode").toString(); errorCol = "salesBarCode";
@@ -3058,13 +2980,9 @@ public class ReceiptController {
 				String oriSalesDate = var.find("salesInfo.oriSalesDate").toString(); errorCol = "salesDate";
 				String salesDate = var.find("salesInfo.salesDate").toString(); errorCol = "DB 데이터 형식 오류 / 중복 SalesBarCode 확인";
 				
-<<<<<<< HEAD
 				delMap.put("salesType", "RCP02");
 				delMap.put("delBarcode", salesBarCode);
 				
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				insertMap.put("bizNo", bizNo);
 				insertMap.put("cashier", cashier);
 				insertMap.put("oriSalesBarCode", oriSalesBarCode);
@@ -3073,20 +2991,12 @@ public class ReceiptController {
 				insertMap.put("salesDate", salesDate);
 				insertMap.put("telNo", var.find("userKey").toString());
 				
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				
 				
-				
-				resultMap = receiptService.cancleGetReceipt(insertMap);
-<<<<<<< HEAD
-=======
 				resultMap = receiptService.cancelGetReceipt(insertMap);
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
+
+				
+				
 				String userKey = resultMap.get("USER_KEY").toString();
 				resultMap.put("telNo", userKey);
 				uplusUserKey = receiptService.uPlusChk(userKey);
@@ -3094,15 +3004,8 @@ public class ReceiptController {
 				
 				resultMap.put("salesBarCode", salesBarCode);
 				resultMap.put("oriSalesDate", oriSalesDate);
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 				resultMap.put("mainSalesBarCode", "RCP02"+salesBarCode);
-=======
-				resultMap.put("mainSalesBarCode", salesBarCode);
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
-				resultMap.put("mainSalesBarCode", "RCP02"+salesBarCode);
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				resultMap.put("oriSalesDate", oriSalesDate);
 				resultMap.put("salesDate", salesDate);
 				resultMap.put("CI",CI);
@@ -3148,16 +3051,8 @@ public class ReceiptController {
 				resultMap.put("eMail", resultMap.get("EMAIL"));
 				resultMap.put("salesBarCode", resultMap.get("SALES_BARCODE"));
 				resultMap.put("uplusUserKey", resultMap.get("UPLUS_USER_KEY"));
-				dateDel = true;
-<<<<<<< HEAD
-<<<<<<< HEAD
-				receiptService.insertCancleReceiptData(resultMap);
-				
-=======
-				receiptService.insertcancelReceiptData(resultMap);
-=======
-				receiptService.insertCancleReceiptData(resultMap);
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
+				dateDel = true; 
+				receiptService.insertCancelReceiptData(resultMap);   
 				
 				//////////////////////취소 디테일 시작/////////////////////
 				errorDeCol ="";
@@ -3172,27 +3067,16 @@ public class ReceiptController {
 				errorDeCol = "salesType";
 				detailMap.put("salesType", delMap.get("salesType")); //판매 구분 (RCP02 - 취소)
 				receiptService.insertCancelReceiptDeatailDataRenew(detailMap); //취소 상세 저장
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 				
 				dateDel = false;
 				/////////////////////////////// 알림톡 renew RCP02///////////////////////////////////////
 	
 				try {
 					//Link URL 작성
-<<<<<<< HEAD
-<<<<<<< HEAD
-					String kakaoBarcode = resultMap.get("SALES_BARCODE").toString();
-					String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(var.find("userKey").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
-=======
 					String kakaoBarcode = resultMap.get("mainSalesBarCode").toString();
 					String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(resultMap.get("USER_KEY").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
 					
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
-					String kakaoBarcode = resultMap.get("SALES_BARCODE").toString();
-					String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(var.find("userKey").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
-					
+					 
 					//고정 입력 값 (주석 사용x 추후 사용 가능)
 					kakaoMap.put("tmp_number", "5581");										//템플릿 번호
 					kakaoMap.put("kakao_sender", "02-540-3111");							//발송 번호
@@ -3241,15 +3125,7 @@ public class ReceiptController {
 			
 			jsonResData += "}";
 			System.out.println("jsonResData:" + jsonResData);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			
-=======
 			System.out.println(e);
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
-			
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 			
 			if(dateDel){
 				receiptService.deleteFailDate(delMap);
@@ -4167,7 +4043,6 @@ public class ReceiptController {
 					retcode = "S" + dcf.format(ret);
 				}
 				log.debug("retcode22 ::::" + retcode);
-<<<<<<< HEAD
 			}
 
 			CI = (String) result.get(5);
@@ -4211,51 +4086,6 @@ public class ReceiptController {
 				resCode = 0;
 			}
 
-=======
-			}
-
-			CI = (String) result.get(5);
-			System.out.println("CI :: " + CI);
-			HashMap<String, Object> map = new HashMap<String, Object>();
-
-			encCi = URLEncoder.encode(CI, "UTF-8");
-
-			System.out.println("원래 키 	: " + CI);
-			System.out.println("인코딩 키 	: " + encCi);
-			System.out.println("디코딩 키 	: " + URLDecoder.decode(encCi, "UTF-8"));
-
-			map.put("CI", encCi);
-
-			int joinChk = (Integer) receiptService.joinChk(map);
-
-			if (retcode.equals("B000")) {
-				resCode = 1;
-
-				map.put("mbphnNo", mbphnNo);
-				map.put("name", (String) commandMap.get("name"));
-				map.put("birthday", (String) commandMap.get("birthday"));
-				map.put("gender", (String) commandMap.get("gender"));
-				map.put("nation", (String) commandMap.get("nation"));
-				map.put("comCd", (String) commandMap.get("comCd"));
-				map.put("uuId", (String) commandMap.get("uuId"));
-				map.put("pushKey", (String) commandMap.get("pushKey"));
-				if (joinChk < 1) {
-					System.out.println("신규 가입자 입니다.");
-					joinType = 0;
-					receiptService.appMemberInsert(map);
-					System.out.println("신규 회원 가입이 완료되었습니다.");
-
-				} else if (joinChk >= 1) {
-					System.out.println("기존 가입된 회원입니다. 로그인 및 데이터 동기화 실행");
-					joinType = 1;
-					receiptService.appMemberUpdate(map);
-					System.out.println("로그인이 완료되었습니다.");
-				}
-			} else {
-				resCode = 0;
-			}
-
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 			log.debug("retcode값확인==" + retcode);
 		}
 
@@ -5600,18 +5430,8 @@ public class ReceiptController {
 				String telNo = (String) commandMap.get("t");
 
 				if (telNo.length() < 12) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-					barcode = aes.encryptStringToBase64(barcode);
-					telNo = aes.encryptStringToBase64(telNo);
-=======
 					barcode = 	aes.encryptStringToBase64(barcode);
 					telNo = 	aes.encryptStringToBase64(telNo);
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
-					barcode = aes.encryptStringToBase64(barcode);
-					telNo = aes.encryptStringToBase64(telNo);
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				}
 				System.out.println(" 복호화전 seq   ::: " + barcode);
 				System.out.println(" 복호화전 telNo ::: " + telNo);
@@ -5624,29 +5444,14 @@ public class ReceiptController {
 				 * System.out.println(" URL복호화전 telNo ::: " + telNo);
 				 */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-				barcode = aes.decryptBase64String(barcode);
-				telNo = aes.decryptBase64String(telNo);
-=======
 				barcode = 	aes.decryptBase64String(barcode);
 				telNo = 	aes.decryptBase64String(telNo);
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
-				barcode = aes.decryptBase64String(barcode);
-				telNo = aes.decryptBase64String(telNo);
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 				System.out.println(" 복호화후 seq   ::: " + barcode);
 				System.out.println(" 복호화후 telNo ::: " + telNo);
 				map.put("barcode", barcode);
 				map.put("telNo", telNo);
 				map.put("type", "01");
 
-<<<<<<< HEAD
-=======
-		
-
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 				
 				log.debug("DB Access getShopInfoRenew");
 				shopMap = receiptService.getShopInfoRenew(map);
@@ -5670,8 +5475,7 @@ public class ReceiptController {
 				resultMap = receiptService.kakaoReceiptDetail(map);
 				resultMap.put("shopInfo", shopMap);
 				receiptService.latestUpdateDataRenew(map);
-<<<<<<< HEAD
-
+ 
 				mv.addObject("detailMap", resultMap);
 				mv.setViewName("/kakaoReceipt");
 				System.out.println(resultMap);
@@ -5706,43 +5510,6 @@ public class ReceiptController {
 		Map<String, Object> result = new HashMap<>();
 		Map<String, Object> detailResult = new HashMap<>();
 
-=======
-
-				mv.addObject("detailMap", resultMap);
-				mv.setViewName("/kakaoReceipt");
-				System.out.println(resultMap);
- 
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-
-			return mv;
-		}
-
-	// 진호씨
-
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/receipt/sendMail.do")
-	@ResponseBody
-	public void sendMail(String CI, @RequestParam(value = "SEQ[]") String[] SEQ, HttpServletRequest request,
-			String email, CommandMap commandMap, String subject, String content, String telNo,
-			@RequestParam(value = "barcode[]", required = false) String[] barcode) throws Exception {
-		Map<String, Object> userDataMap = new HashMap<String, Object>();
-		Map<String, Object> userDataDtailMap = new HashMap<String, Object>();
-		Map<String, Object> telMap = new HashMap<String, Object>();
-		/*
-		 * telMap.put("telNo", (String)commandMap.get("telNo"));
-		 * Map<String,Object> userMap = receiptService.startUserData(telMap);
-		 * System.out.println(userMap); telMap = (Map<String,Object>)
-		 * userMap.get("reslutMap"); String userNm =
-		 * (String)telMap.get("USER_NM");
-		 */
-		List<String> list = new ArrayList<String>();
-		List<String> list2 = new ArrayList<String>();
-		Map<String, Object> result = new HashMap<>();
-		Map<String, Object> detailResult = new HashMap<>();
-
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 		ArrayList paymentList = (ArrayList) result.get("resultMap");
 		Map<String, Object> paymentResultMap = new HashMap<String, Object>();
 
@@ -5754,7 +5521,6 @@ public class ReceiptController {
 		for (int i = 0; i < barcode.length; i++) {
 			list2.add(barcode[i]);
 		}
-<<<<<<< HEAD
 
 		// data
 		result = receiptService.latestDataEmail(list);
@@ -5874,127 +5640,6 @@ public class ReceiptController {
 							+ "<hr width='100%' style='border:1px dashed #cccccc'>";
 				}
 
-=======
-
-		// data
-		result = receiptService.latestDataEmail(list);
-		System.out.println("result :: " + result);
-		ArrayList resultList = (ArrayList) result.get("resultMap");
-
-		detailResult = receiptService.latestDataEmailDetail(list2);
-		ArrayList<HashMap<String, Object>> resultDetailList = (ArrayList<HashMap<String, Object>>) detailResult
-				.get("resultMap");
-		String[] body = new String[200];
-		String forResult = "";
-
-		for (int i = 0; i < resultList.size(); i++) {
-			userDataMap = (HashMap<String, Object>) resultList.get(i);
-
-			// 복합결제일때
-			if (userDataMap.get("CARD_COMPOUND").equals("Y")) {
-
-				Map<String, Object> paymentMap = new HashMap<String, Object>();
-				Map<String, Object> payImportant = new HashMap<String, Object>();
-
-				payImportant.put("SALES_BARCODE", userDataMap.get("SALES_BARCODE"));
-				/* payImportant.put("SEQ", userDataMap.get("SEQ")); */
-
-				paymentMap = receiptService.payment(payImportant);
-
-				paymentList = (ArrayList) paymentMap.get("resultMap");
-
-				body[i] = "<html>" + "<head><meta charset='utf-8'></head>"
-						+ "<body><table style='background: #f2f2f2; width: 690px; font-family: Dotum,; font-size:12px; color:#999999;'><tr><td><img src='http://117.52.97.40/theReal/images/top.jpg'></td>"
-						+ "<tr><td></td></tr><tr><td align='center'><table style='background: #e5e5e5; width: 410px; border: 1px solid #ddd; margin: 50px;'></tr>"
-						+ "<tr><td height='4px' style='background: #e5e5e5;'></td></tr><tr><td align='center'>"
-						+ "<table style='background: #fff; width: 400px; border: 1px solid #ddd;'><tr><td><img src='http://117.52.97.40/theReal/images/paper__top.gif'></td></tr>"
-						+ "<tr><td align='center' style='padding: 0px 30px 30px 30px;'><p></p><p></p><p style='font-size: 12px; color: gray; clear:both;' align='left'></p>"
-						+ "<div class='rt_txt01'style='text-align: left; font-size: 1em; color: #666; clear: both;'></div><div class='affli_div'style='text-align: center; font-size: 20px; padding: 13px 0px; color: #000; font-weight: 700;'>"
-						+ userDataMap.get("SHOP_NAME") + "</div><div></div><div></div>"
-						+ "<div class='rt_txt01'style='text-align: left; font-size: 12px; color: gray; clear:both; padding: 0px 10px;'><div class='rt_txt01'style='text-align: left; font-size: 1em; color: #666; clear: both;'></div><br><span>대표자명 : "
-						+ userDataMap.get("SHOP_CEO") + "</span></div>"
-						+ "<div class='rt_txt01'style='text-align: left; font-size: 12px; color: gray; clear:both; padding: 0px 10px;'><span>전화번호 : "
-						+ userDataMap.get("SHOP_TEL_NUM") + "</span></div>"
-						+ "<div class='rt_txt01'style='text-align: left; font-size: 12px; color: gray; clear:both; padding: 0px 10px;'><span>사업자번호 : "
-						+ userDataMap.get("SHOP_BIZNO") + "</span></div>"
-						+ "<div class='rt_txt01'style='text-align: left; font-size: 12px; color: gray;  clear:both; padding: 0px 10px;'>주소 : "
-						+ userDataMap.get("SHOP_ADDR") + "<span></span></div>"
-						+ "<br><br><hr width='100%' style='border:1px dashed #cccccc'>"
-						+ "<table width='100%' cellspacing='0' cellpadding='0'><tr style='border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: #CCCCCC;'>"
-						+ "<th style='13px gulim; padding:4px; color:#666; font-size: 12px;' align='left'>품명</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='padding: 6px; color:#666; font-size: 12px;'>단가</th>"
-						+ "<th style='13px gulim; color:#666;  padding:6px; font-size: 12px;'>수량</th><th style='13px gulim; color:#666;  padding:6px; font-size: 12px;'>금액</th></tr>";
-
-				// detail반복
-				for (int j = 0; j < resultDetailList.size(); j++) {
-
-					userDataDtailMap = resultDetailList.get(j);
-
-					if (userDataMap.get("SALES_BARCODE").equals(userDataDtailMap.get("SALES_BARCODE"))) {
-
-						body[i] += "<tr><th style='padding:4px;  color:#666; font-size: 12px;' align='left'>"
-								+ userDataDtailMap.get("SALES_PNAME")
-								+ "</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='padding: 6px; color:#666; font-size: 12px;'>"
-								+ CommonUtils.replaceComma(Integer.parseInt((String) userDataDtailMap.get("SALES_PPRICE")))
-								+ "</th>" + "<th style='13px gulim;  padding:6px; color:#666; font-size: 12px;'>"
-								+ userDataDtailMap.get("SALES_QTY")
-								+ "</th><th style='13px gulim;  padding:6px; color:#666; font-size: 12px; font-size: 12px;'>"
-								+ CommonUtils.replaceComma(Integer.parseInt((String) userDataDtailMap.get("SALES_FP_AMT")))
-								+ "</th></tr>";
-					}
-				}
-
-				body[i] += "<tr>" + "</table>"
-						+ "<br><hr width='100%' style='border:1px dashed #cccccc'><table width='100%' cellspacing='0' cellpadding='0'><tr>"
-						+ "<th style='color: black; padding: 6px; font-size: 17px' align='left' >과세물품가액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
-						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: black; padding: 6px; font:bold 13px gulim; font-size: 17px'  >"
-						+ CommonUtils.replaceComma(Integer.parseInt((String) userDataMap.get("SALES_SUM_FP_AMT"))) + "</th></tr>"
-						+ "<tr><th style='color: black; padding: 6px; font-size: 17px' align='left'>부가세</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
-						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
-						+ "<th style='color: black; padding: 6px; font:bold 13px gulim; font-size: 17px'>"
-						+ CommonUtils.replaceComma(Integer.parseInt((String) userDataMap.get("SALES_SUM_TAX_AMT"))) + "</th></tr>"
-						+ "<tr><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px' align='left'>합계금액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
-						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
-						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px'>"
-						+ CommonUtils.replaceComma(Integer.parseInt((String) userDataMap.get("SALES_PAID_AMT"))) + "</th></tr>"
-						+ "<tr><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px' align='left'>반환금액</th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
-						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th><th style='color: #5263bd; padding: 6px;'></th>"
-						+ "<th style='color: #5263bd; padding: 6px;'></th><th style='color: black; padding: 6px; font:bold 18px gulim; font-size: 17px'>0</th></tr>"
-						+ "</table><hr width='100%' style='border:1px dashed #cccccc'>"
-						+ "<div class='rt_etc'style='text-align: left; font-size: 8px; font-weight: 700; color: #333; clear: both; padding: 10px; border-bottom: 1px dashed #aaa'><div class='rt_copy'style='text-align: center; font-size: 12px;'>";
-
-				for (int a = 0; a < paymentList.size(); a++) {
-					paymentResultMap = (HashMap<String, Object>) paymentList.get(a);
-
-					if (paymentResultMap.get("CARD_ICOM").equals("")
-							|| paymentResultMap.get("CARD_ICOM").equals(null)) {
-
-						body[i] += "<div align='letf'>현금결제</div><br>";
-						body[i] += "<div align='left' style='float: left;'>승인금액 </div> <div align='right'> "
-								+ CommonUtils.replaceComma(Integer.parseInt((String) paymentResultMap.get("CARD_AMT"))) + "</div>"
-								+ "<div align='left' style='float: left;'>CARD_APP_NO </div><div align='right'>"
-								+ paymentResultMap.get("CARD_APP_NO") + "</div>"
-								+ "<div align='left' style='float: left;'>CASH_DATE </div> <div align='right'>"
-								+ paymentResultMap.get("CASH_DATE") + "</div>";
-
-					} else {
-						body[i] += "<div align='left'>" + paymentResultMap.get("CARD_PCOM") + "</div><br>";
-						body[i] += "<div align='left' style='float: left;'>승인금액 </div> <div align='right'> "
-								+ CommonUtils.replaceComma(Integer.parseInt((String) paymentResultMap.get("CARD_AMT"))) + "</div>"
-								+ "<div align='left' style='float: left;'>CARD_APP_NO </div><div align='right'>"
-								+ paymentResultMap.get("CARD_APP_NO") + "</div>"
-								+ "<div align='left' style='float: left;'>CARD_DATE </div> <div align='right'>"
-								+ paymentResultMap.get("CARD_DATE") + "</div>"
-								+ "<div align='left' style='float: left;'>CARD_ICOM </div> <div align='right'> "
-								+ paymentResultMap.get("CARD_ICOM") + "</div>";
-
-					}
-
-					body[i] += "<div align='left' style='float: left;'>카드번호 </div> <div align='right'>"
-							+ paymentResultMap.get("CARD_NO") + "</div>"
-							+ "<hr width='100%' style='border:1px dashed #cccccc'>";
-				}
-
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 				body[i] += "<br>" + "***신용승인정보(고객용)***"
 						+ "<div class='rt_txt01'style='text-align: left; font-size: 10px; color: #666; clear: both' align='left'>거래종류: 복합결제</div>";
 
@@ -6313,12 +5958,8 @@ public class ReceiptController {
 		map.put("REVIEW_AFFLIATE_NO", commandMap.get("REVIEW_AFFLIATE_NO"));
 		map.put("REVIEW_AFFLIATE_STAR", commandMap.get("REVIEW_AFFLIATE_STAR"));
 
-<<<<<<< HEAD
-		receiptService.reviewInsert(map);      
-=======
 		receiptService.reviewInsert(map);
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-
+		
 		float avg = receiptService.reviewStarAvg(map);
 
 		Map<String, Object> starMap = new HashMap<String, Object>();
@@ -6978,9 +6619,6 @@ public class ReceiptController {
 
 		return st;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	
 	
 	
@@ -7058,14 +6696,14 @@ public class ReceiptController {
 			 */
 
 			Map<String, Object> resultMap = new HashMap<String, Object>();
-			HashMap<String, Object> cancelMap = new HashMap<String, Object>();
+			HashMap<String, Object> cancleMap = new HashMap<String, Object>();
 
 			if (var.find("salesInfo.salesType").toString().equals("RCP02")) {
 
-				cancelMap.put("originRecNo", var.find("salesInfo.originRecNo").toString());
-				cancelMap.put("shopBizNo", var.find("shopInfo.bizNo").toString());
+				cancleMap.put("originRecNo", var.find("salesInfo.originRecNo").toString());
+				cancleMap.put("shopBizNo", var.find("shopInfo.bizNo").toString());
 
-				resultMap = receiptService.cancelReceipt(cancelMap);
+				resultMap = receiptService.cancelReceipt(cancleMap);
 
 				telNo = (String) resultMap.get("USER_KEY");
 
@@ -7081,7 +6719,7 @@ public class ReceiptController {
 
 				String eMailChk = receiptService.eMailChk(telNo);
 
-				// cancelMap.put("businessNumber",
+				// cancleMap.put("businessNumber",
 				// var.find("shopInfo.bizNo").toString());
 
 				telNo = (String) resultMap.get("USER_KEY");
@@ -7141,7 +6779,7 @@ public class ReceiptController {
 					jsonResData += "}";
 				}
 
-				detailMap = (HashMap<String, Object>) receiptService.getDetailReceipt(cancelMap);
+				detailMap = (HashMap<String, Object>) receiptService.getDetailReceipt(cancleMap);
 				List detailList = (List) detailMap.get("resultMap");
 
 				for (int i = 0; i < detailList.size(); i++) {
@@ -7533,11 +7171,5 @@ public class ReceiptController {
 	
 	
 	
-	
-	
-	
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
-=======
->>>>>>> parent of 73e3aa2... 2018.09.11 업로드
 
 }
