@@ -770,6 +770,8 @@
 						SHOP_CEO	            ,
 						SHOP_TEL_NUM	        ,
 						SHOP_CASHIER	        ,
+						COMPOUND_YN				,
+						PAYMENT_TYPE			,
 						SALES_DATE	            ,
 						SALES_PRINT_DATE	    ,
 						SALES_TYPE	            ,
@@ -824,6 +826,8 @@
 						#{ceo}	            	,
 						#{phone}	        	,
 						#{cashier}	        	,
+						#{compoundYN}			,
+						#{paymentType}			,
 						#{salesDate}	        ,
 						#{printDate}	    	,
 						#{salesType}	        ,
@@ -845,8 +849,8 @@
 						#{cardInstallment}	    ,
 						#{cardAppNo}	        ,
 						#{cardDate}	        	,
-						#{cardICom}	        	,
-						#{cardPCom}	        	,
+						#{cardIcom}	        	,
+						#{cardPcom}	        	,
 						#{cardNo}              	,
 						#{pointCardNo}			,
 						#{pointAmt}	        	,
@@ -870,7 +874,7 @@
 		]]>
 	</insert>	
 	
-	<insert id="insertcancelReceiptData" parameterType="hashmap">
+	<insert id="insertCancelReceiptData" parameterType="hashmap">
 		<![CDATA[
 			INSERT INTO 
 				TB_USER_DATA_RENEW
@@ -978,7 +982,7 @@
 						'Admin'					,
 						#{salesBarCode}	        	,
 						#{salesBarCode}	    	,
-						#{originSalesDate}	    ,
+						#{oriSalesDate}	    ,
 						#{uplusUserKey}
 					)
 			
@@ -1052,10 +1056,8 @@
 					SALES_PPRICE		,
 					SALES_OPRICE		,
 					SALES_QTY	    	,
-					SALES_DF_AMT		,
 					SALES_FP_AMT		,
 					SALES_TAX_AMT		,
-					SALES_SL_AMT		,
 					SALES_TYPE			,
 					FRT_CREA_DTM		,
 					FRT_REGN_NM     	,
@@ -1074,10 +1076,8 @@
 					#{pPrice}           ,
 					#{oPrice}           ,
 					#{qty}              ,
-					#{dfAmt}			,	
-					#{fpAmt}            ,
-					#{taxAmt}           ,
-					#{slAmt}            ,
+					#{fpPrice}            ,
+					#{taxPrice}           ,
 					#{salesType}		,
 					now()               ,
 					'admin'             ,
@@ -1131,10 +1131,10 @@
 					SALES_PPRICE		, 
 					SALES_OPRICE		,
 					SALES_QTY	    	,
-					SALES_DF_AMT		,
+					SALES_DISCOUNT_AMT	,
 					SALES_FP_AMT		,
 					SALES_TAX_AMT		,
-					SALES_SL_AMT		,
+					SALES_PAID_AMT		,
 					SALES_TYPE			,
 					FRT_CREA_DTM		,
 					FRT_REGN_NM     	,
@@ -1147,15 +1147,15 @@
 					USER_CI				,
 					USER_KEY			,
 					SALES_SEQ_NO		,
-					SALES_BARCODE		,
+					#{mainSalesBarCode}	, 
 					SALES_PNAME	    	,
 					SALES_PPRICE		,
 					SALES_OPRICE		,
 					SALES_QTY	    	,
-					SALES_DF_AMT		,
+					SALES_DISCOUNT_AMT	,
 					SALES_FP_AMT		,
 					SALES_TAX_AMT		,
-					SALES_SL_AMT		,
+					SALES_PAID_AMT		,
 					#{salesType}		,
 					FRT_CREA_DTM		,
 					FRT_REGN_NM     	,
@@ -3214,7 +3214,6 @@
 		    		SALES_PAID_AMT,
 		    		SALES_SURTAX_AMT,
 		    		SALES_DF_AMT,
-		    		SALES_DT_CNT,
 		    		SALES_TAX_AMT,
 		    		SALES_RE_PRINT,
 		    		SALES_DETAIL_CNT,
@@ -3488,6 +3487,12 @@
             AND
              	USER_KEY = #{telNo}
              </when>
+             <when test="'02'.equals(type)">
+            WHERE
+            	SALES_BARCODE = #{erecNo} 
+            AND
+             	USER_KEY = #{userKey}
+             </when>
              <otherwise>
             WHERE
 				USER_KEY = #{telNo}
@@ -3505,7 +3510,7 @@
 		<select id="getShopInfoRenew" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 			SELECT 
-				USER_CI					,
+				USER_CI							,
 						USER_KEY				,
 						SALES_BARCODE           ,
 						ETC_MEMO	            ,
@@ -3526,7 +3531,7 @@
 						SALES_PAID_AMT	    	,
 						SALES_SURTAX_AMT	    ,
 						SALES_DF_AMT	        ,
-						SALES_TAX_AMT , 
+						SALES_TAX_AMT 			, 
 						SALES_RE_PRINT	        ,
 						SALES_DETAIL_CNT	    ,
 						CASH_AMT	            ,
@@ -3547,14 +3552,14 @@
 						POINT_ICOM				,
 						POINT_GET	            ,
 						REC_VIEW_YN	            ,
-						EMAIL	            ,
+						EMAIL	            	,
 						FRT_CREA_DTM	        ,
 						FRT_REGN_NM	            ,
 						FNL_MOF_DTM	            ,
 						FNL_MDF_NM				,
-						REC_NO				,
-						ORIGIN_REC_NO				,
-						ORIGIN_SALES_DATE,
+						REC_NO					,
+						ORIGIN_REC_NO			,
+						ORIGIN_SALES_DATE		,
 						UPLUS_USER_KEY
 			FROM
 				TB_USER_DATA_RENEW
@@ -3574,6 +3579,12 @@
             AND
              	USER_KEY = #{telNo}
              </when>
+             <when test="'02'.equals(type)">
+            WHERE
+            	SALES_BARCODE = #{erecNo} 
+            AND
+             	USER_KEY = #{userKey}
+             </when>
              <otherwise>
             WHERE
 				USER_KEY = #{telNo}
@@ -3584,7 +3595,8 @@
 			AND
 				SALES_BARCODE = #{barcode}
              </otherwise>
-         </choose>	
+         </choose>
+         LIMIT 0,1	
 		</select>
 		
 		
@@ -3622,6 +3634,12 @@
             AND
             	SALES_BARCODE = #{barcode}
              </when>
+             <when test="'02'.equals(type)">
+            WHERE
+            	USER_KEY = #{userKey}
+            AND
+            	SALES_BARCODE = #{erecNo}
+             </when>
              <otherwise>
             WHERE
 				USER_KEY = #{telNo}
@@ -3635,21 +3653,21 @@
          </choose>	
 		</select>
 		
-		<select id="kakaoReceiptDetail" parameterType="hashmap" resultType="hashmap">
+		<select id="receiptDetailRenew" parameterType="hashmap" resultType="hashmap">
 			<![CDATA[
 				SELECT
 			SALES_BARCODE	,
 			SALES_SEQ_NO	,
-			USER_CI	    	,
+			USER_CI	    	, 
 			USER_KEY	    ,
 			SALES_PNAME	    ,
 			SALES_PPRICE	,
 			SALES_OPRICE	,
 			SALES_QTY	    ,
-			SALES_DF_AMT	,
+			SALES_DISCOUNT_AMT	,
 			SALES_FP_AMT	,
 			SALES_TAX_AMT	,
-			SALES_SL_AMT	, 
+			SALES_PAID_AMT	, 
 			SALES_TYPE		,
 			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d %H:%i:%s') AS FRT_CREA_DTM
 		FROM
@@ -3667,6 +3685,12 @@
             	USER_KEY = #{telNo}
             AND
             	SALES_BARCODE = #{barcode}
+             </when>
+             <when test="'02'.equals(type)">
+            WHERE
+            	USER_KEY = #{userKey}
+            AND
+            	SALES_BARCODE = #{erecNo}
              </when>
              <otherwise>
             WHERE

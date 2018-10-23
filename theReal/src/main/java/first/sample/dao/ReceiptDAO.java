@@ -606,8 +606,8 @@ public class ReceiptDAO extends AbstractDAO {
 		return selectList("sample.ReceiptDetail", map);
 	}
 	
-	public List<Map<String, Object>> kakaoReceiptDetail(Map<String, Object> map) {
-		return selectList("sample.kakaoReceiptDetail", map);
+	public List<Map<String, Object>> receiptDetailRenew(Map<String, Object> map) {
+		return selectList("sample.receiptDetailRenew", map);
 	}
 
 	public List<Map<String, Object>> getDetailReceipt(Map<String, Object> map) {

@@ -150,9 +150,5 @@ public class AES256 {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String enc = AES256.encrypt("LGU+210987654321", "010012345678");
-		System.out.println(enc.getBytes().length);
-		System.out.println(enc);
-		System.out.println(AES256.decrypt("LGU+210987654321", enc));
 	}
 }

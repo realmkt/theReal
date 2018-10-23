@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
@@ -2543,8 +2544,7 @@ public class ReceiptController {
 
 			String kakaoBarcode = var.find("salesInfo.salesBarCode").toString();
 
-			json.put("kakao_url1_1",
-					"http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="
+			json.put("kakao_url1_1", "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="
 							+ URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t="
 							+ URLEncoder.encode(aes.encryptStringToBase64(telNo), "UTF-8"));
 			// json.put("kakao_add5",
@@ -2648,6 +2648,20 @@ public class ReceiptController {
 				// System.out.println("@@str@@:"+str);
 
 			}
+			
+			/*//인코딩했는데도 안되면 다시 인코딩
+			String v = ".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*";
+			if(!paramData.toString().matches(v)){
+				br = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
+				paramData = new StringBuffer();
+				while ((str = br.readLine()) != null) {
+					paramData.append(str);
+					// System.out.println("@@str@@:"+str);
+
+				}
+			}*/
+			
+			
 
 			System.out.println("Request Data ::::  " + paramData.toString());
 
@@ -2704,14 +2718,18 @@ public class ReceiptController {
 				errorCol = "compoundYN";
 				if (var.find("compoundYN").toString().equals("Y")) {
 					for (int i = 0; i < var.find("paymentList").size(); i++) {
+						insertMap.put("compoundYN", "Y");
 						errorDeCol = "paymentType";
 						paymentType += switchPayType(var.find("paymentList["+i+"].paymentType").toString()); errorDeCol = "paymentTypeCode";
+						insertMap.put("paymentType", paymentType);
 						paymentTypeCode += var.find("paymentList["+i+"].paymentType").toString();
 						errorDeCol = "";
 					}
 				} else {
+					insertMap.put("compoundYN", "N");
 					errorDeCol = "paymentType";
 					paymentType = switchPayType(var.find("paymentList[0].paymentType").toString()); errorDeCol = "paymentTypeCode";
+					insertMap.put("paymentType", paymentType);
 					paymentTypeCode = var.find("paymentList[0].paymentType").toString();
 					errorDeCol = "";
 				}
@@ -2920,53 +2938,55 @@ public class ReceiptController {
 					detailMap.put("paidPrice", var.find("salesList[" + i + "].paidPrice").toString());
 					errorDeCol = "";
 					receiptService.insertReceiptDeatailDataRenew(detailMap);
+					System.out.println();
 				}
 	
 				dateDel = false;
 				/////////////////////////////// 알림톡 renew RCP01///////////////////////////////////////
-				
-				try {
-					//Link URL 작성
-					String kakaoBarcode = var.find("salesInfo.salesBarCode").toString();
-					String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(var.find("userKey").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
-					
-					//고정 입력 값 (주석 사용x 추후 사용 가능)
-					kakaoMap.put("tmp_number", "5580");										//템플릿 번호
-					kakaoMap.put("kakao_sender", "02-540-3111");							//발송 번호
-					kakaoMap.put("kakao_phone", var.find("userKey").toString());			//발신 번호
-					kakaoMap.put("kakao_name", (var.find("userKey").toString()).substring(var.find("userKey").toString().length() - 4));		//발신자 이름
-					kakaoMap.put("kakao_080", "Y");											//080 무료 수신 유무
-					kakaoMap.put("TRAN_REPLACE_TYPE", "S");									//대체문자 S: SMS L:LMS
-					//추가정보 이하 동
-					kakaoMap.put("kakao_add1", var.find("shopInfo.shopName").toString());	//업체 명		
-					kakaoMap.put("kakao_add2", var.find("shopInfo.branchName").toString());	//매장 명
-					kakaoMap.put("kakao_add3", var.find("salesInfo.salesDate").toString());	//결제일시 (ex YYYY.MM.DD)
-					kakaoMap.put("kakao_add4", var.find("salesInfo.paidAmt").toString());	//금액       (2,000원)
-					//String kakao_add5 	= "";
-					//모바일 링크
-					kakaoMap.put("kakao_url1_1", kakaoUrl);
-					/*
-					String kakao_url1_2 = "";	
-					String kakao_url2_1 = "";		
-					String kakao_url2_2 = "";	
-					
-					String Authorization = "";	
-					*/
-					
-					
-					String arlResult = kakaoArl.kakaoArlimtalk(kakaoMap);
-					System.out.println(arlResult);
-					
-				} catch (Exception e) {
-					jsonResData = "{";
-					jsonResData += "    \"result\":\"PI801\",";
-					jsonResData += "    \"message\":\"알림톡 오류 \" ";
-					jsonResData += "}";
-					System.out.println("jsonResData:" + jsonResData);
+				errorCol = "kakaoYN";
+				System.out.println("kakao :: " + var.find("kakaoYN").toString());
+				if(var.find("kakaoYN").toString().equals("Y")){
+					System.out.println("알림톡 발송");
+					try {
+						//Link URL 작성
+						String kakaoBarcode = var.find("salesInfo.salesBarCode").toString();
+						String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(var.find("userKey").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
+						
+						//고정 입력 값 (주석 사용x 추후 사용 가능)
+						kakaoMap.put("tmp_number", "5580");										//템플릿 번호
+						kakaoMap.put("kakao_sender", "02-540-3111");							//발송 번호
+						kakaoMap.put("kakao_phone", var.find("userKey").toString());			//발신 번호
+						kakaoMap.put("kakao_name", (var.find("userKey").toString()).substring(var.find("userKey").toString().length() - 4));		//발신자 이름
+						kakaoMap.put("kakao_080", "Y");											//080 무료 수신 유무
+						kakaoMap.put("TRAN_REPLACE_TYPE", "S");									//대체문자 S: SMS L:LMS
+						//추가정보 이하 동
+						kakaoMap.put("kakao_add1", var.find("shopInfo.shopName").toString());	//업체 명		
+						kakaoMap.put("kakao_add2", var.find("shopInfo.branchName").toString());	//매장 명
+						kakaoMap.put("kakao_add3", var.find("salesInfo.salesDate").toString());	//결제일시 (ex YYYY.MM.DD)
+						kakaoMap.put("kakao_add4", var.find("salesInfo.paidAmt").toString());	//금액       (2,000원)
+						//String kakao_add5 	= "";
+						//모바일 링크
+						kakaoMap.put("kakao_url1_1", kakaoUrl);
+						/*
+						String kakao_url1_2 = "";	
+						String kakao_url2_1 = "";		
+						String kakao_url2_2 = "";	
+						
+						String Authorization = "";	
+						*/
+						
+						
+						String arlResult = kakaoArl.kakaoArlimtalk(kakaoMap);
+						System.out.println(arlResult);
+						
+					} catch (Exception e) {
+						jsonResData = "{";
+						jsonResData += "    \"result\":\"PI801\",";
+						jsonResData += "    \"message\":\"알림톡 오류 \" ";
+						jsonResData += "}";
+						System.out.println("jsonResData:" + jsonResData);
+					}
 				}
-				
-				
-				
 				
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////RCP02 *취소 영수증 발급
 			} else {
@@ -2978,7 +2998,7 @@ public class ReceiptController {
 				String oriSalesBarCode = var.find("salesInfo.oriSalesBarCode").toString(); errorCol = "salesBarCode";
 				String salesBarCode = var.find("salesInfo.salesBarCode").toString(); errorCol = "oriSalesDate";
 				String oriSalesDate = var.find("salesInfo.oriSalesDate").toString(); errorCol = "salesDate";
-				String salesDate = var.find("salesInfo.salesDate").toString(); errorCol = "DB 데이터 형식 오류 / 중복 SalesBarCode 확인";
+				String salesDate = var.find("salesInfo.salesDate").toString(); errorCol = "DB 데이터 형식 오류 / 중복 SalesBarCode";
 				
 				delMap.put("salesType", "RCP02");
 				delMap.put("delBarcode", salesBarCode);
@@ -3063,6 +3083,7 @@ public class ReceiptController {
 				errorDeCol = "shopBizNo";
 				detailMap.put("shopBizNo", resultMap.get("SHOP_BIZNO")); //사업자 번호
 				errorDeCol = "salesBarCode";
+				detailMap.put("mainSalesBarCode", "RCP02"+salesBarCode); //바코드
 				detailMap.put("salesBarCode", resultMap.get("SALES_BARCODE")); //바코드
 				errorDeCol = "salesType";
 				detailMap.put("salesType", delMap.get("salesType")); //판매 구분 (RCP02 - 취소)
@@ -3070,46 +3091,53 @@ public class ReceiptController {
 				
 				dateDel = false;
 				/////////////////////////////// 알림톡 renew RCP02///////////////////////////////////////
-	
-				try {
-					//Link URL 작성
-					String kakaoBarcode = resultMap.get("mainSalesBarCode").toString();
-					String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(resultMap.get("USER_KEY").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
-					
-					 
-					//고정 입력 값 (주석 사용x 추후 사용 가능)
-					kakaoMap.put("tmp_number", "5581");										//템플릿 번호
-					kakaoMap.put("kakao_sender", "02-540-3111");							//발송 번호
-					kakaoMap.put("kakao_phone", resultMap.get("USER_KEY").toString());			//발신 번호
-					kakaoMap.put("kakao_name", resultMap.get("USER_KEY").toString().substring(resultMap.get("USER_KEY").toString().length() - 4));		//발신자 이름
-					kakaoMap.put("kakao_080", "Y");											//080 무료 수신 유무
-					kakaoMap.put("TRAN_REPLACE_TYPE", "S");									//대체문자 S: SMS L:LMS
-					//추가정보 이하 동
-					kakaoMap.put("kakao_add1", resultMap.get("SHOP_NAME").toString());	//업체 명		
-					kakaoMap.put("kakao_add2", resultMap.get("SHOP_BRANCH").toString());	//매장 명
-					kakaoMap.put("kakao_add3", resultMap.get("SALES_DATE").toString());	//결제일시 (ex YYYY.MM.DD)
-					kakaoMap.put("kakao_add4", resultMap.get("SALES_PAID_AMT").toString());	//금액       (2,000원)
-					//String kakao_add5 	= "";
-					//모바일 링크
-					kakaoMap.put("kakao_url1_1", kakaoUrl);
-					/*
-					String kakao_url1_2 = "";	
-					String kakao_url2_1 = "";		
-					String kakao_url2_2 = "";	
-					*/
-					
-					String arlResult = kakaoArl.kakaoArlimtalk(kakaoMap);
-					System.out.println(arlResult);
-					
-				} catch (Exception e) {
-					jsonResData = "{";
-					jsonResData += "    \"result\":\"PI801\",";
-					jsonResData += "    \"message\":\"알림톡 오류 \" ";
-					jsonResData += "}";
-					System.out.println("jsonResData:" + jsonResData);
+				
+				
+				if(var.find("kakaoYN").toString().equals("Y")){
+					try {
+						//Link URL 작성
+						String kakaoBarcode = resultMap.get("mainSalesBarCode").toString();
+						String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(resultMap.get("USER_KEY").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
+						
+						 
+						//고정 입력 값 (주석 사용x 추후 사용 가능)
+						kakaoMap.put("tmp_number", "5581");										//템플릿 번호
+						kakaoMap.put("kakao_sender", "02-540-3111");							//발송 번호
+						kakaoMap.put("kakao_phone", resultMap.get("USER_KEY").toString());			//발신 번호
+						kakaoMap.put("kakao_name", resultMap.get("USER_KEY").toString().substring(resultMap.get("USER_KEY").toString().length() - 4));		//발신자 이름
+						kakaoMap.put("kakao_080", "Y");											//080 무료 수신 유무
+						kakaoMap.put("TRAN_REPLACE_TYPE", "S");									//대체문자 S: SMS L:LMS
+						//추가정보 이하 동
+						kakaoMap.put("kakao_add1", resultMap.get("SHOP_NAME").toString());	//업체 명		
+						kakaoMap.put("kakao_add2", resultMap.get("SHOP_BRANCH").toString());	//매장 명
+						kakaoMap.put("kakao_add3", resultMap.get("SALES_DATE").toString());	//결제일시 (ex YYYY.MM.DD)
+						kakaoMap.put("kakao_add4", resultMap.get("SALES_PAID_AMT").toString());	//금액       (2,000원)
+						//String kakao_add5 	= "";
+						//모바일 링크
+						kakaoMap.put("kakao_url1_1", kakaoUrl);
+						/*
+						String kakao_url1_2 = "";	
+						String kakao_url2_1 = "";		
+						String kakao_url2_2 = "";	
+						*/
+						
+						String arlResult = kakaoArl.kakaoArlimtalk(kakaoMap);
+						System.out.println(arlResult);
+						
+					} catch (Exception e) {
+						jsonResData = "{";
+						jsonResData += "    \"result\":\"PI801\",";
+						jsonResData += "    \"message\":\"알림톡 오류 \" ";
+						jsonResData += "}";
+						System.out.println("jsonResData:" + jsonResData);
+					}
 				}
 			}
+				
+				
 		
+			
+			System.out.println("===============전자영수증 발급 end==============");
 		} catch (Exception e) {
 			
 
@@ -3131,10 +3159,9 @@ public class ReceiptController {
 				receiptService.deleteFailDate(delMap);
 			}
 			
-			
-			
-			
 		}
+		
+		
 		
 		JSONParser jsonParser = new JSONParser();
 		JSONObject jsonObject = null;
@@ -3192,9 +3219,17 @@ public class ReceiptController {
 
 			String recTelNo = var.find("phoneNumber").toString();
 			String sendTelNo = var.find("origNumber").toString();
+			
+			
+			
 			log.debug("recTelNo:" + recTelNo);
 			log.debug("sendTelNo:" + sendTelNo);
 			log.debug("message:" + var.find("message").toString());
+			
+			String lat = var.find("lat").toString();
+			String lon= var.find("lon").toString();
+			
+			
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("telNo", recTelNo);
 			String CI = receiptService.getCi(map);
@@ -5257,8 +5292,7 @@ public class ReceiptController {
 
 	@RequestMapping(value = "/receipt/uplusReceiptDetail.do")
 	@ResponseBody
-	public Object uplusReceiptDetail(CommandMap commandMap, HttpSession session, ServletRequest request)
-			throws Exception {
+	public Object uplusReceiptDetail(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
 		Map<String, Object> shopMap = null;
 		Map<String, Object> resultMap = null;
 		ModelAndView mv = new ModelAndView();
@@ -5328,7 +5362,7 @@ public class ReceiptController {
 	}
 
 	// -----------------------------------------------------------------------
-	// 전자영수증 uplus 상세페이지
+	// 전자영수증 (카카오 알림톡) 상세페이지
 	// -----------------------------------------------------------------------
 
 	@RequestMapping(value = "/receipt/kakaoReceipt.do")
@@ -5403,6 +5437,110 @@ public class ReceiptController {
 		return mv;
 	}
 	
+	
+		// -----------------------------------------------------------------------
+		// 전자영수증  상세페이지 (TOMTOM)
+		// -----------------------------------------------------------------------
+
+		@RequestMapping(value = "/receipt/receiptDetail.do")
+		@ResponseBody
+		public Object receiptDetail(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
+			ModelAndView mv = new ModelAndView();
+			
+			String str = "";
+			String errorCode = "";
+			AES256 aes = null;
+			
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			Map<String, Object> shopMap = new HashMap<String, Object>();
+			Map<String, Object> resultMap =  new HashMap<String, Object>();
+
+			if (CommonUtils.ipChk()) {
+				//더리얼 개발 AES256 KEY : MKTDEV1234567890
+				aes = new AES256("MKTDEV1234567890");
+			} else {
+				//더리얼 운영 AES256 KEY : MKT1101234567890
+				aes = new AES256("MKT1101234567890");
+			}
+			
+			try {
+
+				String connectionCom = (String)commandMap.get("connectionCom");
+				String userKey = (String)commandMap.get("userKey");
+				String erecNo = (String)commandMap.get("erecNo");
+				String linkUrl = (String)commandMap.get("linkUrl");
+
+				
+				errorCode = "AES256 Decrypt Error";
+				if (userKey.length() < 12 && CommonUtils.ipChk()) {
+					System.out.println(" 복호화전 connectionCom ::: " + connectionCom);
+					System.out.println(" 복호화전 erecNo   ::: " + erecNo);
+					System.out.println(" 복호화전 userKey ::: " + userKey);
+					System.out.println(" 복호화전 linkUrl ::: " + linkUrl);
+					connectionCom = aes.encryptStringToBase64(connectionCom);
+					erecNo = aes.encryptStringToBase64(erecNo);
+					userKey = aes.encryptStringToBase64(userKey);
+					if(!(linkUrl.equals("") || linkUrl == null)){
+						linkUrl = aes.encryptStringToBase64(linkUrl);
+					}
+					System.out.println(" 복호화후 connectionCom ::: " + connectionCom);
+					System.out.println(" 복호화후 erecNo   ::: " + erecNo);
+					System.out.println(" 복호화후 userKey ::: " + userKey);
+					System.out.println(" 복호화후 linkUrl ::: " + linkUrl);
+				}
+				
+				erecNo = aes.decryptBase64String(erecNo);
+				userKey = aes.decryptBase64String(userKey);
+				connectionCom = aes.decryptBase64String(connectionCom);
+				if(!(linkUrl.equals("") || linkUrl == null)){
+					linkUrl = aes.decryptBase64String(linkUrl);
+				}
+				
+				map.put("erecNo", erecNo);
+				map.put("userKey", userKey);
+				
+				map.put("telNo", userKey);
+				map.put("barcode", erecNo);
+				map.put("type", "02");
+
+				errorCode = "getShopInfoRenew";
+				shopMap = receiptService.getShopInfoRenew(map);
+
+				System.out.println("가맹점 정보 :: "+shopMap);
+				
+				map.put("salesType", shopMap.get("SALES_TYPE"));
+
+				String date = (String) shopMap.get("SALES_DATE");
+				date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8) + " " + date.substring(8, 10) + ":" + date.substring(10, 12) + ":" + date.substring(12, 14);
+				
+				
+				mv.addObject("salesDate", date);
+				mv.addObject("shopInfo", shopMap);
+				mv.addObject("linkUrl", linkUrl);
+				mv.addObject("connectionCom", connectionCom);
+				errorCode = "receiptDetailRenew";
+				resultMap = receiptService.receiptDetailRenew(map); 
+				
+				resultMap.put("shopInfo", shopMap);
+				errorCode = "latestUpdateData";
+				receiptService.latestUpdateData(map);
+
+				mv.addObject("detailMap", resultMap);
+				mv.setViewName("/detailReceipt");
+				System.out.println(resultMap);
+
+			} catch (Exception e) {
+				
+				System.out.println(e);
+				System.out.println("Error :: " + errorCode);
+			}
+
+			return mv;
+		}
+		
+		
+	
 	// -----------------------------------------------------------------------
 		// 전자영수증 카카오톡 알림톡
 		// -----------------------------------------------------------------------
@@ -5472,12 +5610,12 @@ public class ReceiptController {
 				mv.addObject("salesDate", date);
 				mv.addObject("shopInfo", shopMap);
 
-				resultMap = receiptService.kakaoReceiptDetail(map);
+				resultMap = receiptService.receiptDetailRenew(map); 
 				resultMap.put("shopInfo", shopMap);
 				receiptService.latestUpdateDataRenew(map);
  
 				mv.addObject("detailMap", resultMap);
-				mv.setViewName("/kakaoReceipt");
+				mv.setViewName("/kakaoReceiptRenew");
 				System.out.println(resultMap);
  
 			} catch (Exception e) {
@@ -6597,6 +6735,60 @@ public class ReceiptController {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/receipt/encryptMkt.do")
+	public Object encryptMkt(CommandMap commandMap) {
+		String st = (String) commandMap.get("st");
+
+		AES256 aes = null;
+		try {
+			if (CommonUtils.ipChk()) {
+				aes = new AES256("MKTDEV1234567890");
+				System.out.println("개발 복호화");
+			} else {
+				aes = new AES256("MKT1101234567890");
+				System.out.println("운영 복호화");
+			}
+			
+			
+			System.out.println("암호화 전 :::" + st);
+			st = aes.encryptStringToBase64(st);
+			System.out.println("암호화 후 :::" + st);
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+
+		return st;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/receipt/decryptMkt.do")
+	public Object decryptMkt(CommandMap commandMap) {
+		String st = (String) commandMap.get("st");
+		
+		AES256 aes = null;
+
+		try {
+			if (CommonUtils.ipChk()) {
+				aes = new AES256("MKTDEV1234567890");
+				System.out.println("개발 복호화");
+			} else {
+				aes = new AES256("MKT1101234567890");
+				System.out.println("운영 복호화");
+			}
+
+			System.out.println("복호화 전 :::" + st);
+			st = aes.decryptBase64String(st);
+			System.out.println("복호화 후 :::" + st);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+
+		return st;
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/receipt/encrypt.do")
 	public Object encrypt(CommandMap commandMap) {
 		String st = (String) commandMap.get("st");
@@ -6619,8 +6811,6 @@ public class ReceiptController {
 
 		return st;
 	}
-	
-	
 	
 	
 	

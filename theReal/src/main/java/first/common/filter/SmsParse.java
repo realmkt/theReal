@@ -16,7 +16,7 @@ public class SmsParse {
 	@Resource(name = "receiptService")
 	static private ReceiptService receiptService;
 	
-	static String samsungCardTelNo = "15888900";
+	static String samsungCardTelNo  = "15888900";
 	static String wooriCardTelNo 	= "15889955";
 	static String nhCardTelNo 		= "15881600";
 	static String bcCardTelNo 		= "15884000";
@@ -57,7 +57,7 @@ public class SmsParse {
 				sms = sms.replace("  ", " ").replace("   ", " ").replace("    ", " ").replace("[Web발신]", "");
 				if(sms.contains("한도") || sms.contains("초과") || sms.contains("금지") || sms.contains("도용") || sms.contains("신고") || sms.contains("도난") || 
 				   sms.contains("부족") || sms.contains("정지") || sms.contains("대출") || sms.contains("금리") || sms.contains("이자") || sms.contains("이율") ||
-				   sms.contains("포인트사용") || sms.contains("결제대금") || sms.contains("결제예정") || sms.contains("거절") ){
+				   sms.contains("포인트사용") || sms.contains("결제대금") || sms.contains("결제예정") || sms.contains("거절") || sms.contains("유가보조금")){
 					return null;
 				}
 				

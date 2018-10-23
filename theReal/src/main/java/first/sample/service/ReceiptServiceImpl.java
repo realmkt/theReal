@@ -889,9 +889,9 @@ public class ReceiptServiceImpl implements ReceiptService {
 		return resultMap;
 	}
 	
-	public Map<String, Object> kakaoReceiptDetail(Map<String,Object> map) throws Exception{
+	public Map<String, Object> receiptDetailRenew(Map<String,Object> map) throws Exception{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		List<Map<String, Object>> list = receiptDAO.kakaoReceiptDetail(map);
+		List<Map<String, Object>> list = receiptDAO.receiptDetailRenew(map);
 		resultMap.put("resultMap", list);
 		return resultMap;
 	}

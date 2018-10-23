@@ -254,7 +254,7 @@ public interface ReceiptService {
 	
 	Map<String, Object> ReceiptDetail(Map<String, Object> map) throws Exception;
 	
-	Map<String, Object> kakaoReceiptDetail(Map<String, Object> map) throws Exception;
+	Map<String, Object> receiptDetailRenew(Map<String, Object> map) throws Exception;
 	
 	Map<String, Object> getDetailReceipt(Map<String, Object> map) throws Exception;
 

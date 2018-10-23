@@ -164,9 +164,9 @@
                                     <c:forEach var="list" items="${detailMap.resultMap}" varStatus="status">
                                     	<ul>	
                                      		<li class="rt_mlat01">${list.SALES_PNAME }</li>
-                                      		<li class="rt_mlat02"><fmt:formatNumber value="${list.SALES_SL_AMT/list.SALES_QTY}"  groupingUsed="true"></fmt:formatNumber> </li>
+                                      		<li class="rt_mlat02"><fmt:formatNumber value="${list.SALES_OPRICE}"  groupingUsed="true"></fmt:formatNumber> </li>
                                       		<li class="rt_mlat03">${list.SALES_QTY}</li>
-                                      		<li class="rt_mlat04"><fmt:formatNumber value="${list.SALES_SL_AMT}" groupingUsed="true"/></li>
+                                      		<li class="rt_mlat04"><fmt:formatNumber value="${list.SALES_PPRICE}" groupingUsed="true"/></li>
                                       		<hr>
                                     	</ul>
                                     </c:forEach>
@@ -174,8 +174,11 @@
                                 
 								
                                 <div class="rt_tax">주문합계<span><fmt:formatNumber value="${shopInfo.SALES_PAID_AMT }" groupingUsed="true"/></span><br><br>
-                               						 공급가금액<span><fmt:formatNumber value="${shopInfo.SALES_SUM_FP_AMT }" groupingUsed="true"/></span><br><br>
-                               						 부가세<span><fmt:formatNumber value="${shopInfo.SALES_SUM_TAX_AMT }" groupingUsed="true"/></span></div>
+       								<c:if test="${shopInfo.SALES_DISCOUNT_AMT != ''}">	 
+       												할인금액<span>-<fmt:formatNumber value="${shopInfo.SALES_DISCOUNT_AMT }" groupingUsed="true"/></span><br><br> 
+       								</c:if>
+                               						 공급가금액<span><fmt:formatNumber value="${shopInfo.SALES_SURTAX_AMT }" groupingUsed="true"/></span><br><br>
+                               						 부가세<span><fmt:formatNumber value="${shopInfo.SALES_TAX_AMT }" groupingUsed="true"/></span></div>
                                 
                                 <div class="rt_total">Total<span><fmt:formatNumber value="${shopInfo.SALES_PAID_AMT }" groupingUsed="true"/></span></div>
                                 
