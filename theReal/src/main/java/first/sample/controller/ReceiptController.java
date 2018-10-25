@@ -2318,8 +2318,7 @@ public class ReceiptController {
 							int timeout = 10;
 
 							HttpPost httpost = new HttpPost(new URI(url));
-							RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 5000)
-									.setConnectionRequestTimeout(timeout * 5000).setSocketTimeout(timeout * 5000)
+							RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 5000).setConnectionRequestTimeout(timeout * 5000).setSocketTimeout(timeout * 5000)
 									.build();
 							CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config)
 									.build();
@@ -2506,87 +2505,85 @@ public class ReceiptController {
 		paramData3 += "}                                                                            ";
 
 		/////////////////////////////// 알림톡///////////////////////////////////////
+			try {
+				System.out.println(
+						"///////////////////////////////알림톡start//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
+				String url = "http://www.apiorange.com/api/send/notice.do";
+				int timeout = 10;
 
-		try {
-			System.out.println(
-					"///////////////////////////////알림톡start//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
-			String url = "http://www.apiorange.com/api/send/notice.do";
-			int timeout = 10;
+				// Map<String, Object> kakaoMap = receiptService.getKakao(map)
 
-			// Map<String, Object> kakaoMap = receiptService.getKakao(map)
+				AES256 aes = null;
 
-			AES256 aes = null;
+				if (CommonUtils.ipChk()) {
+					aes = new AES256("LGU+DEV258010247");
+				} else {
+					aes = new AES256("LGU+210987654321");
+				}
 
-			if (CommonUtils.ipChk()) {
-				aes = new AES256("LGU+DEV258010247");
-			} else {
-				aes = new AES256("LGU+210987654321");
+				JSONObject json = new JSONObject();
+
+				json.put("tmp_number", "2456");
+				json.put("kakao_sender", "02-540-3111");
+				json.put("kakao_phone", telNo.toString());
+				json.put("kakao_name", telNo.substring(telNo.length() - 4));
+				json.put("kakao_080", "Y");
+				json.put("TRAN_REPLACE_TYPE", "S");
+				json.put("kakao_add1", var.find("shopInfo.name").toString());
+				String td = var.find("salesInfo.salesDate").toString();
+				System.out.println(td);
+				if (td.length() < 17) {
+					td = td.substring(0, 4) + "." + td.substring(4, 6) + "." + td.substring(6, 8) + " "
+							+ td.substring(8, 10) + ":" + td.substring(10, 12) + ":" + td.substring(12, 14);
+				}
+				json.put("kakao_add2", td);
+				json.put("kakao_add3", var.find("shopInfo.name").toString());
+				json.put("kakao_add4", first.common.util.CommonUtils.replaceComma(Integer.parseInt(var.find("salesInfo.paidAmt").toString())) + "원");
+
+				String kakaoBarcode = var.find("salesInfo.salesBarCode").toString();
+
+				json.put("kakao_url1_1", "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="
+								+ URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t="
+								+ URLEncoder.encode(aes.encryptStringToBase64(telNo), "UTF-8"));
+				// json.put("kakao_add5",
+				// "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="+URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode),"UTF-8")+"&t="+URLEncoder.encode(aes.encryptStringToBase64(telNo),"UTF-8"));
+
+				System.out.println(json.toString());
+
+				HttpPost httpost = new HttpPost(new URI(url));
+
+				httpost.addHeader("Authorization", "NvMMEL2bEB1aeSeUK0Mgd5ymKwfQGUv6LNUo/vuY2f0=");
+
+				RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000).setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+				CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+
+				RequestConfig.Builder requestBuilder = RequestConfig.custom();
+				HttpClientBuilder builder = HttpClientBuilder.create();
+				builder.setDefaultRequestConfig(requestBuilder.build());
+				org.apache.http.client.HttpClient client = builder.build();
+
+				StringEntity stringEntity = new StringEntity(json.toJSONString(),ContentType.create("application/json", "UTF-8"));
+				httpost.setEntity(stringEntity);
+
+				HttpResponse response0 = httpClient.execute(httpost);
+				HttpEntity resEntity = response0.getEntity();
+
+				log.debug("■■resEntity■■" + resEntity);
+
+				String resData;
+				if (resEntity != null) {
+					resData = EntityUtils.toString(resEntity);
+					log.debug("■■ 응답데이터■■==" + resData);
+				}
+
+				System.out.println(
+						"///////////////////////////////알림톡end///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
+				////////////////////////////// 알림톡///////////////////////////////////////
+
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
-
-			JSONObject json = new JSONObject();
-
-			json.put("tmp_number", "2456");
-			json.put("kakao_sender", "02-540-3111");
-			json.put("kakao_phone", telNo.toString());
-			json.put("kakao_name", telNo.substring(telNo.length() - 4));
-			json.put("kakao_080", "Y");
-			json.put("TRAN_REPLACE_TYPE", "S");
-			json.put("kakao_add1", var.find("shopInfo.name").toString());
-			String td = var.find("salesInfo.salesDate").toString();
-			System.out.println(td);
-			if (td.length() < 17) {
-				td = td.substring(0, 4) + "." + td.substring(4, 6) + "." + td.substring(6, 8) + " "
-						+ td.substring(8, 10) + ":" + td.substring(10, 12) + ":" + td.substring(12, 14);
-			}
-			json.put("kakao_add2", td);
-			json.put("kakao_add3", var.find("shopInfo.name").toString());
-			json.put("kakao_add4", first.common.util.CommonUtils.replaceComma(Integer.parseInt(var.find("salesInfo.paidAmt").toString())) + "원");
-
-			String kakaoBarcode = var.find("salesInfo.salesBarCode").toString();
-
-			json.put("kakao_url1_1", "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="
-							+ URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t="
-							+ URLEncoder.encode(aes.encryptStringToBase64(telNo), "UTF-8"));
-			// json.put("kakao_add5",
-			// "http://110.45.190.114:28080/theReal/receipt/kakaoReceipt.do?No="+URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode),"UTF-8")+"&t="+URLEncoder.encode(aes.encryptStringToBase64(telNo),"UTF-8"));
-
-			System.out.println(json.toString());
-
-			HttpPost httpost = new HttpPost(new URI(url));
-
-			httpost.addHeader("Authorization", "NvMMEL2bEB1aeSeUK0Mgd5ymKwfQGUv6LNUo/vuY2f0=");
-
-			RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
-					.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
-			CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
-
-			RequestConfig.Builder requestBuilder = RequestConfig.custom();
-			HttpClientBuilder builder = HttpClientBuilder.create();
-			builder.setDefaultRequestConfig(requestBuilder.build());
-			org.apache.http.client.HttpClient client = builder.build();
-
-			StringEntity stringEntity = new StringEntity(json.toJSONString(),
-					ContentType.create("application/json", "UTF-8"));
-			httpost.setEntity(stringEntity);
-
-			HttpResponse response0 = httpClient.execute(httpost);
-			HttpEntity resEntity = response0.getEntity();
-
-			log.debug("■■resEntity■■" + resEntity);
-
-			String resData;
-			if (resEntity != null) {
-				resData = EntityUtils.toString(resEntity);
-				log.debug("■■ 응답데이터■■==" + resData);
-			}
-
-			System.out.println(
-					"///////////////////////////////알림톡end///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
-			////////////////////////////// 알림톡///////////////////////////////////////
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		
 		// log.debug("paramData2:"+paramData2);
 		// String eRecResData = TheRealShopToERec.theRealToEReceipt2(request,
 		// response, paramData.toString());
@@ -2612,6 +2609,9 @@ public class ReceiptController {
 		kakaoArlimtalk kakaoArl = new kakaoArlimtalk();
 		Map<String, String> kakaoMap = new HashMap<String, String>();
 		
+		InetAddress Address;
+		Address = InetAddress.getLocalHost();
+		String IP = Address.getHostAddress();
 		//변수 설정
 		String CI = "";
 		Var var = null;
@@ -2626,14 +2626,14 @@ public class ReceiptController {
 		boolean dateDel = false;
 		String errorCol = "";
 		String errorDeCol = "";
-		
+		String linkUrl = "";
 		
 		//암호화 모듈
 		AES256 aes = null;
 		if (CommonUtils.ipChk()) {
-			aes = new AES256("LGU+DEV258010247");
+			aes = new AES256("MKTDEV1234567890");
 		} else {
-			aes = new AES256("LGU+210987654321");
+			aes = new AES256("MKT1101234567890");
 		}
 
 		StringBuffer paramData = new StringBuffer();
@@ -2942,6 +2942,20 @@ public class ReceiptController {
 				}
 	
 				dateDel = false;
+				
+				//linkUrl 생성
+				
+				if(IP.equals("182.162.84.177")){
+					linkUrl = "http://182.162.84.177/theReal/receipt/kakaoReceipt.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64(var.find("userKey").toString())+"&erecNo="+aes.encryptStringToBase64(var.find("salesInfo.salesBarCode").toString());
+				}else if(IP.equals("110.45.190.114")){
+					linkUrl = "http://110.45.190.114:19090/theReal/receipt/kakaoReceipt.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64(var.find("userKey").toString())+"&erecNo="+aes.encryptStringToBase64(var.find("salesInfo.salesBarCode").toString());
+				}
+				
+				
+				
+				
+				
+				
 				/////////////////////////////// 알림톡 renew RCP01///////////////////////////////////////
 				errorCol = "kakaoYN";
 				System.out.println("kakao :: " + var.find("kakaoYN").toString());
@@ -3092,6 +3106,12 @@ public class ReceiptController {
 				dateDel = false;
 				/////////////////////////////// 알림톡 renew RCP02///////////////////////////////////////
 				
+				if(IP.equals("182.162.84.177")){
+					linkUrl = "http://182.162.84.177/theReal/receipt/kakaoReceipt.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64((String)resultMap.get("USER_KEY"))+"&erecNo="+aes.encryptStringToBase64((String)resultMap.get("SALES_BARCODE"));
+				}else if(IP.equals("110.45.190.114")){
+					linkUrl = "http://110.45.190.114:19090/theReal/receipt/kakaoReceipt.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64((String)resultMap.get("USER_KEY"))+"&erecNo="+aes.encryptStringToBase64((String)resultMap.get("SALES_BARCODE"));
+				}
+				
 				
 				if(var.find("kakaoYN").toString().equals("Y")){
 					try {
@@ -3135,7 +3155,14 @@ public class ReceiptController {
 			}
 				
 				
-		
+			// 성공시
+						jsonResData = "{";
+						jsonResData += "    \"result\":\"PI000\",";
+						jsonResData += "    \"message\":\"전송성공\",";
+						jsonResData += "    \"linkUrl\":\"" + linkUrl + "\"";
+						jsonResData += "}";
+						System.out.println("jsonResData:" + jsonResData);
+
 			
 			System.out.println("===============전자영수증 발급 end==============");
 		} catch (Exception e) {
