@@ -2946,9 +2946,9 @@ public class ReceiptController {
 				//linkUrl 생성
 				
 				if(IP.equals("182.162.84.177")){
-					linkUrl = "http://182.162.84.177/theReal/receipt/kakaoReceipt.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64(var.find("userKey").toString())+"&erecNo="+aes.encryptStringToBase64(var.find("salesInfo.salesBarCode").toString());
+					linkUrl = "http://182.162.84.177/theReal/receipt/receiptDetail.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64(var.find("userKey").toString())+"&erecNo="+aes.encryptStringToBase64(var.find("salesInfo.salesBarCode").toString());
 				}else if(IP.equals("110.45.190.114")){
-					linkUrl = "http://110.45.190.114:19090/theReal/receipt/kakaoReceipt.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64(var.find("userKey").toString())+"&erecNo="+aes.encryptStringToBase64(var.find("salesInfo.salesBarCode").toString());
+					linkUrl = "http://110.45.190.114:19090/theReal/receipt/receiptDetail.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64(var.find("userKey").toString())+"&erecNo="+aes.encryptStringToBase64(var.find("salesInfo.salesBarCode").toString());
 				}
 				
 				
@@ -3107,9 +3107,9 @@ public class ReceiptController {
 				/////////////////////////////// 알림톡 renew RCP02///////////////////////////////////////
 				
 				if(IP.equals("182.162.84.177")){
-					linkUrl = "http://182.162.84.177/theReal/receipt/kakaoReceipt.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64((String)resultMap.get("USER_KEY"))+"&erecNo="+aes.encryptStringToBase64((String)resultMap.get("SALES_BARCODE"));
+					linkUrl = "http://182.162.84.177/theReal/receipt/receiptDetail.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64((String)resultMap.get("USER_KEY"))+"&erecNo="+aes.encryptStringToBase64((String)resultMap.get("SALES_BARCODE"));
 				}else if(IP.equals("110.45.190.114")){
-					linkUrl = "http://110.45.190.114:19090/theReal/receipt/kakaoReceipt.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64((String)resultMap.get("USER_KEY"))+"&erecNo="+aes.encryptStringToBase64((String)resultMap.get("SALES_BARCODE"));
+					linkUrl = "http://110.45.190.114:19090/theReal/receipt/receiptDetail.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64((String)resultMap.get("USER_KEY"))+"&erecNo="+aes.encryptStringToBase64((String)resultMap.get("SALES_BARCODE"));
 				}
 				
 				
@@ -5539,8 +5539,9 @@ public class ReceiptController {
 				map.put("salesType", shopMap.get("SALES_TYPE"));
 
 				String date = (String) shopMap.get("SALES_DATE");
-				date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8) + " " + date.substring(8, 10) + ":" + date.substring(10, 12) + ":" + date.substring(12, 14);
-				
+				if(!(date.equals("") || date == null || date.length() < 6)){
+					date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8) + " " + date.substring(8, 10) + ":" + date.substring(10, 12) + ":" + date.substring(12, 14);
+				}
 				
 				mv.addObject("salesDate", date);
 				mv.addObject("shopInfo", shopMap);

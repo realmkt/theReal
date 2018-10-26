@@ -21,7 +21,7 @@ public class consoleMail
 {
   private static final String SMTP_HOST_NAME = "smtp.gmail.com";
   private static final String SMTP_AUTH_USER = "RealMKTShop@gmail.com";
-  private static final String SMTP_AUTH_PWD = "real7404!";
+  private static final String SMTP_AUTH_PWD = "diqluffqqyksnjrg";
 
   public void postMail(String[] recipients, String subject, String content, String from, String userNm)
     throws Exception
