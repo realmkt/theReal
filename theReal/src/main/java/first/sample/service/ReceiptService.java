@@ -116,6 +116,8 @@ public interface ReceiptService {
 
 	Map<String, Object> depth03DivList(Map<String, Object> map) throws Exception;
 
+	Map<String, Object> receiptHeader(Map<String, Object> map) throws Exception;
+	
 	Map<String, Object> latestData(Map<String, Object> map) throws Exception;
 
 	Map<String, Object> smsLatestData(Map<String, Object> map) throws Exception;

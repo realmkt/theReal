@@ -76,7 +76,6 @@ import first.sample.controller.function.kakaoArlimtalk;
 import first.sample.controller.function.sktBillLetter;
 import first.sample.service.ReceiptService;
 import first.sample.theRealShop.TheRealShopToUplus;
-import sun.org.mozilla.javascript.internal.regexp.SubString;
 
 
 @Controller
@@ -3823,7 +3822,20 @@ public class ReceiptController {
 
 		return userCreaDate;
 	}
+	
+	/////// 2018.11.22 SK Bill Letter 부터 생성////////////
+	@RequestMapping(value = "/receipt/receiptHeader.do")
+	@ResponseBody
+	public Object receiptHeader(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String CI = (String) commandMap.get("CI");
 
+		map.put("CI", CI);
+		Map<String, Object> resultMap = receiptService.receiptHeader(map);
+		
+		return resultMap;
+	}
+	
 	@RequestMapping(value = "/receipt/latestData.do")
 	@ResponseBody
 	public Object latestData(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {

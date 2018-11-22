@@ -1761,6 +1761,78 @@
         LIMIT 0,10
 	</select>		
 
+<select id="receiptHeader" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		         SELECT             
+                  USER_CI               ,
+                  USER_KEY            ,
+                  SALES_BARCODE           ,
+                  CONNECTION_COM         ,
+                  ETC_MEMO               ,
+                  ETC_EVENT               ,
+                  SHOP_NAME               ,
+                  SHOP_BRANCH            ,
+                  SHOP_BIZNO               ,
+                  SHOP_ADDR               ,
+                  SHOP_CEO               ,
+                  SHOP_TEL_NUM           ,
+                  SHOP_CASHIER           ,
+                  COMPOUND_YN            ,
+                  PAYMENT_TYPE         ,
+                  SALES_DATE               ,
+                  SALES_PRINT_DATE       ,
+                  SALES_TYPE               ,
+                  SALES_TOT_AMT          ,
+                  SALES_DISCOUNT_AMT       ,
+                  SALES_CHG_AMT          ,
+                  SALES_PAID_AMT          ,
+                  SALES_SURTAX_AMT       ,
+                  SALES_DF_AMT           ,
+                  SALES_TAX_AMT , 
+                  SALES_RE_PRINT           ,
+                  SALES_DETAIL_CNT       ,
+                  CASH_AMT               ,
+                  CASH_TYPE               ,
+                  CASH_NO                  ,
+                  CASH_APP_N0               ,
+                  CASH_DATE               ,
+                  CARD_AMT               ,
+                  CARD_INSTALLMENT       ,
+                  CARD_APP_NO               ,
+                  CARD_DATE               ,
+                  CARD_ICOM               ,
+                  CARD_PCOM               ,
+                  CARD_NO                  ,
+                  PAY_AMT               ,
+                  PAY_APP_NO            ,
+                  PAY_DATE            ,
+                  PAY_ICOM            ,
+                  POINT_CARD            ,
+                  POINT_AMT               ,
+                  POINT_TYPE            ,
+                  POINT_ICOM            ,
+                  POINT_GET               ,
+                  POINT_OPER,
+                  COUPON_NO, 
+                  COUPON_COM,
+                  COUPON_TYPE,
+                  COUPON_AMT,
+                  COUPON_CASH_YN,
+                  REC_VIEW_YN               ,
+                  FRT_CREA_DTM           ,
+                  FRT_REGN_NM               ,
+                  FNL_MOF_DTM               ,
+                  FNL_MDF_NM            ,
+                  REC_NO            ,
+                  ORIGIN_REC_NO            ,
+                  ORIGIN_SALES_DATE,
+            FROM
+                  TB_USER_DATA_RENEW
+            WHERE
+                  USER_CI = #{CI}
+		]]>
+	</select>	
+	
 		<select id="latestData" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		SELECT

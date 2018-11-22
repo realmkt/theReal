@@ -477,7 +477,15 @@ public class ReceiptServiceImpl implements ReceiptService {
 		resultMap.put("resultMap", list);
 		return resultMap;
 	}
-
+	
+	@Override
+	public Map<String, Object> receiptHeader(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = receiptDAO.receiptHeader(map);
+		resultMap.put("resultMap", list);
+		return resultMap;
+	}
+	
 	@Override
 	public Map<String, Object> smsLatestData(Map<String, Object> map) throws Exception {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
