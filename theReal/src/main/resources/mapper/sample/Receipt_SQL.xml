@@ -1591,7 +1591,37 @@
 	</select>
 	
 	
-	
+	<select id="receiptFooter" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		      SELECT
+               USER_CI            ,
+               USER_KEY         ,
+               SALES_SEQ_NO      ,
+               SALES_BARCODE      ,
+               SALES_PNAME          ,
+               SALES_PPRICE      ,
+               SALES_OPRICE      ,
+               SALES_QTY          ,
+               SALES_FP_AMT      ,
+               SALES_TAX_AMT      ,
+               SALES_TYPE         ,
+               SALES_DISCOUNT_AMT   ,
+               SALES_PAID_AMT      ,
+               FRT_CREA_DTM      ,
+               FRT_REGN_NM        ,
+               FNL_MOF_DTM          ,
+               FNL_MDF_NM         ,
+               SHOP_BIZNO
+            FROM 
+               TB_USER_DATA_DETAIL_RENEW
+            WHERE
+               USER_CI = #{CI}
+            AND
+            	SALES_BARCODE = #{barcode}
+            AND
+            	SHOP_BIZNO = #{bizNo}
+		]]>
+	</select>
 	
 	<select id="latestDetailData" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[

@@ -118,6 +118,8 @@ public interface ReceiptService {
 
 	Map<String, Object> receiptHeader(Map<String, Object> map) throws Exception;
 	
+	Map<String, Object> receiptFooter(Map<String, Object> map) throws Exception;
+	
 	Map<String, Object> latestData(Map<String, Object> map) throws Exception;
 
 	Map<String, Object> smsLatestData(Map<String, Object> map) throws Exception;

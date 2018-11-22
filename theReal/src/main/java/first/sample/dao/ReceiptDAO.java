@@ -353,6 +353,10 @@ public class ReceiptDAO extends AbstractDAO {
 		return selectList("sample.receiptHeader", map);
 	}
 	
+	public List<Map<String, Object>> receiptFooter(Map<String, Object> map) {
+		return selectList("sample.receiptFooter", map); 
+	}
+	
 	public List<Map<String, Object>> latestData(Map<String, Object> map) {
 		return selectList("sample.latestData", map);
 	}

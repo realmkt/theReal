@@ -3832,6 +3832,30 @@ public class ReceiptController {
 
 		map.put("CI", CI);
 		Map<String, Object> resultMap = receiptService.receiptHeader(map);
+		resultMap.put("Cnt", resultMap.size());
+		return resultMap;
+	}
+	
+	@RequestMapping(value = "/receipt/receiptFooter.do")
+	@ResponseBody
+	public Object receiptFooter(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String CI = (String) commandMap.get("CI");
+		String bizNo = (String) commandMap.get("CI");
+		String barcode = (String) commandMap.get("barcode");
+		
+
+		map.put("CI", CI);
+		map.put("bizNo", bizNo);
+		map.put("barcode", barcode);
+		
+		Map<String, Object> shopInfo  = receiptService.receiptHeader(map);
+		Map<String, Object> detailInfo = receiptService.receiptFooter(map);
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("shopInfo", shopInfo);
+		resultMap.put("detailInfo", detailInfo);
+		
 		
 		return resultMap;
 	}
