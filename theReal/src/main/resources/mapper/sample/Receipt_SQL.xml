@@ -1825,7 +1825,7 @@
                   FNL_MDF_NM            ,
                   REC_NO            ,
                   ORIGIN_REC_NO            ,
-                  ORIGIN_SALES_DATE,
+                  ORIGIN_SALES_DATE
             FROM
                   TB_USER_DATA_RENEW
             WHERE
