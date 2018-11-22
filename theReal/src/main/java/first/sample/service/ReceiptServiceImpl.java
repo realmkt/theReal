@@ -263,9 +263,13 @@ public class ReceiptServiceImpl implements ReceiptService {
 	}
 	
 	@Override
-	public void insertCancelReceiptDeatailDataRenew(HashMap<String, Object> map) throws Exception {
-		receiptDAO.insertCancelReceiptDeatailDataRenew(map); 
+	public int insertCancelReceiptDeatailDataRenew(HashMap<String, Object> map) throws Exception {
 		System.out.println("impl@@@" + map);
+		return (Integer)receiptDAO.insertCancelReceiptDeatailDataRenew(map); 
+	} 
+	
+	public HashMap<String, Object> getReceiptDeatailData(HashMap<String, Object> map) throws Exception {
+		return (HashMap<String, Object>)receiptDAO.getReceiptDeatailData(map); 
 	} 
 	
 	@Override
@@ -273,6 +277,11 @@ public class ReceiptServiceImpl implements ReceiptService {
 		receiptDAO.deleteFailDate(map); 
 		System.out.println("impl@@@" + map);
 	}
+	
+	public Map<String, Object> getRcp02Data(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>)receiptDAO.getRcp02Data(map); 
+	}
+	
 
 	/**
 	 * 설유진 추가
@@ -1026,5 +1035,6 @@ public class ReceiptServiceImpl implements ReceiptService {
 	public void leave(String CI) {
 		receiptDAO.leave(CI);
 	}
+
 	
 }

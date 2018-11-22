@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.connector.Request;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
@@ -72,8 +73,10 @@ import first.common.util.Sha256;
 import first.common.util.Var;
 import first.common.util.consoleMail;
 import first.sample.controller.function.kakaoArlimtalk;
+import first.sample.controller.function.sktBillLetter;
 import first.sample.service.ReceiptService;
 import first.sample.theRealShop.TheRealShopToUplus;
+import sun.org.mozilla.javascript.internal.regexp.SubString;
 
 
 @Controller
@@ -2622,18 +2625,21 @@ public class ReceiptController {
 		String str = null;
 		String resStrEnc = "";
 		String paymentType = "";
-		String paymentTypeCode = "";
+		String paymentTypeCode="";
 		boolean dateDel = false;
 		String errorCol = "";
 		String errorDeCol = "";
 		String linkUrl = "";
+		String sktData = "";
+		Gson gson = new Gson();
+		sktBillLetter skt = new sktBillLetter();
 		
 		//암호화 모듈
 		AES256 aes = null;
 		if (CommonUtils.ipChk()) {
-			aes = new AES256("MKTDEV1234567890");
+			aes = new AES256("MKTDEV7404123456");
 		} else {
-			aes = new AES256("MKT1101234567890");
+			aes = new AES256("MKT1107404123456");
 		}
 
 		StringBuffer paramData = new StringBuffer();
@@ -2693,7 +2699,9 @@ public class ReceiptController {
 		//System.out.println("Request Data ::::  " + paramData.toString());
 		
 		
-		//////////
+		
+		
+		
 		
 		var = JsonParser.object(new CharTokenizer(paramData.toString()));
 		HashMap<String, Object> insertMap = new HashMap<String, Object>();
@@ -2708,7 +2716,7 @@ public class ReceiptController {
 		delMap.put("delBizNo", delBizNo);
 		
 		try {
-			if (var.find("salesInfo.salesType").toString().equals("RCP01")) {
+			if (var.find("salesInfo.salesType").toString().equals("RCP01") || var.find("salesInfo.salesType").toString().equals("RCP99")) {
 				log.debug("====================================================");
 				log.debug("■■■■■■■■■■■■■■■■■RCP01 전자영수증 승인건■■■■■■■■■■■■■■■■■■");
 				
@@ -2718,91 +2726,91 @@ public class ReceiptController {
 				errorCol = "compoundYN";
 				if (var.find("compoundYN").toString().equals("Y")) {
 					for (int i = 0; i < var.find("paymentList").size(); i++) {
-						insertMap.put("compoundYN", "Y");
+						insertMap.put("COMPOUND_YN", "Y");
 						errorDeCol = "paymentType";
 						paymentType += switchPayType(var.find("paymentList["+i+"].paymentType").toString()); errorDeCol = "paymentTypeCode";
-						insertMap.put("paymentType", paymentType);
+						insertMap.put("PAYMENT_TYPE", paymentType);
 						paymentTypeCode += var.find("paymentList["+i+"].paymentType").toString();
 						errorDeCol = "";
 					}
 				} else {
-					insertMap.put("compoundYN", "N");
+					insertMap.put("COMPOUND_YN", "N");
 					errorDeCol = "paymentType";
 					paymentType = switchPayType(var.find("paymentList[0].paymentType").toString()); errorDeCol = "paymentTypeCode";
-					insertMap.put("paymentType", paymentType);
+					insertMap.put("PAYMENT_TYPE", paymentType);
 					paymentTypeCode = var.find("paymentList[0].paymentType").toString();
 					errorDeCol = "";
 				}
 				errorCol = "";
 				System.out.println(paymentType);
 				errorCol = "userKey";
-				insertMap.put("userKey", var.find("userKey").toString());
-				insertMap.put("telNo", var.find("userKey").toString());
+				insertMap.put("USER_KEY", var.find("userKey").toString());
+				insertMap.put("TEL_NO", var.find("userKey").toString());
 	
 				uplusUserKey = receiptService.uPlusChk(var.find("userKey").toString());
 				CI = (String) receiptService.getCi(insertMap);
 				errorCol = "CI";
 				insertMap.put("CI", CI);
-				System.out.println();
+				System.out.println(); 
 				errorCol = "etcInfo";
 				System.out.println("::::etcInfo DATA::::");
 				// etcInfo
-				insertMap.put("connectionCom", var.find("etcInfo.connectionCom").toString());
-				insertMap.put("memo", var.find("etcInfo.memo").toString());
-				insertMap.put("event", var.find("etcInfo.event").toString());
+				insertMap.put("CONNECTION_COM", var.find("etcInfo.connectionCom").toString());
+				insertMap.put("MEMO", var.find("etcInfo.memo").toString());
+				insertMap.put("EVENT", var.find("etcInfo.event").toString());
 				
 				System.out.println();
 				errorCol = "shopInfo";
 				System.out.println("::::shopInfo DATA::::");
 				// shopInfo
-				insertMap.put("shopName", var.find("shopInfo.shopName").toString());
-				insertMap.put("branchName", var.find("shopInfo.branchName").toString());
-				insertMap.put("ercpRegNo", var.find("shopInfo.ercpRegNo").toString());
-				insertMap.put("bizNo", var.find("shopInfo.bizNo").toString());
-				insertMap.put("addr", var.find("shopInfo.addr").toString());//수정
-				insertMap.put("ceo", var.find("shopInfo.ceo").toString());
-				insertMap.put("phone", var.find("shopInfo.phone").toString());
-				insertMap.put("cashier", var.find("shopInfo.cashier").toString());
+				insertMap.put("SHOP_NAME", var.find("shopInfo.shopName").toString());
+				insertMap.put("BRANCH_NAME", var.find("shopInfo.branchName").toString());
+				insertMap.put("ERC_PREG_NO", var.find("shopInfo.ercpRegNo").toString());
+				insertMap.put("BIZ_NO", var.find("shopInfo.bizNo").toString());
+				insertMap.put("ADDR", var.find("shopInfo.addr").toString());//수정
+				insertMap.put("CEO", var.find("shopInfo.ceo").toString());
+				insertMap.put("PHONE", var.find("shopInfo.phone").toString());
+				insertMap.put("CASHIER", var.find("shopInfo.cashier").toString());
 				
 				System.out.println();
 				errorCol = "salesInfo";
 				System.out.println("::::salesInfo DATA::::");
 				// salesInfo
 				errorDeCol = "salesBarCode";
-				insertMap.put("salesBarCode", var.find("salesInfo.salesBarCode").toString()); errorDeCol = "salesDate";
-				insertMap.put("salesDate", var.find("salesInfo.salesDate").toString()); errorDeCol = "printDate";
-				insertMap.put("printDate", var.find("salesInfo.printDate").toString()); errorDeCol = "salesType";
-				insertMap.put("salesType", var.find("salesInfo.salesType").toString()); errorDeCol = "totAmt";
-				insertMap.put("totAmt", var.find("salesInfo.totAmt").toString()); errorDeCol = "discountAmt";
-				insertMap.put("discountAmt", var.find("salesInfo.discountAmt").toString()); errorDeCol = "chgAmt";
-				insertMap.put("chgAmt", var.find("salesInfo.chgAmt").toString()); errorDeCol = "paidAmt";
-				insertMap.put("paidAmt", var.find("salesInfo.paidAmt").toString()); errorDeCol = "surtaxAmt";
-				insertMap.put("surtaxAmt", var.find("salesInfo.surtaxAmt").toString()); errorDeCol = "dfAmt";
-				insertMap.put("dfAmt", var.find("salesInfo.dfAmt").toString()); errorDeCol = "taxAmt";
-				insertMap.put("taxAmt", var.find("salesInfo.taxAmt").toString()); errorDeCol = "rePrint";
-				insertMap.put("rePrint", var.find("salesInfo.rePrint").toString()); errorDeCol = "detailCnt";
-				insertMap.put("detailCnt", var.find("salesInfo.detailCnt").toString()); 
+				insertMap.put("SALES_BARCODE", var.find("salesInfo.salesBarCode").toString()); errorDeCol = "salesDate";
+				insertMap.put("SALES_DATE", var.find("salesInfo.salesDate").toString()); errorDeCol = "printDate";
+				insertMap.put("PRINT_DATE", var.find("salesInfo.printDate").toString()); errorDeCol = "salesType";
+				insertMap.put("SALES_TYPE", var.find("salesInfo.salesType").toString()); errorDeCol = "totAmt";
+				insertMap.put("TOT_AMT", var.find("salesInfo.totAmt").toString()); errorDeCol = "discountAmt";
+				insertMap.put("DISCOUNT_AMT", var.find("salesInfo.discountAmt").toString()); errorDeCol = "chgAmt";
+				insertMap.put("CHG_AMT", var.find("salesInfo.chgAmt").toString()); errorDeCol = "paidAmt";
+				insertMap.put("PAID_AMT", var.find("salesInfo.paidAmt").toString()); errorDeCol = "surtaxAmt";
+				insertMap.put("SURTAX_AMT", var.find("salesInfo.surtaxAmt").toString()); errorDeCol = "dfAmt";
+				insertMap.put("DF_AMT", var.find("salesInfo.dfAmt").toString()); errorDeCol = "taxAmt";
+				insertMap.put("TAX_AMT", var.find("salesInfo.taxAmt").toString()); errorDeCol = "rePrint";
+				insertMap.put("RE_PRINT", var.find("salesInfo.rePrint").toString()); errorDeCol = "detailCnt";
+				insertMap.put("DETAIL_CNT", var.find("salesInfo.detailCnt").toString()); 
 				
 				// paymentType. 
 				System.out.println();
 				errorCol = "paymentType";
 				errorDeCol = "";
 				System.out.println("::::paymentType DATA::::");
-				insertMap.put("compoundYN", var.find("compoundYN").toString());
+				insertMap.put("COMPOUND_YN", var.find("compoundYN").toString());
 				if (paymentType.contains("현금")) {
 					errorDeCol = "cashAmt";
-					insertMap.put("cashAmt", var.find("cashInfo[0].cashAmt").toString()); errorDeCol = "cashType";
-					insertMap.put("cashType", var.find("cashInfo[0].cashType").toString()); errorDeCol = "cashNo";
-					insertMap.put("cashNo", var.find("cashInfo[0].cashNo").toString()); errorDeCol = "cashAppNo";
-					insertMap.put("cashAppNo", var.find("cashInfo[0].cashAppNo").toString()); errorDeCol = "cashDate";
-					insertMap.put("cashDate", var.find("cashInfo[0].cashDate").toString());
+					insertMap.put("CASH_AMT", var.find("cashInfo[0].cashAmt").toString()); errorDeCol = "cashType";
+					insertMap.put("CASH_TYPE", var.find("cashInfo[0].cashType").toString()); errorDeCol = "cashNo";
+					insertMap.put("CASH_NO", var.find("cashInfo[0].cashNo").toString()); errorDeCol = "cashAppNo";
+					insertMap.put("CASH_APP_NO", var.find("cashInfo[0].cashAppNo").toString()); errorDeCol = "cashDate";
+					insertMap.put("CASH_DATE", var.find("cashInfo[0].cashDate").toString());
 					errorDeCol ="";
 				} else {
-					insertMap.put("cashAmt", "");
-					insertMap.put("cashType", "");
-					insertMap.put("cashNo", "");
-					insertMap.put("cashAppNo", "");
-					insertMap.put("cashDate", "");
+					insertMap.put("CASH_AMT", "");
+					insertMap.put("CASH_TYPE", "");
+					insertMap.put("CASH_NO", "");
+					insertMap.put("CASH_APP_NO", "");
+					insertMap.put("CASH_DATE", "");
 				}
 				// 카드는 복합이 가능하여 For문으로 반복
 				if (paymentType.contains("카드")) {
@@ -2825,21 +2833,21 @@ public class ReceiptController {
 						cardNo += var.find("cardInfo[" + i + "].cardNo").toString() + "/";
 						errorDeCol ="";
 					}
-					insertMap.put("cardAmt", cardAmt.substring(0, cardAmt.length() - 1));
-					insertMap.put("cardInstallment", cardInstallment.substring(0, cardInstallment.length() - 1));
-					insertMap.put("cardAppNo", cardAppNo.substring(0, cardAppNo.length() - 1));
-					insertMap.put("cardDate", cardDate.substring(0, cardDate.length() - 1));
-					insertMap.put("cardIcom", cardIcom.substring(0, cardIcom.length() - 1));
-					insertMap.put("cardPcom", cardPcom.substring(0, cardPcom.length() - 1));
-					insertMap.put("cardNo", cardNo.substring(0, cardNo.length() - 1));
+					insertMap.put("CARD_AMT", cardAmt.substring(0, cardAmt.length() - 1));
+					insertMap.put("CARD_INSTALLMENT", cardInstallment.substring(0, cardInstallment.length() - 1));
+					insertMap.put("CARD_APP_NO", cardAppNo.substring(0, cardAppNo.length() - 1));
+					insertMap.put("CARD_DATE", cardDate.substring(0, cardDate.length() - 1));
+					insertMap.put("CARD_ICOM", cardIcom.substring(0, cardIcom.length() - 1));
+					insertMap.put("CARD_PCOM", cardPcom.substring(0, cardPcom.length() - 1));
+					insertMap.put("CARD_NO", cardNo.substring(0, cardNo.length() - 1));
 				} else {
-					insertMap.put("cardAmt", "");
-					insertMap.put("cardInstallment", "");
-					insertMap.put("cardAppNo", "");
-					insertMap.put("cardDate", "");
-					insertMap.put("cardIcom", "");
-					insertMap.put("cardPcom", "");
-					insertMap.put("cardNo", "");
+					insertMap.put("CARD_AMT", "");
+					insertMap.put("CARD_INSTALLMENT", "");
+					insertMap.put("CARD_APP_NO", "");
+					insertMap.put("CARD_DATE", "");
+					insertMap.put("CARD_ICOM", "");
+					insertMap.put("CARD_PCOM", "");
+					insertMap.put("CARD_NO", "");
 				}
 				if (paymentType.contains("모바일")) {
 					String payAmt = "";
@@ -2855,50 +2863,60 @@ public class ReceiptController {
 						payIcom += var.find("payInfo[" + i + "].payIcom").toString() + "/";
 						errorDeCol ="";
 					}
-					insertMap.put("payAmt", payAmt.substring(0, payAmt.length() - 1));
-					insertMap.put("payAppNo", payAppNo.substring(0, payAppNo.length() - 1));
-					insertMap.put("payDate", payDate.substring(0, payDate.length() - 1));
-					insertMap.put("payIcom", payIcom.substring(0, payIcom.length() - 1));
+					insertMap.put("PAY_AMT", payAmt.substring(0, payAmt.length() - 1));
+					insertMap.put("PAY_APP_NO", payAppNo.substring(0, payAppNo.length() - 1));
+					insertMap.put("PAY_DATE", payDate.substring(0, payDate.length() - 1));
+					insertMap.put("PAY_ICOM", payIcom.substring(0, payIcom.length() - 1));
 				} else {
-					insertMap.put("couponNo", "");
-					insertMap.put("couponType", "");
-					insertMap.put("couponAmt", "");
-					insertMap.put("couponCashYN", "");
+					insertMap.put("PAY_AMT", "");
+					insertMap.put("PAY_APP_NO", "");
+					insertMap.put("PAY_DATE", "");
+					insertMap.put("PAY_ICOM", "");
 				}
-				if (paymentType.contains("쿠폰")) {
+				
+				errorCol = "couponInfo";
+				if (var.find("couponInfo").size() > 0 ) {
 					errorDeCol = "couponNo";
-					insertMap.put("couponNo", var.find("couponInfo.payAmt").toString());  errorDeCol = "couponType";
-					insertMap.put("couponType", var.find("couponInfo.payAppNo").toString()); errorDeCol = "couponAmt";
-					insertMap.put("couponAmt", var.find("couponInfo.couponAmt").toString()); errorDeCol = "couponCashYN";
-					insertMap.put("couponCashYN", var.find("couponInfo.couponCashYN").toString());
+					insertMap.put("COUPON_NO", var.find("couponInfo[0].couponNo").toString());  errorDeCol = "couponType";
+					insertMap.put("COUPON_COM", var.find("couponInfo[0].couponCom").toString()); errorDeCol = "couponCom";
+					insertMap.put("COUPON_TYPE", var.find("couponInfo[0].couponType").toString()); errorDeCol = "couponAmt";
+					insertMap.put("COUPON_AMT", var.find("couponInfo[0].couponAmt").toString()); errorDeCol = "couponCashYN";
+					insertMap.put("COUPON_CASH_YN", var.find("couponInfo[0].couponCashYN").toString());
 					errorDeCol ="";
 				} else {
-					insertMap.put("couponNo", "");
-					insertMap.put("couponType", "");
-					insertMap.put("couponAmt", "");
-					insertMap.put("couponCashYN", "");
+					insertMap.put("COUPON_NO", "");
+					insertMap.put("COUPON_COM", "");
+					insertMap.put("COUPON_TYPE", "");
+					insertMap.put("COUPON_AMT", "");
+					insertMap.put("COUPON_CASH_YN", "");
 				}
 				errorCol = "pointType";
 				insertMap.put("pointType", var.find("pointType").toString());
 				if (insertMap.get("pointType").equals("01") || insertMap.get("pointType").equals("02") || insertMap.get("pointType").equals("03")) {
-					 errorDeCol = "payAmt";
-					insertMap.put("payAmt", var.find("payInfo.payAmt").toString()); errorDeCol = "payAppNo";
-					insertMap.put("payAppNo", var.find("payInfo.payAppNo").toString()); errorDeCol = "payDate";
-					insertMap.put("payDate", var.find("payInfo.payDate").toString()); errorDeCol = "payIcom";
-					insertMap.put("payIcom", var.find("payInfo.payIcom").toString()); errorDeCol = "pointGet";
-					insertMap.put("pointGet", var.find("payInfo.pointGet").toString());
+					 errorDeCol = "pointCard";
+					insertMap.put("POINT_CARD", var.find("payInfo.payAmt").toString()); errorDeCol = "pointAmt";
+					insertMap.put("POINT_AMT", var.find("payInfo.payAppNo").toString()); errorDeCol = "pointType";
+					insertMap.put("POINT_TYPE", var.find("payInfo.payDate").toString()); errorDeCol = "pointIcom";
+					insertMap.put("POINT_ICOM", var.find("payInfo.payIcom").toString()); errorDeCol = "pointGet";
+					insertMap.put("POINT_GET", var.find("payInfo.pointGet").toString()); errorDeCol = "pointOper";
+					insertMap.put("POINT_OPER", var.find("payInfo.pointOper").toString());
 					errorDeCol ="";
 				} else {
-					insertMap.put("payAmt", "");
-					insertMap.put("payAppNo", "");
-					insertMap.put("payDate", "");
-					insertMap.put("payIcom", "");
-					insertMap.put("pointGet", "");
+					insertMap.put("POINT_CARD", "");
+					insertMap.put("POINT_AMT", "");
+					insertMap.put("POINT_TYPE", "");
+					insertMap.put("POINT_ICOM", "");
+					insertMap.put("POINT_GET", "");
+					insertMap.put("POINT_OPER", "");
 				}
 	
-				
 				dateDel = true;
-				System.out.println("INSERT MAP ::: "+insertMap);
+				System.out.println();
+				System.out.println("INSERT MAP ::: "+gson.toJson(insertMap).toString());
+				sktData += skt.sktStringToJson(insertMap, "main");
+				System.out.println();
+				
+				
 				receiptService.insertReceiptDataRenew(insertMap);
 				errorDeCol ="";
 				// 디테일
@@ -2911,46 +2929,56 @@ public class ReceiptController {
 					errorDeCol = "uplusUserKey";
 					detailMap.put("uplusUserKey", uplusUserKey);
 					errorDeCol = "uplusshopBizNoUserKey";
-					detailMap.put("shopBizNo", var.find("shopInfo.bizNo").toString());
+					detailMap.put("SHOP_BIZNO", var.find("shopInfo.bizNo").toString());
 					errorDeCol = "salesBarCode";
-					detailMap.put("salesBarCode", var.find("salesInfo.salesBarCode").toString()); 
+					detailMap.put("SALES_BARCODE", var.find("salesInfo.salesBarCode").toString()); 
 					errorDeCol = "userKey";
-					detailMap.put("userKey", var.find("userKey").toString());
+					detailMap.put("USER_KEY", var.find("userKey").toString());
 					errorDeCol = "salesType";					
-					detailMap.put("salesType", var.find("salesInfo.salesType").toString());
+					detailMap.put("SALES_TYPE", var.find("salesInfo.salesType").toString());
 					errorDeCol = "seqNo";
-					detailMap.put("seqNo", var.find("salesList[" + i + "].seqNo").toString());
+					detailMap.put("SALES_SEQ_NO", var.find("salesList[" + i + "].seqNo").toString());
 					errorDeCol = "pName";
-					detailMap.put("pName", var.find("salesList[" + i + "].pName").toString());
+					detailMap.put("SALES_PNAME", var.find("salesList[" + i + "].pName").toString());
 					errorDeCol = "pPrice";
-					detailMap.put("pPrice", var.find("salesList[" + i + "].pPrice").toString());
+					detailMap.put("SALES_PPRICE", var.find("salesList[" + i + "].pPrice").toString());
 					errorDeCol = "taxPrice";
-					detailMap.put("taxPrice", var.find("salesList[" + i + "].taxPrice").toString());
+					detailMap.put("SALES_TAX_AMT", var.find("salesList[" + i + "].taxPrice").toString());
 					errorDeCol = "fpPrice";
-					detailMap.put("fpPrice", var.find("salesList[" + i + "].fpPrice").toString());
+					detailMap.put("SALES_FP_AMT", var.find("salesList[" + i + "].fpPrice").toString());
 					errorDeCol = "qty";
-					detailMap.put("qty", var.find("salesList[" + i + "].qty").toString());
+					detailMap.put("SALES_QTY", var.find("salesList[" + i + "].qty").toString());
 					errorDeCol = "oPrice";
-					detailMap.put("oPrice", var.find("salesList[" + i + "].oPrice").toString());
+					detailMap.put("SALES_OPRICE", var.find("salesList[" + i + "].oPrice").toString());
 					errorDeCol = "discountPrice";
-					detailMap.put("discountPrice", var.find("salesList[" + i + "].discountPrice").toString());
+					detailMap.put("SALES_DISCOUNT_AMT", var.find("salesList[" + i + "].discountPrice").toString());
 					errorDeCol = "paidPrice";
-					detailMap.put("paidPrice", var.find("salesList[" + i + "].paidPrice").toString());
+					detailMap.put("SALES_PAID_AMT", var.find("salesList[" + i + "].paidPrice").toString());
 					errorDeCol = "";
+					sktData += skt.sktStringToJson(detailMap, "detail");
 					receiptService.insertReceiptDeatailDataRenew(detailMap);
 					System.out.println();
 				}
-	
+				
+				sktData = sktData.substring(0,sktData.length()-1);
+				sktData += "] }";
+				
+				System.out.println("=========F&U 데이터 송신 시작========");
+				skt.sktReceipt(sktData);
+				System.out.println("=========F&U 데이터 송신 종료========");
 				dateDel = false;
 				
+				
+				////////SKT BillLetter (F&U Json Data)
+				
+				
 				//linkUrl 생성
-				
 				if(IP.equals("182.162.84.177")){
-					linkUrl = "http://182.162.84.177/theReal/receipt/receiptDetail.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64(var.find("userKey").toString())+"&erecNo="+aes.encryptStringToBase64(var.find("salesInfo.salesBarCode").toString());
+					linkUrl = "http://182.162.84.177/theReal/receipt/receiptDetail.do?connectionCom="+URLEncoder.encode(aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString()), "UTF-8")+"&userKey="+URLEncoder.encode(aes.encryptStringToBase64(var.find("userKey").toString()), "UTF-8")+"&erecNo="+URLEncoder.encode(aes.encryptStringToBase64(var.find("salesInfo.salesBarCode").toString()), "UTF-8");
+					
 				}else if(IP.equals("110.45.190.114")){
-					linkUrl = "http://110.45.190.114:19090/theReal/receipt/receiptDetail.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64(var.find("userKey").toString())+"&erecNo="+aes.encryptStringToBase64(var.find("salesInfo.salesBarCode").toString());
+					linkUrl = "http://110.45.190.114:18080/theReal/receipt/receiptDetail.do?connectionCom="+URLEncoder.encode(aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString()), "UTF-8")+"&userKey="+URLEncoder.encode(aes.encryptStringToBase64(var.find("userKey").toString()), "UTF-8")+"&erecNo="+URLEncoder.encode(aes.encryptStringToBase64(var.find("salesInfo.salesBarCode").toString()), "UTF-8");
 				}
-				
 				
 				
 				
@@ -3081,12 +3109,14 @@ public class ReceiptController {
 				resultMap.put("pointAmt", resultMap.get("POINT_AMT"));
 				resultMap.put("pointType", resultMap.get("POINT_TYPE"));
 				resultMap.put("pointIcom", resultMap.get("POINT_ICOM"));
-				resultMap.put("pointGet", resultMap.get("POINT_GET"));
+				resultMap.put("pointGet", resultMap.get("POINT_GET")); 
 				resultMap.put("eMail", resultMap.get("EMAIL"));
-				resultMap.put("salesBarCode", resultMap.get("SALES_BARCODE"));
+				resultMap.put("oriSalesBarCode", resultMap.get("SALES_BARCODE"));
 				resultMap.put("uplusUserKey", resultMap.get("UPLUS_USER_KEY"));
 				dateDel = true; 
 				receiptService.insertCancelReceiptData(resultMap);   
+				
+				sktData += skt.sktStringToJson(resultMap, "main");
 				
 				//////////////////////취소 디테일 시작/////////////////////
 				errorDeCol ="";
@@ -3101,17 +3131,34 @@ public class ReceiptController {
 				detailMap.put("salesBarCode", resultMap.get("SALES_BARCODE")); //바코드
 				errorDeCol = "salesType";
 				detailMap.put("salesType", delMap.get("salesType")); //판매 구분 (RCP02 - 취소)
-				receiptService.insertCancelReceiptDeatailDataRenew(detailMap); //취소 상세 저장
+				Integer detailCnt = receiptService.insertCancelReceiptDeatailDataRenew(detailMap); //취소 상세 저장
+				
+				
+				//skt BillLetter 데이터 가져와서 가공
+				for (int i = 0; i < detailCnt; i++) {
+					HashMap<String,Object> getDetail = new HashMap<String,Object>();
+					
+					detailMap.put("seq", i+1);
+					getDetail = receiptService.getReceiptDeatailData(detailMap);
+					
+					sktData += skt.sktStringToJson(getDetail, "detail");
+				}
+				sktData = sktData.substring(0,sktData.length()-1);
+				sktData += "] }";
+				
+				System.out.println("=========F&U 데이터 송신 시작========");
+				skt.sktReceipt(sktData);
+				System.out.println("=========F&U 데이터 송신 종료========");
 				
 				dateDel = false;
 				/////////////////////////////// 알림톡 renew RCP02///////////////////////////////////////
 				
 				if(IP.equals("182.162.84.177")){
-					linkUrl = "http://182.162.84.177/theReal/receipt/receiptDetail.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64((String)resultMap.get("USER_KEY"))+"&erecNo="+aes.encryptStringToBase64((String)resultMap.get("SALES_BARCODE"));
+					linkUrl = "http://182.162.84.177/theReal/receipt/receiptDetail.do?connectionCom="+URLEncoder.encode(aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString()), "UTF-8")+"&userKey="+URLEncoder.encode(aes.encryptStringToBase64((String)resultMap.get("USER_KEY")), "UTF-8")+"&erecNo="+URLEncoder.encode(aes.encryptStringToBase64(salesBarCode), "UTF-8");
+					
 				}else if(IP.equals("110.45.190.114")){
-					linkUrl = "http://110.45.190.114:19090/theReal/receipt/receiptDetail.do?connectionCom="+aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString())+"&userKey="+aes.encryptStringToBase64((String)resultMap.get("USER_KEY"))+"&erecNo="+aes.encryptStringToBase64((String)resultMap.get("SALES_BARCODE"));
+					linkUrl = "http://110.45.190.114:18080/theReal/receipt/receiptDetail.do?connectionCom="+URLEncoder.encode(aes.encryptStringToBase64(var.find("etcInfo.connectionCom").toString()), "UTF-8")+"&userKey="+URLEncoder.encode(aes.encryptStringToBase64((String)resultMap.get("USER_KEY")), "UTF-8")+"&erecNo="+URLEncoder.encode(aes.encryptStringToBase64(salesBarCode), "UTF-8");
 				}
-				
 				
 				if(var.find("kakaoYN").toString().equals("Y")){
 					try {
@@ -3119,18 +3166,17 @@ public class ReceiptController {
 						String kakaoBarcode = resultMap.get("mainSalesBarCode").toString();
 						String kakaoUrl = "http://110.45.190.114:28080/theReal/receipt/kakaoReceiptRenew.do?No=" + URLEncoder.encode(aes.encryptStringToBase64(kakaoBarcode), "UTF-8") + "&t=" + URLEncoder.encode(aes.encryptStringToBase64(resultMap.get("USER_KEY").toString()), "UTF-8")+ "&POS=" + URLEncoder.encode(aes.encryptStringToBase64("OK"), "UTF-8");
 						
-						 
 						//고정 입력 값 (주석 사용x 추후 사용 가능)
 						kakaoMap.put("tmp_number", "5581");										//템플릿 번호
 						kakaoMap.put("kakao_sender", "02-540-3111");							//발송 번호
-						kakaoMap.put("kakao_phone", resultMap.get("USER_KEY").toString());			//발신 번호
+						kakaoMap.put("kakao_phone", resultMap.get("USER_KEY").toString());		//발신 번호
 						kakaoMap.put("kakao_name", resultMap.get("USER_KEY").toString().substring(resultMap.get("USER_KEY").toString().length() - 4));		//발신자 이름
 						kakaoMap.put("kakao_080", "Y");											//080 무료 수신 유무
 						kakaoMap.put("TRAN_REPLACE_TYPE", "S");									//대체문자 S: SMS L:LMS
 						//추가정보 이하 동
-						kakaoMap.put("kakao_add1", resultMap.get("SHOP_NAME").toString());	//업체 명		
+						kakaoMap.put("kakao_add1", resultMap.get("SHOP_NAME").toString());		//업체 명		
 						kakaoMap.put("kakao_add2", resultMap.get("SHOP_BRANCH").toString());	//매장 명
-						kakaoMap.put("kakao_add3", resultMap.get("SALES_DATE").toString());	//결제일시 (ex YYYY.MM.DD)
+						kakaoMap.put("kakao_add3", resultMap.get("SALES_DATE").toString());		//결제일시 (ex YYYY.MM.DD)
 						kakaoMap.put("kakao_add4", resultMap.get("SALES_PAID_AMT").toString());	//금액       (2,000원)
 						//String kakao_add5 	= "";
 						//모바일 링크
@@ -3155,7 +3201,7 @@ public class ReceiptController {
 			}
 				
 				
-			// 성공시
+						// 성공시
 						jsonResData = "{";
 						jsonResData += "    \"result\":\"PI000\",";
 						jsonResData += "    \"message\":\"전송성공\",";
@@ -3166,7 +3212,6 @@ public class ReceiptController {
 			
 			System.out.println("===============전자영수증 발급 end==============");
 		} catch (Exception e) {
-			
 
 			jsonResData = "{";
 			jsonResData += "    \"result\":\"PI102\",";
@@ -3185,7 +3230,6 @@ public class ReceiptController {
 			if(dateDel){
 				receiptService.deleteFailDate(delMap);
 			}
-			
 		}
 		
 		
@@ -3252,10 +3296,6 @@ public class ReceiptController {
 			log.debug("recTelNo:" + recTelNo);
 			log.debug("sendTelNo:" + sendTelNo);
 			log.debug("message:" + var.find("message").toString());
-			
-			String lat = var.find("lat").toString();
-			String lon= var.find("lon").toString();
-			
 			
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("telNo", recTelNo);
@@ -5484,11 +5524,11 @@ public class ReceiptController {
 			Map<String, Object> resultMap =  new HashMap<String, Object>();
 
 			if (CommonUtils.ipChk()) {
-				//더리얼 개발 AES256 KEY : MKTDEV1234567890
-				aes = new AES256("MKTDEV1234567890");
+				//더리얼 개발 AES256 KEY : MKTDEV7404123456
+				aes = new AES256("MKTDEV7404123456");
 			} else {
-				//더리얼 운영 AES256 KEY : MKT1101234567890
-				aes = new AES256("MKT1101234567890");
+				//더리얼 운영 AES256 KEY : MKT1107404123456
+				aes = new AES256("MKT1107404123456");
 			}
 			
 			try {
@@ -5497,7 +5537,16 @@ public class ReceiptController {
 				String userKey = (String)commandMap.get("userKey");
 				String erecNo = (String)commandMap.get("erecNo");
 				String linkUrl = (String)commandMap.get("linkUrl");
-
+				
+				System.out.println("===========접근 URL========== ");
+				System.out.println("http://182.162.84.177/theReal/receipt/receiptDetail.do?connectionCom="+URLEncoder.encode(connectionCom, "UTF-8")+"&userKey="+URLEncoder.encode(userKey, "UTF-8")+"&erecNo="+URLEncoder.encode(erecNo,"UTF-8")+"&linkUrl=");
+				System.out.println("===========접근 URL========== ");
+				System.out.println();
+				
+				
+				System.out.println(" 복호화전 connectionCom ::: " + connectionCom);
+				System.out.println(" 복호화전 erecNo   ::: " + erecNo);
+				System.out.println(" 복호화전 userKey ::: " + userKey);
 				
 				errorCode = "AES256 Decrypt Error";
 				if (userKey.length() < 12 && CommonUtils.ipChk()) {
@@ -5520,9 +5569,13 @@ public class ReceiptController {
 				erecNo = aes.decryptBase64String(erecNo);
 				userKey = aes.decryptBase64String(userKey);
 				connectionCom = aes.decryptBase64String(connectionCom);
+				
+				System.out.println("linkUrl :: " + linkUrl);
 				if(!(linkUrl.equals("") || linkUrl == null)){
 					linkUrl = aes.decryptBase64String(linkUrl);
 				}
+				
+				
 				
 				map.put("erecNo", erecNo);
 				map.put("userKey", userKey);
@@ -5531,6 +5584,17 @@ public class ReceiptController {
 				map.put("barcode", erecNo);
 				map.put("type", "02");
 
+				Map<String, Object> originReceipt = receiptService.getRcp02Data(map); 
+				
+				System.out.println("test111");
+				if(originReceipt != null){
+					System.out.println("취소영수증 정보 입력");
+					map.put("barcode", originReceipt.get("SALES_BARCODE"));
+					map.put("erecNo", originReceipt.get("SALES_BARCODE"));
+				}
+				
+				System.out.println("test222");
+				
 				errorCode = "getShopInfoRenew";
 				shopMap = receiptService.getShopInfoRenew(map);
 
@@ -5585,9 +5649,11 @@ public class ReceiptController {
 			AES256 aes = null;
 
 			//if (CommonUtils.ipChk()) {
-				aes = new AES256("LGU+DEV258010247");
+				aes = new AES256("MKTDEV7404123456");
+				System.out.println("개발 복호화");
 			/*} else {
-				aes = new AES256("LGU+210987654321");
+				aes = new AES256("MKT1107404123456");
+				System.out.println("운영 복호화");
 			}*/
 			JSONObject json = null;
 			try {
@@ -6770,10 +6836,10 @@ public class ReceiptController {
 		AES256 aes = null;
 		try {
 			if (CommonUtils.ipChk()) {
-				aes = new AES256("MKTDEV1234567890");
+				aes = new AES256("MKTDEV7404123456");
 				System.out.println("개발 복호화");
 			} else {
-				aes = new AES256("MKT1101234567890");
+				aes = new AES256("MKT1107404123456");
 				System.out.println("운영 복호화");
 			}
 			
@@ -6799,10 +6865,10 @@ public class ReceiptController {
 
 		try {
 			if (CommonUtils.ipChk()) {
-				aes = new AES256("MKTDEV1234567890");
+				aes = new AES256("MKTDEV7404123456");
 				System.out.println("개발 복호화");
 			} else {
-				aes = new AES256("MKT1101234567890");
+				aes = new AES256("MKT1107404123456");
 				System.out.println("운영 복호화");
 			}
 
@@ -7385,9 +7451,75 @@ public class ReceiptController {
 	}
 
 	
-	
-	
-	
+	@ResponseBody
+	@RequestMapping(value = "/receipt/sktReceipt.do")
+	public void sktReceipt(CommandMap commandMap, HttpServletRequest request, HttpServletResponse response)throws Exception {
+		Var var = null;
+		String str;
+		String jsonResData = "";
+		StringBuffer paramData = new StringBuffer();
+		String resStrEnc = "";
+		BufferedReader br = null;
+		
+		AES256 aes = null;
+		if (CommonUtils.ipChk()) {
+			aes = new AES256("MKTDEV7404123456");
+		} else {
+			aes = new AES256("MKT1107404123456");
+		}
+		
+		try {
+			br = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
+
+			while ((str = br.readLine()) != null) {
+				paramData.append(str);
+			}
+			//암호화 된 데이터 출력
+			//System.out.println("theReal paramData ::" + paramData);
+
+			//
+			String decData = aes.decryptBase64String(paramData.toString());
+			System.out.println("복호화 :: " + decData);
+			var = JsonParser.object(new CharTokenizer(decData));
+			
+			System.out.println("영수증번호 : "+ var.find("SALES_BARCODE").toString());
+			System.out.println("SalesList : "+ var.find("salesList[0].SALES_FP_AMT").toString());
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			// 실패시
+			jsonResData = "{";
+			jsonResData += "    \"result\":\"PI101\",";
+			jsonResData += "    \"message\":\"수신된 데이터 빈값 입니다.\"";
+			jsonResData += "}";
+			e.printStackTrace();
+			throw e;
+		}
+	}
 	
 
 }

@@ -15,7 +15,7 @@
 		AND
 			EMAIL != 'UPLUS'
 		AND
-			USER_CI != 'leave'
+			USER_CI != 'leave' 
 		]]>
 	</select>
 	
@@ -761,6 +761,7 @@
 						USER_CI					,
 						USER_KEY				,
 						SALES_BARCODE           ,
+						CONNECTION_COM			,
 						ETC_MEMO	            ,
 						ETC_EVENT	            ,
 						SHOP_NAME	            ,
@@ -796,11 +797,21 @@
 						CARD_ICOM	            ,
 						CARD_PCOM	            ,
 						CARD_NO            		,
+						PAY_AMT					,
+						PAY_APP_NO				,
+						PAY_DATE				,
+						PAY_ICOM				,
 						POINT_CARD				,
 						POINT_AMT	            ,
 						POINT_TYPE				,
 						POINT_ICOM				,
 						POINT_GET	            ,
+						POINT_OPER,
+						COUPON_NO, 
+						COUPON_COM,
+						COUPON_TYPE,
+						COUPON_AMT,
+						COUPON_CASH_YN,
 						REC_VIEW_YN	            ,
 						EMAIL	            ,
 						FRT_CREA_DTM	        ,
@@ -815,48 +826,59 @@
 					VALUES
 					(
 						#{CI}					,
-						#{userKey}				,
-						#{salesBarCode}			,
-						#{memo}            	 	,
-						#{event}            	,
-						#{shopName}	        		,
-						#{branchName}	        		,
-						#{bizNo}	    ,
-						#{addr}	        	,
-						#{ceo}	            	,
-						#{phone}	        	,
-						#{cashier}	        	,
-						#{compoundYN}			,
-						#{paymentType}			,
-						#{salesDate}	        ,
-						#{printDate}	    	,
-						#{salesType}	        ,
-						#{totAmt}	    		,
-						#{discountAmt}	    		,
-						#{chgAmt}    		,
-						#{paidAmt}	    		,
-						#{surtaxAmt}	    		,
-						#{dfAmt}	    		,
-						#{taxAmt}	    		,
-						#{rePrint}	    		,
-						#{detailCnt}	        	,
-						#{cashAmt}	            ,
-						#{cashType}	        	,
-						#{cashNo}              	,
-						#{cashAppNo}	        ,
-						#{cashDate}	        	,
-						#{cardAmt}	            ,
-						#{cardInstallment}	    ,
-						#{cardAppNo}	        ,
-						#{cardDate}	        	,
-						#{cardIcom}	        	,
-						#{cardPcom}	        	,
-						#{cardNo}              	,
-						#{pointCardNo}			,
-						#{pointAmt}	        	,
-						#{pointType}	        ,
-						#{pointIcom}	        ,
-						#{pointGet}	        	,
+						#{USER_KEY}				,
+						#{SALES_BARCODE}		,
+						#{CONNECTION_COM}		,
+						#{MEMO}            	 	,
+						#{EVENT}            	,
+						#{SHOP_NAME}	        ,
+						#{BRANCH_NAME}	        ,
+						#{BIZ_NO}	    		,
+						#{ADDR}	        		,
+						#{CEO}	            	,
+						#{PHONE}	        	,
+						#{CASHIER}	        	,
+						#{COMPOUND_YN}			,
+						#{PAYMENT_TYPE}			,
+						#{SALES_DATE}	        ,
+						#{PRINT_DATE}	    	,
+						#{SALES_TYPE}	        ,
+						#{TOT_AMT}	    		,
+						#{DISCOUNT_AMT}	    	,
+						#{CHG_AMT}    			,	
+						#{PAID_AMT}	    		,
+						#{SURTAX_AMT}	    	,
+						#{DF_AMT}	    		,
+						#{TAX_AMT}	    		,
+						#{RE_PRINT}	    		,
+						#{DETAIL_CNT}	        ,
+						#{CASH_AMT}	            ,
+						#{CASH_TYPE}	        	,
+						#{CASH_NO}              	,
+						#{CASH_APP_NO}	        ,
+						#{CASH_DATE}	        	,
+						#{CARDAMT}	            ,
+						#{CARD_INSTALLMENT}	    ,
+						#{CARD_APP_NO}	        ,
+						#{CARD_DATE}	        	,
+						#{CARDICOM}	        	,
+						#{CARD_PCOM}	        	,
+						#{CARD_NO}              	,
+						#{PAY_AMT}				,
+						#{PAY_APP_NO}				,
+						#{PAY_DATE}				,
+						#{PAY_ICOM}				,
+						#{POINT_CARD}			,
+						#{POINT_AMT}	        	,
+						#{POINT_TYPE}	        ,
+						#{POINT_ICOM}	        ,
+						#{POINT_GET}	        	,
+						#{POINT_OPER}	        ,
+						#{COUPON_NO}				,
+						#{COUPON_COM}	        ,
+						#{COUPON_TYPE}	        ,
+						#{COUPON_AMT}	        ,
+						#{COUPON_CASH_YN}	        ,
 						'N'	        			,
 						#{eMail}	    		,
 						now()	        		,
@@ -981,7 +1003,7 @@
 						now()	        		,
 						'Admin'					,
 						#{salesBarCode}	        	,
-						#{salesBarCode}	    	,
+						#{oriSalesBarCode}	    	,
 						#{oriSalesDate}	    ,
 						#{uplusUserKey}
 					)
@@ -1059,6 +1081,8 @@
 					SALES_FP_AMT		,
 					SALES_TAX_AMT		,
 					SALES_TYPE			,
+					SALES_DISCOUNT_AMT	,
+					SALES_PAID_AMT		,
 					FRT_CREA_DTM		,
 					FRT_REGN_NM     	,
 					FNL_MOF_DTM	    	,
@@ -1069,22 +1093,24 @@
 				VALUES
 					(
 					#{CI}   	        ,
-					#{userKey}          ,
-					#{seqNo}            ,
-					#{salesBarCode}     ,
-					#{pName}            ,
-					#{pPrice}           ,
-					#{oPrice}           ,
-					#{qty}              ,
-					#{fpPrice}            ,
-					#{taxPrice}           ,
-					#{salesType}		,
+					#{USER_KEY}          ,
+					#{SALES_SEQ_NO}            ,
+					#{SALES_BARCODE}     ,
+					#{SALES_PNAME}            ,
+					#{SALES_PPRICE}           ,
+					#{SALES_OPRICE}           ,
+					#{SALES_QTY}              ,
+					#{SALES_FP_AMT}            ,
+					#{SALES_TAX_AMT}           ,
+					#{SALES_TYPE}		,
+					#{SALES_DISCOUNT_AMT},
+					#{SALES_PAID_AMT}	,
 					now()               ,
 					'admin'             ,
 					now()				,
 					'admin'				,
 					#{uplusUserKey}		,
-					#{shopBizNo}
+					#{SHOP_BIZNO}
 					)
 		]]>
 	</insert>	
@@ -1103,6 +1129,40 @@
 	    ]]>
 	</delete>
 	
+	<select id="getReceiptDeatailData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			SALES_BARCODE	,
+			SALES_SEQ_NO	,
+			USER_CI	    	, 
+			USER_KEY	    ,
+			SALES_PNAME	    ,
+			SALES_PPRICE	,
+			SALES_OPRICE	,
+			SALES_QTY	    ,
+			SALES_DISCOUNT_AMT	,
+			SALES_FP_AMT	,
+			SALES_TAX_AMT	,
+			SALES_PAID_AMT	, 
+			SALES_TYPE		,
+			DATE_FORMAT(FRT_CREA_DTM,'%Y-%m-%d %H:%i:%s') AS FRT_CREA_DTM,
+			FRT_REGN_NM		,
+			DATE_FORMAT(FNL_MOF_DTM,'%Y-%m-%d %H:%i:%s') AS FNL_MOF_DTM,
+			FNL_MDF_NM		,
+			SHOP_BIZNO
+		FROM
+			TB_USER_DATA_DETAIL_RENEW
+		WHERE
+			SALES_SEQ_NO = #{seq} 
+		AND
+			SALES_BARCODE = #{salesBarCode}
+		AND
+			SHOP_BIZNO = #{shopBizNo}
+		]]>
+	</select>
+	
+	
+	
 	<delete id="deleteFailDateDetail" parameterType="hashmap">
 	    <![CDATA[
 	    	DELETE FROM
@@ -1115,6 +1175,23 @@
 	   			SALES_TYPE = #{salesType}
 	    ]]>
 	</delete>
+	
+	
+	<select id="getRcp02Data" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT 
+			SALES_BARCODE,
+			SALES_TYPE
+		FROM
+			TB_USER_DATA_RENEW
+		WHERE
+			REC_NO = #{barcode} 
+		AND
+			USER_KEY = #{userKey}
+		AND 
+			SALES_TYPE = 'RCP02'
+		]]>
+	</select>
 	
 
 	
@@ -1170,6 +1247,19 @@
 		   			SHOP_BIZNO = #{shopBizNo}
 		]]>
 	</insert>	
+	
+	<select id="receiptDeatailCnt" parameterType="hashmap" resultType="Integer">
+		<![CDATA[
+		SELECT 
+			COUNT(*)
+		FROM
+			TB_USER_DATA_DETAIL_RENEW
+		WHERE
+			SALES_BARCODE = #{salesBarCode}
+		AND
+			SHOP_BIZNO = #{shopBizNo}
+		]]>
+	</select>
 	
 	
 	<!-- 
@@ -2778,49 +2868,6 @@
 		WHERE
 			A.USER_CI = #{CI}
 			AND A.USER_CI = B.USER_CI
-<<<<<<< HEAD
-=======
-			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
-		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) DESC
-		]]>
-	</select>		
-	
-	<select id="depth02DivList" parameterType="hashmap" resultType="hashmap">
-		<![CDATA[
-		SELECT 
-			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_MONTH,
-			A.REC_TEN_NO,
-			A.CARD_APP_CO,
-			case when A.APP_CO_DIV is null then 'etc' else A.APP_CO_DIV end AS APP_CO_DIV,
-			COUNT(A.SMS_NO) AS MONTH_CNT, 
-			FORMAT(SUM(A.APP_AMOUNT),0) AS TOTAL_AMT 
-		FROM 
-			TB_SMS_MASTER A,
-			TB_USER B
-		WHERE 
-			A.USER_CI = #{CI}
-			AND A.USER_CI = B.USER_CI
-			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
-		GROUP BY APP_CO_DIV,DIV_MONTH
-		ORDER BY DIV_MONTH DESC, convert(SUM(A.APP_AMOUNT), decimal)  DESC
-		]]>
-	</select>		
-	
-	<select id="depth03DivList" parameterType="hashmap" resultType="hashmap">
-		<![CDATA[
-		SELECT
-			DATE_FORMAT(A.FRT_CREA_DTM,'%Y-%m-%d') AS DIV_MONTH,
-			DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') AS DIV_WEEK,
-			A.APP_AMOUNT,
-			A.APP_CO AS APP_CO,
-			A.CARD_APP_CO
-		FROM
-			TB_SMS_MASTER A,
-			TB_USER B
-		WHERE
-			A.USER_CI = #{CI}
-			AND A.USER_CI = B.USER_CI
->>>>>>> 73e3aa28f6ce4773bf343658352bf1353ce6ce04
 			AND DATE_FORMAT(A.FRT_CREA_DTM,'%Y%m') >= 	DATE_FORMAT(B.FRT_CREA_DTM,'%Y%m')
 		ORDER BY DIV_MONTH DESC, convert(A.APP_AMOUNT, decimal) DESC
 		]]>
@@ -3046,7 +3093,7 @@
 	    	FROM
 	    		TB_USER_COUPON AS A JOIN TB_AFFLIATE_MASTER AS B
 	    	ON
-	    		(A.AFFLIATE_NO_COUPON = B.AFFLIATE_NO)
+	    		(A.COUPON_NO = B.AFFLIATE_NO)
 	    	WHERE
 	    		USER_CI = #{CI}
 	    	AND 
@@ -3546,11 +3593,21 @@
 						CARD_ICOM	            ,
 						CARD_PCOM	            ,
 						CARD_NO            		,
+						PAY_AMT,
+						PAY_APP_NO,
+						PAY_DATE,
+						PAY_ICOM,
 						POINT_CARD				,
 						POINT_AMT	            ,
 						POINT_TYPE				,
 						POINT_ICOM				,
 						POINT_GET	            ,
+						POINT_OPER	            ,
+						COUPON_NO				,
+						COUPON_COM	            ,
+						COUPON_TYPE				,
+						COUPON_AMT				,
+						COUPON_CASH_YN	            ,
 						REC_VIEW_YN	            ,
 						EMAIL	            	,
 						FRT_CREA_DTM	        ,

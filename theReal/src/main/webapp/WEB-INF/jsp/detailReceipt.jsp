@@ -21,7 +21,7 @@
 <title>모바일영수증</title>
 
 <style type="text/css">
-.page { background:#333333 !important; overflow:visible !important; }
+.page { background:#52161E !important; overflow:visible !important; }
 .page-content { padding-top:0 !important; max-width: 450px; margin: 0 auto;}
 
 .latest_contitle { color:#747474; background:#0d0d0d; }
@@ -40,8 +40,8 @@
 .rec_top .left_arrow { background:url(common/left.png) no-repeat; left:20px; }
 .rec_top .right_arrow { background:url(common/right.png) no-repeat; right:20px; }
 
-.rtpage_box { background:#333333; margin-bottom:20px; font-size:12px; line-height:1.2em; }
-.rtpage_inbox { background:#fff; padding:15px 15px; border-radius:4px; margin: 20px }
+.rtpage_box { background:#52161E; margin-bottom:20px; font-size:12px; line-height:1.2em; }
+.rtpage_inbox { background:#fff; padding:15px 15px; border-radius:4px; margin: 15px }
 .rtpage_holl { padding:5px 5px 15px 5px; height:35px; }
 .rtpage_holl div { width:6%; height:100%; margin:0 2%; border-radius:30px; border:1px solid #e5e5e5; float:left; background:#f2f2f2; }
 
@@ -81,6 +81,8 @@
 .rt_card{  padding: 10px; color: #232323; font-size: 12px; border-bottom: 1px dashed #aaaaaa; }
 
 .exit_a img{width: 30px;position: absolute;right: 35px;}
+
+.font_bold{font-size: 1.2em; font-weight: 600}
 </style>
    
     
@@ -88,11 +90,6 @@
 <body>
     <div class="views">
 		<div class="view view-main">
-
-			<!-- <div class="rec_top">
-                <div class="rec_arrow left_arrow"></div>
-                <div class="rec_arrow right_arrow"></div>
-            </div> -->
 
 			<div class="pages navbar-through toolbar-through">
                 <div data-page="index" class="page">
@@ -102,41 +99,25 @@
                     
 						<div class="rtpage_box">
                         	<div class="rtpage_inbox">
-                            
-                            	<!-- <div class="rtpage_holl">
-                                	<div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <hr>
-                                </div> -->
-                                <!-- <a class="exit_a" href="javascript:exit()">
-                                	<img alt="exit" src="../uplusCode/lg_img/exit.png" style="width: 15px"> 
-                                </a> -->
-                                
                                 
                                 <div class="rt_title">
                                 	<h2>${shopInfo.SHOP_NAME }</h2>
                                 </div>
                                 
+                                <c:if test="${shopInfo.SALES_TYPE == 'RCP02' }">
+											<div class="rt_txt01"><span style="color : #ff0000">[취소 영수증]</span></div>
+								</c:if>
+								
+								<!--<c:if test="${shopInfo.SALES_TYPE == 'RCP99' }">
+											<div class="rt_txt01"><span style="color : #ff0000">개발서버 메세지 :: SALES_TYPE : 'RCP99' 는 취소영수증이 아닙니다. 'RCP02' 로 수정하여 취소테스트 해주세요</span></div>
+								</c:if>!-->
+											
                                 
 								<div class="rt_txt01">${shopInfo.SHOP_NAME }<span>${salesDate }</span></div>
 								<div class="rt_txt01">사업자번호:${shopInfo.SHOP_BIZNO }</div>
 								<div class="rt_txt01">대표:${shopInfo.SHOP_CEO }</div>
                                 <div class="rt_txt01">전화:${shopInfo.SHOP_TEL_NUM }</div>
 								<div class="rt_txt01">주소:${shopInfo.SHOP_ADDR}</div>
-                                
-                               <!--  <div class="rt_orderno">
-                                	<p>주문번호</p>
-                                	<h2>1225911584-11584</h2>
-                                </div> -->
-                                
                                 
                                 <div class="rt_table">
                                 	<ul class="rt_tabletitle">
@@ -150,9 +131,25 @@
                                     <c:forEach var="list" items="${detailMap.resultMap}" varStatus="status">
                                     	<ul>	
                                      		<li class="rt_mlat01">${list.SALES_PNAME }</li>
-                                      		<li class="rt_mlat02"><fmt:formatNumber value="${list.SALES_FP_AMT}"  groupingUsed="true"></fmt:formatNumber> </li>
+                                     		
+                                     	<c:choose>
+                                			<c:when test="${list.SALES_FP_AMT == 0  }">
+                                				<li class="rt_mlat02">-</li>
+                                			</c:when>
+                                			<c:otherwise>
+                                				<li class="rt_mlat02"><fmt:formatNumber value="${list.SALES_FP_AMT}"  groupingUsed="true"></fmt:formatNumber> </li>
+                                			</c:otherwise>
+                                		</c:choose>
                                       		<li class="rt_mlat03">${list.SALES_QTY}</li>
-                                      		<li class="rt_mlat04"><fmt:formatNumber value="${list.SALES_OPRICE}" groupingUsed="true"/></li>
+                                      		<c:choose>
+                                			<c:when test="${list.SALES_OPRICE == 0  }">
+                                				<li class="rt_mlat04">-</li>
+                                			</c:when>
+                                			<c:otherwise>
+                                				<li class="rt_mlat04"><fmt:formatNumber value="${list.SALES_OPRICE}"  groupingUsed="true"></fmt:formatNumber> </li>
+                                			</c:otherwise>
+                                		</c:choose>
+                                		
                                       		<hr>
                                     	</ul>
                                     </c:forEach>
@@ -160,7 +157,7 @@
                                 
 								
                                 <div class="rt_tax">주문합계<span><fmt:formatNumber value="${shopInfo.SALES_PAID_AMT }" groupingUsed="true"/></span><br><br>
-                                <c:if test="${shopInfo.SALES_DISCOUNT_AMT != '' } || ${shopInfo.SALES_DISCOUNT_AMT != 0  } || ${shopInfo.SALES_DISCOUNT_AMT != null  }">	 
+                                <c:if test="${shopInfo.SALES_DISCOUNT_AMT != '' &&  shopInfo.SALES_DISCOUNT_AMT != '0'}" >	 
        												할인금액<span>-<fmt:formatNumber value="${shopInfo.SALES_DISCOUNT_AMT }" groupingUsed="true"/></span><br><br> 
        								</c:if>
                                						 공급가금액<span><fmt:formatNumber value="${shopInfo.SALES_SURTAX_AMT }" groupingUsed="true"/></span><br><br>
@@ -168,8 +165,7 @@
                                 
                                 <div class="rt_total">Total<span><fmt:formatNumber value="${shopInfo.SALES_PAID_AMT }" groupingUsed="true"/></span></div>
                                 
-                                <!-- <div class="rt_etc">스타벅스카드<span>500</span></div> -->
-                                
+<!-- 카드 결제 -->
                                 <c:if test="${shopInfo.CARD_ICOM != ''}">
                                 	<div class="rt_card">
                                			<div>거래종류 : <span>카드거래</span> </div>
@@ -206,52 +202,118 @@
                                 		<div>거래일시 : <span>${salesDate}</span> </div>
                                 	</div>
                                 </c:if>
+                                
+<!-- 현금 결제 -->
                                 <c:if test="${shopInfo.CASH_AMT != ''}">
-                                	<div class="rt_card">
-                               			<div>거래종류 : <span>현금거래</span> </div>
-                                		<div>거래일시 : <span>${salesDate}</span> </div>
-                                	</div>
+                                	<c:if test="${shopInfo.CASH_AMT != '0'}">
+	                                	<div class="rt_card">
+	                               			<div>거래종류 : <span>현금거래</span> </div>
+	                               			<div>거래금액 : <span><fmt:formatNumber value="${shopInfo.CASH_AMT }"  groupingUsed="true"/></span> </div>
+	                                		<div>거래일시 : <span>${salesDate}</span> </div>
+	                                		<c:if test="${shopInfo.CASH_TYPE == 'CH01'}">
+	                               				<div>현금영수증 승인번호 : <span>${shopInfo.CASH_NO }</span> </div>
+	                               			</c:if>
+	                                	</div>
+                                	</c:if>
                                 </c:if>
-                                
-                                
-                                
-                                
-                                <c:if test="${(shopInfo.POINT_CARD != '' )} || ${(shopInfo.POINT_CARD != NULL )}">
+ <!-- 포인트 적립/사용 -->			
+ 
+ 		 						
+ 								<c:choose>
+ 									<c:when test="${(shopInfo.POINT_TYPE == '01' )}">
+ 										<div  class="rt_card">
+ 										<div class="font_bold">[ ${shopInfo.POINT_ICOM } 포인트 적립 ] </div>
+ 										
+ 										<div>카드번호 : <span>
+											<c:set var="pointNo" value="${shopInfo.POINT_NO }"/>
+											${fn:substring(pointNo,0,4) }-${fn:substring(pointNo,4,6) }**-****-${fn:substring(pointNo,12,16) }
+										</span> </div>
+                                		<div>적립 포인트 : <span>${shopInfo.POINT_GET }</span> </div>
+                                		<div>가용 포인트 : <span>${shopInfo.POINT_OPER }</span> </div>
+                                		</div>
+ 									</c:when>
+ 									
+ 									<c:when test="${(shopInfo.POINT_TYPE == '02' )}">
+ 									<div  class="rt_card">
+ 										<div class="font_bold">[ ${shopInfo.POINT_ICOM } 포인트 사용 ] </div>
+ 										
+ 										<div>카드번호 : <span>
+											<c:set var="pointNo" value="${shopInfo.POINT_NO }"/>
+											${fn:substring(pointNo,0,4) }-${fn:substring(pointNo,4,6) }**-****-${fn:substring(pointNo,12,16) }
+										</span> </div>
+                                		<div>사용 포인트 : <span>${shopInfo.POINT_AMT }</span> </div>
+                                		<div>최종 가용 포인트 : <span>${shopInfo.POINT_OPER }</span> </div>
+                                		</div>
+ 									</c:when>
+ 									
+ 									<c:when test="${(shopInfo.POINT_TYPE == '03' )}">
+ 										<div  class="rt_card">
+ 										<div class="font_bold">[ ${shopInfo.POINT_ICOM } 포인트 적립/사용 ] </div>
+ 										
+ 										<div>카드번호 : <span>
+											<c:set var="pointNo" value="${shopInfo.POINT_NO }"/>
+											${fn:substring(pointNo,0,4) }-${fn:substring(pointNo,4,6) }**-****-${fn:substring(pointNo,12,16) }
+										</span> </div>
+                                		<div>사용 포인트 : <span>${shopInfo.POINT_AMT }</span> </div>
+                                		<div>적립 포인트 : <span>${shopInfo.POINT_GET }</span> </div>
+                                		<div>최종 가용 포인트 : <span>${shopInfo.POINT_OPER }</span> </div>
+                                		</div>
+ 									</c:when>
+ 								
+ 								
+ 								</c:choose>
+ 								
+<!-- 소액결제 사용 -->
+                                <c:if test="${(shopInfo.PAY_APP_NO != '' )}">
                                 	<div  class="rt_card">
-                                	<c:if test="${shopInfo.GET_POINT == '0'}">
-                                		<div>포인트카드 : <span>${shopInfo.POINT_CARD }</span> </div>
-                                		<div>포인트적립/사용 : <span>포인트적립</span> </div>
-                                		<div>사용포인트 : <span>1000</span> </div>
-                                		<div>남은포인트 : <span>5000</span> </div>
-                                	</c:if>
-                                	<c:if test="${shopInfo.GET_POINT != '0'}">
-                                		<div>포인트카드 : <span>${shopInfo.POINT_CARD }</span> </div>
-                                		<div>포인트적립/사용 : <span>포인트적립</span> </div>
-                                		<div>적립포인트 : <span>50</span> </div>
-                                		<div>남은포인트 : <span>5000</span> </div>
-                                	</c:if>
+                                		<div class="font_bold">[ 소액결제 ]</div>
+                                		
+                                		
+                                		<c:choose>
+                                			<c:when test="${(shopInfo.PAY_ICOM == '갤럭시아컴즈' )}">
+                                				<div>결제사 : <span>갤럭시아 컴즈</span> </div>
+                                			</c:when>
+                                			<c:otherwise>
+                                				<div>결제사 : <span>${shopInfo.PAY_ICOM }</span> </div>
+                                			</c:otherwise>
+                                		</c:choose>
+                                		<div>결제 금액 : <span><fmt:formatNumber value="${shopInfo.PAY_AMT }"  groupingUsed="true"/></span> </div>
+                                		
+                                		<c:choose>
+                                			<c:when test="${shopInfo.PAY_APP_NO == 'null' || shopInfo.PAY_APP_NO == null || shopInfo.PAY_APP_NO == '' }">
+                                			</c:when>
+                                			<c:otherwise>
+                                				<div>결제 승인 번호 : <span>${shopInfo.PAY_APP_NO }</span> </div>
+                                			</c:otherwise>
+                                		</c:choose>
+                                		
+                                		
+                                		
+                                		<div>승인 날짜 : <span>${shopInfo.PAY_DATE }</span> </div>
                             	</div>
                                 </c:if>
                                 
-                                
-                                
-                                <!-- <div class="rt_etc">제휴할인(KT)<span>1,500</span></div> -->
-                                
-                                <!-- <div class="rt_etc">적립포인트<span>300포인트</span></div> -->
-                                
-                                
-                                
+
+<!-- 쿠폰 사용 -->
+                                <c:if test="${(shopInfo.COUPON_NO != '' )}">
+                                	<div  class="rt_card">
+                                		<div class="font_bold">[ COUPON ]</div>
+                                		<div>제휴사 : <span>${shopInfo.COUPON_COM }</span> </div>
+                                		<div>쿠폰 금액 : <span><fmt:formatNumber value="${shopInfo.COUPON_AMT }" groupingUsed="true"/></span> </div>
+                                		<div>쿠폰 번호 : <span>${shopInfo.COUPON_NO }</span> </div>
+                            	</div>
+                                </c:if>
                                 
                                 <div class="rt_copy">
                                 	본 영수증은 거래의 참고용으로 사용하시기 바랍니다.
                                 </div>
-                                <c:if test="${linkUrl != ''} || ${linkUrl != null } ">
+                                <c:if test="${linkUrl != '' && linkUrl != null }   ">
                                 	<img src="${linkUrl }" style="width: 100%; margin: 15px 0; padding: 0 15px">
                                 </c:if>
                             </div>
                         </div>
                         
-                        <div style="height:50px;"></div>
+                        <div style="height:30px;"></div>
                     
                     </div>
                     </div>

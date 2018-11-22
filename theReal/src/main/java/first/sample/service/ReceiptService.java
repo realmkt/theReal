@@ -70,9 +70,13 @@ public interface ReceiptService {
 	
 	void insertReceiptDeatailDataRenew(HashMap<String, Object> map) throws Exception;
 	
-	void insertCancelReceiptDeatailDataRenew(HashMap<String, Object> map) throws Exception;
+	int insertCancelReceiptDeatailDataRenew(HashMap<String, Object> map) throws Exception;
+	
+	HashMap<String, Object> getReceiptDeatailData(HashMap<String, Object> map) throws Exception;
 	
 	void deleteFailDate(HashMap<String, Object> map) throws Exception;
+	
+	Map<String, Object> getRcp02Data(Map<String, Object> map) throws Exception;
 
 	/**
 	 * 설유진 추가
