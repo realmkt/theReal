@@ -8,13 +8,17 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
-import java.util.HashMap;
 
+import org.apache.cordova.geolocation.myGPSLocation;
 import org.json.JSONObject;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.location.GpsSatellite;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
@@ -22,10 +26,12 @@ import android.util.Log;
 
 public class SmsBroadCast extends BroadcastReceiver {
 	
+	
 	String origNumber = null;
 	String message =  null;
 	String phoneNumber = null;
-	
+	double lat = 0;
+	double lon = 0;
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())){
@@ -40,10 +46,29 @@ public class SmsBroadCast extends BroadcastReceiver {
         if ("android.provider.Telephony.SMS_RECEIVED".equals(intent.getAction())) {
             Log.d("onReceive()","문자가 수신되었습니다");
             
+            
+            try {
+            	
+            	myGPSLocation loca = new myGPSLocation(context);
+            	
+            	lat = loca.getLatitude();
+            	lon = loca.getLongitude();
+            	
+            	
+            	
+            			
+            } catch (Exception e) {
+				// TODO: handle exception
+			}
+            
+            
+            
+            
+            
+            
 			TelephonyManager systemService = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 			phoneNumber = systemService.getLine1Number();
-			phoneNumber = phoneNumber.substring(phoneNumber.length() - 10,
-			phoneNumber.length());
+			phoneNumber = phoneNumber.substring(phoneNumber.length() - 10, phoneNumber.length());
 			phoneNumber = "0" + phoneNumber;             
             
 			String samsungCardTelNo = "15888900";
@@ -63,7 +88,7 @@ public class SmsBroadCast extends BroadcastReceiver {
             // SMS 메시지를 파싱합니다.
             Bundle bundle = intent.getExtras();
             Object messages[] = (Object[])bundle.get("pdus");
-            SmsMessage smsMessage[] = new SmsMessage[messages.length];
+            SmsMessage smsMessage[] =  new SmsMessage[messages.length];
             
             for(int i = 0; i < messages.length; i++) {
                 // PDU 포맷으로 되어 있는 메시지를 복원합니다.
@@ -90,8 +115,8 @@ public class SmsBroadCast extends BroadcastReceiver {
 	            
 	            HttpURLConnection conn = null;
 	            try {
-	            	URL url = new URL("http://110.45.190.114/theReal/receipt/smsCardInfo.do");
-	            	//URL url = new URL("http://182.162.84.177/theReal/receipt/smsCardInfo.do");
+	            	//URL url = new URL("http://110.45.190.114/theReal/receipt/smsCardInfo.do");
+	            	URL url = new URL("http://182.162.84.177/theReal/receipt/smsCardInfo.do");
 	                //URL url = new URL("requestURL"); //요청 URL을 입력
 	                conn = (HttpURLConnection) url.openConnection();
 	                conn.setRequestMethod("POST"); //요청 방식을 설정 (default : GET)
@@ -112,6 +137,8 @@ public class SmsBroadCast extends BroadcastReceiver {
 			    	obj.put("origNumber", origNumber);
 			    	obj.put("message",message);
 			    	obj.put("phoneNumber",phoneNumber);
+			    	obj.put("lat",lat);
+			    	obj.put("lon",lon);
 			    	 Log.d("문자 내용", "발신자 : "+obj);
 			    	 Log.d("문자 내용", "발신자 : "+obj.toString());
 	                writer.write(obj.toString()); //요청 파라미터를 입력
@@ -158,6 +185,10 @@ public class SmsBroadCast extends BroadcastReceiver {
 
         }
     }
+    
+    
+   
+    
     
 }
 

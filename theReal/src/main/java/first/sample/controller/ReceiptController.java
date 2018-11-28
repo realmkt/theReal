@@ -3823,42 +3823,7 @@ public class ReceiptController {
 		return userCreaDate;
 	}
 	
-	/////// 2018.11.22 SK Bill Letter 부터 생성////////////
-	@RequestMapping(value = "/receipt/receiptHeader.do")
-	@ResponseBody
-	public Object receiptHeader(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
-		String CI = (String) commandMap.get("CI");
-
-		map.put("CI", CI);
-		Map<String, Object> resultMap = receiptService.receiptHeader(map);
-		resultMap.put("Cnt", resultMap.size());
-		return resultMap;
-	}
 	
-	@RequestMapping(value = "/receipt/receiptFooter.do")
-	@ResponseBody
-	public Object receiptFooter(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
-		String CI = (String) commandMap.get("CI");
-		String bizNo = (String) commandMap.get("CI");
-		String barcode = (String) commandMap.get("barcode");
-		
-
-		map.put("CI", CI);
-		map.put("bizNo", bizNo);
-		map.put("barcode", barcode);
-		
-		Map<String, Object> shopInfo  = receiptService.receiptHeader(map);
-		Map<String, Object> detailInfo = receiptService.receiptFooter(map);
-		
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("shopInfo", shopInfo);
-		resultMap.put("detailInfo", detailInfo);
-		
-		
-		return resultMap;
-	}
 	
 	@RequestMapping(value = "/receipt/latestData.do")
 	@ResponseBody
@@ -7522,29 +7487,6 @@ public class ReceiptController {
 			System.out.println("SalesList : "+ var.find("salesList[0].SALES_FP_AMT").toString());
 			
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		} catch (Exception e) {
 			System.out.println(e);
 			// 실패시
@@ -7555,6 +7497,43 @@ public class ReceiptController {
 			e.printStackTrace();
 			throw e;
 		}
+	}
+	
+/////// 2018.11.22 SK Bill Letter 부터 생성////////////
+	@RequestMapping(value = "/front/skt_receipt_list.do")
+	@ResponseBody
+	public Object receiptHeader(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String CI = (String) commandMap.get("CI");
+
+		map.put("CI", CI);
+		Map<String, Object> resultMap = receiptService.receiptHeader(map);
+		resultMap.put("Cnt", resultMap.size());
+		return resultMap;
+	}
+	
+	@RequestMapping(value = "/front/skt_receipt_list_detail.do")
+	@ResponseBody
+	public Object receiptFooter(CommandMap commandMap, HttpSession session, ServletRequest request) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String CI = (String) commandMap.get("CI");
+		String bizNo = (String) commandMap.get("bizNo");
+		String barcode = (String) commandMap.get("barcode");
+		
+
+		map.put("CI", CI);
+		map.put("bizNo", bizNo);
+		map.put("barcode", barcode);
+		
+		Map<String, Object> shopInfo  = receiptService.receiptHeader(map);
+		Map<String, Object> detailInfo = receiptService.receiptFooter(map);
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("shopInfo", shopInfo);
+		resultMap.put("detailInfo", detailInfo);
+		
+		
+		return resultMap;
 	}
 	
 

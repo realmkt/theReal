@@ -11,7 +11,7 @@ import android.util.Log;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 
-
+ 
 public class SmsMainActivity extends Activity
 {
     BroadcastReceiver myReceiver = new SmsBroadCast();

@@ -1618,9 +1618,11 @@
                USER_CI = #{CI}
             AND
             	SALES_BARCODE = #{barcode}
-            AND
+			]]>
+		<if test="bizNo != '' ">
+			AND
             	SHOP_BIZNO = #{bizNo}
-		]]>
+		</if>
 	</select>
 	
 	<select id="latestDetailData" parameterType="hashmap" resultType="hashmap">

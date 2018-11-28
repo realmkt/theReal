@@ -61,8 +61,7 @@ public class Geolocation extends CordovaPlugin {
     }
 
 
-    public void onRequestPermissionResult(int requestCode, String[] permissions,
-                                          int[] grantResults) throws JSONException
+    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException
     {
         PluginResult result;
         //This is important if we're using Cordova without using Cordova, but we have the geolocation plugin installed
